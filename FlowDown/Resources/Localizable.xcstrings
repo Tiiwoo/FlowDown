@@ -9479,23 +9479,6 @@
         }
       }
     },
-    "Search Results" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search Results"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索结果"
-          }
-        }
-      }
-    },
     "Search Strategy" : {
       "localizations" : {
         "en" : {
