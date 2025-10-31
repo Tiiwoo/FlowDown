@@ -5,6 +5,7 @@
 //  Created by 秋星桥 on 1/21/25.
 //
 
+import Combine
 import Storage
 import UIKit
 
@@ -16,20 +17,12 @@ class Sidebar: UIView {
     let conversationListView = ConversationListView()
     let syncIndicator = SidebarSyncLabel()
 
-    var chatSelection: Conversation.ID? {
-        didSet {
-            guard oldValue != chatSelection else { return }
-            if let chatSelection { conversationListView.select(identifier: chatSelection) }
-            delegate?.sidebarDidSelectNewChat(chatSelection)
-        }
-    }
-
-    weak var delegate: Delegate? {
-        didSet { delegate?.sidebarDidSelectNewChat(chatSelection) }
-    }
+    private var cancellables = Set<AnyCancellable>()
 
     init() {
         super.init(frame: .zero)
+
+        setupChatSelectionSubscription()
 
         let spacing: CGFloat = 16
 
@@ -62,7 +55,6 @@ class Sidebar: UIView {
 
         searchButton.delegate = self
 
-        conversationListView.delegate = self
         addSubview(conversationListView)
         conversationListView.snp.makeConstraints { make in
             make.top.equalTo(brandingLabel.snp.bottom).offset(spacing)
@@ -78,15 +70,20 @@ class Sidebar: UIView {
         }
     }
 
+    private func setupChatSelectionSubscription() {
+        ChatSelection.shared.selection
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] conversationId in
+                Logger.ui.debugFile("Sidebar received chat selection update: \(conversationId ?? "nil")")
+                if let conversationId {
+                    self?.conversationListView.select(identifier: conversationId)
+                }
+            }
+            .store(in: &cancellables)
+    }
+
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError()
-    }
-}
-
-extension Sidebar {
-    protocol Delegate: AnyObject {
-        func sidebarDidSelectNewChat(_ conv: Conversation.ID?)
-        func sidebarRecivedSingleTapForSelection()
     }
 }

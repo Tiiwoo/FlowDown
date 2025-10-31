@@ -27,14 +27,6 @@ class ConversationListView: UIView {
     typealias DataSource = UITableViewDiffableDataSource<SectionIdentifier, DataIdentifier>
     typealias Snapshot = NSDiffableDataSourceSnapshot<SectionIdentifier, DataIdentifier>
 
-    let selection = CurrentValueSubject<Conversation.ID?, Never>(nil)
-
-    weak var delegate: Delegate? {
-        didSet { delegate?.conversationListView(didSelect: selection.value) }
-    }
-
-    var keepMyFocusTimer: Timer?
-
     init() {
         tableView = GroundedTableView(frame: .zero, style: .plain)
         tableView.register(Cell.self, forCellReuseIdentifier: "Cell")
@@ -70,11 +62,23 @@ class ConversationListView: UIView {
         tableView.sectionHeaderTopPadding = 0
         tableView.sectionHeaderHeight = UITableView.automaticDimension
 
-        selection
-            .ensureMainThread()
+        ChatSelection.shared.selection
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] identifier in
                 guard let self else { return }
-                var selectedIndexPath = Set(tableView.indexPathsForSelectedRows ?? [])
+                Logger.ui.debugFile("ConversationListView received global selection: \(identifier ?? "nil")")
+                if tableView.indexPathsForSelectedRows?.count ?? 0 == 1,
+                   let selection = tableView.indexPathForSelectedRow,
+                   let selectedIdentifier = dataSource.itemIdentifier(for: selection),
+                   selectedIdentifier == identifier
+                {
+                    return
+                }
+
+                let selectedIndexPath = Set(tableView.indexPathsForSelectedRows ?? [])
+                for index in selectedIndexPath {
+                    tableView.deselectRow(at: index, animated: false)
+                }
                 if let identifier,
                    let indexPath = dataSource.indexPath(for: identifier)
                 {
@@ -84,20 +88,7 @@ class ConversationListView: UIView {
                         animated: false,
                         scrollPosition: visible ? .none : .middle
                     )
-                    selectedIndexPath.remove(indexPath)
                 }
-                for index in selectedIndexPath {
-                    tableView.deselectRow(at: index, animated: false)
-                }
-            }
-            .store(in: &cancellables)
-
-        selection
-            .removeDuplicates()
-            .ensureMainThread()
-            .sink { [weak self] identifier in
-                guard let self else { return }
-                delegate?.conversationListView(didSelect: identifier)
             }
             .store(in: &cancellables)
 
@@ -107,23 +98,11 @@ class ConversationListView: UIView {
                 self?.updateDataSource()
             }
             .store(in: &cancellables)
-
-        let timer = Timer(timeInterval: 1, repeats: true) { [weak self] _ in
-            guard let self else { return }
-            keepAtLeastOncFocus()
-        }
-        RunLoop.main.add(timer, forMode: .common)
-        keepMyFocusTimer = timer
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError()
-    }
-
-    deinit {
-        keepMyFocusTimer?.invalidate()
-        keepMyFocusTimer = nil
     }
 
     func updateDataSource() {
@@ -177,27 +156,17 @@ class ConversationListView: UIView {
                 .compactMap(\.self)
             snapshot.reconfigureItems(visibleItemIdentifiers)
             dataSource.apply(snapshot, animatingDifferences: true)
-            keepAtLeastOncFocus()
         }
     }
 
     func select(identifier: Conversation.ID) {
-        selection.send(identifier)
-
-        DispatchQueue.main.async {
-            var snapshot = self.dataSource.snapshot()
+        Logger.ui.debugFile("ConversationListView.select called with identifier: \(identifier)")
+        if Thread.isMainThread {
+            var snapshot = dataSource.snapshot()
             snapshot.reconfigureItems([identifier])
-            self.dataSource.apply(snapshot, animatingDifferences: true)
-        }
-    }
-
-    func keepAtLeastOncFocus() {
-        guard tableView.indexPathsForSelectedRows?.count ?? 0 == 0 else { return }
-        let item = ConversationManager.shared.conversations.value.values.first
-        if let item {
-            select(identifier: item.id)
+            dataSource.apply(snapshot, animatingDifferences: true)
         } else {
-            selection.send(nil)
+            assertionFailure()
         }
     }
 
@@ -236,7 +205,7 @@ class ConversationListView: UIView {
             }
             let indexPath = IndexPath(item: sectionItemIndex, section: sectionIndex)
             let identifier = dataSource.itemIdentifier(for: indexPath)
-            selection.send(identifier)
+            ChatSelection.shared.select(identifier)
             resolved = true
         }
         if !resolved {

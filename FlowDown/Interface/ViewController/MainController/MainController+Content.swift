@@ -5,6 +5,7 @@
 //  Created by 秋星桥 on 1/20/25.
 //
 
+import Combine
 import Foundation
 import Storage
 import UIKit
@@ -47,7 +48,8 @@ extension MainController {
             make.edges.equalToSuperview()
         }
 
-        sidebar.delegate = self
+        setupChatSelectionSubscription()
+
         sidebar.newChatButton.delegate = self
         sidebar.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -66,33 +68,24 @@ extension MainController {
         #endif
     }
 
+    private func setupChatSelectionSubscription() {
+        ChatSelection.shared.selection
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] conversationId in
+                Logger.ui.debugFile("MainController received chat selection update: \(conversationId ?? "nil")")
+                self?.load(conversationId)
+            }
+            .store(in: &cancellables)
+    }
+
     func load(_ conv: Conversation.ID?) {
-        Logger.ui.debugFile("sidebarDidSelectNewChat: \(conv ?? "-1")")
+        Logger.ui.debugFile("load called with conversation: \(conv ?? "-1")")
         chatView.prepareForReuse()
         guard let identifier = conv else { return }
 
-        sidebar.chatSelection = identifier
         chatView.use(conversation: identifier)
 
         let session = ConversationSessionManager.shared.session(for: identifier)
         session.updateModels()
-    }
-}
-
-extension MainController: Sidebar.Delegate {
-    func sidebarRecivedSingleTapForSelection() {
-        #if !targetEnvironment(macCatalyst)
-            DispatchQueue.main.async {
-                guard self.presentedViewController == nil else { return }
-                guard !self.allowSidebarPersistence else { return }
-                let tableView = self.sidebar.conversationListView.tableView
-                guard !tableView.isEditing else { return }
-                self.view.doWithAnimation { self.isSidebarCollapsed = true }
-            }
-        #endif
-    }
-
-    func sidebarDidSelectNewChat(_ conv: Conversation.ID?) {
-        load(conv)
     }
 }

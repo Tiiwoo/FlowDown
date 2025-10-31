@@ -12,7 +12,7 @@ import UIKit
 
 extension MainController {
     func queueBootMessage(text: String) {
-        bootMessages.append(text)
+        bootAlertMessageQueue.append(text)
         NSObject.cancelPreviousPerformRequests(
             withTarget: self,
             selector: #selector(presentNextBootMessage),
@@ -22,8 +22,8 @@ extension MainController {
     }
 
     @objc func presentNextBootMessage() {
-        let text = bootMessages.joined(separator: "\n")
-        bootMessages.removeAll()
+        let text = bootAlertMessageQueue.joined(separator: "\n")
+        bootAlertMessageQueue.removeAll()
 
         let alert = AlertViewController(
             title: "External Resources",

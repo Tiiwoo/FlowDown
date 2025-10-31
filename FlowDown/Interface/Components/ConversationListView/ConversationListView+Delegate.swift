@@ -8,16 +8,11 @@
 import Storage
 import UIKit
 
-extension ConversationListView {
-    protocol Delegate: AnyObject {
-        func conversationListView(didSelect identifier: Conversation.ID?)
-    }
-}
-
 extension ConversationListView: UITableViewDelegate {
     func tableView(_: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let identifier = dataSource.itemIdentifier(for: indexPath) else { return }
-        selection.send(identifier)
+        Logger.ui.debugFile("ConversationListView didSelectRowAt: \(identifier)")
+        ChatSelection.shared.select(identifier)
     }
 
     func tableView(_: UITableView, viewForHeaderInSection section: Int) -> UIView? {

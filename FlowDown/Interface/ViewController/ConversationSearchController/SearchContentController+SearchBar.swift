@@ -9,7 +9,7 @@ import UIKit
 
 extension SearchContentController: UISearchBarDelegate {
     func searchBar(_: UISearchBar, textDidChange searchText: String) {
-        highlightedIndex = nil
+        focusedIndexPath = nil
 
         guard !searchText.isEmpty else {
             searchResults = []
@@ -28,8 +28,8 @@ extension SearchContentController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
         guard !searchResults.isEmpty else { return }
 
-        let indexToSelect = highlightedIndex?.row ?? 0
-        highlightedIndex = .init(row: indexToSelect, section: 0)
+        let indexToSelect = focusedIndexPath?.row ?? 0
+        focusedIndexPath = .init(row: indexToSelect, section: 0)
         handleEnterKey()
     }
 

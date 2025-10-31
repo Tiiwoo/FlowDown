@@ -11,30 +11,17 @@ import UIKit
 
 extension Sidebar: NewChatButton.Delegate {
     func newChatDidCreated(_ identifier: Conversation.ID) {
-        chatSelection = identifier
-    }
-}
-
-extension Sidebar: ConversationListView.Delegate {
-    func conversationListView(didSelect identifier: Conversation.ID?) {
-        chatSelection = identifier
+        ChatSelection.shared.select(identifier)
     }
 }
 
 extension Sidebar: SearchControllerOpenButton.Delegate {
     func searchButtonDidTap() {
-        let controller = ConversationSearchController { [weak self] conversationId in
-            if let conversationId {
-                self?.chatSelection = conversationId
-                // Collapse sidebar after search dismissal only on compact size classes
-                if let mainController = self?.parentViewController as? MainController,
-                   mainController.traitCollection.horizontalSizeClass == .compact
-                {
-                    mainController.view.doWithAnimation {
-                        mainController.isSidebarCollapsed = true
-                    }
-                }
-            }
+        let controller = ConversationSearchController { conversationId in
+            Logger.ui.debugFile("Search callback called with conversationId: \(conversationId ?? "nil")")
+            guard let conversationId else { return }
+            Logger.ui.debugFile("Setting chat selection to: \(conversationId)")
+            ChatSelection.shared.select(conversationId)
         }
         parentViewController?.present(controller, animated: true)
     }

@@ -87,6 +87,8 @@ DispatchQueue.global().async {
     FLDCatalystHelper.shared.install()
 #endif
 
+_ = ChatSelection.shared
+
 _ = UIApplicationMain(
     CommandLine.argc,
     CommandLine.unsafeArgv,

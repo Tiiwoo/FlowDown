@@ -25,10 +25,10 @@ class SearchContentController: UIViewController {
         }
     }
 
-    var highlightedIndex: IndexPath?
-    var currentHighlightedCell: SearchResultCell? {
-        guard let highlightedIndex else { return nil }
-        return tableView.cellForRow(at: highlightedIndex) as? SearchResultCell
+    var focusedIndexPath: IndexPath? {
+        didSet {
+            Logger.ui.debugFile("highlightedIndex updated: \(String(describing: focusedIndexPath))")
+        }
     }
 
     var searchBar: UISearchBar {
@@ -36,8 +36,12 @@ class SearchContentController: UIViewController {
     }
 
     init(callback: @escaping ConversationSearchController.SearchCallback) {
-        self.callback = callback
+        self.callback = { _ in }
         super.init(nibName: nil, bundle: nil)
+        self.callback = { [weak self] input in
+            callback(input)
+            self?.callback = { _ in assertionFailure() }
+        }
     }
 
     @available(*, unavailable)
@@ -126,21 +130,17 @@ class SearchContentController: UIViewController {
 
     func handleEnterKey() {
         guard !searchResults.isEmpty else { return }
-
-        let selectionIndexPath = highlightedIndex ?? tableView.indexPathForSelectedRow
-        guard let selectionIndexPath else { return }
-
-        if highlightedIndex != selectionIndexPath {
-            updateHighlightedIndex(selectionIndexPath)
+        guard let selectionIndexPath = focusedIndexPath else { return }
+        tableView.cellForRow(at: selectionIndexPath)?.puddingAnimate()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.selectResultAndDismiss(at: selectionIndexPath)
         }
-        currentHighlightedCell?.puddingAnimate()
-        selectResultAndDismiss(at: selectionIndexPath)
     }
 
     func handleUpArrow() {
         guard !searchResults.isEmpty else { return }
 
-        if var currentIndex = highlightedIndex {
+        if var currentIndex = focusedIndexPath {
             currentIndex.row -= 1
             currentIndex.row = max(currentIndex.row, 0)
             updateHighlightedIndex(currentIndex)
@@ -152,7 +152,7 @@ class SearchContentController: UIViewController {
     func handleDownArrow() {
         guard !searchResults.isEmpty else { return }
 
-        if var currentIndex = highlightedIndex {
+        if var currentIndex = focusedIndexPath {
             currentIndex.row += 1
             currentIndex.row = min(currentIndex.row, searchResults.count - 1)
             updateHighlightedIndex(currentIndex)
@@ -162,7 +162,7 @@ class SearchContentController: UIViewController {
     }
 
     func updateHighlightedIndex(_ newIndex: IndexPath) {
-        highlightedIndex = newIndex
+        focusedIndexPath = newIndex
 
         let cells = tableView.visibleCells.compactMap { $0 as? SearchResultCell }
         for visibleCell in cells {
@@ -178,13 +178,16 @@ class SearchContentController: UIViewController {
 
         let result = searchResults[indexPath.row]
         let conversationId = result.conversation.id
+        Logger.ui.debugFile("selectResultAndDismiss called for conversation: \(conversationId)")
 
         if let navController = navigationController {
             navController.dismiss(animated: true) { [weak self] in
+                Logger.ui.debugFile("Search dismiss animation completed, calling callback for: \(conversationId)")
                 self?.callback(conversationId)
             }
         } else {
             dismiss(animated: true) { [weak self] in
+                Logger.ui.debugFile("Search dismiss animation completed, calling callback for: \(conversationId)")
                 self?.callback(conversationId)
             }
         }

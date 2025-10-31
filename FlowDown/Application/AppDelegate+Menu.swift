@@ -203,7 +203,7 @@ extension AppDelegate {
         else { return }
         let conversationID = ChatTemplateManager.shared.createConversationFromTemplate(template)
         if let mainVC = mainWindow?.rootViewController as? MainController {
-            mainVC.sidebar.chatSelection = conversationID
+            ChatSelection.shared.select(conversationID)
             mainVC.chatView.use(conversation: conversationID) {
                 mainVC.chatView.focusEditor()
             }
@@ -216,7 +216,7 @@ extension AppDelegate {
         else { return }
         let conversationID = ChatTemplateManager.shared.createConversationFromTemplate(template)
         if let mainVC = mainWindow?.rootViewController as? MainController {
-            mainVC.sidebar.chatSelection = conversationID
+            ChatSelection.shared.select(conversationID)
             mainVC.chatView.use(conversation: conversationID) {
                 mainVC.chatView.focusEditor()
             }
@@ -248,7 +248,7 @@ extension AppDelegate {
             let list = ConversationManager.shared.conversations.value.values
             guard let currentIndex = list.firstIndex(where: { $0.id == conversationID }), currentIndex > 0 else { return }
             let previousID = list[currentIndex - 1].id
-            mainVC.sidebar.chatSelection = previousID
+            ChatSelection.shared.select(previousID)
             mainVC.chatView.use(conversation: previousID) {
                 mainVC.chatView.focusEditor()
             }
@@ -260,7 +260,7 @@ extension AppDelegate {
             let list = ConversationManager.shared.conversations.value.values
             guard let currentIndex = list.firstIndex(where: { $0.id == conversationID }), currentIndex < list.count - 1 else { return }
             let nextID = list[currentIndex + 1].id
-            mainVC.sidebar.chatSelection = nextID
+            ChatSelection.shared.select(nextID)
             mainVC.chatView.use(conversation: nextID) {
                 mainVC.chatView.focusEditor()
             }

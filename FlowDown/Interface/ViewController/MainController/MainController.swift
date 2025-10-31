@@ -77,7 +77,8 @@ class MainController: UIViewController {
         $0.translatesAutoresizingMaskIntoConstraints = false
     }
 
-    var bootMessages: [String] = []
+    var bootAlertMessageQueue: [String] = []
+    var cancellables: Set<AnyCancellable> = []
 
     init() {
         #if targetEnvironment(macCatalyst)

@@ -10,8 +10,13 @@ import UIKit
 extension SearchContentController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        highlightedIndex = indexPath
+        focusedIndexPath = indexPath
         selectResultAndDismiss(at: indexPath)
+    }
+
+    func tableView(_: UITableView, didUpdateFocusIn context: UITableViewFocusUpdateContext, with _: UIFocusAnimationCoordinator) {
+        let currentFocus = context.nextFocusedIndexPath ?? context.previouslyFocusedIndexPath
+        focusedIndexPath = currentFocus
     }
 }
 
@@ -32,7 +37,7 @@ extension SearchContentController: UITableViewDataSource {
         }
         let result = searchResults[indexPath.row]
         let searchTerm = searchBar.text ?? ""
-        let isHighlighted = highlightedIndex == indexPath
+        let isHighlighted = focusedIndexPath == indexPath
         cell.configure(with: result, searchTerm: searchTerm, isHighlighted: isHighlighted)
         return cell
     }
