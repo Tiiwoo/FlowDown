@@ -189,8 +189,8 @@
 		50B5145B2D2305890092284C /* FlowDown */ = {
 			isa = PBXGroup;
 			children = (
-				3C2409992E97803B0055F162 /* Configuration */,
 				50B5146A2D2305F20092284C /* main.swift */,
+				3C2409992E97803B0055F162 /* Configuration */,
 				50B514652D2305C00092284C /* Application */,
 				5050EB812D478A5800634B81 /* Backend */,
 				5089F4192EA73B8E00258D85 /* DerivedSources */,
