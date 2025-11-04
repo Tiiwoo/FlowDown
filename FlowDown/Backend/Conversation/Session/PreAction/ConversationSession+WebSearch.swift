@@ -271,7 +271,7 @@ extension ConversationSessionManager.Session {
         do {
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 128,
+                maxCompletionTokens: 256,
                 input: messages
             )
 

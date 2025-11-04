@@ -76,7 +76,7 @@ extension ConversationSessionManager.Session {
             guard let model = models.auxiliary else { throw NSError() }
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 128,
+                maxCompletionTokens: 256,
                 input: messages
             )
 
