@@ -76,9 +76,8 @@ extension ConversationSessionManager.Session {
             guard let model = models.auxiliary else { throw NSError() }
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 8,
-                input: messages,
-                additionalBodyField: [:]
+                maxCompletionTokens: 128,
+                input: messages
             )
 
             if let icon = extractIconFromXML(ans.content) {

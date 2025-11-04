@@ -76,9 +76,8 @@ extension ConversationSessionManager.Session {
             guard let model = models.auxiliary else { throw NSError() }
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 64,
-                input: messages,
-                additionalBodyField: [:]
+                maxCompletionTokens: 128,
+                input: messages
             )
 
             let content = ans.content.trimmingCharacters(in: .whitespacesAndNewlines)

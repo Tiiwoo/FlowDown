@@ -340,12 +340,11 @@ extension ModelManager {
         with modelID: ModelIdentifier,
         maxCompletionTokens: Int? = nil,
         input: [ChatRequestBody.Message],
-        tools: [ChatRequestBody.Tool]? = nil,
-        additionalBodyField: [String: Any] = [:]
+        tools: [ChatRequestBody.Tool]? = nil
     ) async throws -> InferenceMessage {
         let client = try chatService(
             for: modelID,
-            additionalBodyField: additionalBodyField
+            additionalBodyField: modelBodyFields(for: modelID)
         )
         let requestTemperature: Double = switch temperatureStrategy(for: modelID) {
         case let .send(value):
@@ -381,12 +380,11 @@ extension ModelManager {
         with modelID: ModelIdentifier,
         maxCompletionTokens: Int? = nil,
         input: [ChatRequestBody.Message],
-        tools: [ChatRequestBody.Tool]? = nil,
-        additionalBodyField: [String: Any] = [:]
+        tools: [ChatRequestBody.Tool]? = nil
     ) async throws -> AsyncThrowingStream<InferenceMessage, any Error> {
         let client = try chatService(
             for: modelID,
-            additionalBodyField: additionalBodyField
+            additionalBodyField: modelBodyFields(for: modelID)
         )
         client.collectedErrors = nil
         let requestTemperature: Double = switch temperatureStrategy(for: modelID) {

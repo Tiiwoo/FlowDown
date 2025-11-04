@@ -77,9 +77,7 @@ extension ConversationSession {
         let message = appendNewMessage(role: .assistant)
         for try await resp in try await ModelManager.shared.streamingInfer(
             with: decision,
-            maxCompletionTokens: 2048,
-            input: messages,
-            additionalBodyField: [:]
+            input: messages
         ) {
             await requestUpdate(view: currentMessageListView)
             startThinking(for: message.objectId)

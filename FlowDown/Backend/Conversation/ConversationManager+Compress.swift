@@ -95,8 +95,7 @@ extension ConversationManager {
             do {
                 let stream = try await ModelManager.shared.streamingInfer(
                     with: model,
-                    input: messageBody,
-                    additionalBodyField: [:]
+                    input: messageBody
                 )
                 let mess = sess.appendNewMessage(role: .assistant)
                 for try await resp in stream where !resp.content.isEmpty {

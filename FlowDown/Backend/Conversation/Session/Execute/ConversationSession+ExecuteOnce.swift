@@ -25,14 +25,10 @@ extension ConversationSession {
 
         let message = appendNewMessage(role: .assistant)
 
-        // For normal chat, use model's configured bodyFields (includes thinking mode, etc.)
-        let additionalBodyField = ModelManager.shared.modelBodyFields(for: modelID)
-
         let stream = try await ModelManager.shared.streamingInfer(
             with: modelID,
             input: requestMessages,
-            tools: tools,
-            additionalBodyField: additionalBodyField
+            tools: tools
         )
         defer { self.stopThinking(for: message.objectId) }
 

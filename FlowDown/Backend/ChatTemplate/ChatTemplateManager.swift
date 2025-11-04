@@ -187,11 +187,7 @@ class ChatTemplateManager {
             .user(content: .text(prompt)),
         ]
 
-        let response = try await ModelManager.shared.infer(
-            with: model,
-            maxCompletionTokens: 2048,
-            input: messages
-        )
+        let response = try await ModelManager.shared.infer(with: model, input: messages)
 
         let parsedResponse = try parseTemplateResponse(response.content)
         return template.with {
@@ -244,12 +240,7 @@ class ChatTemplateManager {
             .user(content: .text(xmlString)),
         ]
 
-        let response = try await ModelManager.shared.infer(
-            with: model,
-            maxCompletionTokens: 2048,
-            input: messages,
-            additionalBodyField: [:]
-        )
+        let response = try await ModelManager.shared.infer(with: model, input: messages)
 
         return try parseTemplateResponse(response.content)
     }

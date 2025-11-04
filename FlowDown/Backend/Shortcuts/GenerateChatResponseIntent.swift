@@ -59,8 +59,7 @@ struct GenerateChatResponseIntent: AppIntent {
 
         let inference = try await ModelManager.shared.infer(
             with: modelIdentifier,
-            input: requestMessages,
-            additionalBodyField: context.bodyFields
+            input: requestMessages
         )
 
         var response = inference.content.trimmingCharacters(in: .whitespacesAndNewlines)
