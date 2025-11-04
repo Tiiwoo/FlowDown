@@ -339,13 +339,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Additional Body Fields (Optional)"
+            "value" : "Additional Body Fields"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "额外请求体字段（可选）"
+            "value" : "额外请求体字段"
           }
         }
       }
@@ -355,13 +355,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Additional Header (Optional)"
+            "value" : "Additional Header"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "额外报头（可选）"
+            "value" : "额外报头"
           }
         }
       }
@@ -753,6 +753,12 @@
     },
     "Another key already exists, which usually causes errors. You can choose to replace it." : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Another key already exists, which usually causes errors. You can choose to replace it."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1064,6 +1070,9 @@
           }
         }
       }
+    },
+    "Ask Model" : {
+
     },
     "Audio" : {
       "localizations" : {
@@ -1721,6 +1730,9 @@
           }
         }
       }
+    },
+    "Cloud" : {
+
     },
     "Cloud Model" : {
       "localizations" : {
@@ -3566,6 +3578,12 @@
     },
     "Duplicated Content" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Duplicated Content"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5246,6 +5264,91 @@
         }
       }
     },
+    "FlowDownModelEntityType" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型"
+          }
+        }
+      }
+    },
+    "FlowDownModelSourceApple" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Intelligence"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Intelligence"
+          }
+        }
+      }
+    },
+    "FlowDownModelSourceCloud" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cloud"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "云端"
+          }
+        }
+      }
+    },
+    "FlowDownModelSourceLocal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "本地"
+          }
+        }
+      }
+    },
+    "FlowDownQuickReplyShortcutTitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ask FlowDown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "询问 FlowDown"
+          }
+        }
+      }
+    },
     "Font Size" : {
       "localizations" : {
         "en" : {
@@ -6583,6 +6686,9 @@
         }
       }
     },
+    "Local" : {
+
+    },
     "Local Area Network" : {
       "localizations" : {
         "en" : {
@@ -7166,6 +7272,22 @@
         }
       }
     },
+    "Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Message"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "消息"
+          }
+        }
+      }
+    },
     "Metadata" : {
       "localizations" : {
         "en" : {
@@ -7475,6 +7597,23 @@
         }
       }
     },
+    "Model replied: %@" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model replied: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型已回复：%@"
+          }
+        }
+      }
+    },
     "Model Selector" : {
       "localizations" : {
         "en" : {
@@ -7645,13 +7784,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Networking"
+            "value" : "Networking (Optional)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "网络"
+            "value" : "网络（可选）"
           }
         }
       }
@@ -8941,6 +9080,22 @@
         }
       }
     },
+    "Quick Reply" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quick Reply"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "快速回复"
+          }
+        }
+      }
+    },
     "Raw Content" : {
       "localizations" : {
         "en" : {
@@ -8975,6 +9130,12 @@
     },
     "Reasoning Budget" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reasoning Budget"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8985,6 +9146,12 @@
     },
     "Reasoning Parameters" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reasoning Parameters"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9190,6 +9357,12 @@
     },
     "Replace" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Replace"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9662,6 +9835,22 @@
         }
       }
     },
+    "Send a message and get the model's response." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send a message and get the model's response."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送消息并获得回复。"
+          }
+        }
+      }
+    },
     "Send us an email." : {
       "localizations" : {
         "en" : {
@@ -9728,6 +9917,12 @@
     },
     "Set Budget to %lld Tokens" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set Budget to %lld Tokens"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10785,6 +10980,22 @@
         }
       }
     },
+    "The model did not return any content." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The model did not return any content."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型未返回任何内容。"
+          }
+        }
+      }
+    },
     "The model is used for auxiliary tasks such as generating conversation titles and web search keywords." : {
       "localizations" : {
         "en" : {
@@ -11254,13 +11465,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "This value will be added to the request body as additional fields."
+            "value" : "Configure inference-specific body fields here. The JSON key-value pairs you enter are merged into every request."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "此处的数据将会在请求额外添加到请求报文中，并覆盖已有的任何同名字段。"
+            "value" : "在这里配置推理所需的额外请求体字段，填写的 JSON 键值会随每次请求发送。"
           }
         }
       }
@@ -11828,6 +12039,22 @@
         }
       }
     },
+    "Unable to find the selected model." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to find the selected model."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法找到所选模型。"
+          }
+        }
+      }
+    },
     "Unable to generate icon" : {
       "localizations" : {
         "en" : {
@@ -11942,6 +12169,12 @@
     },
     "Unavailable - Multiple Reasoning Keys" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable - Multiple Reasoning Keys"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11952,6 +12185,12 @@
     },
     "Unavailable - No Reasoning Key" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unavailable - No Reasoning Key"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12362,6 +12601,12 @@
     },
     "Use %@ Key" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use %@ Key"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13202,6 +13447,22 @@
         }
       }
     },
+    "What do you want to ask?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What do you want to ask?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你想要问什么？"
+          }
+        }
+      }
+    },
     "When enabled, large content pasted into the editor will be attached as a file. You can tap on the file to edit it." : {
       "localizations" : {
         "en" : {
@@ -13247,6 +13508,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关闭同步后将不再共享新更改。现有数据保持不变。重新开启同步会先获取最新状态再继续。"
+          }
+        }
+      }
+    },
+    "Which model should answer?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which model should answer?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "应该由哪个模型来回答？"
           }
         }
       }
