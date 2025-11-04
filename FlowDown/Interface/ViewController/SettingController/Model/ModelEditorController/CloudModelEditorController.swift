@@ -261,6 +261,7 @@ class CloudModelEditorController: StackScrollController {
         bodyFieldsEditorView.configure(value: hasBodyFields ? String(localized: "Configured") : String(localized: "N/A"))
 
         stackView.addArrangedSubviewWithMargin(bodyFieldsEditorView)
+        stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
