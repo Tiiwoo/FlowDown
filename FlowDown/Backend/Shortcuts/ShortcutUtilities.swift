@@ -53,9 +53,12 @@ enum ShortcutUtilities {
             throw ShortcutUtilitiesError.unableToCreateURL
         }
 
-        let launched = await UIApplication.shared.open(url)
-
-        guard launched else { throw ShortcutUtilitiesError.failedToLaunchApplication }
+        let launched = await withCheckedContinuation { cont in
+            Task { @MainActor in
+                let launched = await UIApplication.shared.open(url)
+                cont.resume(returning: launched)
+            }
+        }
 
         if trimmedMessage.isEmpty {
             return String(localized: "FlowDown launched to start a new conversation.")
