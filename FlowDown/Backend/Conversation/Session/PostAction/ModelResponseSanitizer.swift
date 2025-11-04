@@ -6,6 +6,9 @@ enum ModelResponseSanitizer {
             "(?is)<think>.*?</think>",
             "(?is)<thinking>.*?</thinking>",
             "(?is)<reasoning>.*?</reasoning>",
+            "(?is)<think>.*",
+            "(?is)<thinking>.*",
+            "(?is)<reasoning>.*",
         ]
 
         return rawPatterns.compactMap { pattern in
