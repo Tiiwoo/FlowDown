@@ -13459,18 +13459,18 @@
         }
       }
     },
-    "Unable to construct FlowDown URL." : {
+    "Unable to construct URL." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Unable to construct FlowDown URL."
+            "value" : "Unable to construct URL."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法构建 FlowDown URL。"
+            "value" : "无法构建资源链接。"
           }
         }
       }
