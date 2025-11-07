@@ -1516,7 +1516,20 @@
       }
     },
     "Browse recent conversations" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browse recent conversations"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "浏览最近的对话"
+          }
+        }
+      }
     },
     "Browse, search, and manage stored memories." : {
       "localizations" : {
@@ -2031,10 +2044,36 @@
       }
     },
     "Classify the provided content using the candidate list" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classify the provided content using the candidate list"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用候选列表对提供的内容进行分类"
+          }
+        }
+      }
     },
     "Classify the provided image using the candidate list" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Classify the provided image using the candidate list"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用候选列表对提供的图像进行分类"
+          }
+        }
+      }
     },
     "Clean Cache" : {
       "localizations" : {
@@ -2967,10 +3006,36 @@
       }
     },
     "Create a blank conversation link" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a blank conversation link"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建空白对话链接"
+          }
+        }
+      }
     },
     "Create a conversation link with a preset message" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create a conversation link with a preset message"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "创建带预设消息的对话链接"
+          }
+        }
+      }
     },
     "Create a duplicate of this template for further editing." : {
       "localizations" : {
@@ -4593,7 +4658,20 @@
       }
     },
     "Enable Memory Tools" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Memory Tools"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用记忆工具"
+          }
+        }
+      }
     },
     "Enable this to automatically collapse reasoning content after the reasoning is completed. This is useful for keeping the chat interface clean and focused on the final response." : {
       "localizations" : {
@@ -5701,25 +5779,21 @@
         }
       }
     },
-    "Fetch latest conversation details" : {
-      "extractionState" : "stale",
+    "Fetch the latest conversation details" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Fetch latest conversation details"
+            "value" : "Fetch the latest conversation details"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "获取最新对话详情"
+            "value" : "获取最新的对话详情"
           }
         }
       }
-    },
-    "Fetch the latest conversation details" : {
-
     },
     "Fetch Updates Now" : {
       "localizations" : {
@@ -6014,10 +6088,36 @@
       }
     },
     "Generate Model Response" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate Model Response"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成模型回复"
+          }
+        }
+      }
     },
     "Generate Model Response with Image" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generate Model Response with Image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成带图像的模型回复"
+          }
+        }
+      }
     },
     "Generate New Icon" : {
       "localizations" : {
@@ -6393,7 +6493,20 @@
       }
     },
     "If you are unsure, use '%@' for VALUE." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "If you are unsure, use '%@' for VALUE."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果不确定，请将 VALUE 设置为“%@”。"
+          }
+        }
+      }
     },
     "If you encounter any issues, you can try to reset the app. This will remove all content and reset the entire database." : {
       "localizations" : {
@@ -7374,10 +7487,36 @@
       }
     },
     "List the key points from the text" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List the key points from the text"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "列出文本中的关键要点"
+          }
+        }
+      }
     },
     "List the key points using the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "List the key points using the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型列出关键要点"
+          }
+        }
+      }
     },
     "Local" : {
       "localizations" : {
@@ -7654,10 +7793,36 @@
       }
     },
     "Make the text concise using the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make the text concise using the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型使文本更简洁"
+          }
+        }
+      }
     },
     "Make the text more concise" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make the text more concise"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "让文本更加简洁"
+          }
+        }
+      }
     },
     "Manage AI memory tools and stored conversation memories." : {
       "localizations" : {
@@ -10031,23 +10196,6 @@
         }
       }
     },
-    "Quick Reply" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quick Reply"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快速回复"
-          }
-        }
-      }
-    },
     "Quick Reply %@" : {
       "localizations" : {
         "en" : {
@@ -10060,23 +10208,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快速回复 %@"
-          }
-        }
-      }
-    },
-    "Quick Reply with Image" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Quick Reply with Image"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "快速回复（带图像）"
           }
         }
       }
@@ -10469,21 +10600,17 @@
       }
     },
     "Respond only with XML formatted as <classification><label>VALUE</label></classification>, replacing VALUE with a label from the candidate list." : {
-
-    },
-    "Respond with exactly one candidate string from the list above. If you are unsure, respond with '%@'." : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Respond with exactly one candidate string from the list above. If you are unsure, respond with '%@'."
+            "value" : "Respond only with XML formatted as <classification><label>VALUE</label></classification>, replacing VALUE with a label from the candidate list."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "从上述列表中仅返回一个候选项字符串。如果不确定，请返回“%@”。"
+            "value" : "仅返回 XML 格式 <classification><label>VALUE</label></classification>，并将 VALUE 替换为候选列表中的标签。"
           }
         }
       }
@@ -10665,16 +10792,68 @@
       }
     },
     "Rewrite the text in a friendly tone using the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rewrite the text in a friendly tone using the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型以友好语气改写文本"
+          }
+        }
+      }
     },
     "Rewrite the text professionally using the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rewrite the text professionally using the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型以专业语气改写文本"
+          }
+        }
+      }
     },
     "Rewrite the text with a friendly tone" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rewrite the text with a friendly tone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用友好语气改写文本"
+          }
+        }
+      }
     },
     "Rewrite the text with a professional tone" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rewrite the text with a professional tone"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "以专业语气改写文本"
+          }
+        }
+      }
     },
     "Rewriting Message" : {
       "localizations" : {
@@ -10917,7 +11096,20 @@
       }
     },
     "Search saved conversations by keyword" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search saved conversations by keyword"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按关键字搜索已保存的对话"
+          }
+        }
+      }
     },
     "Search saved conversations by keyword and return formatted summaries." : {
       "localizations" : {
@@ -11032,7 +11224,20 @@
       }
     },
     "Select exactly one label from the candidate list." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select exactly one label from the candidate list."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅从候选列表中选择一个标签。"
+          }
+        }
+      }
     },
     "Select from Existing" : {
       "localizations" : {
@@ -11099,16 +11304,68 @@
       }
     },
     "Send your message with the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send your message with the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型发送你的消息"
+          }
+        }
+      }
     },
     "Send your message with the default model and optional image" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send your message with the default model and optional image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型并可选图像发送你的消息"
+          }
+        }
+      }
     },
     "Send your message with the selected model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send your message with the selected model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用所选模型发送你的消息"
+          }
+        }
+      }
     },
     "Send your message with the selected model and optional image" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send your message with the selected model and optional image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用所选模型并可选图像发送你的消息"
+          }
+        }
+      }
     },
     "Sending Hello..." : {
       "localizations" : {
@@ -11207,7 +11464,20 @@
       }
     },
     "Set the default conversation model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Set the default conversation model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置默认对话模型"
+          }
+        }
+      }
     },
     "Set the strategy for handling runtime resource cache. Allowing the use of cache can speed up inference and save energy, but may cause the software to close unexpectedly." : {
       "localizations" : {
@@ -11837,10 +12107,36 @@
       }
     },
     "Summarize the provided text" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summarize the provided text"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "总结提供的文本"
+          }
+        }
+      }
     },
     "Summarize the provided text with the default model" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Summarize the provided text with the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型总结提供的文本"
+          }
+        }
+      }
     },
     "Support" : {
       "localizations" : {
