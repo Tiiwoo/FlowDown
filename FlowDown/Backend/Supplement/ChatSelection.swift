@@ -51,7 +51,8 @@ class ChatSelection {
 
     private init() {
         selection = subject
-            .ensureMainThread()
+            // delay some run loop for ui to handle events
+            .delay(for: .milliseconds(1), scheduler: DispatchQueue.main)
             .eraseToAnyPublisher()
 
         let conversations = sdb.conversationList()
