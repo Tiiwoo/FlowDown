@@ -27,13 +27,13 @@ enum MemoryProactiveProvisionScope: String, CaseIterable, Codable {
         case .pastWeek:
             "calendar"
         case .pastMonth:
-            "calendar.circle"
+            "calendar"
         case .pastYear:
             "calendar.badge.clock"
         case .recent15:
             "list.number"
         case .recent30:
-            "list.bullet.rectangle"
+            "list.number"
         case .all:
             "tray.full"
         }
