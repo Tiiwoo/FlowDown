@@ -43,7 +43,7 @@ enum InferenceIntentHandler {
             throw ShortcutError.emptyMessage
         }
 
-        let modelIdentifier = try await resolveModelIdentifier(model: model)
+        let modelIdentifier = try resolveModelIdentifier(model: model)
         let modelCapabilities = await MainActor.run {
             ModelManager.shared.modelCapabilities(identifier: modelIdentifier)
         }

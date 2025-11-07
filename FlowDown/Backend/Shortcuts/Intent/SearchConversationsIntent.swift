@@ -163,15 +163,6 @@ enum SearchConversationsIntentHelper {
         let result = ([header] + body).joined(separator: "\n\n")
         return result
     }
-
-    private static func dateRange(from components: DateComponents?) -> (start: Date, end: Date)? {
-        guard let components else { return nil }
-        let calendar = Calendar.current
-        guard let targetDate = calendar.date(from: components) else { return nil }
-        let start = calendar.startOfDay(for: targetDate)
-        guard let end = calendar.date(byAdding: .day, value: 1, to: start) else { return nil }
-        return (start, end)
-    }
 }
 
 private extension String {
