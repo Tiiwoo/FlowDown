@@ -22,10 +22,6 @@ jobs:
             scheme: FlowDown-Catalyst
             destination: "generic/platform=macOS,variant=Mac Catalyst"
             archive_path: BuildArtifacts/macos.xcarchive
-    env:
-      CODE_SIGNING_ALLOWED: "NO"
-      CODE_SIGNING_REQUIRED: "NO"
-      CODE_SIGN_IDENTITY: ""
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,10 +31,15 @@ jobs:
 
       - name: Resolve Packages (${{ matrix.target }})
         run: |
+          set -o pipefail
           xcodebuild \
             -workspace FlowDown.xcworkspace \
             -scheme "${{ matrix.scheme }}" \
-            -resolvePackageDependencies
+            -resolvePackageDependencies \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            | xcbeautify --is-ci --disable-colored-output --disable-logging
 
       - name: Archive (${{ matrix.target }})
         run: |
@@ -51,7 +52,11 @@ jobs:
             -destination '${{ matrix.destination }}' \
             archive \
             -archivePath "${{ matrix.archive_path }}" \
-            -resultBundlePath "BuildArtifacts/${{ matrix.target }}.xcresult"
+            -resultBundlePath "BuildArtifacts/${{ matrix.target }}.xcresult" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            | xcbeautify --is-ci --disable-colored-output --disable-logging
 
       - name: Compress Archive (${{ matrix.target }})
         run: |
