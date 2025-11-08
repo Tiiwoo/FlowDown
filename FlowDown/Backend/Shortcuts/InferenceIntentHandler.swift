@@ -7,7 +7,6 @@
 
 import AppIntents
 import ChatClientKit
-import ConfigurableKit
 import Foundation
 import RichEditor
 import Storage
@@ -37,8 +36,6 @@ enum InferenceIntentHandler {
         image: IntentFile?,
         options: Options
     ) async throws -> String {
-        bootstrapEnvironment()
-
         let trimmedMessage = message.trimmingCharacters(in: .whitespacesAndNewlines)
         let hasImage = image != nil
 
@@ -324,14 +321,6 @@ enum InferenceIntentHandler {
                 Logger.model.errorFile("Memory tool \(tool.functionName) failed: \(error.localizedDescription)")
             }
         }
-    }
-
-    private static let environmentBootstrap: Void = {
-        ConfigurableKit.storage = UserDefaultKeyValueStorage(suite: .standard, prefix: "in-house.")
-    }()
-
-    private static func bootstrapEnvironment() {
-        _ = environmentBootstrap
     }
 }
 
