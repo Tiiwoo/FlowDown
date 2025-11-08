@@ -16,16 +16,16 @@ struct ClassifyContentIntent: AppIntent {
     @Parameter(title: "Content", requestValueDialog: "What content should be classified?")
     var content: String
 
-    @Parameter(title: "Candidate \(String("A"))", default: "")
+    @Parameter(title: "Candidate A", default: "")
     var candidateA: String
 
-    @Parameter(title: "Candidate \(String("B"))", default: "")
+    @Parameter(title: "Candidate B", default: "")
     var candidateB: String
 
-    @Parameter(title: "Candidate \(String("C"))", default: "")
+    @Parameter(title: "Candidate C", default: "")
     var candidateC: String
 
-    @Parameter(title: "Candidate \(String("D"))", default: "")
+    @Parameter(title: "Candidate D", default: "")
     var candidateD: String
 
     private func makeManualCandidates() -> [String] {
@@ -104,16 +104,16 @@ struct ClassifyContentWithImageIntent: AppIntent {
     @Parameter(title: "Image", supportedContentTypes: [.image], requestValueDialog: "Select an image to accompany the request.")
     var image: IntentFile
 
-    @Parameter(title: "Candidate \(String("A"))", default: "")
+    @Parameter(title: "Candidate A", default: "")
     var candidateA: String
 
-    @Parameter(title: "Candidate \(String("B"))", default: "")
+    @Parameter(title: "Candidate B", default: "")
     var candidateB: String
 
-    @Parameter(title: "Candidate \(String("C"))", default: "")
+    @Parameter(title: "Candidate C", default: "")
     var candidateC: String
 
-    @Parameter(title: "Candidate \(String("D"))", default: "")
+    @Parameter(title: "Candidate D", default: "")
     var candidateD: String
 
     private func makeManualCandidates() -> [String] {

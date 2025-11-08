@@ -1691,18 +1691,66 @@
         }
       }
     },
-    "Candidate %@" : {
+    "Candidate A" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Candidate %@"
+            "value" : "Candidate A"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "候选项 %@"
+            "value" : "选项 A"
+          }
+        }
+      }
+    },
+    "Candidate B" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Candidate B"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选项 B"
+          }
+        }
+      }
+    },
+    "Candidate C" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Candidate C"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选项 C"
+          }
+        }
+      }
+    },
+    "Candidate D" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Candidate D"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选项 D"
           }
         }
       }
