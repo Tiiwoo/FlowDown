@@ -9184,6 +9184,22 @@
         }
       }
     },
+    "Open FlowDown" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open FlowDown"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 FlowDown"
+          }
+        }
+      }
+    },
     "Open in Default Browser" : {
       "localizations" : {
         "en" : {
