@@ -13,6 +13,10 @@ FlowDown is a native AI chat client for Apple platforms, designed for speed, pri
 
 [![App Store Icon](./Resources/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg)](https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198)
 
+**About Pricing Update**
+
+We are planning to make FlowDown free next year. As more developers join the project and core features mature, maintenance needs decrease, making it possible to provide the app at a lower cost (covering only essential expenses like domain, hosting, documentation site, and developer membership fees). Before transitioning to free, FlowDown will gradually reduce prices in phases. All conversations and chat features will remain free; subscription fees will only apply to new personalization options.
+
 You can also join the public beta on [TestFlight](https://testflight.apple.com/join/StpMeybv) to try out new features.
 
 To get you started, FlowDown includes complimentary access to a selection of models. For more power and control, you can easily connect to your own self-hosted services or any OpenAI-compatible provider. Learn more in our [documentation](https://apps.qaq.wiki/docs/flowdown/).
@@ -26,10 +30,11 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback
 - **Universal Compatibility**: Connect to any OpenAI-compatible API, including self-hosted models, giving you complete freedom and control.
 - **Rich User Experience**: Enjoy full Markdown rendering, syntax highlighting, and a buttery-smooth interface that makes interacting with AI a pleasure.
 - **Powerful Workflows**:
-    - **Vision Support**: Interact with vision-capable models.
-    - **File Attachments**: Add files and documents to your conversations.
-    - **Web Search**: Grant the AI access to real-time information from the web.
-    - **Reusable Templates**: Save and quickly reuse your favorite prompts.
+  - **Vision Support**: Interact with vision-capable models.
+  - **File Attachments**: Add files and documents to your conversations.
+  - **Web Search**: Grant the AI access to real-time information from the web.
+  - **Reusable Templates**: Save and quickly reuse your favorite prompts.
+  - **Shortcuts Integration**: Deep integration with system Shortcuts for automating your workflows.
 - **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
 - **Open Source**: FlowDown is fully open source under the AGPL-3.0 license. We invite you to inspect the code and verify our commitment to privacy and quality.
 
