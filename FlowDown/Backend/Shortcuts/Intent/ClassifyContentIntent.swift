@@ -16,19 +16,45 @@ struct ClassifyContentIntent: AppIntent {
     @Parameter(title: "Content", requestValueDialog: "What content should be classified?")
     var content: String
 
-    @Parameter(title: "Candidates", default: [])
-    var candidates: [String]
+    @Parameter(title: "Candidate \(String("A"))", default: "")
+    var candidateA: String
+
+    @Parameter(title: "Candidate \(String("B"))", default: "")
+    var candidateB: String
+
+    @Parameter(title: "Candidate \(String("C"))", default: "")
+    var candidateC: String
+
+    @Parameter(title: "Candidate \(String("D"))", default: "")
+    var candidateD: String
+
+    private func makeManualCandidates() -> [String] {
+        [
+            candidateA,
+            candidateB,
+            candidateC,
+            candidateD,
+        ]
+        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        .filter { !$0.isEmpty }
+    }
 
     static var parameterSummary: some ParameterSummary {
         When(\.$model, .hasAnyValue) {
             Summary("Use the selected model to classify your \(\.$content)") {
                 \.$model
-                \.$candidates
+                \.$candidateA
+                \.$candidateB
+                \.$candidateC
+                \.$candidateD
             }
         } otherwise: {
             Summary("Use the default model to classify your \(\.$content)") {
                 \.$model
-                \.$candidates
+                \.$candidateA
+                \.$candidateB
+                \.$candidateC
+                \.$candidateD
             }
         }
     }
@@ -40,7 +66,7 @@ struct ClassifyContentIntent: AppIntent {
         }
 
         let resolvedCandidates = try CandidateInputResolver.resolveCandidates(
-            manualCandidates: candidates
+            manualCandidates: makeManualCandidates()
         )
 
         let request = try ClassificationPromptBuilder.make(
@@ -78,28 +104,54 @@ struct ClassifyContentWithImageIntent: AppIntent {
     @Parameter(title: "Image", supportedContentTypes: [.image], requestValueDialog: "Select an image to accompany the request.")
     var image: IntentFile
 
-    @Parameter(title: "Candidates", default: [])
-    var candidates: [String]
+    @Parameter(title: "Candidate \(String("A"))", default: "")
+    var candidateA: String
+
+    @Parameter(title: "Candidate \(String("B"))", default: "")
+    var candidateB: String
+
+    @Parameter(title: "Candidate \(String("C"))", default: "")
+    var candidateC: String
+
+    @Parameter(title: "Candidate \(String("D"))", default: "")
+    var candidateD: String
+
+    private func makeManualCandidates() -> [String] {
+        [
+            candidateA,
+            candidateB,
+            candidateC,
+            candidateD,
+        ]
+        .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        .filter { !$0.isEmpty }
+    }
 
     static var parameterSummary: some ParameterSummary {
         When(\.$model, .hasAnyValue) {
             Summary("Use the selected model to classify the image") {
                 \.$model
                 \.$image
-                \.$candidates
+                \.$candidateA
+                \.$candidateB
+                \.$candidateC
+                \.$candidateD
             }
         } otherwise: {
             Summary("Use the default model to classify the image") {
                 \.$model
                 \.$image
-                \.$candidates
+                \.$candidateA
+                \.$candidateB
+                \.$candidateC
+                \.$candidateD
             }
         }
     }
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog {
         let resolvedCandidates = try CandidateInputResolver.resolveCandidates(
-            manualCandidates: candidates
+            manualCandidates: makeManualCandidates()
         )
 
         let request = try ClassificationPromptBuilder.make(
