@@ -97,24 +97,44 @@ enum InferenceIntentHandler {
         requestMessages.append(userMessage)
 
         let toolDefinitions = memoryWritingTools.isEmpty ? nil : memoryWritingTools.map(\.definition)
-        let inference = try await ModelManager.shared.infer(
+        let inference = try await ModelManager.shared.streamingInfer(
             with: modelIdentifier,
             input: requestMessages,
             tools: toolDefinitions
         )
 
-        let trimmedContent = inference.content.trimmingCharacters(in: .whitespacesAndNewlines)
-        let trimmedReasoning = inference.reasoningContent.trimmingCharacters(in: .whitespacesAndNewlines)
-        let response = trimmedContent.isEmpty ? trimmedReasoning : trimmedContent
+        var content = ""
+        var reasoningContent = ""
+        var toolRequests: [ToolCallRequest] = []
+        for try await chunk in inference {
+            content = chunk.content
+            reasoningContent = chunk.reasoningContent
+            toolRequests.append(contentsOf: chunk.toolCallRequests)
+        }
 
-        guard !response.isEmpty else { throw ShortcutError.emptyResponse }
+        let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmedReasoning = reasoningContent.trimmingCharacters(in: .whitespacesAndNewlines)
+        var response = trimmedContent.isEmpty ? trimmedReasoning : trimmedContent
+
+        #if DEBUG
+            print("Inference response: \(response)")
+            print("Tool requests: \(toolRequests)")
+        #endif
+
+        if response.isEmpty {
+            if toolRequests.isEmpty {
+                throw ShortcutError.emptyResponse
+            } else {
+                response = String(localized: "Executed \(toolRequests.count) tool calls")
+            }
+        }
 
         if options.enableMemory,
            modelCapabilities.contains(.tool),
            !memoryWritingTools.isEmpty,
-           !inference.toolCallRequests.isEmpty
+           !toolRequests.isEmpty
         {
-            await executeMemoryWritingToolCalls(inference.toolCallRequests, using: memoryWritingTools)
+            await executeMemoryWritingToolCalls(toolRequests, using: memoryWritingTools)
         }
 
         if options.saveToConversation {

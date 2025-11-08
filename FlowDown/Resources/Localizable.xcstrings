@@ -4914,6 +4914,22 @@
         }
       }
     },
+    "Executed %lld tool calls" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Executed %lld tool calls"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行了 %lld 个工具"
+          }
+        }
+      }
+    },
     "Export all memories as JSON file." : {
       "localizations" : {
         "en" : {
