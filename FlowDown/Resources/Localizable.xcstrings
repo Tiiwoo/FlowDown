@@ -2267,6 +2267,22 @@
         }
       }
     },
+    "Collected %lld attachments from tool %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Collected %1$lld attachments from tool %2$@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已从工具 %2$@ 中获取了 %1$lld 个附件。"
+          }
+        }
+      }
+    },
     "Comment" : {
       "localizations" : {
         "en" : {
@@ -4942,22 +4958,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "执行 MCP 工具"
-          }
-        }
-      }
-    },
-    "Execute tool call timed out" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Execute tool call timed out"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "执行工具调用超时"
           }
         }
       }
@@ -13581,6 +13581,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "工具调用失败：无法展示授权请求。"
+          }
+        }
+      }
+    },
+    "Tool Provided Image" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具提供的图片"
           }
         }
       }

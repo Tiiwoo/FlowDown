@@ -109,6 +109,8 @@ extension ConversationSession {
 
         for request in pendingToolCalls {
             guard let tool = await ModelToolsManager.shared.findTool(for: request) else {
+                Logger.chatService.errorFile("unable to find tool for request: \(request)")
+                await Logger.chatService.infoFile("available tools: \(ModelToolsManager.shared.getEnabledToolsIncludeMCP())")
                 throw NSError(
                     domain: "Tool Error",
                     code: -1,
@@ -167,20 +169,62 @@ extension ConversationSession {
                 await requestUpdate(view: currentMessageListView)
 
                 // 标准工具
-                let callResult = ModelToolsManager.shared.perform(
-                    withTool: tool,
-                    parms: request.args,
-                    anchorTo: currentMessageListView
-                )
+                do {
+                    let result = try await ModelToolsManager.shared.perform(
+                        withTool: tool,
+                        parms: request.args,
+                        anchorTo: currentMessageListView
+                    )
 
-                switch callResult {
-                case let .success(result):
                     toolStatus.state = 1
-                    toolStatus.message = result
+                    toolStatus.message = result.text
                     toolMessage.update(\.toolStatus, to: toolStatus)
                     await requestUpdate(view: currentMessageListView)
-                    requestMessages.append(.tool(content: .text(result), toolCallID: request.id.uuidString))
-                case let .failure(error):
+                    requestMessages.append(.tool(content: .text(result.text), toolCallID: request.id.uuidString))
+
+                    let resultAttachmentsCount = (result.imageAttachments.count + result.audioAttachments.count)
+                    if resultAttachmentsCount > 0 {
+                        // form a user message for holding attachments
+                        let collectorMessage = appendNewMessage(role: .user)
+                        collectorMessage.update(\.document, to: String(localized: "Collected \(resultAttachmentsCount) attachments from tool \(tool.interfaceName)."))
+
+                        var editorObjects: [RichEditorView.Object.Attachment] = []
+
+                        let imageAttachments = result.imageAttachments.map { image in
+                            RichEditorView.Object.Attachment(
+                                type: .image,
+                                name: String(localized: "Tool Provided Image"),
+                                previewImage: image.data,
+                                imageRepresentation: image.data,
+                                textRepresentation: "",
+                                storageSuffix: UUID().uuidString
+                            )
+                        }
+                        editorObjects.append(contentsOf: imageAttachments)
+
+                        // TODO: IMPL
+//                        for audio in result.audioAttachments {
+//                            editorObjects.append(.init(
+//                                type: .audio,
+//                                name: String(localized: "Tool Provided Audio"),
+//                                previewImage: "",
+//                                imageRepresentation: "",
+//                                textRepresentation: "",
+//                                storageSuffix: UUID().uuidString
+//                            ))
+//                        }
+                        addAttachments(editorObjects, to: collectorMessage)
+                        updateAttachments(editorObjects, for: collectorMessage)
+                        await requestUpdate(view: currentMessageListView)
+
+                        // 如果模型支持图片则添加到请求消息中 如果不支持 tool 一般已经返回了需要的 text 信息
+                        let modelCapabilities = ModelManager.shared.modelCapabilities(identifier: modelID)
+                        if modelCapabilities.contains(.visual) {
+                            let message = makeMessageFromAttachments(imageAttachments, isModelSupportsVision: true)
+                            requestMessages.append(contentsOf: message)
+                        }
+                    }
+                } catch {
                     toolStatus.state = 2
                     toolStatus.message = error.localizedDescription
                     toolMessage.update(\.toolStatus, to: toolStatus)

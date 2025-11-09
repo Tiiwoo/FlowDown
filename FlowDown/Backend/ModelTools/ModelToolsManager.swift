@@ -6,9 +6,11 @@
 //
 
 import AlertController
+import AVFoundation
 import ChatClientKit
 import ConfigurableKit
 import Foundation
+import MCP
 import UIKit
 
 class ModelToolsManager {
@@ -43,7 +45,7 @@ class ModelToolsManager {
                 MTWebScraperTool(),
                 MTWebSearchTool(),
 
-//            MTLocationTool(),
+                //            MTLocationTool(),
 
                 MTURLTool(),
 
@@ -131,82 +133,182 @@ class ModelToolsManager {
         }
     }
 
-    func perform(withTool tool: ModelTool, parms: String, anchorTo view: UIView) -> Result<String, Error> {
-        assert(!Thread.isMainThread)
+    struct ToolResultContents: Equatable, Hashable, Codable, Sendable {
+        let text: String
 
-        var ans = String(localized: "Execute tool call timed out")
-        var success = false
-        let sem = DispatchSemaphore(value: 0)
-
-        let execution = {
-            do {
-                ans = try await tool.execute(with: parms, anchorTo: view)
-                success = true
-            } catch {
-                ans = String(localized: "Tool execution failed: \(error.localizedDescription)")
-            }
-            sem.signal()
+        struct Attachment: Equatable, Hashable, Codable, Sendable {
+            let name: String
+            let data: Data
         }
 
+        let imageAttachments: [Attachment]
+        let audioAttachments: [Attachment]
+    }
+
+    func perform(withTool tool: ModelTool, parms: String, anchorTo view: UIView) async throws -> ToolResultContents {
         if Self.skipConfirmationValue {
-            Task.detached(priority: .userInitiated) {
-                await execution()
-            }
-            sem.wait()
+            let ans = try await tool.execute(with: parms, anchorTo: view)
+            return processToolResult(ans)
         } else {
-            DispatchQueue.main.async {
-                let setupContext: (ActionContext) -> Void = { context in
-                    context.addAction(title: "Cancel") {
-                        context.dispose {
-                            ans = String(localized: "Tool execution cancelled by user")
-                            sem.signal()
+            return try await withCheckedThrowingContinuation { continuation in
+                Task { @MainActor in
+                    let setupContext: (ActionContext) -> Void = { context in
+                        context.addAction(title: "Cancel") {
+                            context.dispose {
+                                let error = NSError(
+                                    domain: "ToolCall",
+                                    code: 500,
+                                    userInfo: [
+                                        NSLocalizedDescriptionKey: String(localized: "Tool execution cancelled by user"),
+                                    ]
+                                )
+                                continuation.resume(throwing: error)
+                            }
+                        }
+                        context.addAction(title: "Use Tool", attribute: .accent) {
+                            context.dispose {
+                                Task.detached(priority: .userInitiated) {
+                                    do {
+                                        let ans = try await tool.execute(with: parms, anchorTo: view)
+                                        let result = self.processToolResult(ans)
+                                        continuation.resume(returning: result)
+                                    } catch {
+                                        let error = NSError(
+                                            domain: "ToolCall",
+                                            code: 500,
+                                            userInfo: [
+                                                NSLocalizedDescriptionKey: String(localized: "Tool execution failed: \(error.localizedDescription)"),
+                                            ]
+                                        )
+                                        continuation.resume(throwing: error)
+                                    }
+                                }
+                            }
                         }
                     }
-                    context.addAction(title: "Use Tool", attribute: .accent) {
-                        context.dispose {
-                            Task.detached { await execution() }
-                        }
+
+                    let alert = if let tool = tool as? MCPTool {
+                        AlertViewController(
+                            title: "Execute MCP Tool",
+                            message: "The model wants to execute '\(tool.toolInfo.name)' from \(tool.toolInfo.serverName). This tool can access external resources.\n\nDescription: \(tool.toolInfo.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "No description available")",
+                            setupActions: setupContext
+                        )
+                    } else {
+                        AlertViewController(
+                            title: "Tool Call",
+                            message: "Your model is calling a tool: \(tool.interfaceName)",
+                            setupActions: setupContext
+                        )
                     }
-                }
 
-                let alert = if let tool = tool as? MCPTool {
-                    AlertViewController(
-                        title: "Execute MCP Tool",
-                        message: "The model wants to execute '\(tool.toolInfo.name)' from \(tool.toolInfo.serverName). This tool can access external resources.\n\nDescription: \(tool.toolInfo.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "No description available")",
-                        setupActions: setupContext
-                    )
-                } else {
-                    AlertViewController(
-                        title: "Tool Call",
-                        message: "Your model is calling a tool: \(tool.interfaceName)",
-                        setupActions: setupContext
-                    )
-                }
+                    // Check if view controller already has a presented view controller
+                    guard let parentVC = view.parentViewController else {
+                        let error = NSError(
+                            domain: "ToolCall",
+                            code: 500,
+                            userInfo: [
+                                NSLocalizedDescriptionKey: String(localized: "Tool execution failed: parent view controller not found."),
+                            ]
+                        )
+                        continuation.resume(throwing: error)
+                        return
+                    }
 
-                // Check if view controller already has a presented view controller
-                guard let parentVC = view.parentViewController else {
-                    ans = String(localized: "Tool execution failed: parent view controller not found.")
-                    sem.signal()
-                    return
-                }
+                    guard parentVC.presentedViewController == nil else {
+                        let error = NSError(
+                            domain: "ToolCall",
+                            code: 500,
+                            userInfo: [
+                                NSLocalizedDescriptionKey: String(localized: "Tool execution failed: authorization dialog is already presented."),
+                            ]
+                        )
+                        continuation.resume(throwing: error)
+                        return
+                    }
 
-                guard parentVC.presentedViewController == nil else {
-                    ans = String(localized: "Tool execution failed: authorization dialog is already presented.")
-                    sem.signal()
-                    return
+                    parentVC.present(alert, animated: true)
                 }
-
-                parentVC.present(alert, animated: true)
             }
-            sem.wait()
+        }
+    }
+
+    private func processToolResult(_ ans: String) -> ToolResultContents {
+        if let value = try? [Tool.Content].decodeContents(ans) {
+            var textContent: [String] = []
+            var imageAttachments: [ToolResultContents.Attachment] = []
+//            var audioAttachments: [ToolResultContents.Attachment] = []
+            for content in value {
+                switch content {
+                case let .text(string):
+                    textContent.append(string)
+                case let .image(dataString, mimeType, metadata):
+                    var name = metadata?["name"] as? String ?? ""
+                    if name.isEmpty {
+                        name = String(localized: "Tool Provided Image")
+                        name += " " + mimeType
+                    }
+                    name = name.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if let data = parseDataFromString(dataString), UIImage(data: data) != nil {
+                        imageAttachments.append(.init(
+                            name: name,
+                            data: data
+                        ))
+                    } else {
+                        Logger.model.errorFile("failed to parse image data from string")
+                    }
+                case let .audio(dataString, mimeType):
+                    // TODO: Convert audio to m4a format with compression
+                    _ = dataString
+                    _ = mimeType
+                case let .resource(uri, mimeType, text):
+                    textContent.append("[\(text ?? "Resource") \(mimeType)](\(uri))")
+                }
+            }
+            return .init(
+                text: textContent.joined(separator: "\n"),
+                imageAttachments: imageAttachments,
+                audioAttachments: [] // audioAttachments
+            )
+        } else {
+            return .init(text: ans, imageAttachments: [], audioAttachments: [])
+        }
+    }
+
+    private func parseDataFromString(_ dataString: String) -> Data? {
+        // Handle data URL format: data:image/png;base64,<base64_string>
+        if dataString.hasPrefix("data:") {
+            // Extract the part after ";base64," or after the first comma
+            if let base64Range = dataString.range(of: ";base64,") {
+                let base64String = String(dataString[base64Range.upperBound...])
+                return Data(base64Encoded: base64String)
+            } else if let commaIndex = dataString.firstIndex(of: ",") {
+                // Handle data URL without base64 encoding
+                let afterComma = String(dataString[dataString.index(after: commaIndex)...])
+                // Try base64 first, then fallback to URL-encoded or plain text
+                return Data(base64Encoded: afterComma) ?? afterComma.data(using: .utf8)
+            }
+            return nil
         }
 
-        if success {
-            return .success(ans)
-        } else {
-            return .failure(NSError(domain: "ToolCall", code: 500, userInfo: [
-                NSLocalizedDescriptionKey: ans,
-            ]))
+        // Handle URL string (for data URLs parsed as URL)
+        if let url = URL(string: dataString), url.scheme == "data" {
+            let absoluteString = url.absoluteString
+            if let base64Range = absoluteString.range(of: ";base64,") {
+                let base64String = String(absoluteString[base64Range.upperBound...])
+                return Data(base64Encoded: base64String)
+            } else if let commaIndex = absoluteString.firstIndex(of: ",") {
+                let afterComma = String(absoluteString[absoluteString.index(after: commaIndex)...])
+                return Data(base64Encoded: afterComma) ?? afterComma.data(using: .utf8)
+            }
+            return nil
         }
+
+        // Try as direct base64 string (most common case for MCP tools)
+        if let data = Data(base64Encoded: dataString, options: .ignoreUnknownCharacters) {
+            return data
+        }
+
+        // Fallback: treat as UTF-8 string data (should rarely happen)
+        return dataString.data(using: .utf8)
     }
 }

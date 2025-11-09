@@ -11,6 +11,7 @@ import ConfigurableKit
 import Foundation
 import MCP
 import Storage
+import XMLCoder
 
 class MCPTool: ModelTool, @unchecked Sendable {
     // MARK: - Properties
@@ -87,39 +88,46 @@ class MCPTool: ModelTool, @unchecked Sendable {
                 from: toolInfo.serverID
             )
 
-            return formatToolResult(result.content, isError: result.isError)
+            // isError is optional
+            if result.isError == true {
+                Logger.network.errorFile("MCP Tool \(toolInfo.name) returned error: \(result.content)")
+                throw NSError(
+                    domain: "MCPTool.\(toolInfo.name)",
+                    code: 500,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: result.content,
+                    ]
+                )
+            }
+
+            // later on we process the result content and map audio and image to user attachment
+            // so it can be seen by model
+            return result.0.serializedRawContent()
         } catch {
             throw error
         }
     }
+}
 
-    // MARK: - Private Helper Methods
+extension [Tool.Content] {
+    static let encoder = JSONEncoder()
+    static let decoder = JSONDecoder()
 
-    private func formatToolResult(_ contents: [Tool.Content], isError: Bool?) -> String {
-        var result = ""
-
-        for content in contents {
-            switch content {
-            case let .text(text):
-                result += text
-            case let .image(_, mimeType, _):
-                result += "[Image: \(mimeType)]"
-            case let .resource(uri, text, _):
-                result += "[Resource: \(uri)]"
-                if !text.isEmpty {
-                    result += "\n\(text)"
-                }
-            case let .audio(_, mimeType):
-                result += "[Audio: \(mimeType)]"
-            }
-            result += "\n"
+    func serializedRawContent() -> String {
+        do {
+            let data = try Self.encoder.encode(self)
+            let text = String(data: data, encoding: .utf8)
+            return text ?? ""
+        } catch {
+            Logger.chatService.errorFile("failed to encode tool content: \(error.localizedDescription)")
+            return error.localizedDescription
         }
+    }
 
-        if isError == true {
-            result = "Error: \(result)"
-        }
-
-        return result.trimmingCharacters(in: .whitespacesAndNewlines)
+    static func decodeContents(_ input: String?) throws -> [Tool.Content] {
+        guard let input else { return [] }
+        let data = Data(input.utf8)
+        return try decoder.decode([Tool.Content].self, from: data)
     }
 }
 
