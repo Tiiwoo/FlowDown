@@ -48,6 +48,7 @@ struct GenerateResponseIntent: AppIntent {
             model: model,
             message: message,
             image: nil,
+            audio: nil,
             options: .init(
                 allowsImages: false,
                 saveToConversation: saveToConversation,
@@ -109,6 +110,7 @@ struct GenerateChatResponseWithImagesIntent: AppIntent {
             model: model,
             message: message,
             image: image,
+            audio: nil,
             options: .init(
                 allowsImages: true,
                 saveToConversation: saveToConversation,

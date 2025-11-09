@@ -15,6 +15,9 @@ enum ShortcutError: LocalizedError {
     case imageNotAllowed
     case imageNotSupportedByModel
     case invalidImage
+    case audioNotAllowed
+    case audioNotSupportedByModel
+    case invalidAudio
     case invalidCandidates
 
     var errorDescription: String? {
@@ -31,6 +34,12 @@ enum ShortcutError: LocalizedError {
             String(localized: "The selected model does not support image inputs.")
         case .invalidImage:
             String(localized: "The provided image could not be processed.")
+        case .audioNotAllowed:
+            String(localized: "This shortcut does not accept audio.")
+        case .audioNotSupportedByModel:
+            String(localized: "The selected model does not support audio inputs.")
+        case .invalidAudio:
+            String(localized: "The provided audio could not be processed.")
         case .invalidCandidates:
             String(localized: "At least one candidate is required.")
         }

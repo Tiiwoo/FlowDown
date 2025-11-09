@@ -60,6 +60,18 @@ struct Shortcuts: AppShortcutsProvider {
         if #available(iOS 18.0, macCatalyst 18.0, *) {
             shortcuts.append(
                 AppShortcut(
+                    intent: TranscribeAudioIntent(),
+                    phrases: [
+                        "Transcribe audio on \(.applicationName)",
+                        "Turn audio into text with \(.applicationName)",
+                    ],
+                    shortTitle: LocalizedStringResource("Transcribe Audio"),
+                    systemImageName: "waveform"
+                )
+            )
+
+            shortcuts.append(
+                AppShortcut(
                     intent: GenerateChatResponseWithImagesIntent(),
                     phrases: [
                         "Ask Model with image on \(.applicationName)",

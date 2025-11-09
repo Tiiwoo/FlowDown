@@ -79,6 +79,7 @@ struct ClassifyContentIntent: AppIntent {
             model: model,
             message: request.message,
             image: nil,
+            audio: nil,
             options: .init(allowsImages: false)
         )
 
@@ -164,6 +165,7 @@ struct ClassifyContentWithImageIntent: AppIntent {
             model: model,
             message: request.message,
             image: image,
+            audio: nil,
             options: .init(allowsImages: true)
         )
 

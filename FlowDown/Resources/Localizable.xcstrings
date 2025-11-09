@@ -2989,6 +2989,22 @@
         }
       }
     },
+    "Convert an audio recording into text using a model that supports audio input." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Convert an audio recording into text using a model that supports audio input."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用支持听觉的模型对传入的音频文件进行转写。"
+          }
+        }
+      }
+    },
     "Convert to Image" : {
       "localizations" : {
         "en" : {
@@ -7709,6 +7725,16 @@
         }
       }
     },
+    "Language Hint" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言提示"
+          }
+        }
+      }
+    },
     "Large" : {
       "comment" : "Font Size",
       "localizations" : {
@@ -10646,6 +10672,12 @@
     },
     "Processing Attachments" : {
       "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Processing Attachments"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11181,6 +11213,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "重试"
+          }
+        }
+      }
+    },
+    "Return only the transcription without additional commentary." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Return only the transcription without additional commentary."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅返回转写内容，不要返回额外的评论。"
           }
         }
       }
@@ -13418,6 +13466,22 @@
         }
       }
     },
+    "The provided audio could not be processed." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The provided audio could not be processed."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "提供的音频文件无法被处理。"
+          }
+        }
+      }
+    },
     "The provided image could not be processed." : {
       "localizations" : {
         "en" : {
@@ -13430,6 +13494,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法处理提供的图像。"
+          }
+        }
+      }
+    },
+    "The recording is primarily in %@." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The recording is primarily in %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此录音主要为：%@。"
           }
         }
       }
@@ -13462,6 +13542,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "未能找到选中的对话，请选择其他对话或创建新对话。"
+          }
+        }
+      }
+    },
+    "The selected model does not support audio inputs." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The selected model does not support audio inputs."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "所选的模型不支持音频输入。"
           }
         }
       }
@@ -13878,6 +13974,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此服务由 pollinations.ai 免费提供，包含速率限制，在部分国家或地区的网络下不可用。如遇到问题，请自建模型服务。"
+          }
+        }
+      }
+    },
+    "This shortcut does not accept audio." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This shortcut does not accept audio."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此快捷指令不接受音频。"
           }
         }
       }
@@ -14439,6 +14551,54 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在转码音频附件 %lld"
+          }
+        }
+      }
+    },
+    "Transcribe Audio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transcribe Audio"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "转写音频"
+          }
+        }
+      }
+    },
+    "Transcribe the selected ${audio} with the chosen model" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transcribe the selected ${audio} with the chosen model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用选中的模型转写 ${audio}"
+          }
+        }
+      }
+    },
+    "Transcribe the selected ${audio} with the default model" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Transcribe the selected ${audio} with the default model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型转写 ${audio}"
           }
         }
       }
@@ -16269,6 +16429,22 @@
         }
       }
     },
+    "What language is primarily spoken?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What language is primarily spoken?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对话使用的主要语言是什么？"
+          }
+        }
+      }
+    },
     "What message should we pre-fill?" : {
       "localizations" : {
         "en" : {
@@ -16378,6 +16554,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关闭同步后将不再共享新更改。现有数据保持不变。重新开启同步会先获取最新状态再继续。"
+          }
+        }
+      }
+    },
+    "Which audio file should be transcribed?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Which audio file should be transcribed?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "哪个音频文件需要被转写？"
           }
         }
       }
@@ -16525,6 +16717,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你是一名专业的对话摘要助理。请根据以下要求对先前的对话内容进行压缩和总结：\n\n1. 保留对话的核心信息和重要结论；删除无关、重复或冗余的内容  \n2. 保持原有的逻辑顺序和上下文，确保压缩后的内容易于理解  \n3. 清晰列出对话中提到的待办事项、决定、结论或关键问题  \n4. 保留必要的背景信息，避免因压缩导致信息丢失或误解  \n5. 使用简洁准确的语言，不添加未提及的信息或主观推测  \n6. 若对话涉及多个主题，请分章节或分条目整理  \n7. 输出结构化Markdown格式的摘要，包含标题和条目以便查阅  \n\n请根据上述要求对\"先前对话\"的内容进行压缩和总结。"
+          }
+        }
+      }
+    },
+    "You are a transcription assistant. Accurately transcribe the provided audio recording into written text with clear punctuation." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are a transcription assistant. Accurately transcribe the provided audio recording into written text with clear punctuation."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你是一个转写助理。请准确地转写提供的音频文件，并清晰标记标点。"
           }
         }
       }

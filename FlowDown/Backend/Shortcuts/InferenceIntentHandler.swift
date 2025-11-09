@@ -10,15 +10,23 @@ import ChatClientKit
 import Foundation
 import Storage
 import UIKit
+import UniformTypeIdentifiers
 
 enum InferenceIntentHandler {
     struct Options {
         let allowsImages: Bool
+        let allowsAudio: Bool
         let saveToConversation: Bool
         let enableMemory: Bool
 
-        init(allowsImages: Bool, saveToConversation: Bool = false, enableMemory: Bool = false) {
+        init(
+            allowsImages: Bool,
+            allowsAudio: Bool = false,
+            saveToConversation: Bool = false,
+            enableMemory: Bool = false
+        ) {
             self.allowsImages = allowsImages
+            self.allowsAudio = allowsAudio
             self.saveToConversation = saveToConversation
             self.enableMemory = enableMemory
         }
@@ -29,16 +37,26 @@ enum InferenceIntentHandler {
         let attachment: RichEditorView.Object.Attachment
     }
 
+    private struct PreparedAudioResources {
+        let contentParts: [ChatRequestBody.Message.ContentPart]
+        let attachment: RichEditorView.Object.Attachment
+    }
+
     static func execute(
         model: ShortcutsEntities.ModelEntity?,
         message: String,
         image: IntentFile?,
+        audio: IntentFile?,
         options: Options
     ) async throws -> String {
         let trimmedMessage = message.trimmingCharacters(in: .whitespacesAndNewlines)
         let hasImage = image != nil
+        let hasAudio = audio != nil
 
-        if trimmedMessage.isEmpty, !(options.allowsImages && hasImage) {
+        if trimmedMessage.isEmpty,
+           !(options.allowsImages && hasImage),
+           !(options.allowsAudio && hasAudio)
+        {
             throw ShortcutError.emptyMessage
         }
 
@@ -76,6 +94,13 @@ enum InferenceIntentHandler {
             guard modelCapabilities.contains(.visual) else { throw ShortcutError.imageNotSupportedByModel }
             let resources = try prepareImageResources(from: image)
             contentParts.append(resources.contentPart)
+            attachmentsForConversation.append(resources.attachment)
+        }
+        if let audio {
+            guard options.allowsAudio else { throw ShortcutError.audioNotAllowed }
+            guard modelCapabilities.contains(.auditory) else { throw ShortcutError.audioNotSupportedByModel }
+            let resources = try await prepareAudioResources(from: audio)
+            contentParts.append(contentsOf: resources.contentParts)
             attachmentsForConversation.append(resources.attachment)
         }
 
@@ -225,6 +250,61 @@ enum InferenceIntentHandler {
         )
 
         return PreparedImageResources(contentPart: .imageURL(url), attachment: attachment)
+    }
+
+    private static func prepareAudioResources(from file: IntentFile) async throws -> PreparedAudioResources {
+        var data = file.data
+        if data.isEmpty, let url = file.fileURL {
+            data = try Data(contentsOf: url)
+        }
+
+        guard !data.isEmpty else {
+            throw ShortcutError.invalidAudio
+        }
+
+        let transcoded = try await AudioTranscoder.transcode(
+            data: data,
+            fileExtension: inferredAudioFileExtension(from: file),
+            output: .compressedQualityWAV
+        )
+        let format = transcoded.format.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty?.lowercased() ?? "wav"
+        let attachment = try await RichEditorView.Object.Attachment.makeAudioAttachment(
+            transcoded: transcoded,
+            storage: nil,
+            suggestedName: file.filename.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+        )
+        let base64 = transcoded.data.base64EncodedString()
+
+        var metadataLines = ["[\(attachment.name)]"]
+        let details = attachment.textRepresentation.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !details.isEmpty {
+            metadataLines.append(details)
+        }
+
+        let contentParts: [ChatRequestBody.Message.ContentPart] = [
+            .audioBase64(base64, format: format),
+            .text(metadataLines.joined(separator: "\n")),
+        ]
+
+        return PreparedAudioResources(contentParts: contentParts, attachment: attachment)
+    }
+
+    private static func inferredAudioFileExtension(from file: IntentFile) -> String? {
+        if let url = file.fileURL {
+            let ext = url.pathExtension.trimmingCharacters(in: .whitespacesAndNewlines)
+            if !ext.isEmpty {
+                return ext
+            }
+        }
+
+        let filename = file.filename.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let dotIndex = filename.lastIndex(of: "."),
+              dotIndex < filename.index(before: filename.endIndex)
+        else { return nil }
+
+        let suffixStart = filename.index(after: dotIndex)
+        let ext = filename[suffixStart...].trimmingCharacters(in: .whitespacesAndNewlines)
+        return ext.isEmpty ? nil : ext
     }
 
     static func resize(image: UIImage, maxDimension: CGFloat) -> UIImage {
