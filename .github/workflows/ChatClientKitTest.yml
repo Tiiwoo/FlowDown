@@ -1,16 +1,6 @@
 name: ChatClientKit Tests
 
 on:
-  push:
-    branches: [ main ]
-    paths:
-      - "Frameworks/ChatClientKit/**"
-      - ".github/workflows/ChatClientKitTest.yml"
-  pull_request:
-    branches: [ main ]
-    paths:
-      - "Frameworks/ChatClientKit/**"
-      - ".github/workflows/ChatClientKitTest.yml"
   workflow_dispatch:
 
 permissions:
@@ -19,7 +9,7 @@ permissions:
 jobs:
   chatclientkit-tests:
     name: ChatClientKit Swift Tests
-    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    if: false  # temporarily disabled due to metal issues on runner
     runs-on: macos-26
     steps:
       - name: Checkout
