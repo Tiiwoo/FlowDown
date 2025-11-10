@@ -14,25 +14,34 @@ extension MessageListView {
 
         private var cache: [MessageIdentifier: MarkdownTextView.PreprocessedContent] = [:]
         private var messageDidChanged: [MessageIdentifier: Int] = [:]
+        private let lock = NSLock()
 
         func package(for message: MessageRepresentation, theme: MarkdownTheme) -> MarkdownTextView.PreprocessedContent {
             let id = message.id
-            let cachedContent = messageDidChanged[id]
-            if cachedContent == message.content.hashValue {
-                if let nodes = cache[id] {
-                    return nodes
-                }
-                return updateCache(for: message, theme: theme)
+            let contentHash = message.content.hashValue
+
+            lock.lock()
+            if let cachedHash = messageDidChanged[id],
+               cachedHash == contentHash,
+               let nodes = cache[id] {
+                lock.unlock()
+                return nodes
             }
-            return updateCache(for: message, theme: theme)
+            lock.unlock()
+
+            return updateCache(for: message, theme: theme, contentHash: contentHash)
         }
 
-        private func updateCache(for message: MessageRepresentation, theme: MarkdownTheme) -> MarkdownTextView.PreprocessedContent {
+        private func updateCache(for message: MessageRepresentation, theme: MarkdownTheme, contentHash: Int) -> MarkdownTextView.PreprocessedContent {
             let content = message.content
             let result = MarkdownParser().parse(content)
             let package = MarkdownTextView.PreprocessedContent(parserResult: result, theme: theme)
+
+            lock.lock()
             cache[message.id] = package
-            messageDidChanged[message.id] = message.content.hashValue
+            messageDidChanged[message.id] = contentHash
+            lock.unlock()
+
             return package
         }
     }
