@@ -102,40 +102,8 @@ public extension ChatRequest {
         }
     }
 
-    static func frequencyPenalty(_ value: Double?) -> BuildComponent {
-        { $0.frequencyPenalty = value }
-    }
-
-    static func logitBias(_ value: [String: Double]?) -> BuildComponent {
-        { $0.logitBias = value }
-    }
-
-    static func logprobs(_ value: Bool?) -> BuildComponent {
-        { $0.logprobs = value }
-    }
-
     static func maxCompletionTokens(_ value: Int?) -> BuildComponent {
         { $0.maxCompletionTokens = value }
-    }
-
-    static func choices(_ value: Int?) -> BuildComponent {
-        { $0.n = value }
-    }
-
-    static func parallelToolCalls(_ value: Bool?) -> BuildComponent {
-        { $0.parallelToolCalls = value }
-    }
-
-    static func presencePenalty(_ value: Double?) -> BuildComponent {
-        { $0.presencePenalty = value }
-    }
-
-    static func responseFormat(_ value: ResponseFormat?) -> BuildComponent {
-        { $0.responseFormat = value }
-    }
-
-    static func seed(_ value: Int?) -> BuildComponent {
-        { $0.seed = value }
     }
 
     static func stop(_ values: [String]?) -> BuildComponent {
@@ -168,14 +136,6 @@ public extension ChatRequest {
 
     static func toolChoice(_ value: ToolChoice?) -> BuildComponent {
         { $0.toolChoice = value }
-    }
-
-    static func topLogprobs(_ value: Int?) -> BuildComponent {
-        { $0.topLogprobs = value }
-    }
-
-    static func topP(_ value: Double?) -> BuildComponent {
-        { $0.topP = value }
     }
 
     static func user(_ value: String?) -> BuildComponent {

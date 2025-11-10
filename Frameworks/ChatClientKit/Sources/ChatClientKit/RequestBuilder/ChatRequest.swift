@@ -36,15 +36,7 @@ public struct ChatRequest: Sendable {
 
     public var model: String?
     public var messages: [Message]
-    public var frequencyPenalty: Double?
-    public var logitBias: [String: Double]?
-    public var logprobs: Bool?
     public var maxCompletionTokens: Int?
-    public var n: Int?
-    public var parallelToolCalls: Bool?
-    public var presencePenalty: Double?
-    public var responseFormat: ResponseFormat?
-    public var seed: Int?
     public var stop: [String]?
     public var store: Bool?
     public var stream: Bool?
@@ -52,22 +44,12 @@ public struct ChatRequest: Sendable {
     public var temperature: Double?
     public var tools: [Tool]?
     public var toolChoice: ToolChoice?
-    public var topLogprobs: Int?
-    public var topP: Double?
     public var user: String?
 
     public init(
         model: String? = nil,
         messages: [Message],
-        frequencyPenalty: Double? = nil,
-        logitBias: [String: Double]? = nil,
-        logprobs: Bool? = nil,
         maxCompletionTokens: Int? = nil,
-        n: Int? = nil,
-        parallelToolCalls: Bool? = nil,
-        presencePenalty: Double? = nil,
-        responseFormat: ResponseFormat? = nil,
-        seed: Int? = nil,
         stop: [String]? = nil,
         store: Bool? = nil,
         stream: Bool? = nil,
@@ -75,21 +57,11 @@ public struct ChatRequest: Sendable {
         temperature: Double? = nil,
         tools: [Tool]? = nil,
         toolChoice: ToolChoice? = nil,
-        topLogprobs: Int? = nil,
-        topP: Double? = nil,
         user: String? = nil
     ) {
         self.model = model
         self.messages = messages
-        self.frequencyPenalty = frequencyPenalty
-        self.logitBias = logitBias
-        self.logprobs = logprobs
         self.maxCompletionTokens = maxCompletionTokens
-        self.n = n
-        self.parallelToolCalls = parallelToolCalls
-        self.presencePenalty = presencePenalty
-        self.responseFormat = responseFormat
-        self.seed = seed
         self.stop = stop
         self.store = store
         self.stream = stream
@@ -97,22 +69,12 @@ public struct ChatRequest: Sendable {
         self.temperature = temperature
         self.tools = tools
         self.toolChoice = toolChoice
-        self.topLogprobs = topLogprobs
-        self.topP = topP
         self.user = user
     }
 
     public init(
         model: String? = nil,
-        frequencyPenalty: Double? = nil,
-        logitBias: [String: Double]? = nil,
-        logprobs: Bool? = nil,
         maxCompletionTokens: Int? = nil,
-        n: Int? = nil,
-        parallelToolCalls: Bool? = nil,
-        presencePenalty: Double? = nil,
-        responseFormat: ResponseFormat? = nil,
-        seed: Int? = nil,
         stop: [String]? = nil,
         store: Bool? = nil,
         stream: Bool? = nil,
@@ -120,23 +82,13 @@ public struct ChatRequest: Sendable {
         temperature: Double? = nil,
         tools: [Tool]? = nil,
         toolChoice: ToolChoice? = nil,
-        topLogprobs: Int? = nil,
-        topP: Double? = nil,
         user: String? = nil,
         @ChatMessageBuilder messages: () -> [Message]
     ) {
         self.init(
             model: model,
             messages: messages(),
-            frequencyPenalty: frequencyPenalty,
-            logitBias: logitBias,
-            logprobs: logprobs,
             maxCompletionTokens: maxCompletionTokens,
-            n: n,
-            parallelToolCalls: parallelToolCalls,
-            presencePenalty: presencePenalty,
-            responseFormat: responseFormat,
-            seed: seed,
             stop: stop,
             store: store,
             stream: stream,
@@ -144,8 +96,6 @@ public struct ChatRequest: Sendable {
             temperature: temperature,
             tools: tools,
             toolChoice: toolChoice,
-            topLogprobs: topLogprobs,
-            topP: topP,
             user: user
         )
     }
@@ -159,15 +109,7 @@ extension ChatRequest: ChatRequestConvertible {
     public func asChatRequestBody() throws -> ChatRequestBody {
         var body = ChatRequestBody(
             messages: Self.normalize(messages),
-            frequencyPenalty: frequencyPenalty,
-            logitBias: logitBias.map(Self.normalizeLogitBias),
-            logprobs: logprobs,
             maxCompletionTokens: maxCompletionTokens,
-            n: n,
-            parallelToolCalls: parallelToolCalls,
-            presencePenalty: presencePenalty,
-            responseFormat: responseFormat,
-            seed: seed,
             stop: stop?.map(Self.normalizeStop),
             store: store,
             stream: stream,
@@ -175,8 +117,6 @@ extension ChatRequest: ChatRequestConvertible {
             temperature: temperature,
             tools: tools.map(Self.normalizeTools),
             toolChoice: toolChoice.map(Self.normalizeToolChoice),
-            topLogprobs: topLogprobs,
-            topP: topP,
             user: Self.trimmed(user)
         )
         body.model = Self.trimmed(model)
@@ -304,14 +244,6 @@ private extension ChatRequest {
             )
         }
         return normalized.sorted { $0.id < $1.id }
-    }
-
-    static func normalizeLogitBias(_ bias: [String: Double]) -> [String: Double] {
-        var normalized: [String: Double] = [:]
-        for (key, value) in bias {
-            normalized[key.trimmingCharacters(in: .whitespacesAndNewlines)] = value
-        }
-        return normalized
     }
 
     static func normalizeStop(_ value: String) -> String {

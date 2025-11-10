@@ -130,7 +130,7 @@ struct RemoteChatClientBasicTests {
         let content = response.choices.first?.message.content ?? ""
         let reasoning = response.choices.first?.message.reasoning ?? ""
         let reasoningContent = response.choices.first?.message.reasoningContent ?? ""
-        #expect([content, reasoning, reasoningContent].allSatisfy { $0.isEmpty } == false)
+        #expect([content, reasoning, reasoningContent].allSatisfy(\.isEmpty) == false)
     }
 
     @Test("Streaming chat completion collects all chunks")
