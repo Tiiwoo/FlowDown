@@ -115,7 +115,22 @@ class CloudModelEditorController: StackScrollController {
             }
         }
 
-        return [verifyAction, exportAction, duplicateAction]
+        let deleteAction = UIAction(
+            title: String(localized: "Delete Model"),
+            image: UIImage(systemName: "trash"),
+            attributes: [.destructive]
+        ) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor in
+                self.deleteModel()
+            }
+        }
+
+        let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
+        let exportSection = UIMenu(title: "", options: [.displayInline], children: [exportAction, duplicateAction])
+        let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
+
+        return [verifySection, exportSection, deleteSection]
     }
 
     override func setupContentViews() {
@@ -368,7 +383,7 @@ class CloudModelEditorController: StackScrollController {
 
         let contextListView = ConfigurableInfoView()
         contextListView.configure(icon: .init(systemName: "list.bullet"))
-        contextListView.configure(title: "Context Length")
+        contextListView.configure(title: "Context")
         contextListView.configure(description: "The context length for inference refers to the amount of information the model can retain and process at a given time. This context serves as the model’s memory, allowing it to understand and generate responses based on prior input.")
         let contextValue = model?.context.title ?? String(localized: "Not Configured")
         contextListView.configure(value: contextValue)
@@ -488,25 +503,6 @@ class CloudModelEditorController: StackScrollController {
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionHeaderView()
-                .with(header: "Management")
-        ) { $0.bottom /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-        let deleteAction = ConfigurableActionView { @MainActor [weak self] _ in
-            guard let self else { return }
-            deleteModel()
-        }
-        deleteAction.configure(icon: UIImage(systemName: "trash"))
-        deleteAction.configure(title: "Delete Model")
-        deleteAction.configure(description: "Delete this model from your device.")
-        deleteAction.titleLabel.textColor = .systemRed
-        deleteAction.iconView.tintColor = .systemRed
-        deleteAction.descriptionLabel.textColor = .systemRed
-        deleteAction.imageView.tintColor = .systemRed
-        stackView.addArrangedSubviewWithMargin(deleteAction)
-        stackView.addArrangedSubview(SeparatorView())
-
         stackView.addArrangedSubviewWithMargin(UIView())
 
         let icon = UIImageView().with {
@@ -589,6 +585,7 @@ class CloudModelEditorController: StackScrollController {
         }
     }
 
+    @MainActor
     @objc func deleteModel() {
         let alert = AlertViewController(
             title: "Delete Model",

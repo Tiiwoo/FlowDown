@@ -3837,23 +3837,8 @@
         }
       }
     },
-    "Delete this model from your device." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Delete this model from your device."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "从设备中删除此模型。"
-          }
-        }
-      }
-    },
     "Delete this model from your local storage." : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -3977,22 +3962,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在确认搜索内容"
-          }
-        }
-      }
-    },
-    "Developer Role" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Developer Role"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "开发者角色"
           }
         }
       }
@@ -5394,22 +5363,6 @@
         }
       }
     },
-    "Export this model to share with others." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Export this model to share with others."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "导出模型以供分享。"
-          }
-        }
-      }
-    },
     "Exported Conversation - %@" : {
       "localizations" : {
         "en" : {
@@ -6546,7 +6499,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "报头"
+            "value" : "报文头"
           }
         }
       }
@@ -6562,7 +6515,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "报头"
+            "value" : "报文头"
           }
         }
       }
@@ -11415,6 +11368,22 @@
         }
       }
     },
+    "Role" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Role"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "角色"
+          }
+        }
+      }
+    },
     "Runtime System Prompt" : {
       "localizations" : {
         "en" : {
@@ -15699,22 +15668,6 @@
         }
       }
     },
-    "Verify this model with corresponding capabilities." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verify this model with corresponding capabilities."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "验证当前模型及其功能。"
-          }
-        }
-      }
-    },
     "Verifying Configuration" : {
       "localizations" : {
         "en" : {
@@ -15807,22 +15760,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "原始数据"
-          }
-        }
-      }
-    },
-    "View this model on Hugging Face." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "View this model on Hugging Face."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "在抱抱脸上查看这个模型。"
           }
         }
       }

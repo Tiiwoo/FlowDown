@@ -33,9 +33,7 @@ extension ModelCapabilities {
     var icon: String {
         switch self {
         case .visual: "eye"
-//        case .stream: "arrow.up.arrow.down"
         case .tool: "hammer"
-//        case .reasoning: "text.bubble"
         case .developerRole: "person.crop.circle.badge.checkmark"
         case .auditory: "waveform"
         }
@@ -44,9 +42,9 @@ extension ModelCapabilities {
     var title: String.LocalizationValue {
         switch self {
         case .visual: "Visual"
-        case .tool: "Tool"
-        case .developerRole: "Developer Role"
         case .auditory: "Audio"
+        case .tool: "Tool"
+        case .developerRole: "Role"
         }
     }
 
