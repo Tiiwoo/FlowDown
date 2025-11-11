@@ -41,12 +41,21 @@ class CloudModelEditorController: StackScrollController {
         super.viewDidLoad()
         view.backgroundColor = .background
 
-        navigationItem.rightBarButtonItem = .init(
+        let confirmItem = UIBarButtonItem(
             image: UIImage(systemName: "checkmark"),
             style: .done,
             target: self,
             action: #selector(checkTapped)
         )
+        let actionsItem = UIBarButtonItem(
+            image: UIImage(systemName: "ellipsis.circle"),
+            style: .plain,
+            target: nil,
+            action: nil
+        )
+        actionsItem.accessibilityLabel = String(localized: "More Actions")
+        actionsItem.menu = buildActionsMenu()
+        navigationItem.rightBarButtonItems = [confirmItem, actionsItem]
 
         ModelManager.shared.cloudModels
             .removeDuplicates()
@@ -62,6 +71,51 @@ class CloudModelEditorController: StackScrollController {
 
     @objc func checkTapped() {
         navigationController?.popViewController()
+    }
+
+    private func buildActionsMenu() -> UIMenu {
+        let deferred = UIDeferredMenuElement.uncached { [weak self] completion in
+            guard let self else {
+                completion([])
+                return
+            }
+            completion(makeActionMenuElements())
+        }
+        return UIMenu(children: [deferred])
+    }
+
+    private func makeActionMenuElements() -> [UIMenuElement] {
+        let verifyAction = UIAction(
+            title: String(localized: "Verify Model"),
+            image: UIImage(systemName: "testtube.2")
+        ) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor in
+                await self.runVerification()
+            }
+        }
+
+        let exportAction = UIAction(
+            title: String(localized: "Export Model"),
+            image: UIImage(systemName: "square.and.arrow.up")
+        ) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor in
+                self.exportCurrentModel()
+            }
+        }
+
+        let duplicateAction = UIAction(
+            title: String(localized: "Duplicate"),
+            image: UIImage(systemName: "doc.on.doc")
+        ) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor in
+                self.duplicateCurrentModel()
+            }
+        }
+
+        return [verifyAction, exportAction, duplicateAction]
     }
 
     override func setupContentViews() {
@@ -186,91 +240,6 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Networking (Optional)")
-        ) { $0.bottom /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-
-        // additional header
-        let headerEditorView = ConfigurableInfoView().setTapBlock { view in
-            guard let model = ModelManager.shared.cloudModel(identifier: model?.id) else { return }
-            let jsonData = try? JSONSerialization.data(withJSONObject: model.headers, options: .prettyPrinted)
-            var text = String(data: jsonData ?? Data(), encoding: .utf8) ?? ""
-            if text.isEmpty { text = "{}" }
-            let textEditor = JsonStringMapEditorController(text: text)
-            textEditor.title = String(localized: "Edit Additional Header")
-            textEditor.collectEditedContent { result in
-                guard let object = try? JSONDecoder().decode([String: String].self, from: result.data(using: .utf8) ?? .init()) else {
-                    return
-                }
-                ModelManager.shared.editCloudModel(identifier: model.id) {
-                    $0.update(\.headers, to: object)
-                }
-                view.configure(value: object.isEmpty ? String(localized: "N/A") : String(localized: "Configured"))
-            }
-            view.parentViewController?.navigationController?.pushViewController(textEditor, animated: true)
-        }
-        headerEditorView.configure(icon: .init(systemName: "pencil"))
-        headerEditorView.configure(title: "Additional Header")
-        headerEditorView.configure(description: "This value will be added to the request as additional header.")
-        headerEditorView.configure(value: model?.headers.isEmpty ?? true ? String(localized: "N/A") : String(localized: "Configured"))
-
-        stackView.addArrangedSubviewWithMargin(headerEditorView)
-        stackView.addArrangedSubview(SeparatorView())
-
-        // additional body fields
-        let bodyFieldsEditorView = ConfigurableInfoView()
-        bodyFieldsEditorView.setTapBlock { [weak self] view in
-            guard let model = ModelManager.shared.cloudModel(identifier: model?.id) else { return }
-            var text = model.bodyFields
-            if text.isEmpty { text = "{}" }
-
-            let textEditor = JsonEditorController(text: text)
-            textEditor.secondaryMenuBuilder = { controller in
-                self?.buildExtraBodyEditorMenu(controller: controller) ?? .init()
-            }
-
-            textEditor.onTextDidChange = { draft in
-                let trimmed = draft.trimmingCharacters(in: .whitespacesAndNewlines)
-                if trimmed.isEmpty || Self.isEmptyJsonObject(draft) {
-                    view.configure(value: String(localized: "N/A"))
-                } else {
-                    view.configure(value: String(localized: "Configured"))
-                }
-            }
-
-            textEditor.title = String(localized: "Edit Additional Body Fields")
-            textEditor.collectEditedContent { result in
-                guard let data = result.data(using: .utf8),
-                      (try? JSONSerialization.jsonObject(with: data)) != nil
-                else {
-                    return
-                }
-                let normalizedResult = Self.isEmptyJsonObject(result) ? "" : result
-                ModelManager.shared.editCloudModel(identifier: model.id) { editable in
-                    editable.update(\.bodyFields, to: normalizedResult)
-                }
-                view.configure(value: normalizedResult.isEmpty ? String(localized: "N/A") : String(localized: "Configured"))
-            }
-
-            view.parentViewController?.navigationController?.pushViewController(textEditor, animated: true)
-        }
-        bodyFieldsEditorView.configure(icon: .init(systemName: "pencil"))
-        bodyFieldsEditorView.configure(title: "Additional Body Fields")
-        bodyFieldsEditorView.configure(description: "Configure inference-specific body fields here. The JSON key-value pairs you enter are merged into every request.")
-        let hasBodyFields = !(model?.bodyFields.isEmpty ?? true) && !Self.isEmptyJsonObject(model?.bodyFields ?? "")
-        bodyFieldsEditorView.configure(value: hasBodyFields ? String(localized: "Configured") : String(localized: "N/A"))
-
-        stackView.addArrangedSubviewWithMargin(bodyFieldsEditorView)
-        stackView.addArrangedSubview(SeparatorView())
-
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionFooterView()
-                .with(footer: "Extra headers and body fields can be used to fine-tune model behavior and performance, such as enabling reasoning or setting reasoning budgets. The specific parameters vary across different service providers—please refer to their official documentation.")
-        ) { $0.top /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionHeaderView()
                 .with(header: "Capabilities")
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
@@ -305,40 +274,6 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Context")
-        ) { $0.bottom /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-
-        let contextListViewAnnotation = ConfigurableInfoView()
-        contextListViewAnnotation.configure(icon: .init(systemName: "list.bullet"))
-        contextListViewAnnotation.configure(title: "Context Length")
-        contextListViewAnnotation.configure(description: "The context length for inference refers to the amount of information the model can retain and process at a given time. This context serves as the model’s memory, allowing it to understand and generate responses based on prior input.")
-        let value = model?.context.title ?? String(localized: "Not Configured")
-        contextListViewAnnotation.configure(value: value)
-        contextListViewAnnotation.use {
-            ModelContextLength.allCases.map { item in
-                UIAction(
-                    title: item.title,
-                    image: UIImage(systemName: item.icon)
-                ) { _ in
-                    ModelManager.shared.editCloudModel(identifier: model?.id) {
-                        $0.update(\.context, to: item)
-                    }
-                    contextListViewAnnotation.configure(value: item.title)
-                }
-            }
-        }
-        stackView.addArrangedSubviewWithMargin(contextListViewAnnotation)
-        stackView.addArrangedSubview(SeparatorView())
-
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionFooterView()
-                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference.")
-        ) { $0.top /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionHeaderView()
                 .with(header: "Parameters")
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
@@ -363,7 +298,7 @@ class CloudModelEditorController: StackScrollController {
             view.parentViewController?.present(input, animated: true)
         }
         nameView.configure(icon: .init(systemName: "tag"))
-        nameView.configure(title: "Nickname (Optional)")
+        nameView.configure(title: "Nickname")
         nameView.configure(description: "Custom display name for this model.")
         var nameValue = model?.name ?? ""
         if nameValue.isEmpty { nameValue = String(localized: "Not Configured") }
@@ -431,96 +366,125 @@ class CloudModelEditorController: StackScrollController {
         stackView.addArrangedSubviewWithMargin(temperatureView)
         stackView.addArrangedSubview(SeparatorView())
 
-        stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionHeaderView()
-                .with(header: "Verification")
-        ) { $0.bottom /= 2 }
-        stackView.addArrangedSubview(SeparatorView())
-
-        let verifyButton = ConfigurableActionView { @MainActor [weak self] _ in
-            guard let self else { return }
-            guard let model = ModelManager.shared.cloudModel(identifier: identifier) else { return }
-            Indicator.progress(
-                title: "Verifying Model",
-                controller: self
-            ) { completionHandler in
-                let result = await withCheckedContinuation { continuation in
-                    ModelManager.shared.testCloudModel(model) { result in
-                        continuation.resume(returning: result)
+        let contextListView = ConfigurableInfoView()
+        contextListView.configure(icon: .init(systemName: "list.bullet"))
+        contextListView.configure(title: "Context Length")
+        contextListView.configure(description: "The context length for inference refers to the amount of information the model can retain and process at a given time. This context serves as the model’s memory, allowing it to understand and generate responses based on prior input.")
+        let contextValue = model?.context.title ?? String(localized: "Not Configured")
+        contextListView.configure(value: contextValue)
+        contextListView.use {
+            ModelContextLength.allCases.map { item in
+                UIAction(
+                    title: item.title,
+                    image: UIImage(systemName: item.icon)
+                ) { _ in
+                    ModelManager.shared.editCloudModel(identifier: model?.id) {
+                        $0.update(\.context, to: item)
                     }
-                }
-                try result.get()
-                await completionHandler {
-                    Indicator.present(
-                        title: "Model Verified",
-                        referencingView: self.view
-                    )
+                    contextListView.configure(value: item.title)
                 }
             }
         }
-        verifyButton.configure(icon: UIImage(systemName: "testtube.2"))
-        verifyButton.configure(title: "Verify Model")
-        verifyButton.configure(description: "Verify the model by sending a test request.")
-        stackView.addArrangedSubviewWithMargin(verifyButton)
+        stackView.addArrangedSubviewWithMargin(contextListView)
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "Verification process will send a standard inference request to the inference node and verify the returned status code. This process requires the server to return status code: 200. The verification process may incur standard charges from your service provider.")
+                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference.")
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Shortcuts")
+                .with(header: "Networking (Optional)")
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
-        let exportOption = ConfigurableActionView { @MainActor [weak self] controller in
-            guard let self,
-                  let model = ModelManager.shared.cloudModel(identifier: identifier)
-            else { return }
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            guard let data = try? encoder.encode(model) else { return }
-            let fileName = "Export-\(model.modelDisplayName.sanitizedFileName)\(model.auxiliaryIdentifier)"
-            DisposableExporter(
-                data: data,
-                name: fileName,
-                pathExtension: ModelManager.flowdownModelConfigurationExtension,
-                title: "Export Model"
-            ).run(anchor: controller.view)
+        // additional header
+        let headerEditorView = ConfigurableInfoView().setTapBlock { view in
+            guard let model = ModelManager.shared.cloudModel(identifier: model?.id) else { return }
+            let jsonData = try? JSONSerialization.data(withJSONObject: model.headers, options: .prettyPrinted)
+            var text = String(data: jsonData ?? Data(), encoding: .utf8) ?? ""
+            if text.isEmpty { text = "{}" }
+            let textEditor = JsonStringMapEditorController(text: text)
+            textEditor.title = String(localized: "Edit Header")
+            textEditor.collectEditedContent { result in
+                guard let object = try? JSONDecoder().decode([String: String].self, from: result.data(using: .utf8) ?? .init()) else {
+                    return
+                }
+                ModelManager.shared.editCloudModel(identifier: model.id) {
+                    $0.update(\.headers, to: object)
+                }
+                view.configure(value: object.isEmpty ? String(localized: "N/A") : String(localized: "Configured"))
+            }
+            view.parentViewController?.navigationController?.pushViewController(textEditor, animated: true)
         }
-        exportOption.configure(icon: UIImage(systemName: "square.and.arrow.up"))
-        exportOption.configure(title: "Export Model")
-        exportOption.configure(description: "Export this model to share with others.")
-        stackView.addArrangedSubviewWithMargin(exportOption)
+        headerEditorView.configure(icon: .init(systemName: "pencil"))
+        headerEditorView.configure(title: "Header")
+        headerEditorView.configure(description: "This value will be added to the request as additional header.")
+        headerEditorView.configure(value: model?.headers.isEmpty ?? true ? String(localized: "N/A") : String(localized: "Configured"))
+
+        stackView.addArrangedSubviewWithMargin(headerEditorView)
         stackView.addArrangedSubview(SeparatorView())
 
-        let duplicateModel = ConfigurableActionView { @MainActor [weak self] _ in
-            guard let nav = self?.navigationController else { return }
-            let newIdentifier = UUID().uuidString
-            ModelManager.shared.editCloudModel(identifier: self?.identifier) {
-                $0.update(\.objectId, to: newIdentifier)
-                $0.update(\.model_identifier, to: "")
-                $0.update(\.creation, to: $0.modified)
+        // additional body fields
+        let bodyFieldsEditorView = ConfigurableInfoView()
+        bodyFieldsEditorView.setTapBlock { [weak self] view in
+            guard let model = ModelManager.shared.cloudModel(identifier: model?.id) else { return }
+            var text = model.bodyFields
+            if text.isEmpty { text = "{}" }
+            else if let formatted = Self.prettyPrintedJson(from: text) {
+                text = formatted
             }
-            guard let newModel = ModelManager.shared.cloudModel(identifier: newIdentifier) else { return }
-            assert(newModel.objectId == newIdentifier)
-            nav.popViewController(animated: true) {
-                let editor = CloudModelEditorController(identifier: newModel.id)
-                nav.pushViewController(editor, animated: true)
+
+            let textEditor = JsonEditorController(text: text)
+            textEditor.secondaryMenuBuilder = { controller in
+                self?.buildExtraBodyEditorMenu(controller: controller) ?? .init()
             }
+
+            textEditor.onTextDidChange = { draft in
+                let trimmed = draft.trimmingCharacters(in: .whitespacesAndNewlines)
+                if trimmed.isEmpty || Self.isEmptyJsonObject(draft) {
+                    view.configure(value: String(localized: "N/A"))
+                } else {
+                    view.configure(value: String(localized: "Configured"))
+                }
+            }
+
+            textEditor.title = String(localized: "Edit Fields")
+            textEditor.collectEditedContent { result in
+                guard let data = result.data(using: .utf8),
+                      (try? JSONSerialization.jsonObject(with: data)) != nil
+                else {
+                    return
+                }
+                let normalizedResult: String = if Self.isEmptyJsonObject(result) {
+                    ""
+                } else if let formatted = Self.prettyPrintedJson(from: result) {
+                    formatted
+                } else {
+                    result
+                }
+                ModelManager.shared.editCloudModel(identifier: model.id) { editable in
+                    editable.update(\.bodyFields, to: normalizedResult)
+                }
+                view.configure(value: normalizedResult.isEmpty ? String(localized: "N/A") : String(localized: "Configured"))
+            }
+
+            view.parentViewController?.navigationController?.pushViewController(textEditor, animated: true)
         }
-        duplicateModel.configure(icon: UIImage(systemName: "doc.on.doc"))
-        duplicateModel.configure(title: "Duplicate")
-        duplicateModel.configure(description: "Create a new model by copying the current configuration.")
-        stackView.addArrangedSubviewWithMargin(duplicateModel)
+        bodyFieldsEditorView.configure(icon: .init(systemName: "pencil"))
+        bodyFieldsEditorView.configure(title: "Body Fields")
+        bodyFieldsEditorView.configure(description: "Configure inference-specific body fields here. The json key-value pairs you enter are merged into every request.")
+        let hasBodyFields = !(model?.bodyFields.isEmpty ?? true) && !Self.isEmptyJsonObject(model?.bodyFields ?? "")
+        bodyFieldsEditorView.configure(value: hasBodyFields ? String(localized: "Configured") : String(localized: "N/A"))
+
+        stackView.addArrangedSubviewWithMargin(bodyFieldsEditorView)
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "After creating a copy, you can choose a new model. This is useful if the endpoint provides multiple models.")
+                .with(footer: "Extra headers and body fields can be used to fine-tune model behavior and performance, such as enabling reasoning or setting reasoning budgets. The specific parameters vary across different service providers—please refer to their official documentation.")
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -567,6 +531,62 @@ class CloudModelEditorController: StackScrollController {
         }
         stackView.addArrangedSubviewWithMargin(footer) { $0.top /= 2 }
         stackView.addArrangedSubviewWithMargin(UIView())
+    }
+
+    // MARK: - Action Handlers
+
+    @MainActor
+    private func runVerification() async {
+        guard let model = ModelManager.shared.cloudModel(identifier: identifier) else { return }
+        Indicator.progress(
+            title: "Verifying Model",
+            controller: self
+        ) { completionHandler in
+            let result = await withCheckedContinuation { continuation in
+                ModelManager.shared.testCloudModel(model) { result in
+                    continuation.resume(returning: result)
+                }
+            }
+            try result.get()
+            await completionHandler {
+                Indicator.present(
+                    title: "Model Verified",
+                    referencingView: self.view
+                )
+            }
+        }
+    }
+
+    @MainActor
+    private func exportCurrentModel() {
+        guard let model = ModelManager.shared.cloudModel(identifier: identifier) else { return }
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        guard let data = try? encoder.encode(model) else { return }
+        let fileName = "Export-\(model.modelDisplayName.sanitizedFileName)\(model.auxiliaryIdentifier)"
+        DisposableExporter(
+            data: data,
+            name: fileName,
+            pathExtension: ModelManager.flowdownModelConfigurationExtension,
+            title: "Export Model"
+        ).run(anchor: navigationController?.view ?? view)
+    }
+
+    @MainActor
+    private func duplicateCurrentModel() {
+        guard let nav = navigationController else { return }
+        let newIdentifier = UUID().uuidString
+        ModelManager.shared.editCloudModel(identifier: identifier) {
+            $0.update(\.objectId, to: newIdentifier)
+            $0.update(\.model_identifier, to: "")
+            $0.update(\.creation, to: $0.modified)
+        }
+        guard let newModel = ModelManager.shared.cloudModel(identifier: newIdentifier) else { return }
+        assert(newModel.objectId == newIdentifier)
+        nav.popViewController(animated: true) {
+            let editor = CloudModelEditorController(identifier: newModel.id)
+            nav.pushViewController(editor, animated: true)
+        }
     }
 
     @objc func deleteModel() {
@@ -769,6 +789,19 @@ class CloudModelEditorController: StackScrollController {
             return false
         }
         return jsonObject.isEmpty
+    }
+
+    private static func prettyPrintedJson(from raw: String) -> String? {
+        guard let data = raw.data(using: .utf8),
+              let jsonObject = try? JSONSerialization.jsonObject(with: data)
+        else {
+            return nil
+        }
+        guard JSONSerialization.isValidJSONObject(jsonObject) else { return nil }
+        guard let formattedData = try? JSONSerialization.data(withJSONObject: jsonObject, options: [.prettyPrinted]) else {
+            return nil
+        }
+        return String(data: formattedData, encoding: .utf8)
     }
 }
 

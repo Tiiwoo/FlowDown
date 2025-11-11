@@ -489,38 +489,6 @@
         }
       }
     },
-    "Additional Body Fields" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Additional Body Fields"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "额外请求体字段"
-          }
-        }
-      }
-    },
-    "Additional Header" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Additional Header"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "额外报头"
-          }
-        }
-      }
-    },
     "Additional Prompt" : {
       "localizations" : {
         "en" : {
@@ -565,22 +533,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "调整标记文本的字体大小。"
-          }
-        }
-      }
-    },
-    "After creating a copy, you can choose a new model. This is useful if the endpoint provides multiple models." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "After creating a copy, you can choose a new model. This is useful if the endpoint provides multiple models."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "创建副本后，您可以选择一个新模型。如果端点提供多个模型，这将很有用。"
           }
         }
       }
@@ -1559,6 +1511,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "必应搜索"
+          }
+        }
+      }
+    },
+    "Body Fields" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Body Fields"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请求体"
           }
         }
       }
@@ -2587,18 +2555,18 @@
         }
       }
     },
-    "Configure inference-specific body fields here. The JSON key-value pairs you enter are merged into every request." : {
+    "Configure inference-specific body fields here. The json key-value pairs you enter are merged into every request." : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Configure inference-specific body fields here. The JSON key-value pairs you enter are merged into every request."
+            "value" : "Configure inference-specific body fields here. The json key-value pairs you enter are merged into every request."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "在这里配置推理所需的额外请求体字段，填写的 JSON 键值会随每次请求发送。"
+            "value" : "使用 JSON 键值对配置推理请求的载荷，并在请求时合并配置。"
           }
         }
       }
@@ -3257,22 +3225,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "创建一个链接来打开对话并呈现 ${message}"
-          }
-        }
-      }
-    },
-    "Create a new model by copying the current configuration." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Create a new model by copying the current configuration."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "通过复制当前配置创建一个新模型。"
           }
         }
       }
@@ -4445,38 +4397,6 @@
         }
       }
     },
-    "Edit Additional Body Fields" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Additional Body Fields"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑额外请求体字段"
-          }
-        }
-      }
-    },
-    "Edit Additional Header" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Edit Additional Header"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "编辑额外报头"
-          }
-        }
-      }
-    },
     "Edit Branding Name" : {
       "localizations" : {
         "en" : {
@@ -4522,6 +4442,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "编辑端点"
+          }
+        }
+      }
+    },
+    "Edit Fields" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Fields"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑字段"
+          }
+        }
+      }
+    },
+    "Edit Header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Edit Header"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "编辑报头"
           }
         }
       }
@@ -6579,6 +6531,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "有任何疑问反馈或建议？与我们联系。"
+          }
+        }
+      }
+    },
+    "Header" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Header"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "报头"
           }
         }
       }
@@ -8999,6 +8967,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "更多"
+          }
+        }
+      }
+    },
+    "More Actions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "More Actions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "更多操作"
           }
         }
       }
@@ -15651,22 +15635,6 @@
         }
       }
     },
-    "Verification process will send a standard inference request to the inference node and verify the returned status code. This process requires the server to return status code: 200. The verification process may incur standard charges from your service provider." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verification process will send a standard inference request to the inference node and verify the returned status code. This process requires the server to return status code: 200. The verification process may incur standard charges from your service provider."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "验证过程会发送标准的生成请求到推理节点，并验证返回的状态代码。此过程要求服务器返回状态代码：200。验证过程可能会被你的服务提供商收取标准费用。"
-          }
-        }
-      }
-    },
     "Verified Model Only" : {
       "localizations" : {
         "en" : {
@@ -15727,22 +15695,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "验证此 MCP 服务器的配置文件并列出可用的工具列表。"
-          }
-        }
-      }
-    },
-    "Verify the model by sending a test request." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Verify the model by sending a test request."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "发送标准请求以验证这个模型。"
           }
         }
       }
