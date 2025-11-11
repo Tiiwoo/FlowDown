@@ -20,7 +20,7 @@ extension SettingController {
             .init(
                 icon: "gear",
                 title: "General",
-                explain: "Change the behavior of the application, adjust text sizes, and more.",
+                explain: "Change the behavior of the application, adjust text sizes, tuning editor behavior.",
                 ephemeralAnnotation: .page { GeneralController() }
             ),
             .init(
@@ -31,31 +31,31 @@ extension SettingController {
             ),
             .init(
                 icon: "doc.text.magnifyingglass",
-                title: "Model Management",
+                title: "Model",
                 explain: "Manage language model providers or download local models.",
                 ephemeralAnnotation: .page { ModelController() }
             ),
             .init(
                 icon: "hammer",
-                title: "Tools Configuration",
-                explain: "Configure tool settings, choose search engine for internet searches.",
+                title: "Tools",
+                explain: "Configure tool settings, choose search engine for internet searches, adding custom tools.",
                 ephemeralAnnotation: .page { ToolsController() }
             ),
             .init(
                 icon: "moon.stars",
-                title: "Memory Management",
+                title: "Memory",
                 explain: "Manage AI memory tools and stored conversation memories.",
                 ephemeralAnnotation: .page { MemoryController() }
             ),
             .init(
                 icon: "lock.shield",
-                title: "Data Control",
-                explain: "Get control of your data, export or delete.",
+                title: "Data",
+                explain: "Get control of your data, configure cloud sync, export database or reset the app.",
                 ephemeralAnnotation: .page { DataControlController() }
             ),
             .init(
                 icon: "key",
-                title: "Permission List",
+                title: "Permission",
                 explain: "Manage permissions for the application. Your privacy is important to us.",
                 ephemeralAnnotation: .page { PermissionController() }
             ),

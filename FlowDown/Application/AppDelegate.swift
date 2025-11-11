@@ -60,6 +60,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         sdb.clearDeletedRecords()
 
+        if let firstSeenTicketURL = FileManager.default
+            .urls(for: .documentDirectory, in: .userDomainMask)
+            .first?
+            .appendingPathComponent("first_seen_ticket.txt")
+        {
+            let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown"
+            if !FileManager.default.fileExists(atPath: firstSeenTicketURL.path) {
+                do {
+                    try version.write(to: firstSeenTicketURL, atomically: true, encoding: .utf8)
+                    logger.infoFile("wrote first seen ticket: \(version)")
+                } catch {
+                    logger.errorFile("failed to write first seen ticket: \(error)")
+                }
+            }
+        }
+
         return true
     }
 

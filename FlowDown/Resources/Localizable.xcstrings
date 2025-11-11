@@ -1899,18 +1899,12 @@
         }
       }
     },
-    "Change the behavior of the application, adjust text sizes, and more." : {
+    "Change the behavior of the application, adjust text sizes, tuning editor behavior." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change the behavior of the application, adjust text sizes, and more."
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "修改软件通用设置，调整字体大小等。"
+            "value" : "修改软件通用设置，调整字体大小和编辑器偏好。"
           }
         }
       }
@@ -2571,18 +2565,12 @@
         }
       }
     },
-    "Configure tool settings, choose search engine for internet searches." : {
+    "Configure tool settings, choose search engine for internet searches, adding custom tools." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Configure tool settings, choose search engine for internet searches."
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "配置工具设置，选择网络搜索引擎。"
+            "value" : "配置工具设置，选择网络搜索引擎，添加自定义工具。"
           }
         }
       }
@@ -3449,6 +3437,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "深色"
+          }
+        }
+      }
+    },
+    "Data" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据"
           }
         }
       }
@@ -6424,18 +6422,12 @@
         }
       }
     },
-    "Get control of your data, export or delete." : {
+    "Get control of your data, configure cloud sync, export database or reset the app." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Get control of your data, export or delete."
-          }
-        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "管理数据，导出、删除等。"
+            "value" : "管理你的数据，配置云同步，导出数据库，重置软件。"
           }
         }
       }
@@ -10015,6 +10007,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "人物 & 肢体"
+          }
+        }
+      }
+    },
+    "Permission" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "权限"
           }
         }
       }
@@ -14430,22 +14432,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "工具"
-          }
-        }
-      }
-    },
-    "Tools Configuration" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tools Configuration"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "工具配置"
           }
         }
       }
