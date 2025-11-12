@@ -31,6 +31,7 @@
 - **绝佳体验**：完整的 Markdown 渲染、代码语法高亮，以及如丝般顺滑的交互界面，让与 AI 的每一次对话都成为享受。
 - **强大工作流**：
   - **视觉模型**：与支持图像理解的多模态模型进行互动。
+  - **音频支持**：使用附件向兼容的模型发送音频消息。
   - **文件附件**：在对话中轻松添加文件和文档。
   - **联网搜索**：授权 AI 访问互联网，获取实时信息。
   - **对话模板**：保存并快速复用你最喜欢的提示词。
@@ -38,9 +39,21 @@
 - **iCloud 同步**：在你的所有 Apple 设备之间无缝同步对话、应用设置和自定义模型。
 - **开源透明**：我们相信开源的力量。浮望采用 AGPL-3.0 许可证，欢迎你随时审查代码，共同见证我们对隐私和品质的承诺。
 
+## Star 历史
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Lakr233/FlowDown&type=date&legend=top-left)](https://www.star-history.com/#Lakr233/FlowDown&type=date&legend=top-left)
+
 ## 许可证
 
 项目源代码基于 AGPL-3.0 许可证。你可以在 [LICENSE](../../../LICENSE) 文件中找到完整的许可证文本。
+
+用于构建浮望或从中提取的解耦库如下，其各自许可证如下：
+
+- [AlertController](https://github.com/Lakr233/AlertController) - MIT License
+- [ColorfulX](https://github.com/Lakr233/ColorfulX) - MIT License
+- [ListViewKit](https://github.com/Lakr233/ListViewKit) - MIT License
+- [MarkdownView](https://github.com/Lakr233/MarkdownView) - MIT License
+- [GlyphixTextFx](https://github.com/ktiays/GlyphixTextFx/) - MIT License
 
 请注意，项目代码遵循开源许可，但“浮望”的名称、图标及相关视觉设计为专有资产。如需商业授权，请与我们联系。
 

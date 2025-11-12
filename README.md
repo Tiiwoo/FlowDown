@@ -31,6 +31,7 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback
 - **Rich User Experience**: Enjoy full Markdown rendering, syntax highlighting, and a buttery-smooth interface that makes interacting with AI a pleasure.
 - **Powerful Workflows**:
   - **Vision Support**: Interact with vision-capable models.
+  - **Audio Support**: Send audio messages to compatible models using attachments.
   - **File Attachments**: Add files and documents to your conversations.
   - **Web Search**: Grant the AI access to real-time information from the web.
   - **Reusable Templates**: Save and quickly reuse your favorite prompts.
@@ -38,9 +39,21 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback
 - **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
 - **Open Source**: FlowDown is fully open source under the AGPL-3.0 license. We invite you to inspect the code and verify our commitment to privacy and quality.
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=Lakr233/FlowDown&type=date&legend=top-left)](https://www.star-history.com/#Lakr233/FlowDown&type=date&legend=top-left)
+
 ## License
 
 The source code is licensed under AGPL-3.0. You can find the full license text in the [LICENSE](./LICENSE) file.
+
+The decoupled libraries used to build, or extracted from FlowDown are listed below with their respective licenses:
+
+- [AlertController](https://github.com/Lakr233/AlertController) - MIT License
+- [ColorfulX](https://github.com/Lakr233/ColorfulX) - MIT License
+- [ListViewKit](https://github.com/Lakr233/ListViewKit) - MIT License
+- [MarkdownView](https://github.com/Lakr233/MarkdownView) - MIT License
+- [GlyphixTextFx](https://github.com/ktiays/GlyphixTextFx/) - MIT License
 
 Please note that while the code is open source, the FlowDown name, icon, and artwork are proprietary. For commercial licensing inquiries, please contact us.
 
