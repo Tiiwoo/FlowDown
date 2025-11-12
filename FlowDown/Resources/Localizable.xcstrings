@@ -12217,6 +12217,22 @@
         }
       }
     },
+    "Show ${conversation}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show ${conversation}"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示 ${conversation}"
+          }
+        }
+      }
+    },
     "Show ${conversation} and send message" : {
       "localizations" : {
         "en" : {
@@ -12261,6 +12277,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示云端模型"
+          }
+        }
+      }
+    },
+    "Show Conversation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Conversation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示对话"
           }
         }
       }
@@ -12939,6 +12971,22 @@
         }
       }
     },
+    "Switch to a conversation without sending any messages" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switch to a conversation without sending any messages"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "切换到一个对话，但不自动发送消息。"
+          }
+        }
+      }
+    },
     "Switch to Conversation" : {
       "localizations" : {
         "en" : {
@@ -12951,6 +12999,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "切换到会话"
+          }
+        }
+      }
+    },
+    "Switched to conversation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Switched to conversation"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已切换到对话"
           }
         }
       }

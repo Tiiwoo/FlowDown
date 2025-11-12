@@ -83,6 +83,18 @@ struct Shortcuts: AppShortcutsProvider {
 
         shortcuts.append(
             AppShortcut(
+                intent: ShowConversationIntent(),
+                phrases: [
+                    "Show conversation on \(.applicationName)",
+                    "Open chat on \(.applicationName)",
+                ],
+                shortTitle: LocalizedStringResource("Show Conversation"),
+                systemImageName: "bubble.left"
+            )
+        )
+
+        shortcuts.append(
+            AppShortcut(
                 intent: ShowAndSendConversationIntent(),
                 phrases: [
                     "Send conversation on \(.applicationName)",
