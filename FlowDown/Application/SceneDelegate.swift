@@ -33,6 +33,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
 
+        UIUserInterfaceStyle.reapplyConfiguredStyle()
+
         for urlContext in connectionOptions.urlContexts {
             handleIncomingURL(urlContext.url)
         }
