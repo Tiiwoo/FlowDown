@@ -14706,6 +14706,22 @@
         }
       }
     },
+    "Tool executed successfully with no output." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool executed successfully with no output."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具执行成功但没有输出任何结果"
+          }
+        }
+      }
+    },
     "Tool execution cancelled by user" : {
       "localizations" : {
         "en" : {
@@ -16560,6 +16576,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "网页搜索"
+          }
+        }
+      }
+    },
+    "Web search completed with no results." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Web search completed with no results."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "网页搜索完成但没有找到结果。"
           }
         }
       }
