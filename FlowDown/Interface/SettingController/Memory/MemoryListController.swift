@@ -18,7 +18,7 @@ class MemoryListController: UIViewController {
     private lazy var addMemoryButton = UIBarButtonItem(
         barButtonSystemItem: .add,
         target: self,
-        action: #selector(addMemoryButtonTapped)
+        action: #selector(addMemoryButtonTapped),
     )
 
     private var isSearching: Bool {
@@ -132,7 +132,7 @@ class MemoryListController: UIViewController {
                 await MainActor.run {
                     let errorAlert = AlertViewController(
                         title: "Error",
-                        message: "Failed to delete memory: \(error.localizedDescription)"
+                        message: "Failed to delete memory: \(error.localizedDescription)",
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) {
@@ -197,7 +197,7 @@ extension MemoryListController: UITableViewDelegate {
 
     func tableView(
         _: UITableView,
-        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath,
     ) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "") { [weak self] _, _, completion in
             self?.deleteMemory(at: indexPath)
@@ -213,12 +213,12 @@ extension MemoryListController: UITableViewDelegate {
     func tableView(
         _: UITableView,
         contextMenuConfigurationForRowAt indexPath: IndexPath,
-        point _: CGPoint
+        point _: CGPoint,
     ) -> UIContextMenuConfiguration? {
         let memory = currentMemories()[indexPath.row]
         return UIContextMenuConfiguration(
             identifier: memory.id as NSString,
-            previewProvider: { nil }
+            previewProvider: { nil },
         ) { [weak self] _ in
             guard let self else { return nil }
             let editAction = UIAction(title: String(localized: "Edit"), image: UIImage(systemName: "square.and.pencil")) { _ in
@@ -248,7 +248,7 @@ extension MemoryListController: UITableViewDelegate {
     func tableView(
         _: UITableView,
         willPerformPreviewActionForMenuWith configuration: UIContextMenuConfiguration,
-        animator: UIContextMenuInteractionCommitAnimating
+        animator: UIContextMenuInteractionCommitAnimating,
     ) {
         guard let identifier = configuration.identifier as? NSString else { return }
         let memoryId = identifier as String
@@ -373,7 +373,7 @@ private extension MemoryListController {
                     await MainActor.run {
                         let errorAlert = AlertViewController(
                             title: "Error",
-                            message: "Failed to update memory: \(error.localizedDescription)"
+                            message: "Failed to update memory: \(error.localizedDescription)",
                         ) { context in
                             context.allowSimpleDispose()
                             context.addAction(title: "OK", attribute: .accent) {
@@ -397,7 +397,7 @@ private extension MemoryListController {
     func presentMemoryCreationError(_ error: Error) {
         let alert = AlertViewController(
             title: String(localized: "Error"),
-            message: error.localizedDescription
+            message: error.localizedDescription,
         ) { context in
             context.allowSimpleDispose()
             context.addAction(title: String(localized: "OK"), attribute: .accent) {

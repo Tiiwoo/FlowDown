@@ -9,7 +9,7 @@ struct GetLatestConversationDetailsIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Return the full document of the most recent conversation."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 

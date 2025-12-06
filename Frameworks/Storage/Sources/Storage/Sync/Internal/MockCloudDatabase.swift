@@ -89,7 +89,7 @@ package final class MockCloudDatabase: CloudDatabase {
 
     package func records(
         for ids: [CKRecord.ID],
-        desiredKeys _: [CKRecord.FieldKey]?
+        desiredKeys _: [CKRecord.FieldKey]?,
     ) async throws -> [CKRecord.ID: Result<CKRecord, any Error>] {
         let accountStatus = try await container.accountStatus()
         guard accountStatus == .available
@@ -111,10 +111,10 @@ package final class MockCloudDatabase: CloudDatabase {
         saving recordsToSave: [CKRecord] = [],
         deleting recordIDsToDelete: [CKRecord.ID] = [],
         savePolicy: CKModifyRecordsOperation.RecordSavePolicy = .ifServerRecordUnchanged,
-        atomically _: Bool = true
+        atomically _: Bool = true,
     ) async throws -> (
         saveResults: [CKRecord.ID: Result<CKRecord, any Error>],
-        deleteResults: [CKRecord.ID: Result<Void, any Error>]
+        deleteResults: [CKRecord.ID: Result<Void, any Error>],
     ) {
         let accountStatus = try await container.accountStatus()
         guard accountStatus == .available
@@ -225,8 +225,8 @@ package final class MockCloudDatabase: CloudDatabase {
                                     userInfo: [
                                         CKRecordChangedErrorServerRecordKey: existingRecord.copy() as Any,
                                         CKRecordChangedErrorClientRecordKey: recordToSave.copy(),
-                                    ]
-                                )
+                                    ],
+                                ),
                             )
                         }
                     case let (.some(existingRecord), .none):
@@ -239,8 +239,8 @@ package final class MockCloudDatabase: CloudDatabase {
                                 userInfo: [
                                     CKRecordChangedErrorServerRecordKey: existingRecord.copy() as Any,
                                     CKRecordChangedErrorClientRecordKey: recordToSave.copy(),
-                                ]
-                            )
+                                ],
+                            ),
                         )
                     case (.none, .some):
                         // We are trying to save a record with a change tag but it does not exist in the DB.
@@ -266,7 +266,7 @@ package final class MockCloudDatabase: CloudDatabase {
                 let hasReferenceViolation = !Set(
                     storage[recordIDToDelete.zoneID]?.values
                         .compactMap { $0.parent?.recordID == recordIDToDelete ? $0.recordID : nil }
-                        ?? []
+                        ?? [],
                 )
                 .subtracting(recordIDsToDelete)
                 .isEmpty
@@ -286,10 +286,10 @@ package final class MockCloudDatabase: CloudDatabase {
 
     package func modifyRecordZones(
         saving recordZonesToSave: [CKRecordZone] = [],
-        deleting recordZoneIDsToDelete: [CKRecordZone.ID] = []
+        deleting recordZoneIDsToDelete: [CKRecordZone.ID] = [],
     ) async throws -> (
         saveResults: [CKRecordZone.ID: Result<CKRecordZone, any Error>],
-        deleteResults: [CKRecordZone.ID: Result<Void, any Error>]
+        deleteResults: [CKRecordZone.ID: Result<Void, any Error>],
     ) {
         let accountStatus = try await container.accountStatus()
         guard accountStatus == .available

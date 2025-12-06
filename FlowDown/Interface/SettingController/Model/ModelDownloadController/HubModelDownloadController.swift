@@ -92,7 +92,7 @@ class HubModelDownloadController: UIViewController {
         }
         let filterItem = UIBarButtonItem(
             image: .init(systemName: "ellipsis"),
-            menu: UIMenu(children: [deferredMenu])
+            menu: UIMenu(children: [deferredMenu]),
         )
 
         var items: [UIBarButtonItem] = [filterItem]
@@ -109,7 +109,7 @@ class HubModelDownloadController: UIViewController {
         isFirstAppear = false
         let warning = AlertViewController(
             title: "Warning",
-            message: "Features provided by this page are suitable for users who have experience deploying large language models. Running models that exceed the resources of the device may cause the application or system to crash. Please proceed with caution.\n\nReady to dive in? Select a model to see its size and details."
+            message: "Features provided by this page are suitable for users who have experience deploying large language models. Running models that exceed the resources of the device may cause the application or system to crash. Please proceed with caution.\n\nReady to dive in? Select a model to see its size and details.",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose { [weak self] in
@@ -149,18 +149,18 @@ class HubModelDownloadController: UIViewController {
                     UIAction(
                         title: String(localized: "Text Model Only"),
                         image: UIImage(systemName: "text.append"),
-                        state: anchorToTextGenerationModels ? .on : .off
+                        state: anchorToTextGenerationModels ? .on : .off,
                     ) { [weak self] _ in
                         self?.anchorToTextGenerationModels.toggle()
                     },
                     UIAction(
                         title: String(localized: "Verified Model Only"),
                         image: UIImage(systemName: "rosette"),
-                        state: anchorToVerifiedAuthorMLX ? .on : .off
+                        state: anchorToVerifiedAuthorMLX ? .on : .off,
                     ) { [weak self] _ in
                         self?.anchorToVerifiedAuthorMLX.toggle()
                     },
-                ]
+                ],
             ),
         ]
     }

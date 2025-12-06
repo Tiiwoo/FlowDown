@@ -35,7 +35,7 @@ extension SettingController.SettingContent {
             explain: "Enable this to automatically collapse reasoning content after the reasoning is completed. This is useful for keeping the chat interface clean and focused on the final response.",
             key: ModelManager.shared.collapseReasoningSectionWhenCompleteKey,
             defaultValue: false,
-            annotation: .boolean
+            annotation: .boolean,
         )
         .createView()
 
@@ -44,8 +44,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Display"
-                )
+                    header: "Display",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -60,15 +60,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "The above setting only adjusts the text size in conversations. To change the font size globally, please go to the system settings, as this app follows the system’s font size preferences."
-                )
+                    footer: "The above setting only adjusts the text size in conversations. To change the font size globally, please go to the system settings, as this app follows the system’s font size preferences.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Chat"
-                )
+                    header: "Chat",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -77,15 +77,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "The above setting will take effect at conversation page."
-                )
+                    footer: "The above setting will take effect at conversation page.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Editor"
-                )
+                    header: "Editor",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -98,15 +98,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "Regardless of whether image compression is enabled, the EXIF information of the image will be removed. This will delete information such as the shooting date and location."
-                )
+                    footer: "Regardless of whether image compression is enabled, the EXIF information of the image will be removed. This will delete information such as the shooting date and location.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Model Selector"
-                )
+                    header: "Model Selector",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -118,8 +118,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "If this switch is turned off, the newly selected model in the conversation will not be used for new conversations."
-                )
+                    footer: "If this switch is turned off, the newly selected model in the conversation will not be used for new conversations.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }

@@ -11,7 +11,7 @@ struct TranscribeAudioIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Convert an audio recording into text using a model that supports audio input."),
-            categoryName: LocalizedStringResource("Transcription")
+            categoryName: LocalizedStringResource("Transcription"),
         )
     }
 
@@ -21,14 +21,14 @@ struct TranscribeAudioIntent: AppIntent {
     @Parameter(
         title: "Audio",
         supportedContentTypes: [.audio],
-        requestValueDialog: "Which audio file should be transcribed?"
+        requestValueDialog: "Which audio file should be transcribed?",
     )
     var audio: IntentFile
 
     @Parameter(
         title: "Language Hint",
         default: nil,
-        requestValueDialog: "What language is primarily spoken?"
+        requestValueDialog: "What language is primarily spoken?",
     )
     var languageHint: String?
 
@@ -74,8 +74,8 @@ struct TranscribeAudioIntent: AppIntent {
             options: .init(
                 allowsImages: false,
                 allowsAudio: true,
-                saveToConversation: saveToConversation
-            )
+                saveToConversation: saveToConversation,
+            ),
         )
 
         let dialog = IntentDialog(.init(stringLiteral: response))

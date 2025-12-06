@@ -15,7 +15,7 @@ class TemporaryStorage {
             .appendingPathComponent(id)
         try? FileManager.default.createDirectory(
             at: storageDir,
-            withIntermediateDirectories: true
+            withIntermediateDirectories: true,
         )
     }
 
@@ -46,7 +46,7 @@ class TemporaryStorage {
         try? FileManager.default.removeItem(at: storageDir)
         try? FileManager.default.createDirectory(
             at: storageDir,
-            withIntermediateDirectories: true
+            withIntermediateDirectories: true,
         )
     }
 }

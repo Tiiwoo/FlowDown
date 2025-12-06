@@ -15,8 +15,8 @@ public extension Storage {
                 orderBy: [
                     Attachment.Properties.creation
                         .order(.ascending),
-                ]
-            )
+                ],
+            ),
         ) ?? []
     }
 
@@ -127,7 +127,7 @@ public extension Storage {
             let objects: [Attachment] = try $0.getObjects(
                 fromTable: Attachment.tableName,
                 where: Attachment.Properties.messageId.in(messageIds)
-                    && Attachment.Properties.removed == false
+                    && Attachment.Properties.removed == false,
             )
 
             guard !objects.isEmpty else {
@@ -164,7 +164,7 @@ public extension Storage {
 
             let objects: [Attachment] = try $0.getObjects(
                 fromTable: Attachment.tableName,
-                where: Attachment.Properties.removed == false
+                where: Attachment.Properties.removed == false,
             )
 
             guard !objects.isEmpty else {

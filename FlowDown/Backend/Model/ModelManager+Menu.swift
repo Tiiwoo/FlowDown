@@ -30,7 +30,7 @@ extension ModelManager {
         requiresCapabilities: Set<ModelCapabilities> = [],
         allowSelectionWithNone: Bool = false,
         onCompletion: @escaping (ModelIdentifier) -> Void,
-        includeQuickActions: Bool
+        includeQuickActions: Bool,
     ) -> [UIMenuElement] {
         let localModels = ModelManager.shared.localModels.value.filter {
             !$0.model_identifier.isEmpty
@@ -40,10 +40,11 @@ extension ModelManager {
         }.filter { requiresCapabilities.isSubset(of: $0.capabilities) }
 
         var appleIntelligenceAvailable = false
-        if #available(iOS 26.0, macCatalyst 26.0, *),
+        if ModelManager.shared.appleIntelligenceEnabled,
+           #available(iOS 26.0, macCatalyst 26.0, *),
            AppleIntelligenceModel.shared.isAvailable,
            requiresCapabilities.isSubset(of: modelCapabilities(
-               identifier: AppleIntelligenceModel.shared.modelIdentifier
+               identifier: AppleIntelligenceModel.shared.modelIdentifier,
            ))
         {
             appleIntelligenceAvailable = true
@@ -82,7 +83,7 @@ extension ModelManager {
                     UIAction(title: item.0, state: item.1.id == currentSelection ? .on : .off) { _ in
                         onCompletion(item.1.id)
                     }
-                }
+                },
             ))
         }
 
@@ -97,7 +98,7 @@ extension ModelManager {
                     UIAction(title: item.0, state: item.1.id == currentSelection ? .on : .off) { _ in
                         onCompletion(item.1.id)
                     }
-                }
+                },
             ))
         }
 
@@ -135,7 +136,7 @@ extension ModelManager {
                 let relatedActions: [UIAction] = relatedEntries.map { entry in
                     UIAction(
                         title: entry.title,
-                        state: entry.identifier == currentSelection ? .on : .off
+                        state: entry.identifier == currentSelection ? .on : .off,
                     ) { _ in
                         onCompletion(entry.identifier)
                     }
@@ -146,33 +147,42 @@ extension ModelManager {
 
         if allowSelectionWithNone {
             finalChildren.append(UIAction(
-                title: String(localized: "Use None")
+                title: String(localized: "Use None"),
             ) { _ in
                 onCompletion("")
             })
         }
 
+        var appleIntelligenceMenu: UIMenuElement?
         if #available(iOS 26.0, macCatalyst 26.0, *) {
             if appleIntelligenceAvailable {
-                finalChildren.append(UIAction(
+                let appleAction = UIAction(
                     title: AppleIntelligenceModel.shared.modelDisplayName,
-                    state: currentSelection == AppleIntelligenceModel.shared.modelIdentifier ? .on : .off
+                    state: currentSelection == AppleIntelligenceModel.shared.modelIdentifier ? .on : .off,
                 ) { _ in
                     onCompletion(AppleIntelligenceModel.shared.modelIdentifier)
-                })
+                }
+                appleIntelligenceMenu = UIMenu(
+                    options: [.displayInline],
+                    children: [appleAction],
+                )
             }
+        }
+
+        if let appleIntelligenceMenu {
+            finalChildren.append(appleIntelligenceMenu)
         }
 
         if !localMenuChildren.isEmpty {
             finalChildren.append(UIMenu(
                 options: finalOptions,
-                children: localMenuChildren
+                children: localMenuChildren,
             ))
         }
         if !cloudMenuChildren.isEmpty {
             finalChildren.append(UIMenu(
                 options: finalOptions,
-                children: cloudMenuChildren
+                children: cloudMenuChildren,
             ))
         }
 
@@ -187,12 +197,12 @@ extension ModelManager {
                 allowSelectionWithNone: !Self.ModelIdentifier.defaultModelForAuxiliaryTask.isEmpty,
                 onCompletion: { identifier in
                     Self.ModelIdentifier.defaultModelForAuxiliaryTask = identifier
-                }, includeQuickActions: false
+                }, includeQuickActions: false,
             )
             let taskModelSelect = UIMenu(
                 title: String(localized: "Task Model"),
                 image: UIImage(systemName: "ellipsis.bubble"),
-                children: taskMenu
+                children: taskMenu,
             )
 
             let auxVisionMenu = buildModelSelectionMenu(
@@ -201,12 +211,12 @@ extension ModelManager {
                 allowSelectionWithNone: !Self.ModelIdentifier.defaultModelForAuxiliaryVisualTask.isEmpty,
                 onCompletion: { identifier in
                     Self.ModelIdentifier.defaultModelForAuxiliaryVisualTask = identifier
-                }, includeQuickActions: false
+                }, includeQuickActions: false,
             )
             let auxVisionModelSelect = UIMenu(
                 title: String(localized: "Auxiliary Visual Model"),
                 image: UIImage(systemName: "eye"),
-                children: auxVisionMenu
+                children: auxVisionMenu,
             )
 
             let temperatureGroup = UIMenu(
@@ -218,12 +228,12 @@ extension ModelManager {
                     let action = UIAction(
                         title: preset.title,
                         image: UIImage(systemName: preset.icon),
-                        state: isCurrent ? .on : .off
+                        state: isCurrent ? .on : .off,
                     ) { _ in
                         ModelManager.shared.temperature = Float(preset.value)
                     }
                     return action
-                }
+                },
             )
             let quickMenu = UIMenu(
                 title: String(localized: "Parameters"),
@@ -234,8 +244,8 @@ extension ModelManager {
                         taskModelSelect,
                         auxVisionModelSelect,
                         temperatureGroup,
-                    ]
-                )]
+                    ],
+                )],
             )
             finalChildren.append(quickMenu)
         }

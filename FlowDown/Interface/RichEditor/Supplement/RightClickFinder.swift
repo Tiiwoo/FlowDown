@@ -18,7 +18,7 @@ class RightClickFinder: NSObject, UIContextMenuInteractionDelegate {
 
     func contextMenuInteraction(
         _: UIContextMenuInteraction,
-        configurationForMenuAtLocation _: CGPoint
+        configurationForMenuAtLocation _: CGPoint,
     ) -> UIContextMenuConfiguration? {
         contextMenuActivationTime = CACurrentMediaTime()
         action?()
@@ -28,7 +28,7 @@ class RightClickFinder: NSObject, UIContextMenuInteractionDelegate {
     func contextMenuInteraction(
         _: UIContextMenuInteraction,
         willEndFor _: UIContextMenuConfiguration,
-        animator _: UIContextMenuInteractionAnimating?
+        animator _: UIContextMenuInteractionAnimating?,
     ) {
         contextMenuActivationTime = 0
     }

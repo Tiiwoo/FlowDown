@@ -49,7 +49,7 @@ class SimpleSpeechController: AlertBaseController {
         textView.textColor = .label
         textView.font = .systemFont(
             ofSize: UIFont.preferredFont(forTextStyle: .title3).pointSize,
-            weight: .semibold
+            weight: .semibold,
         )
         textView.backgroundColor = .clear
         textView.contentInset = .zero
@@ -76,19 +76,19 @@ class SimpleSpeechController: AlertBaseController {
             x: 0,
             y: bounds.height - 50,
             width: bounds.width,
-            height: 50
+            height: 50,
         )
         divider.frame = .init(
             x: 0,
             y: bounds.height - 50,
             width: bounds.width,
-            height: 1
+            height: 1,
         )
         textView.frame = .init(
             x: 10,
             y: 10,
             width: bounds.width - 20,
-            height: divider.frame.minY - 20
+            height: divider.frame.minY - 20,
         )
     }
 }

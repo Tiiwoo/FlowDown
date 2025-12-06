@@ -90,7 +90,7 @@ public extension Storage {
                 where: Memory.Properties.removed == false,
                 orderBy: [
                     Memory.Properties.creation.order(.descending),
-                ]
+                ],
             )
         } catch {
             throw MemoryError.retrieveFailed(error.localizedDescription)
@@ -105,7 +105,7 @@ public extension Storage {
                 orderBy: [
                     Memory.Properties.creation.order(.descending),
                 ],
-                limit: limit
+                limit: limit,
             )
         } catch {
             throw MemoryError.retrieveFailed(error.localizedDescription)
@@ -116,7 +116,7 @@ public extension Storage {
         do {
             return try db.getObject(
                 fromTable: Memory.tableName,
-                where: Memory.Properties.objectId == id && Memory.Properties.removed == false
+                where: Memory.Properties.objectId == id && Memory.Properties.removed == false,
             )
         } catch {
             throw MemoryError.retrieveFailed(error.localizedDescription)
@@ -131,7 +131,7 @@ public extension Storage {
                 orderBy: [
                     Memory.Properties.creation.order(.descending),
                 ],
-                limit: limit
+                limit: limit,
             )
         } catch {
             throw MemoryError.retrieveFailed(error.localizedDescription)
@@ -151,7 +151,7 @@ public extension Storage {
         do {
             let existingMemory = try db.getObject(
                 fromTable: Memory.tableName,
-                where: Memory.Properties.objectId == memory.objectId
+                where: Memory.Properties.objectId == memory.objectId,
             ) as Memory?
 
             guard existingMemory != nil else {
@@ -173,12 +173,12 @@ public extension Storage {
             let existingMemory: Memory? = if let handle {
                 try handle.getObject(
                     fromTable: Memory.tableName,
-                    where: Memory.Properties.objectId == id
+                    where: Memory.Properties.objectId == id,
                 )
             } else {
                 try db.getObject(
                     fromTable: Memory.tableName,
-                    where: Memory.Properties.objectId == id
+                    where: Memory.Properties.objectId == id,
                 )
             }
 
@@ -258,7 +258,7 @@ public extension Storage {
                 orderBy: [
                     Memory.Properties.creation.order(.ascending),
                 ],
-                limit: totalCount - keepCount
+                limit: totalCount - keepCount,
             )
 
             guard !memoriesToDelete.isEmpty else {

@@ -122,7 +122,7 @@ public final class ModelContextServer: Identifiable, Codable, TableNamed, Device
         templateEnabled: EnableCodable = .init(),
         lastConnected: Date? = nil,
         connectionStatus: ConnectionStatus = .disconnected,
-        capabilities: StringArrayCodable = StringArrayCodable([])
+        capabilities: StringArrayCodable = StringArrayCodable([]),
     ) {
         self.name = name
         self.comment = comment

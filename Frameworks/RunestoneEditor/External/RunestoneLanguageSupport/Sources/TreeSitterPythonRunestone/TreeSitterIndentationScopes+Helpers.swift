@@ -14,7 +14,7 @@ public extension TreeSitterIndentationScopes {
                 "if_statement",
                 "try_statement",
             ],
-            whitespaceDenotesBlocks: true
+            whitespaceDenotesBlocks: true,
         )
     }
 }

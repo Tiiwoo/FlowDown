@@ -20,7 +20,7 @@ extension NSString {
             encoding: encoding.rawValue,
             options: [],
             range: range,
-            remaining: nil
+            remaining: nil,
         )
         if didGetBytes {
             return UnsafePointer<Int8>(buffer)

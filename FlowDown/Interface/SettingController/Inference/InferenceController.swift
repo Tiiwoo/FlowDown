@@ -37,7 +37,7 @@ extension SettingController.SettingContent {
         private let defaultAuxiliaryModelAlignWithChatModel = ConfigurableBooleanBlockView(storage: .init(
             key: "InferenceController.defaultAuxiliaryModelAlignWithChatModel",
             defaultValue: true,
-            storage: UserDefaultKeyValueStorage(suite: .standard)
+            storage: UserDefaultKeyValueStorage(suite: .standard),
         )).with {
             $0.configure(icon: UIImage(systemName: "quote.bubble"))
             $0.configure(title: "Use Chat Model")
@@ -56,13 +56,23 @@ extension SettingController.SettingContent {
             $0.configure(description: "The model is used for visual input when the current model does not support it. It will extract information before using the current model for inference.")
         }
 
+        private let appleIntelligenceToggle = ConfigurableBooleanBlockView(storage: .init(
+            key: ModelManager.appleIntelligenceEnabledKey,
+            defaultValue: true,
+            storage: UserDefaultKeyValueStorage(suite: .standard),
+        )).with {
+            $0.configure(icon: UIImage(systemName: "switch.2"))
+            $0.configure(title: "Enable Foundation Model")
+            $0.configure(description: "Show Foundation Model in the model picker when available.")
+        }
+
         private let skipVisualAssessmentView = ConfigurableObject(
             icon: "arrowshape.zigzag.forward",
             title: "Skip Recognization If Possible",
             explain: "Skip the visual assessment process when the conversation model natively supports visual input. Enabling this option can improve the efficiency when using visual models, but if you switch to a model that does not support visual input after using it, the image information will be lost.",
             key: ModelManager.shared.defaultModelForAuxiliaryVisualTaskSkipIfPossibleKey,
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
         .createView()
 
@@ -71,8 +81,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Conversation"
-                )
+                    header: "Conversation",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -86,15 +96,15 @@ extension SettingController.SettingContent {
                     explain: "The template used for new conversations. You can customize the system prompt and other parameters here. Also known as assistant.",
                     ephemeralAnnotation: .page {
                         ChatTemplateListController()
-                    }
-                ).createView()
+                    },
+                ).createView(),
             )
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Task Model"
-                )
+                    header: "Task Model",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -105,15 +115,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "Using a local or mini model for this purpose will lower overall costs while maintaining a consistent experience."
-                )
+                    footer: "Using a local or mini model for this purpose will lower overall costs while maintaining a consistent experience.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Visual Assessment"
-                )
+                    header: "Visual Assessment",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -124,8 +134,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "While using a visual assessment model may result in some loss of information, it can make tasks requiring visual input possible."
-                )
+                    footer: "While using a visual assessment model may result in some loss of information, it can make tasks requiring visual input possible.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -133,8 +143,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Parameters"
-                )
+                    header: "Parameters",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -152,8 +162,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "The above parameters will be applied to all conversations."
-                )
+                    footer: "The above parameters will be applied to all conversations.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -161,9 +171,12 @@ extension SettingController.SettingContent {
             if #available(iOS 26.0, macCatalyst 26.0, *) {
                 stackView.addArrangedSubviewWithMargin(
                     ConfigurableSectionHeaderView().with(
-                        header: "Apple Intelligence"
-                    )
+                        header: "Apple Intelligence",
+                    ),
                 ) { $0.bottom /= 2 }
+                stackView.addArrangedSubview(SeparatorView())
+
+                stackView.addArrangedSubviewWithMargin(appleIntelligenceToggle)
                 stackView.addArrangedSubview(SeparatorView())
 
                 let appleIntelligenceStatusView = ConfigurableInfoView().with {
@@ -177,16 +190,21 @@ extension SettingController.SettingContent {
 
                 stackView.addArrangedSubviewWithMargin(
                     ConfigurableSectionFooterView().with(
-                        footer: "Apple Intelligence provides on-device AI capabilities when available."
-                    )
+                        footer: "Apple Intelligence provides on-device AI capabilities when available.",
+                    ),
                 ) { $0.top /= 2 }
                 stackView.addArrangedSubview(SeparatorView())
+
+                appleIntelligenceToggle.onUpdated = { [weak self] isOn in
+                    ModelManager.shared.appleIntelligenceEnabled = isOn
+                    self?.updateDefaultModelinfoFile()
+                }
             }
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "MLX"
-                )
+                    header: "MLX",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -195,8 +213,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "MLX is only available on Apple Silicon devices with Metal 3 support."
-                )
+                    footer: "MLX is only available on Apple Silicon devices with Metal 3 support.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }
@@ -227,7 +245,7 @@ extension SettingController.SettingContent {
                             ModelManager.ModelIdentifier.defaultModelForConversation = identifier
                             self?.updateDefaultModelinfoFile()
                         },
-                        includeQuickActions: false
+                        includeQuickActions: false,
                     )
                 }
                 handledConvModel = true
@@ -250,7 +268,7 @@ extension SettingController.SettingContent {
                             ModelManager.ModelIdentifier.defaultModelForConversation = identifier
                             self?.updateDefaultModelinfoFile()
                         },
-                        includeQuickActions: false
+                        includeQuickActions: false,
                     )
                 }
             }
@@ -295,7 +313,7 @@ extension SettingController.SettingContent {
                         ModelManager.ModelIdentifier.defaultModelForAuxiliaryTask = identifier
                         self?.updateDefaultModelinfoFile()
                     },
-                    includeQuickActions: false
+                    includeQuickActions: false,
                 )
             }
 
@@ -331,7 +349,7 @@ extension SettingController.SettingContent {
                         ModelManager.ModelIdentifier.defaultModelForAuxiliaryVisualTask = identifier
                         self?.updateDefaultModelinfoFile()
                     },
-                    includeQuickActions: false
+                    includeQuickActions: false,
                 )
             }
         }

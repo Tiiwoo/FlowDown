@@ -55,13 +55,13 @@ class LocalModelEditorController: StackScrollController {
             image: UIImage(systemName: "checkmark"),
             style: .done,
             target: self,
-            action: #selector(checkTapped)
+            action: #selector(checkTapped),
         )
         let actionsItem = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis.circle"),
             style: .plain,
             target: nil,
-            action: nil
+            action: nil,
         )
         actionsItem.accessibilityLabel = String(localized: "More Actions")
         actionsItem.menu = buildActionsMenu()
@@ -97,7 +97,7 @@ class LocalModelEditorController: StackScrollController {
     private func makeActionMenuElements() -> [UIMenuElement] {
         let verifyAction = UIAction(
             title: String(localized: "Verify Model"),
-            image: UIImage(systemName: "testtube.2")
+            image: UIImage(systemName: "testtube.2"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -107,7 +107,7 @@ class LocalModelEditorController: StackScrollController {
 
         let openHuggingFaceAction = UIAction(
             title: String(localized: "Open in Hugging Face"),
-            image: UIImage(systemName: "safari")
+            image: UIImage(systemName: "safari"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -117,7 +117,7 @@ class LocalModelEditorController: StackScrollController {
 
         let exportAction = UIAction(
             title: String(localized: "Export Model"),
-            image: UIImage(systemName: "square.and.arrow.up")
+            image: UIImage(systemName: "square.and.arrow.up"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -128,7 +128,7 @@ class LocalModelEditorController: StackScrollController {
         let deleteAction = UIAction(
             title: String(localized: "Delete Model"),
             image: UIImage(systemName: "trash"),
-            attributes: [.destructive]
+            attributes: [.destructive],
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -147,7 +147,7 @@ class LocalModelEditorController: StackScrollController {
     @objc func deleteTapped() {
         let alert = AlertViewController(
             title: "Delete Model",
-            message: "Are you sure you want to delete this model? This action cannot be undone."
+            message: "Are you sure you want to delete this model? This action cannot be undone.",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose()
@@ -170,7 +170,7 @@ class LocalModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Metadata")
+                .with(header: "Metadata"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -180,7 +180,7 @@ class LocalModelEditorController: StackScrollController {
             title: "Copy",
             actionTitle: "Identifier",
             actionIcon: "person.crop.square.filled.and.at.rectangle",
-            copyText: { model?.model_identifier ?? "" }
+            copyText: { model?.model_identifier ?? "" },
         ))
         idView.valueLabel.addInteraction(idInteraction)
         idView.configure(icon: .init(systemName: "person.crop.square.filled.and.at.rectangle"))
@@ -193,7 +193,7 @@ class LocalModelEditorController: StackScrollController {
         let sizeView = ConfigurableInfoView()
         let sizeInteraction = UIContextMenuInteraction(delegate: CalibrateSizeMenuDelegate(
             view: sizeView,
-            modelId: identifier
+            modelId: identifier,
         ))
         sizeView.valueLabel.addInteraction(sizeInteraction)
         sizeView.configure(icon: .init(systemName: "internaldrive"))
@@ -209,7 +209,7 @@ class LocalModelEditorController: StackScrollController {
             title: "Copy",
             actionTitle: "Download Date",
             actionIcon: "timer",
-            copyText: { dateFormatter.string(from: model?.downloaded ?? .distantPast) }
+            copyText: { dateFormatter.string(from: model?.downloaded ?? .distantPast) },
         ))
         dateView.valueLabel.addInteraction(dateInteraction)
         dateView.configure(icon: .init(systemName: "timer"))
@@ -221,14 +221,14 @@ class LocalModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "Metadata of a local model cannot be changed.")
+                .with(footer: "Metadata of a local model cannot be changed."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         if !ModelCapabilities.localModelEditable.isEmpty {
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView()
-                    .with(header: "Capabilities")
+                    .with(header: "Capabilities"),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -254,14 +254,14 @@ class LocalModelEditorController: StackScrollController {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView()
-                    .with(footer: "We cannot determine whether this model includes additional capabilities. However, if supported, features such as visual recognition can be enabled manually here. Please note that if the model does not actually support these capabilities, attempting to enable them may result in errors.")
+                    .with(footer: "We cannot determine whether this model includes additional capabilities. However, if supported, features such as visual recognition can be enabled manually here. Please note that if the model does not actually support these capabilities, attempting to enable them may result in errors."),
             ) {
                 $0.top /= 2
                 $0.bottom = 0
             }
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView()
-                    .with(footer: "Local models will use different loaders based on the selected capabilities. For visual models, make sure to enable visual capabilities. Selecting the wrong model capability may result in a crash. If you still cannot load, try switching the model.")
+                    .with(footer: "Local models will use different loaders based on the selected capabilities. For visual models, make sure to enable visual capabilities. Selecting the wrong model capability may result in a crash. If you still cannot load, try switching the model."),
             ) { $0.top /= 2 }
 
             stackView.addArrangedSubview(SeparatorView())
@@ -269,7 +269,7 @@ class LocalModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Parameters")
+                .with(header: "Parameters"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -284,7 +284,7 @@ class LocalModelEditorController: StackScrollController {
             let children = ModelContextLength.allCases.map { item in
                 UIAction(
                     title: item.title,
-                    image: UIImage(systemName: item.icon)
+                    image: UIImage(systemName: item.icon),
                 ) { _ in
                     ModelManager.shared.editLocalModel(identifier: model.id) { $0.context = item }
                     view.configure(value: item.title)
@@ -298,7 +298,7 @@ class LocalModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference.")
+                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -317,7 +317,7 @@ class LocalModelEditorController: StackScrollController {
         let footer = UILabel().with {
             $0.font = .rounded(
                 ofSize: UIFont.preferredFont(forTextStyle: .footnote).pointSize,
-                weight: .regular
+                weight: .regular,
             )
             $0.textColor = .label.withAlphaComponent(0.25)
             $0.numberOfLines = 0
@@ -335,7 +335,7 @@ class LocalModelEditorController: StackScrollController {
         guard let model = ModelManager.shared.localModel(identifier: identifier) else { return }
         Indicator.progress(
             title: "Verifying Model",
-            controller: self
+            controller: self,
         ) { completionHandler in
             let result = await withCheckedContinuation { continuation in
                 ModelManager.shared.testLocalModel(model) { result in
@@ -346,7 +346,7 @@ class LocalModelEditorController: StackScrollController {
             await completionHandler {
                 Indicator.present(
                     title: "Model Verified",
-                    referencingView: self.view
+                    referencingView: self.view,
                 )
             }
         }
@@ -368,7 +368,7 @@ class LocalModelEditorController: StackScrollController {
         guard let model = ModelManager.shared.localModel(identifier: identifier) else { return }
         Indicator.progress(
             title: "Exporting Model",
-            controller: self
+            controller: self,
         ) { completionHandler in
             let (url, _) = await withCheckedContinuation { continuation in
                 ModelManager.shared.pack(model: model) { url, error in
@@ -388,7 +388,7 @@ class LocalModelEditorController: StackScrollController {
         if !MLX.GPU.isSupported {
             let alert = AlertViewController(
                 title: "Unsupporte",
-                message: "Your device does not support MLX."
+                message: "Your device does not support MLX.",
             ) { context in
                 context.allowSimpleDispose()
                 context.addAction(title: "OK", attribute: .accent) {
@@ -432,14 +432,14 @@ private class SimpleCopyMenuDelegate: NSObject, UIContextMenuInteractionDelegate
 
     func contextMenuInteraction(
         _: UIContextMenuInteraction,
-        configurationForMenuAtLocation _: CGPoint
+        configurationForMenuAtLocation _: CGPoint,
     ) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             guard let self else { return nil }
             return UIMenu(title: title, children: [
                 UIAction(
                     title: actionTitle,
-                    image: UIImage(systemName: actionIcon)
+                    image: UIImage(systemName: actionIcon),
                 ) { [weak self] _ in
                     guard let self, let view else { return }
                     UIPasteboard.general.string = copyText()
@@ -461,14 +461,14 @@ private class CalibrateSizeMenuDelegate: NSObject, UIContextMenuInteractionDeleg
 
     func contextMenuInteraction(
         _: UIContextMenuInteraction,
-        configurationForMenuAtLocation _: CGPoint
+        configurationForMenuAtLocation _: CGPoint,
     ) -> UIContextMenuConfiguration? {
         UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
             guard let self else { return nil }
             return UIMenu(children: [
                 UIAction(
                     title: String(localized: "Calibrate Size"),
-                    image: UIImage(systemName: "internaldrive")
+                    image: UIImage(systemName: "internaldrive"),
                 ) { [weak self] _ in
                     guard let self, let view else { return }
                     let newSize = ModelManager.shared.calibrateLocalModelSize(identifier: modelId)

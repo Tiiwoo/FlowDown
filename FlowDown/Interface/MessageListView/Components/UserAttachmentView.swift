@@ -38,7 +38,7 @@ final class UserAttachmentView: MessageListRowView {
             x: bounds.width - width,
             y: 0,
             width: width,
-            height: bounds.height
+            height: bounds.height,
         )
     }
 

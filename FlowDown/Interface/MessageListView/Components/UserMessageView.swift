@@ -77,7 +77,7 @@ final class UserMessageView: MessageListRowView {
             x: bounds.width - contentWidth - insets.right,
             y: 0,
             width: contentWidth,
-            height: bounds.height - insets.bottom
+            height: bounds.height - insets.bottom,
         )
         backgroundGradientLayer.frame = contentView.bounds
         backgroundGradientLayer.cornerRadius = contentView.layer.cornerRadius

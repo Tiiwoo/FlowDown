@@ -14,7 +14,7 @@ public extension TreeSitterIndentationScopes {
             outdent: [
                 "fi",
                 "done",
-            ]
+            ],
         )
     }
 }

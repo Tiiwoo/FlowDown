@@ -18,7 +18,7 @@ struct FillConversationMessageIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Add text, images, or audio to the rich editor's temporary storage for the selected conversation."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 
@@ -85,12 +85,12 @@ struct FillConversationMessageIntent: AppIntent {
             let transcoded = try await AudioTranscoder.transcode(
                 data: data,
                 fileExtension: fileExtension,
-                output: .mediumQualityM4A
+                output: .mediumQualityM4A,
             )
             let attachment = try await RichEditorView.Object.Attachment.makeAudioAttachment(
                 transcoded: transcoded,
                 storage: storage,
-                suggestedName: filename
+                suggestedName: filename,
             )
             attachmentsToAppend.append(attachment)
         }
@@ -116,7 +116,7 @@ struct FillConversationMessageIntent: AppIntent {
         ConversationManager.shared.setRichEditorObject(identifier: identifier, editorObject)
         NotificationCenter.default.post(
             name: NSNotification.Name("RefreshRichEditor"),
-            object: identifier
+            object: identifier,
         )
     }
 }

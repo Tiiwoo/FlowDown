@@ -23,7 +23,7 @@ enum InferenceIntentHandler {
             allowsImages: Bool,
             allowsAudio: Bool = false,
             saveToConversation: Bool = false,
-            enableMemory: Bool = false
+            enableMemory: Bool = false,
         ) {
             self.allowsImages = allowsImages
             self.allowsAudio = allowsAudio
@@ -47,7 +47,7 @@ enum InferenceIntentHandler {
         message: String,
         image: IntentFile?,
         audio: IntentFile?,
-        options: Options
+        options: Options,
     ) async throws -> String {
         let trimmedMessage = message.trimmingCharacters(in: .whitespacesAndNewlines)
         let hasImage = image != nil
@@ -124,16 +124,23 @@ enum InferenceIntentHandler {
         let inference = try await ModelManager.shared.streamingInfer(
             with: modelIdentifier,
             input: requestMessages,
-            tools: toolDefinitions
+            tools: toolDefinitions,
         )
 
         var content = ""
         var reasoningContent = ""
-        var toolRequests: [ToolCallRequest] = []
+        var toolRequests: [ToolRequest] = []
         for try await chunk in inference {
-            content = chunk.content
-            reasoningContent = chunk.reasoningContent
-            toolRequests.append(contentsOf: chunk.toolCallRequests)
+            switch chunk {
+            case let .text(value):
+                content += value
+            case let .reasoning(value):
+                reasoningContent += value
+            case let .tool(call):
+                toolRequests.append(call)
+            case .image:
+                break
+            }
         }
 
         let trimmedContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -167,7 +174,7 @@ enum InferenceIntentHandler {
                 userMessage: trimmedMessage,
                 attachments: attachmentsForConversation,
                 response: response,
-                reasoning: trimmedReasoning
+                reasoning: trimmedReasoning,
             )
         }
 
@@ -225,18 +232,34 @@ enum InferenceIntentHandler {
             throw ShortcutError.invalidImage
         }
 
-        let processedForRequest = resize(image: image, maxDimension: 1024)
-        guard let pngData = processedForRequest.pngData() else {
+        // Compress and normalize before sending or storing
+        let compressedData = image.prepareAttachment() ?? data
+        guard let compressedImage = UIImage(data: compressedData) else {
             throw ShortcutError.invalidImage
         }
 
-        let base64 = pngData.base64EncodedString()
-        guard let url = URL(string: "data:image/png;base64,\(base64)") else {
+        let processedForRequest = resize(image: compressedImage, maxDimension: 1024)
+        let requestData: Data
+        let mimeType: String
+        if let jpegData = processedForRequest.jpegData(compressionQuality: 0.8) {
+            requestData = jpegData
+            mimeType = "image/jpeg"
+        } else if let pngData = processedForRequest.pngData() {
+            requestData = pngData
+            mimeType = "image/png"
+        } else {
             throw ShortcutError.invalidImage
         }
 
-        let previewImage = resize(image: image, maxDimension: 320)
-        let previewData = previewImage.pngData() ?? Data()
+        let base64 = requestData.base64EncodedString()
+        guard let url = URL(string: "data:\(mimeType);base64,\(base64)") else {
+            throw ShortcutError.invalidImage
+        }
+
+        let previewImage = resize(image: compressedImage, maxDimension: 320)
+        let previewData = previewImage.jpegData(compressionQuality: 0.7)
+            ?? previewImage.pngData()
+            ?? Data()
         let attachmentName = file.filename.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
             ?? String(localized: "Image")
 
@@ -244,9 +267,9 @@ enum InferenceIntentHandler {
             type: .image,
             name: attachmentName,
             previewImage: previewData,
-            imageRepresentation: data,
+            imageRepresentation: compressedData,
             textRepresentation: "",
-            storageSuffix: UUID().uuidString
+            storageSuffix: UUID().uuidString,
         )
 
         return PreparedImageResources(contentPart: .imageURL(url), attachment: attachment)
@@ -265,13 +288,13 @@ enum InferenceIntentHandler {
         let transcoded = try await AudioTranscoder.transcode(
             data: data,
             fileExtension: inferredAudioFileExtension(from: file),
-            output: .compressedQualityWAV
+            output: .compressedQualityWAV,
         )
         let format = transcoded.format.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty?.lowercased() ?? "wav"
         let attachment = try await RichEditorView.Object.Attachment.makeAudioAttachment(
             transcoded: transcoded,
             storage: nil,
-            suggestedName: file.filename.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
+            suggestedName: file.filename.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty,
         )
         let base64 = transcoded.data.base64EncodedString()
 
@@ -326,7 +349,7 @@ enum InferenceIntentHandler {
         userMessage: String,
         attachments: [RichEditorView.Object.Attachment],
         response: String,
-        reasoning: String
+        reasoning: String,
     ) {
         let formatter = DateFormatter()
         formatter.locale = .current
@@ -335,7 +358,7 @@ enum InferenceIntentHandler {
         let suffix = formatter.string(from: Date())
 
         let titleFormat = String(
-            localized: "Quick Reply %@"
+            localized: "Quick Reply %@",
         )
         let title = String(format: titleFormat, suffix)
 
@@ -382,8 +405,7 @@ enum InferenceIntentHandler {
         var guidance = String(localized:
             """
             The system provides several tools for your convenience. Please use them wisely and according to the user's query. Avoid requesting information that is already provided or easily inferred.
-            """
-        )
+            """)
 
         guidance += "\n\n" + MemoryStore.memoryToolsPrompt
 
@@ -407,7 +429,7 @@ enum InferenceIntentHandler {
         }
     }
 
-    private static func executeMemoryWritingToolCalls(_ toolCalls: [ToolCallRequest], using tools: [ModelTool]) async {
+    private static func executeMemoryWritingToolCalls(_ toolCalls: [ToolRequest], using tools: [ModelTool]) async {
         guard !toolCalls.isEmpty else { return }
         let mapping = Dictionary(uniqueKeysWithValues: tools.map { ($0.functionName.lowercased(), $0) })
 

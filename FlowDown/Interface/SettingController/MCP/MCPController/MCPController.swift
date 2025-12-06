@@ -37,7 +37,7 @@ extension SettingController.SettingContent {
 
             tableView.register(
                 MCPServerCell.self,
-                forCellReuseIdentifier: NSStringFromClass(MCPServerCell.self)
+                forCellReuseIdentifier: NSStringFromClass(MCPServerCell.self),
             )
         }
 
@@ -57,7 +57,7 @@ extension SettingController.SettingContent {
 
             navigationItem.rightBarButtonItem = UIBarButtonItem(
                 image: UIImage(systemName: "plus"),
-                menu: UIMenu(children: createAddClientMenuItems())
+                menu: UIMenu(children: createAddClientMenuItems()),
             )
 
             dataSource.defaultRowAnimation = .fade
@@ -103,7 +103,7 @@ extension SettingController.SettingContent {
         static let cellProvider: DataSource.CellProvider = { tableView, indexPath, clientId in
             let cell = tableView.dequeueReusableCell(
                 withIdentifier: NSStringFromClass(MCPServerCell.self),
-                for: indexPath
+                for: indexPath,
             )
             cell.contentView.isUserInteractionEnabled = false
             if let cell = cell as? MCPServerCell {
@@ -126,7 +126,7 @@ extension SettingController.SettingContent.MCPController: UITableViewDelegate {
         guard let clientId = dataSource.itemIdentifier(for: indexPath) else { return nil }
         let delete = UIContextualAction(
             style: .destructive,
-            title: "Delete"
+            title: "Delete",
         ) { _, _, completion in
             MCPService.shared.remove(clientId)
             completion(true)
@@ -143,7 +143,7 @@ extension SettingController.SettingContent.MCPController: UITableViewDelegate {
             UIMenu(options: [.displayInline], children: [
                 UIAction(
                     title: server.isEnabled ? String(localized: "Disable") : String(localized: "Enable"),
-                    image: UIImage(systemName: server.isEnabled ? "pause.circle" : "play.circle")
+                    image: UIImage(systemName: server.isEnabled ? "pause.circle" : "play.circle"),
                 ) { _ in
                     MCPService.shared.edit(identifier: clientId) {
                         $0.update(\.isEnabled, to: !$0.isEnabled)
@@ -175,7 +175,7 @@ extension SettingController.SettingContent.MCPController: UIDocumentPickerDelega
 
         Indicator.progress(
             title: "Importing MCP Servers",
-            controller: self
+            controller: self,
         ) { completionHandler in
             var success = 0
             var failure: [Error] = .init()
@@ -203,7 +203,7 @@ extension SettingController.SettingContent.MCPController: UIDocumentPickerDelega
                 if !failure.isEmpty {
                     let alert = AlertViewController(
                         title: "Import Failed",
-                        message: String(localized: "\(success) servers imported successfully, \(failure.count) failed.")
+                        message: String(localized: "\(success) servers imported successfully, \(failure.count) failed."),
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) {
@@ -215,7 +215,7 @@ extension SettingController.SettingContent.MCPController: UIDocumentPickerDelega
                     Indicator.present(
                         title: "Imported \(success) servers.",
                         preset: .done,
-                        referencingView: self.view
+                        referencingView: self.view,
                     )
                 }
             }
@@ -224,7 +224,7 @@ extension SettingController.SettingContent.MCPController: UIDocumentPickerDelega
 
     func documentPicker(
         _: UIDocumentPickerViewController,
-        didPickDocumentsAt urls: [URL]
+        didPickDocumentsAt urls: [URL],
     ) {
         doImport(urls: urls)
     }
@@ -246,7 +246,7 @@ extension SettingController.SettingContent.MCPController: UITableViewDragDelegat
             let data = try encoder.encode(server)
             itemProvider.registerDataRepresentation(
                 forTypeIdentifier: utType,
-                visibility: .all
+                visibility: .all,
             ) { completion in
                 completion(data, nil)
                 return nil
@@ -281,7 +281,7 @@ extension SettingController.SettingContent.MCPController: UITableViewDragDelegat
         var snapshot = dataSource.snapshot()
         if sourceIndexPath.row < destinationIndexPath.row {
             if let destinationItem = dataSource.itemIdentifier(
-                for: IndexPath(row: destinationIndexPath.row, section: 0)
+                for: IndexPath(row: destinationIndexPath.row, section: 0),
             ) {
                 guard sourceItem != destinationItem else { return }
                 snapshot.moveItem(sourceItem, afterItem: destinationItem)

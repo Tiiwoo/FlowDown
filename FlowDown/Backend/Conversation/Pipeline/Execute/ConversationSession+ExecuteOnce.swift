@@ -18,7 +18,7 @@ extension ConversationSession {
         _ tools: [ChatRequestBody.Tool]?,
         _ modelWillExecuteTools: Bool,
         linkedContents: [Int: URL],
-        requestLinkContentIndex: @escaping (URL) -> Int
+        requestLinkContentIndex: @escaping (URL) -> Int,
     ) async throws -> Bool {
         await requestUpdate(view: currentMessageListView)
         await currentMessageListView.loading()
@@ -31,32 +31,62 @@ extension ConversationSession {
         let stream = try await ModelManager.shared.streamingInfer(
             with: modelID,
             input: requestMessages,
-            tools: tools
+            tools: tools,
         )
         defer { self.stopThinking(for: message.objectId) }
 
-        var pendingToolCalls: [ToolCallRequest] = []
-        var collectedReasoningDetails: [ReasoningDetail] = []
-
+        var pendingToolCalls: [ToolRequest] = []
+        var generatedImages: [ImageContent] = []
         let collapseAfterReasoningComplete = ModelManager.shared.collapseReasoningSectionWhenComplete
 
         for try await resp in stream {
-            let reasoningContent = resp.reasoningContent
-            let content = resp.content
-            if !resp.reasoningDetails.isEmpty {
-                collectedReasoningDetails = resp.reasoningDetails
+            switch resp {
+            case let .reasoning(value):
+                message.update(\.reasoningContent, to: message.reasoningContent + value)
+            case let .text(value):
+                message.update(\.document, to: message.document + value)
+            case let .tool(call):
+                pendingToolCalls.append(call)
+            case let .image(imageContent):
+                // Skip invalid image payloads
+                guard UIImage(data: imageContent.data) != nil else {
+                    Logger.model.warning("skip invalid generated image payload (size: \(imageContent.data.count) bytes)")
+                    break
+                }
+                generatedImages.append(imageContent)
+
+                let sequence = generatedImages.count
+                let name = sequence > 1
+                    ? String(localized: "Generated Image #\(sequence)")
+                    : String(localized: "Generated Image")
+                let attachments: [RichEditorView.Object.Attachment] = [
+                    .init(
+                        type: .image,
+                        name: name,
+                        previewImage: imageContent.data,
+                        imageRepresentation: imageContent.data,
+                        textRepresentation: "",
+                        storageSuffix: UUID().uuidString,
+                    ),
+                ]
+
+                let attachmentHolder = appendNewMessage(role: .user)
+                let receivedText = if attachments.count > 1 {
+                    String(localized: "Received \(attachments.count) images.")
+                } else {
+                    String(localized: "Received an image")
+                }
+                attachmentHolder.update(\.document, to: receivedText)
+                addAttachments(attachments, to: attachmentHolder)
+                await requestUpdate(view: currentMessageListView)
             }
-            pendingToolCalls.append(contentsOf: resp.toolCallRequests)
 
-            message.update(\.reasoningContent, to: reasoningContent)
-            message.update(\.document, to: content)
-
-            if !content.isEmpty {
+            if !message.document.isEmpty {
                 stopThinking(for: message.objectId)
                 if collapseAfterReasoningComplete {
                     message.update(\.isThinkingFold, to: true)
                 }
-            } else if !reasoningContent.isEmpty {
+            } else if !message.reasoningContent.isEmpty {
                 startThinking(for: message.objectId)
             }
             await requestUpdate(view: currentMessageListView)
@@ -91,17 +121,16 @@ extension ConversationSession {
                     let trimmed = message.reasoningContent.trimmingCharacters(in: .whitespacesAndNewlines)
                     return trimmed.isEmpty ? nil : trimmed
                 }(),
-                reasoningDetails: collectedReasoningDetails.isEmpty ? nil : collectedReasoningDetails
-            )
+            ),
         )
 
-        if message.document.isEmpty, message.reasoningContent.isEmpty, !modelWillExecuteTools {
+        if message.document.isEmpty, message.reasoningContent.isEmpty, generatedImages.isEmpty, !modelWillExecuteTools {
             throw NSError(
                 domain: "Inference Service",
                 code: -1,
                 userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "No response from model."),
-                ]
+                ],
             )
         }
 
@@ -125,7 +154,7 @@ extension ConversationSession {
                     code: -1,
                     userInfo: [
                         NSLocalizedDescriptionKey: String(localized: "Unable to process tool request with name: \(request.name)"),
-                    ]
+                    ],
                 )
             }
             await currentMessageListView.loading(with: String(localized: "Utilizing tool: \(tool.interfaceName)"))
@@ -138,7 +167,7 @@ extension ConversationSession {
                     with: request.args,
                     session: self,
                     webSearchMessage: webSearchMessage,
-                    anchorTo: currentMessageListView
+                    anchorTo: currentMessageListView,
                 )
                 var webAttachments: [RichEditorView.Object.Attachment] = []
                 for doc in searchResult {
@@ -151,9 +180,9 @@ extension ConversationSession {
                         textRepresentation: formatAsWebArchive(
                             document: doc.textDocument,
                             title: doc.title,
-                            atIndex: index
+                            atIndex: index,
                         ),
-                        storageSuffix: UUID().uuidString
+                        storageSuffix: UUID().uuidString,
                     ))
                 }
                 await currentMessageListView.loading()
@@ -161,12 +190,12 @@ extension ConversationSession {
                 if webAttachments.isEmpty {
                     requestMessages.append(.tool(
                         content: .text(String(localized: "Web search returned no results.")),
-                        toolCallID: request.id
+                        toolCallID: request.id,
                     ))
                 } else {
                     requestMessages.append(.tool(
                         content: .text(webAttachments.map(\.textRepresentation).joined(separator: "\n")),
-                        toolCallID: request.id
+                        toolCallID: request.id,
                     ))
                 }
             } else {
@@ -181,7 +210,7 @@ extension ConversationSession {
                     let result = try await ModelToolsManager.shared.perform(
                         withTool: tool,
                         parms: request.args,
-                        anchorTo: currentMessageListView
+                        anchorTo: currentMessageListView,
                     )
                     var toolResponseText = result.text
 
@@ -199,7 +228,7 @@ extension ConversationSession {
                                 previewImage: image.data,
                                 imageRepresentation: image.data,
                                 textRepresentation: "",
-                                storageSuffix: UUID().uuidString
+                                storageSuffix: UUID().uuidString,
                             )
                         }
                         editorObjects.append(contentsOf: imageAttachments)
@@ -213,7 +242,7 @@ extension ConversationSession {
                                 }
                                 let transcoded = try await AudioTranscoder.transcode(
                                     data: audio.data,
-                                    fileExtension: fileExtension
+                                    fileExtension: fileExtension,
                                 )
                                 var suggestedName = audio.name.trimmingCharacters(in: .whitespacesAndNewlines)
                                 if suggestedName.isEmpty {
@@ -226,7 +255,7 @@ extension ConversationSession {
                                 let attachment = try await RichEditorView.Object.Attachment.makeAudioAttachment(
                                     transcoded: transcoded,
                                     storage: nil,
-                                    suggestedName: suggestedName
+                                    suggestedName: suggestedName,
                                 )
                                 audioAttachments.append(attachment)
                             } catch {
@@ -236,7 +265,7 @@ extension ConversationSession {
                         editorObjects.append(contentsOf: audioAttachments)
                         let finalAttachmentCount = editorObjects.count
                         collectorMessage.update(\.document, to: String(
-                            localized: "Collected \(finalAttachmentCount) attachments from tool \(tool.interfaceName)."
+                            localized: "Collected \(finalAttachmentCount) attachments from tool \(tool.interfaceName).",
                         ))
 
                         toolResponseText = collectorMessage.document
@@ -249,7 +278,7 @@ extension ConversationSession {
                         let modelCapabilities = ModelManager.shared.modelCapabilities(identifier: modelID)
                         let messages = await makeMessageFromAttachments(
                             editorObjects,
-                            modelCapabilities: modelCapabilities
+                            modelCapabilities: modelCapabilities,
                         )
                         requestMessages.append(contentsOf: messages)
                     }
@@ -270,7 +299,7 @@ extension ConversationSession {
                     let finalToolContent = toolResponseText.trimmingCharacters(in: .whitespacesAndNewlines)
                     requestMessages.append(.tool(
                         content: .text(finalToolContent.isEmpty ? String(localized: "Tool executed successfully with no output") : toolResponseText),
-                        toolCallID: request.id
+                        toolCallID: request.id,
                     ))
                 } catch {
                     toolStatus.state = 2

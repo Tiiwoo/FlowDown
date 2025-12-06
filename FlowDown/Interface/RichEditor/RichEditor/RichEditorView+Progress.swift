@@ -72,7 +72,7 @@ extension RichEditorView {
         cancelButton.action = {
             let alert = AlertViewController(
                 title: NSLocalizedString("Terminate", comment: ""),
-                message: NSLocalizedString("Are you sure you want to terminate this request?", comment: "")
+                message: NSLocalizedString("Are you sure you want to terminate this request?", comment: ""),
             ) { context in
                 context.addAction(title: NSLocalizedString("Cancel", comment: "")) {
                     context.dispose()

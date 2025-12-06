@@ -13,13 +13,13 @@ package protocol SyncEngineDelegate: AnyObject, Sendable {
     func nextRecordZoneChangeBatch(
         reason: CKSyncEngine.SyncReason,
         options: CKSyncEngine.SendChangesOptions,
-        syncEngine: any SyncEngineProtocol
+        syncEngine: any SyncEngineProtocol,
     ) async -> CKSyncEngine.RecordZoneChangeBatch?
 
     func nextFetchChangesOptions(
         reason: CKSyncEngine.SyncReason,
         options: CKSyncEngine.FetchChangesOptions,
-        syncEngine: any SyncEngineProtocol
+        syncEngine: any SyncEngineProtocol,
     ) async -> CKSyncEngine.FetchChangesOptions
 }
 
@@ -27,7 +27,7 @@ extension SyncEngineDelegate {
     func nextFetchChangesOptions(
         reason _: CKSyncEngine.SyncReason,
         options _: CKSyncEngine.FetchChangesOptions,
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async -> CKSyncEngine.FetchChangesOptions {
         CKSyncEngine.FetchChangesOptions()
     }

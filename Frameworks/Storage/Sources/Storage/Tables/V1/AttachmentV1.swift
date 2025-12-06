@@ -41,7 +41,7 @@ package final class AttachmentV1: Identifiable, Codable, TableNamed, TableCodabl
                 foreignKey: ForeignKey()
                     .references(with: MessageV1.tableName)
                     .columns(MessageV1.CodingKeys.id)
-                    .onDelete(.cascade)
+                    .onDelete(.cascade),
             )
         }
 

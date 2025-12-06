@@ -116,13 +116,13 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
                 image: selectedLevels.contains(level) ? UIImage(systemName: "checkmark") : nil,
                 handler: { [weak self] _ in
                     self?.toggleLevel(level)
-                }
+                },
             )
         }
         let levelMenu = UIMenu(
             title: String(localized: "Filter by Level"),
             image: UIImage(systemName: "slider.horizontal.3"),
-            children: levelActions
+            children: levelActions,
         )
 
         // Category filter submenu
@@ -135,7 +135,7 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
                     self?.selectedCategories.removeAll()
                     self?.applyFilters()
                     self?.updateMenu()
-                }
+                },
             ))
             categoryActions.append(contentsOf: allCategories.sorted().map { category in
                 UIAction(
@@ -143,14 +143,14 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
                     image: selectedCategories.contains(category) ? UIImage(systemName: "checkmark") : nil,
                     handler: { [weak self] _ in
                         self?.toggleCategory(category)
-                    }
+                    },
                 )
             })
         }
         let categoryMenu = UIMenu(
             title: String(localized: "Filter by Category"),
             image: UIImage(systemName: "tag"),
-            children: categoryActions.isEmpty ? [UIAction(title: String(localized: "No categories"), handler: { _ in })] : categoryActions
+            children: categoryActions.isEmpty ? [UIAction(title: String(localized: "No categories"), handler: { _ in })] : categoryActions,
         )
 
         // Actions
@@ -159,7 +159,7 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
             image: UIImage(systemName: "arrow.clockwise"),
             handler: { [weak self] _ in
                 self?.reload()
-            }
+            },
         )
 
         let shareAction = UIAction(
@@ -167,7 +167,7 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
             image: UIImage(systemName: "square.and.arrow.up"),
             handler: { [weak self] _ in
                 self?.shareLog()
-            }
+            },
         )
 
         let clearAction = UIAction(
@@ -176,7 +176,7 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
             attributes: .destructive,
             handler: { [weak self] _ in
                 self?.clearLog()
-            }
+            },
         )
 
         return UIMenu(children: [
@@ -363,14 +363,14 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
             let copyAction = UIAction(
                 title: String(localized: "Copy"),
-                image: UIImage(systemName: "doc.on.doc")
+                image: UIImage(systemName: "doc.on.doc"),
             ) { _ in
                 UIPasteboard.general.string = logLine.fullText
             }
 
             let copyMessageAction = UIAction(
                 title: String(localized: "Copy Message"),
-                image: UIImage(systemName: "text.quote")
+                image: UIImage(systemName: "text.quote"),
             ) { _ in
                 UIPasteboard.general.string = logLine.message
             }

@@ -13,7 +13,7 @@ import UniformTypeIdentifiers
 extension RichEditorView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     public func imagePickerController(
         _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any],
     ) {
         picker.dismiss(animated: true)
         guard let image = info[.originalImage] as? UIImage else { return }

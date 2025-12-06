@@ -34,7 +34,7 @@ extension SettingController.SettingContent {
             for section in settingSections {
                 if !String(localized: section.title).isEmpty {
                     stackView.addArrangedSubviewWithMargin(
-                        ConfigurableSectionHeaderView().with(header: section.title)
+                        ConfigurableSectionHeaderView().with(header: section.title),
                     ) { $0.bottom /= 2 }
                     stackView.addArrangedSubview(SeparatorView())
                 }
@@ -50,7 +50,7 @@ extension SettingController.SettingContent {
 extension SettingController.SettingContent.SupportController {
     typealias SettingSection = (
         title: String.LocalizationValue,
-        objects: [ConfigurableObject]
+        objects: [ConfigurableObject],
     )
     var documentObject: SettingSection { (
         title: "Read Documents",
@@ -61,10 +61,10 @@ extension SettingController.SettingContent.SupportController {
                 explain: "We provided a comprehensive documentation to help you understand how to use this app effectively.",
                 ephemeralAnnotation: .openLink(
                     title: "Open...",
-                    url: URL(string: "https://apps.qaq.wiki/docs/flowdown/")!
-                )
+                    url: URL(string: "https://apps.qaq.wiki/docs/flowdown/")!,
+                ),
             ),
-        ]
+        ],
     ) }
 
     var contactObject: SettingSection { (
@@ -76,8 +76,8 @@ extension SettingController.SettingContent.SupportController {
                 explain: "Send us an email.",
                 ephemeralAnnotation: .openLink(
                     title: "Open...",
-                    url: URL(string: "mailto:flowdownapp@qaq.wiki")!
-                )
+                    url: URL(string: "mailto:flowdownapp@qaq.wiki")!,
+                ),
             ),
             ConfigurableObject(
                 icon: "safari",
@@ -85,8 +85,8 @@ extension SettingController.SettingContent.SupportController {
                 explain: "Leave a message on GitHub issue.",
                 ephemeralAnnotation: .openLink(
                     title: "Open...",
-                    url: URL(string: "https://github.com/Lakr233/FlowDown-Beta/issues")!
-                )
+                    url: URL(string: "https://github.com/Lakr233/FlowDown-Beta/issues")!,
+                ),
             ),
             ConfigurableObject(
                 icon: "bubble.left",
@@ -94,8 +94,8 @@ extension SettingController.SettingContent.SupportController {
                 explain: "Join our Discord server.",
                 ephemeralAnnotation: .openLink(
                     title: "Open...",
-                    url: URL(string: "https://discord.gg/UHKMRyJcgc")!
-                )
+                    url: URL(string: "https://discord.gg/UHKMRyJcgc")!,
+                ),
             ),
             ConfigurableObject(
                 icon: "doc.richtext",
@@ -103,9 +103,9 @@ extension SettingController.SettingContent.SupportController {
                 explain: "Inspect recent application logs for troubleshooting.",
                 ephemeralAnnotation: .action { controller in
                     controller.navigationController?.pushViewController(LogViewerController(), animated: true)
-                }
+                },
             ),
-        ]
+        ],
     ) }
 
     var openSourceObject: SettingSection { (
@@ -117,9 +117,9 @@ extension SettingController.SettingContent.SupportController {
                 explain: "These are the open-source licenses for the frameworks used in this app.",
                 ephemeralAnnotation: .action { controller in
                     controller.navigationController?.pushViewController(OpenSourceLicenseController(), animated: true)
-                }
+                },
             ),
-        ]
+        ],
     ) }
 
     var agreementsObject: SettingSection { (
@@ -131,9 +131,9 @@ extension SettingController.SettingContent.SupportController {
                 explain: "Tells you how we handle your data.",
                 ephemeralAnnotation: .action { controller in
                     controller.navigationController?.pushViewController(PrivacyPolicyController(), animated: true)
-                }
+                },
             ),
-        ]
+        ],
     ) }
 
     var settingSections: [SettingSection] { [

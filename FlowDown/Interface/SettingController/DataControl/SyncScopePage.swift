@@ -29,8 +29,8 @@ final class SyncScopePage: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView().with(
-                header: "Syncing Scope"
-            )
+                header: "Syncing Scope",
+            ),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -38,34 +38,34 @@ final class SyncScopePage: StackScrollController {
             icon: "text.bubble",
             title: "Conversations, Messages, Attachments",
             desc: "Sync chats and their messages and files.",
-            group: .conversations
+            group: .conversations,
         )
 
         addGroupToggle(
             icon: "brain.head.profile",
             title: "Memory",
             desc: "Sync your AI memory entries.",
-            group: .memory
+            group: .memory,
         )
 
         addGroupToggle(
             icon: "rectangle.3.group.bubble.left",
             title: "MCP Servers",
             desc: "Sync configured MCP connections.",
-            group: .mcp
+            group: .mcp,
         )
 
         addGroupToggle(
             icon: "icloud",
             title: "Models",
             desc: "Sync cloud model configurations.",
-            group: .models
+            group: .models,
         )
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView().with(
-                header: "Shortcuts"
-            )
+                header: "Shortcuts",
+            ),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -77,7 +77,7 @@ final class SyncScopePage: StackScrollController {
                 guard SyncEngine.isSyncEnabled else {
                     let alert = AlertViewController(
                         title: "Error Occurred",
-                        message: "iCloud synchronization is not enabled. You have to enable iCloud sync in settings before fetching updates."
+                        message: "iCloud synchronization is not enabled. You have to enable iCloud sync in settings before fetching updates.",
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) { context.dispose() }
@@ -91,7 +91,7 @@ final class SyncScopePage: StackScrollController {
                     await completion {
                         let alert = AlertViewController(
                             title: "Update Requested",
-                            message: "The request to fetch updates has been sent. Depending on the amount of data, it may take some time to complete."
+                            message: "The request to fetch updates has been sent. Depending on the amount of data, it may take some time to complete.",
                         ) { context in
                             context.allowSimpleDispose()
                             context.addAction(title: "OK", attribute: .accent) {
@@ -101,7 +101,7 @@ final class SyncScopePage: StackScrollController {
                         controller.present(alert, animated: true)
                     }
                 }
-            }
+            },
         ).createView()
         stackView.addArrangedSubviewWithMargin(refreshAction)
         stackView.addArrangedSubview(SeparatorView())

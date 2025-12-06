@@ -35,7 +35,7 @@ class MCPEditorController: StackScrollController {
             image: UIImage(systemName: "checkmark"),
             style: .done,
             target: self,
-            action: #selector(checkTapped)
+            action: #selector(checkTapped),
         )
 
         MCPService.shared.servers
@@ -82,7 +82,7 @@ class MCPEditorController: StackScrollController {
                 data: data,
                 name: fileName,
                 pathExtension: "fdmcp",
-                title: "Export MCP Server"
+                title: "Export MCP Server",
             ).run(anchor: view)
         } catch {
             Logger.app.errorFile("failed to export MCP server: \(error)")
@@ -92,7 +92,7 @@ class MCPEditorController: StackScrollController {
     @objc func deleteTapped() {
         let alert = AlertViewController(
             title: "Delete Server",
-            message: "Are you sure you want to delete this MCP server? This action cannot be undone."
+            message: "Are you sure you want to delete this MCP server? This action cannot be undone.",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose()
@@ -116,13 +116,13 @@ class MCPEditorController: StackScrollController {
         if !server.comment.isEmpty {
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView()
-                    .with(header: "Comment")
+                    .with(header: "Comment"),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView()
-                    .with(rawFooter: server.comment)
+                    .with(rawFooter: server.comment),
             )
         }
 
@@ -151,7 +151,7 @@ class MCPEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Connection")
+                .with(header: "Connection"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -164,7 +164,7 @@ class MCPEditorController: StackScrollController {
             [
                 UIAction(
                     title: String(localized: "Streamble HTTP"),
-                    image: UIImage(systemName: "network")
+                    image: UIImage(systemName: "network"),
                 ) { _ in
                     MCPService.shared.edit(identifier: self.serverId) {
                         $0.update(\.type, to: .http)
@@ -182,7 +182,7 @@ class MCPEditorController: StackScrollController {
                 title: "Edit Endpoint",
                 message: "The URL endpoint for this MCP server. Most of them requires /mcp/ suffix.",
                 placeholder: "https://",
-                text: server.endpoint.isEmpty ? "https://" : server.endpoint
+                text: server.endpoint.isEmpty ? "https://" : server.endpoint,
             ) { output in
                 MCPService.shared.edit(identifier: self.serverId) {
                     $0.update(\.endpoint, to: output)
@@ -231,7 +231,7 @@ class MCPEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Customization")
+                .with(header: "Customization"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -241,7 +241,7 @@ class MCPEditorController: StackScrollController {
                 title: "Edit Nickname",
                 message: "Custom display name for this MCP server.",
                 placeholder: "Nickname (Optional)",
-                text: client.name
+                text: client.name,
             ) { output in
                 MCPService.shared.edit(identifier: self.serverId) {
                     $0.update(\.name, to: output)
@@ -255,7 +255,7 @@ class MCPEditorController: StackScrollController {
         nicknameView.configure(title: "Nickname")
         nicknameView.configure(description: "Custom display name for this MCP server.")
         nicknameView.configure(
-            value: server.name.isEmpty ? String(localized: "Not Configured") : server.name
+            value: server.name.isEmpty ? String(localized: "Not Configured") : server.name,
         )
         stackView.addArrangedSubviewWithMargin(nicknameView)
         stackView.addArrangedSubview(SeparatorView())
@@ -264,7 +264,7 @@ class MCPEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Verification")
+                .with(header: "Verification"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -284,7 +284,7 @@ class MCPEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Management")
+                .with(header: "Management"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -329,7 +329,7 @@ class MCPEditorController: StackScrollController {
         let footer = UILabel().with {
             $0.font = .rounded(
                 ofSize: UIFont.preferredFont(forTextStyle: .footnote).pointSize,
-                weight: .regular
+                weight: .regular,
             )
             $0.textColor = .label.withAlphaComponent(0.25)
             $0.numberOfLines = 0
@@ -368,11 +368,11 @@ extension MCPEditorController {
     func testConfiguration() {
         Indicator.progress(
             title: "Verifying Configuration",
-            controller: self
+            controller: self,
         ) { completionHandler in
             let result = await withCheckedContinuation { continuation in
                 MCPService.shared.testConnection(
-                    serverID: self.serverId
+                    serverID: self.serverId,
                 ) { result in
                     continuation.resume(returning: result)
                 }
@@ -381,7 +381,7 @@ extension MCPEditorController {
             await completionHandler {
                 Indicator.present(
                     title: "Configuration Verified",
-                    referencingView: self.view
+                    referencingView: self.view,
                 )
                 self.testFooterView.with(footer: "Available tool(s): \(tools)")
             }

@@ -36,7 +36,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
             title: "Edit Name",
             message: "The display name of this chat template.",
             placeholder: "Enter template name",
-            text: self.template.name
+            text: self.template.name,
         ) { output in
             self.template = self.template.with { $0.name = output }
             self.title = self.template.name
@@ -73,14 +73,14 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
             image: UIImage(systemName: "checkmark"),
             style: .done,
             target: self,
-            action: #selector(checkTapped)
+            action: #selector(checkTapped),
         )
 
         navigationItem.leftBarButtonItem = .init(
             image: UIImage(systemName: "sparkles"),
             style: .plain,
             target: self,
-            action: #selector(sparklesTapped)
+            action: #selector(sparklesTapped),
         )
 
         ChatTemplateManager.shared.$templates
@@ -108,7 +108,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
         guard !defaultModel.isEmpty else {
             let alert = AlertViewController(
                 title: "No Model Selected",
-                message: "Please select a default chat model in settings before using rewrite features."
+                message: "Please select a default chat model in settings before using rewrite features.",
             ) { context in
                 context.allowSimpleDispose()
                 context.addAction(title: "OK") {
@@ -125,18 +125,18 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
             title: "Rewrite",
             message: "You can use \(modelName) to rewrite this template, e.g., 'Add more instructions to the template.', or 'Make it more concise.'...",
             placeholder: "Enter instructions...",
-            text: ""
+            text: "",
         ) { [self] instructions in
             guard !instructions.isEmpty else { return }
             Indicator.progress(
                 title: "Rewriting Template",
-                controller: self
+                controller: self,
             ) { completionHandler in
                 let result = await withCheckedContinuation { continuation in
                     ChatTemplateManager.shared.rewriteTemplate(
                         template: self.template,
                         request: instructions,
-                        model: defaultModel
+                        model: defaultModel,
                     ) { result in
                         continuation.resume(returning: result)
                     }
@@ -156,7 +156,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
     @objc func deleteTapped() {
         let alert = AlertViewController(
             title: "Delete Template",
-            message: "Are you sure you want to delete this template? This action cannot be undone."
+            message: "Are you sure you want to delete this template? This action cannot be undone.",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose()
@@ -209,7 +209,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Prompt")
+                .with(header: "Prompt"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -225,13 +225,13 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "The prompt serves as the initial instruction for the language model. It defines the character, behavior, and context for the conversation.")
+                .with(footer: "The prompt serves as the initial instruction for the language model. It defines the character, behavior, and context for the conversation."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Configuration")
+                .with(header: "Configuration"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -245,14 +245,14 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
             [
                 UIAction(
                     title: String(localized: "Inherit"),
-                    image: UIImage(systemName: "arrow.down.circle")
+                    image: UIImage(systemName: "arrow.down.circle"),
                 ) { _ in
                     self.template = self.template.with { $0.inheritApplicationPrompt = true }
                     promptBehaviorView.configure(value: String(localized: "Inherit"))
                 },
                 UIAction(
                     title: String(localized: "Ignore"),
-                    image: UIImage(systemName: "xmark.circle")
+                    image: UIImage(systemName: "xmark.circle"),
                 ) { _ in
                     self.template = self.template.with { $0.inheritApplicationPrompt = false }
                     promptBehaviorView.configure(value: String(localized: "Ignore"))
@@ -264,7 +264,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Management")
+                .with(header: "Management"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -293,7 +293,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
                 data: data,
                 name: fileName,
                 pathExtension: "fdtemplate",
-                title: "Export Template"
+                title: "Export Template",
             ).run(anchor: controller.view)
         }
         exportOption.configure(icon: UIImage(systemName: "square.and.arrow.up"))
@@ -331,7 +331,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
         let footer = UILabel().with {
             $0.font = .rounded(
                 ofSize: UIFont.preferredFont(forTextStyle: .footnote).pointSize,
-                weight: .regular
+                weight: .regular,
             )
             $0.textColor = .label.withAlphaComponent(0.25)
             $0.numberOfLines = 0

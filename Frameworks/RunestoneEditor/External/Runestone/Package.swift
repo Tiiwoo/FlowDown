@@ -23,5 +23,5 @@ let package = Package(
         ]),
         .target(name: "TestTreeSitterLanguages", cSettings: [.unsafeFlags(["-w"])]),
         .testTarget(name: "RunestoneTests", dependencies: ["Runestone", "TestTreeSitterLanguages"]),
-    ]
+    ],
 )

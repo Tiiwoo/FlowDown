@@ -66,7 +66,7 @@ package final class CloudModelV1: Identifiable, Codable, Equatable, Hashable, Ta
         context _: ModelContextLength = .medium_64k,
         capabilities: Set<ModelCapabilities> = [],
         comment: String = "",
-        temperature_preference: ModelTemperaturePreference = .inherit
+        temperature_preference: ModelTemperaturePreference = .inherit,
     ) {
         self.id = id
         self.model_identifier = model_identifier

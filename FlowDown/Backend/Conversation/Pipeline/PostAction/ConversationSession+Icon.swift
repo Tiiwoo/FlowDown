@@ -59,7 +59,7 @@ extension ConversationSessionManager.Session {
             task: task,
             last_user_message: userMessage,
             last_assistant_message: assistantMessage,
-            output_format: IconConversationXML.OutputFormat(icon: "💬")
+            output_format: IconConversationXML.OutputFormat(icon: "💬"),
         )
 
         do {
@@ -77,16 +77,17 @@ extension ConversationSessionManager.Session {
             let ans = try await ModelManager.shared.infer(
                 with: model,
                 maxCompletionTokens: 256,
-                input: messages
+                input: messages,
             )
 
-            let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: ans.content)
+            let raw = ans.text.isEmpty ? ans.reasoning : ans.text
+            let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: raw)
 
             if let icon = extractIconFromXML(sanitizedContent) {
                 return validateIcon(icon)
             }
 
-            let ret = sanitizedContent.trimmingCharacters(in: .whitespacesAndNewlines)
+            let ret = sanitizedContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             Logger.ui.debugFile("generated conversation icon: \(ret)")
             return validateIcon(ret)
         } catch {

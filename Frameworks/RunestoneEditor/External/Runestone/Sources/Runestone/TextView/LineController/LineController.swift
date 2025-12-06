@@ -253,7 +253,7 @@ private extension LineController {
                     textColor: theme.textColor,
                     font: theme.font,
                     kern: kern,
-                    tabWidth: tabWidth
+                    tabWidth: tabWidth,
                 )
                 defaultStringAttributes.apply(to: input.attributedString)
             }
@@ -356,7 +356,7 @@ private extension LineController {
         } else {
             let lineFragmentController = LineFragmentController(
                 lineFragment: lineFragment,
-                invisibleCharacterConfiguration: invisibleCharacterConfiguration
+                invisibleCharacterConfiguration: invisibleCharacterConfiguration,
             )
             lineFragmentController.delegate = self
             lineFragmentControllers[lineFragment.id] = lineFragmentController

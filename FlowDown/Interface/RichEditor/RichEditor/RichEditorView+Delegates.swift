@@ -18,7 +18,7 @@ extension RichEditorView {
         let controller = SimpleSpeechController()
         controller.callback = { [weak self] text in
             self?.inputEditor.set(
-                text: (self?.inputEditor.textView.text ?? "") + text
+                text: (self?.inputEditor.textView.text ?? "") + text,
             )
             self?.inputEditor.textView.becomeFirstResponder()
         }
@@ -105,7 +105,7 @@ extension RichEditorView {
             let attachment = try await RichEditorView.Object.Attachment.makeAudioAttachment(
                 transcoded: transcode,
                 storage: self.storage,
-                suggestedName: url.lastPathComponent
+                suggestedName: url.lastPathComponent,
             )
             await completion { @MainActor in
                 self.attachmentsBar.insert(item: attachment)
@@ -127,7 +127,7 @@ extension RichEditorView {
 
         let alert = AlertViewController(
             title: NSLocalizedString("Import PDF", comment: ""),
-            message: String(format: NSLocalizedString("This PDF has %lld page(s). You can select whether to import it as text or convert it to images.", comment: ""), pageCount)
+            message: String(format: NSLocalizedString("This PDF has %lld page(s). You can select whether to import it as text or convert it to images.", comment: ""), pageCount),
         ) { [weak self] context in
             context.addAction(title: NSLocalizedString("Cancel", comment: "")) {
                 context.dispose()
@@ -141,7 +141,7 @@ extension RichEditorView {
                         previewImage: .init(),
                         imageRepresentation: .init(),
                         textRepresentation: pdfDocument.string ?? "",
-                        storageSuffix: file.lastPathComponent
+                        storageSuffix: file.lastPathComponent,
                     )
                     if attachment.textRepresentation.count > 1_000_000 {
                         self.delegate?.onRichEditorError(NSLocalizedString("Text too long.", comment: ""))
@@ -163,7 +163,7 @@ extension RichEditorView {
         let pageCount = pdfDocument.pageCount
 
         let indicator = AlertProgressIndicatorViewController(
-            title: NSLocalizedString("Converting PDF", comment: "")
+            title: NSLocalizedString("Converting PDF", comment: ""),
         )
         parentViewController?.present(indicator, animated: true) {
             Task.detached(priority: .userInitiated) { [weak self] in
@@ -176,7 +176,7 @@ extension RichEditorView {
                     let scaleFactor: CGFloat = 1.0
                     let targetSize = CGSize(
                         width: pageRect.width * scaleFactor,
-                        height: pageRect.height * scaleFactor
+                        height: pageRect.height * scaleFactor,
                     )
 
                     let renderer = UIGraphicsImageRenderer(size: targetSize)
@@ -201,7 +201,7 @@ extension RichEditorView {
                         guard !images.isEmpty else {
                             let alert = AlertViewController(
                                 title: NSLocalizedString("Error", comment: ""),
-                                message: NSLocalizedString("Failed to convert PDF pages to images.", comment: "")
+                                message: NSLocalizedString("Failed to convert PDF pages to images.", comment: ""),
                             ) { context in
                                 context.allowSimpleDispose()
                                 context.addAction(title: NSLocalizedString("OK", comment: ""), attribute: .accent) {
@@ -218,7 +218,7 @@ extension RichEditorView {
 
                         let successAlert = AlertViewController(
                             title: NSLocalizedString("Success", comment: ""),
-                            message: String(format: NSLocalizedString("Successfully imported %lld page(s) from PDF.", comment: ""), images.count)
+                            message: String(format: NSLocalizedString("Successfully imported %lld page(s) from PDF.", comment: ""), images.count),
                         ) { context in
                             context.allowSimpleDispose()
                             context.addAction(title: NSLocalizedString("OK", comment: ""), attribute: .accent) {
@@ -468,7 +468,7 @@ extension RichEditorView: QuickSettingBar.Delegate {
                 quickSettingBar.toolsToggle.isOn = false
                 let alert = AlertViewController(
                     title: NSLocalizedString("Error", comment: ""),
-                    message: NSLocalizedString("This model does not support tool call or no model is selected.", comment: "")
+                    message: NSLocalizedString("This model does not support tool call or no model is selected.", comment: ""),
                 ) { context in
                     context.allowSimpleDispose()
                     context.addAction(title: NSLocalizedString("OK", comment: ""), attribute: .accent) {
@@ -493,7 +493,7 @@ extension RichEditorView: ControlPanel.Delegate {
             placeholder: NSLocalizedString("https://", comment: ""),
             text: "",
             cancelButtonText: NSLocalizedString("Cancel", comment: ""),
-            doneButtonText: NSLocalizedString("Capture", comment: "")
+            doneButtonText: NSLocalizedString("Capture", comment: ""),
         ) { [weak self] text in
             guard let url = URL(string: text.trimmingCharacters(in: .whitespacesAndNewlines)),
                   let scheme = url.scheme,
@@ -502,7 +502,7 @@ extension RichEditorView: ControlPanel.Delegate {
             else {
                 let alert = AlertViewController(
                     title: NSLocalizedString("Error", comment: ""),
-                    message: NSLocalizedString("Please enter a valid URL.", comment: "")
+                    message: NSLocalizedString("Please enter a valid URL.", comment: ""),
                 ) { context in
                     context.allowSimpleDispose()
                     context.addAction(title: NSLocalizedString("OK", comment: ""), attribute: .accent) {
@@ -513,7 +513,7 @@ extension RichEditorView: ControlPanel.Delegate {
                 return
             }
             let indicator = AlertProgressIndicatorViewController(
-                title: NSLocalizedString("Fetching Content", comment: "")
+                title: NSLocalizedString("Fetching Content", comment: ""),
             )
             self?.parentViewController?.present(indicator, animated: true)
             Scrubber.document(for: url) { [weak self] doc in
@@ -521,7 +521,7 @@ extension RichEditorView: ControlPanel.Delegate {
                     guard let doc else {
                         let alert = AlertViewController(
                             title: NSLocalizedString("Error", comment: ""),
-                            message: NSLocalizedString("Failed to fetch the web content.", comment: "")
+                            message: NSLocalizedString("Failed to fetch the web content.", comment: ""),
                         ) { context in
                             context.allowSimpleDispose()
                             context.addAction(title: NSLocalizedString("OK", comment: ""), attribute: .accent) {
@@ -537,7 +537,7 @@ extension RichEditorView: ControlPanel.Delegate {
                         previewImage: .init(),
                         imageRepresentation: .init(),
                         textRepresentation: doc.textDocument,
-                        storageSuffix: UUID().uuidString
+                        storageSuffix: UUID().uuidString,
                     )
                     self?.attachmentsBar.insert(item: attachment)
                 }
@@ -565,7 +565,7 @@ extension RichEditorView.Object.Attachment {
         do {
             try? FileManager.default.createDirectory(
                 at: url.deletingLastPathComponent(),
-                withIntermediateDirectories: true
+                withIntermediateDirectories: true,
             )
             try? FileManager.default.removeItem(at: url)
             FileManager.default.createFile(atPath: url.path, contents: nil)
@@ -579,7 +579,7 @@ extension RichEditorView.Object.Attachment {
             previewImage: image.jpeg(.medium) ?? .init(),
             imageRepresentation: compressed,
             textRepresentation: "",
-            storageSuffix: suffix
+            storageSuffix: suffix,
         )
     }
 }
@@ -595,7 +595,7 @@ extension RichEditorView.Object.Attachment {
                 previewImage: .init(),
                 imageRepresentation: .init(),
                 textRepresentation: content,
-                storageSuffix: url.lastPathComponent
+                storageSuffix: url.lastPathComponent,
             )
         } catch {
             return nil
@@ -644,7 +644,7 @@ extension RichEditorView.Object.Attachment {
         let url = storage.absoluteURL(suffix)
         try? FileManager.default.createDirectory(
             at: url.deletingLastPathComponent(),
-            withIntermediateDirectories: true
+            withIntermediateDirectories: true,
         )
         try data.write(to: url, options: .atomic)
         return suffix
@@ -653,7 +653,7 @@ extension RichEditorView.Object.Attachment {
     static func makeAudioAttachment(
         transcoded: AudioTranscoder.Result,
         storage: TemporaryStorage?,
-        suggestedName: String?
+        suggestedName: String?,
     ) async throws -> Self {
         let fileExtension = transcoded.format.isEmpty ? "m4a" : transcoded.format.lowercased()
         let formattedDuration = formattedDuration(transcoded.duration)
@@ -675,7 +675,7 @@ extension RichEditorView.Object.Attachment {
             previewImage: .init(),
             imageRepresentation: transcoded.data,
             textRepresentation: textDescription,
-            storageSuffix: suffix
+            storageSuffix: suffix,
         )
     }
 }
@@ -718,13 +718,13 @@ extension RichEditorView: UIDropInteractionDelegate {
         UIView.animate(withDuration: 0.25) { self.dropColorView.alpha = 0 }
         for provider in items.map(\.itemProvider) {
             provider.loadFileRepresentation(
-                forTypeIdentifier: UTType.item.identifier
+                forTypeIdentifier: UTType.item.identifier,
             ) { url, _ in
                 guard let url else { return }
                 let tempDir = disposableResourcesDir.appendingPathComponent(UUID().uuidString)
                 try? FileManager.default.createDirectory(
                     at: tempDir,
-                    withIntermediateDirectories: true
+                    withIntermediateDirectories: true,
                 )
                 let targetURL = tempDir.appendingPathComponent(url.lastPathComponent)
                 try? FileManager.default.copyItem(at: url, to: targetURL)

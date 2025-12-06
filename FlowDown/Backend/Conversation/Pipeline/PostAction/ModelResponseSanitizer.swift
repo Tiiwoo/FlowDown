@@ -27,7 +27,7 @@ enum ModelResponseSanitizer {
                 in: sanitized,
                 options: [],
                 range: range,
-                withTemplate: ""
+                withTemplate: "",
             )
         }
 

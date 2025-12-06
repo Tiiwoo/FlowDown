@@ -441,6 +441,38 @@
         }
       }
     },
+    "Add modalities: image" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add modalities: image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加模态：图像"
+          }
+        }
+      }
+    },
+    "Add modalities: text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Add modalities: text"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "添加模态：文本"
+          }
+        }
+      }
+    },
     "Add Model" : {
       "localizations" : {
         "en" : {
@@ -1995,6 +2027,22 @@
         }
       }
     },
+    "Chat Completions Format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat Completions Format"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对话补全格式"
+          }
+        }
+      }
+    },
     "Chat Template" : {
       "localizations" : {
         "en" : {
@@ -2840,6 +2888,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "内容"
+          }
+        }
+      }
+    },
+    "Content Format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Content Format"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容格式"
           }
         }
       }
@@ -4849,6 +4913,22 @@
         }
       }
     },
+    "Enable Foundation Model" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Foundation Model"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用 Foundation Model"
+          }
+        }
+      }
+    },
     "Enable iCloud Sync" : {
       "localizations" : {
         "en" : {
@@ -6520,6 +6600,38 @@
         }
       }
     },
+    "Generated Image" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generated Image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的图像"
+          }
+        }
+      }
+    },
+    "Generated Image #%lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generated Image #%lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "生成的图像 #%lld"
+          }
+        }
+      }
+    },
     "Generating New Icon" : {
       "localizations" : {
         "en" : {
@@ -7550,22 +7662,6 @@
         }
       }
     },
-    "Invalid model configuration." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid model configuration."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的模型配置。"
-          }
-        }
-      }
-    },
     "Invalid model file." : {
       "localizations" : {
         "en" : {
@@ -7630,22 +7726,6 @@
         }
       }
     },
-    "Invalid response." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid response."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的响应。"
-          }
-        }
-      }
-    },
     "Invalid start date format. Use YYYY-MM-DD." : {
       "localizations" : {
         "en" : {
@@ -7658,22 +7738,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无效的日期格式：请使用 YYYY-MM-DD。"
-          }
-        }
-      }
-    },
-    "Invalid status code: %d" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid status code: %d"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的响应代码：%d"
           }
         }
       }
@@ -8795,6 +8859,22 @@
         }
       }
     },
+    "Modalities" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Modalities"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模态"
+          }
+        }
+      }
+    },
     "Model" : {
       "localizations" : {
         "en" : {
@@ -8855,6 +8935,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型详情"
+          }
+        }
+      }
+    },
+    "Model did not produce any textual output." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model did not produce any textual output."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型没有生成任何文本内容。"
           }
         }
       }
@@ -10998,6 +11094,38 @@
         }
       }
     },
+    "Received %lld images." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received %lld images."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收到 %lld 张图像。"
+          }
+        }
+      }
+    },
+    "Received an image" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Received an image"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "收到一张图片"
+          }
+        }
+      }
+    },
     "Recent Used" : {
       "localizations" : {
         "en" : {
@@ -11268,6 +11396,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "资源未找到，请检查你所安装的软件数据。"
+          }
+        }
+      }
+    },
+    "Responses Format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Responses Format"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "响应格式"
           }
         }
       }
@@ -11992,6 +12136,22 @@
         }
       }
     },
+    "Select which format this model should use when performing network requests." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Select which format this model should use when performing network requests."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择网络请求所使用的格式。"
+          }
+        }
+      }
+    },
     "Send a message and get the model's response." : {
       "localizations" : {
         "en" : {
@@ -12373,6 +12533,22 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示对话"
+          }
+        }
+      }
+    },
+    "Show Foundation Model in the model picker when available." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Foundation Model in the model picker when available."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可用时在模型选择器中显示 Foundation Model。"
           }
         }
       }
@@ -14177,6 +14353,22 @@
         }
       }
     },
+    "This data has been saved, but we could not match a request format for this endpoint. This is usually a mistake. In most cases your request should end with /v1/chat/completions." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This data has been saved, but we could not match a request format for this endpoint. This is usually a mistake. In most cases your request should end with /v1/chat/completions."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "数据已保存，但无法匹配该端点的请求格式。通常这是一个错误，大多数情况下请求应以 /v1/chat/completions 结尾。"
+          }
+        }
+      }
+    },
     "This device is not eligible for Apple Intelligence. Requires compatible hardware." : {
       "localizations" : {
         "en" : {
@@ -15268,6 +15460,22 @@
         }
       }
     },
+    "Unable to Match Request Format" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unable to Match Request Format"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "无法匹配请求格式"
+          }
+        }
+      }
+    },
     "Unable to open link." : {
       "localizations" : {
         "en" : {
@@ -15792,6 +16000,38 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不使用"
+          }
+        }
+      }
+    },
+    "Use OpenAI-compatible chat completions." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use OpenAI-compatible chat completions."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenAI 兼容的对话补全格式。"
+          }
+        }
+      }
+    },
+    "Use OpenAI-compatible chat response format." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use OpenAI-compatible chat response format."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenAI 兼容的响应格式。"
           }
         }
       }

@@ -22,7 +22,7 @@ public extension TreeSitterIndentationScopes {
                 "where_clause",
                 "use_list",
             ],
-            outdent: ["}"]
+            outdent: ["}"],
         )
     }
 }

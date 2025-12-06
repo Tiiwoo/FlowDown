@@ -8,7 +8,7 @@ public extension TreeSitterIndentationScopes {
                 "formal_parameters",
                 "array_creation_expression",
             ],
-            outdent: ["}"]
+            outdent: ["}"],
         )
     }
 }

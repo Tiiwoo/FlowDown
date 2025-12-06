@@ -40,7 +40,7 @@ class MTWebScraperTool: ModelTool, @unchecked Sendable {
                 "required": ["url"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -51,7 +51,7 @@ class MTWebScraperTool: ModelTool, @unchecked Sendable {
             explain: "Allows LLM to fetch and read content from web pages.",
             key: "wiki.qaq.ModelTools.WebScraperTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -67,7 +67,7 @@ class MTWebScraperTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTWebScraperTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid URL provided"),
-                ]
+                ],
             )
         }
 

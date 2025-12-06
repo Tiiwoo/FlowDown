@@ -59,7 +59,7 @@ extension ConversationSessionManager.Session {
             task: task,
             last_user_message: userMessage,
             last_assistant_message: assistantMessage,
-            output_format: ConversationXML.OutputFormat(title: "your_title_here")
+            output_format: ConversationXML.OutputFormat(title: "your_title_here"),
         )
 
         do {
@@ -77,16 +77,17 @@ extension ConversationSessionManager.Session {
             let ans = try await ModelManager.shared.infer(
                 with: model,
                 maxCompletionTokens: 256,
-                input: messages
+                input: messages,
             )
 
-            let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: ans.content)
+            let raw = ans.text.isEmpty ? ans.reasoning : ans.text
+            let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: raw)
 
             if let title = extractTitleFromXML(sanitizedContent) {
                 return title.count > 32 ? String(title.prefix(32)) : title
             }
 
-            var ret = sanitizedContent.trimmingCharacters(in: .whitespacesAndNewlines)
+            var ret = sanitizedContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
             if ret.isEmpty { return nil }
             if ret.count > 32 { ret = String(ret.prefix(32)) }
             return ret

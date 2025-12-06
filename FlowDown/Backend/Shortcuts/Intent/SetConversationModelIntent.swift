@@ -9,7 +9,7 @@ struct SetConversationModelIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Choose the default model for new conversations."),
-            categoryName: LocalizedStringResource("Models")
+            categoryName: LocalizedStringResource("Models"),
         )
     }
 

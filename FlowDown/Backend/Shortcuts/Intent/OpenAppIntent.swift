@@ -16,7 +16,7 @@ struct OpenAppIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Launch FlowDown without performing any additional actions."),
-            categoryName: LocalizedStringResource("Utilities")
+            categoryName: LocalizedStringResource("Utilities"),
         )
     }
 

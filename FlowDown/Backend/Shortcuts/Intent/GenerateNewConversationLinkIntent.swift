@@ -9,7 +9,7 @@ struct GenerateNewConversationLinkIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Create a deep link that starts a new conversation in the app."),
-            categoryName: LocalizedStringResource("Utilities")
+            categoryName: LocalizedStringResource("Utilities"),
         )
     }
 
@@ -30,7 +30,7 @@ struct GenerateNewConversationLinkIntent: AppIntent {
         let link = url.absoluteString
 
         let dialogMessage = String(
-            localized: "Use the Open URL action with \(link) to launch the app and start a conversation"
+            localized: "Use the Open URL action with \(link) to launch the app and start a conversation",
         )
 
         let dialog = IntentDialog(.init(stringLiteral: dialogMessage))

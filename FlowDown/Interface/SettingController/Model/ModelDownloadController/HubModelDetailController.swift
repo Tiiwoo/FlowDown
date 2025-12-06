@@ -52,7 +52,7 @@ class HubModelDetailController: StackScrollController {
             let sanitizedMarkdown = markdown.replacingOccurrences(
                 of: yamlBlockPattern,
                 with: "",
-                options: .regularExpression
+                options: .regularExpression,
             )
 
             await MainActor.run { [weak self] in
@@ -162,27 +162,27 @@ class HubModelDetailController: StackScrollController {
                 image: .init(systemName: "checkmark"),
                 style: .done,
                 target: self,
-                action: #selector(download)
+                action: #selector(download),
             )
         } else {
             if let downloadSize {
                 if downloadSize > 0 {
                     let byteText = ByteCountFormatter.string(
                         fromByteCount: Int64(downloadSize),
-                        countStyle: .file
+                        countStyle: .file,
                     )
                     navigationItem.rightBarButtonItem = .init(
                         title: String(localized: "Download (\(byteText))"),
                         style: .plain,
                         target: self,
-                        action: #selector(download)
+                        action: #selector(download),
                     )
                 } else {
                     navigationItem.rightBarButtonItem = .init(
                         title: String(localized: "Download (Unknown Size)"),
                         style: .plain,
                         target: self,
-                        action: #selector(download)
+                        action: #selector(download),
                     )
                 }
             } else {
@@ -230,7 +230,7 @@ class HubModelDetailController: StackScrollController {
                 We are not responsible for the model you are about to download. If we are unable to load this model, the app may crash. Do you want to continue?
 
                 Estimated download size: \(sizeText)
-                """
+                """,
             ) { context in
                 context.allowSimpleDispose()
                 context.addAction(title: "Cancel") {
@@ -250,7 +250,7 @@ class HubModelDetailController: StackScrollController {
                 Even if you download this model, it may not work or even crash the app. Do you still want to download this model?
 
                 Estimated download size: \(sizeText)
-                """
+                """,
             ) { context in
                 context.allowSimpleDispose()
                 context.addAction(title: "Cancel") {

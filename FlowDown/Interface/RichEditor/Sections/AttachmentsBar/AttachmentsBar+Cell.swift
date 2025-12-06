@@ -63,7 +63,7 @@ extension AttachmentsBar {
                 x: bounds.width - deleteButtonInset - deleteButtonSize,
                 y: deleteButtonInset,
                 width: deleteButtonSize,
-                height: deleteButtonSize
+                height: deleteButtonSize,
             )
         }
 
@@ -141,20 +141,20 @@ extension AttachmentsBar {
                 x: inset,
                 y: inset,
                 width: bounds.width - inset * 3 - (isDeletable ? iconSize : 0),
-                height: iconSize
+                height: iconSize,
             )
             deleteButton.isHidden = !isDeletable
             deleteButton.frame = .init(
                 x: bounds.width - inset - iconSize,
                 y: inset,
                 width: iconSize,
-                height: iconSize
+                height: iconSize,
             )
             textLabel.frame = .init(
                 x: inset,
                 y: nameLabel.frame.maxY + inset,
                 width: bounds.width - inset * 2,
-                height: bounds.height - nameLabel.frame.maxY - inset * 2
+                height: bounds.height - nameLabel.frame.maxY - inset * 2,
             )
         }
 

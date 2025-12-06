@@ -9,7 +9,7 @@ struct ClassifyContentIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Use the model to classify content into one of the provided candidates. If the model cannot decide, the first candidate is returned."),
-            categoryName: LocalizedStringResource("Classification")
+            categoryName: LocalizedStringResource("Classification"),
         )
     }
 
@@ -69,13 +69,13 @@ struct ClassifyContentIntent: AppIntent {
         }
 
         let resolvedCandidates = try CandidateInputResolver.resolveCandidates(
-            manualCandidates: makeManualCandidates()
+            manualCandidates: makeManualCandidates(),
         )
 
         let request = try ClassificationPromptBuilder.make(
             content: trimmedContent,
             candidates: resolvedCandidates,
-            includeImageInstruction: false
+            includeImageInstruction: false,
         )
 
         let response = try await InferenceIntentHandler.execute(
@@ -83,7 +83,7 @@ struct ClassifyContentIntent: AppIntent {
             message: request.message,
             image: nil,
             audio: nil,
-            options: .init(allowsImages: false)
+            options: .init(allowsImages: false),
         )
 
         let resolved = request.resolveCandidate(from: response)
@@ -101,7 +101,7 @@ struct ClassifyContentWithImageIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Use the model to classify content with the help of an accompanying image. If the model cannot decide, the first candidate is returned."),
-            categoryName: LocalizedStringResource("Classification")
+            categoryName: LocalizedStringResource("Classification"),
         )
     }
 
@@ -158,13 +158,13 @@ struct ClassifyContentWithImageIntent: AppIntent {
 
     func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog {
         let resolvedCandidates = try CandidateInputResolver.resolveCandidates(
-            manualCandidates: makeManualCandidates()
+            manualCandidates: makeManualCandidates(),
         )
 
         let request = try ClassificationPromptBuilder.make(
             content: nil,
             candidates: resolvedCandidates,
-            includeImageInstruction: true
+            includeImageInstruction: true,
         )
 
         let response = try await InferenceIntentHandler.execute(
@@ -172,7 +172,7 @@ struct ClassifyContentWithImageIntent: AppIntent {
             message: request.message,
             image: image,
             audio: nil,
-            options: .init(allowsImages: true)
+            options: .init(allowsImages: true),
         )
 
         let resolved = request.resolveCandidate(from: response)
@@ -212,7 +212,7 @@ private enum ClassificationPromptBuilder {
     static func make(
         content: String?,
         candidates: [String],
-        includeImageInstruction: Bool
+        includeImageInstruction: Bool,
     ) throws -> Request {
         let trimmedContent = content?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
 
@@ -239,12 +239,12 @@ private enum ClassificationPromptBuilder {
 
         if includeImageInstruction {
             instructionSegments.append(
-                "An image is provided with this request. Consider the visual details when selecting the candidate."
+                "An image is provided with this request. Consider the visual details when selecting the candidate.",
             )
         }
 
         instructionSegments.append(
-            "An image is provided with this request. Consider the visual details when selecting the candidate."
+            "An image is provided with this request. Consider the visual details when selecting the candidate.",
         )
 
         instructionSegments.append("Candidates:")
@@ -256,10 +256,10 @@ private enum ClassificationPromptBuilder {
         }
 
         instructionSegments.append(
-            "Respond only with XML formatted as <classification><label>VALUE</label></classification>, replacing VALUE with a label from the candidate list. Without explanation or additional text or quotation marks."
+            "Respond only with XML formatted as <classification><label>VALUE</label></classification>, replacing VALUE with a label from the candidate list. Without explanation or additional text or quotation marks.",
         )
         instructionSegments.append(
-            "If you are unsure, use \(primaryCandidate) for VALUE."
+            "If you are unsure, use \(primaryCandidate) for VALUE.",
         )
 
         let message = instructionSegments.joined(separator: "\n\n")
@@ -267,14 +267,14 @@ private enum ClassificationPromptBuilder {
         return Request(
             message: message,
             sanitizedCandidates: sanitizedCandidates,
-            primaryCandidate: primaryCandidate
+            primaryCandidate: primaryCandidate,
         )
     }
 }
 
 private enum CandidateInputResolver {
     static func resolveCandidates(
-        manualCandidates: [String]
+        manualCandidates: [String],
     ) throws -> [String] {
         var ordered: [String] = []
         var seen: Set<String> = []

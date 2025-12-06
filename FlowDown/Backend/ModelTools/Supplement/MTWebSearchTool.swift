@@ -39,7 +39,7 @@ class MTWebSearchTool: ModelTool, @unchecked Sendable {
                 "required": ["query"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -55,7 +55,7 @@ class MTWebSearchTool: ModelTool, @unchecked Sendable {
         with input: String,
         session: ConversationSession,
         webSearchMessage: Message,
-        anchorTo messageListView: MessageListView
+        anchorTo messageListView: MessageListView,
     ) async throws -> [Scrubber.Document] {
         guard let data = input.data(using: .utf8),
               let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
@@ -64,7 +64,7 @@ class MTWebSearchTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTWebSearchTool",
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"]
+                userInfo: [NSLocalizedDescriptionKey: "Invalid parameters"],
             )
         }
 
@@ -88,7 +88,7 @@ class MTWebSearchTool: ModelTool, @unchecked Sendable {
 
         for try await phase in await messageListView.session.gatheringWebContent(
             searchQueries: [query],
-            onSetWebDocumentResult: onSetWebContents
+            onSetWebDocumentResult: onSetWebContents,
         ) {
             var status = webSearchMessage.webSearchStatus
             status.currentSource = phase.currentSource

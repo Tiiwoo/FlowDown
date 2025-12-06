@@ -26,7 +26,7 @@ public extension TreeSitterIndentationScopes {
             outdent: [
                 "else",
                 "elsif",
-            ]
+            ],
         )
     }
 }

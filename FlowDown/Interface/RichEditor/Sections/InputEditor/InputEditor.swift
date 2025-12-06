@@ -63,7 +63,7 @@ class InputEditor: EditorSectionView {
             self,
             selector: #selector(updateReturnKeyType),
             name: .EditorBehaviorChanged,
-            object: nil
+            object: nil,
         )
 
         bossButton.tapAction = { [weak self] in

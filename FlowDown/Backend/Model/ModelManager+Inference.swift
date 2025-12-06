@@ -17,7 +17,7 @@ extension ModelManager {
     // - imageProcessingFailure : "height: 1 must be larger than factor: 28"
     static let testImage: UIImage = .init(
         color: .accent,
-        size: .init(width: 64, height: 64)
+        size: .init(width: 64, height: 64),
     )
 
     private static let testImageDataURL: URL? = {
@@ -40,7 +40,7 @@ extension ModelManager {
                 let preferredKind: MLXModelKind = model.capabilities.contains(.visual) ? .vlm : .llm
                 let client = MLXChatClient(
                     url: ModelManager.shared.modelContent(for: model),
-                    preferredKind: preferredKind
+                    preferredKind: preferredKind,
                 )
                 await client.errorCollector.clear()
 
@@ -56,31 +56,33 @@ extension ModelManager {
                     ])
                 }()
 
-                let stream = try await client.streamingChatCompletionRequest(
+                let stream = try await client.streamingChat(
                     body: .init(
                         messages: [
                             .system(content: .text("Reply YES to every query.")),
                             .user(content: userContent),
                         ],
                         maxCompletionTokens: 32,
-                        temperature: 0
-                    )
+                        temperature: 0,
+                    ),
                 )
 
-                var reasoning = ""
                 var reasoningContent = ""
                 var responseContent = ""
-                var collectedToolCalls: [ToolCallRequest] = []
+                var collectedToolCalls: [ToolRequest] = []
 
                 for try await object in stream {
                     switch object {
-                    case let .chatCompletionChunk(chunk):
-                        guard let delta = chunk.choices.first?.delta else { continue }
-                        if let value = delta.reasoning { reasoning += value }
-                        if let value = delta.reasoningContent { reasoningContent += value }
-                        if let value = delta.content { responseContent += value }
+                    case let .reasoning(value):
+                        reasoningContent += value
+                    case let .text(value):
+                        responseContent += value
                     case let .tool(call):
                         collectedToolCalls.append(call)
+                    case let .image(url):
+                        // MARK: TODO
+
+                        print(url)
                     }
                 }
 
@@ -96,15 +98,14 @@ extension ModelManager {
                 trimmedContent = trimmedContent.trimmingCharacters(in: .whitespacesAndNewlines)
 
                 if trimmedContent.isEmpty,
-                   reasoning.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
                    reasoningContent.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
                    collectedToolCalls.isEmpty
                 {
-                    if let error = await client.collectedErrors, !error.isEmpty {
+                    if let error = client.collectedErrors, !error.isEmpty {
                         throw NSError(
                             domain: "Model",
                             code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: error]
+                            userInfo: [NSLocalizedDescriptionKey: error],
                         )
                     }
 
@@ -113,9 +114,9 @@ extension ModelManager {
                             NSError(
                                 domain: "Model",
                                 code: -1,
-                                userInfo: [NSLocalizedDescriptionKey: String(localized: "Failed to generate text.")]
-                            )
-                        )
+                                userInfo: [NSLocalizedDescriptionKey: String(localized: "Failed to generate text.")],
+                            ),
+                        ),
                     )
                 } else {
                     Logger.model.debugFile("model \(model.model_identifier) generates output for test case: \(trimmedContent)")
@@ -129,79 +130,34 @@ extension ModelManager {
     }
 
     func testCloudModel(_ model: CloudModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        var dic: [String: Any] = [
-            "model": model.model_identifier,
-            "stream": true,
-            "messages": [
-                [
-                    "role": "system",
-                    "content": "Reply YES to every query.",
-                ],
-                [
-                    "role": "user",
-                    "content": "YES or NO",
-                ],
-            ],
-        ]
-        // Get model's configured bodyFields for testing
-        if !model.bodyFields.isEmpty,
-           let data = model.bodyFields.data(using: .utf8),
-           let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-        {
-            for (key, value) in jsonObject where dic[key] == nil {
-                dic[key] = value
+        Task.detached { [weak self] in
+            guard let self else { return }
+            do {
+                let inference = try await infer(
+                    with: model.id,
+                    maxCompletionTokens: 512,
+                    input: [
+                        .system(content: .text("Reply YES to every query.")),
+                        .user(content: .text("YES or NO")),
+                    ],
+                )
+                if !isEmptyResponse(inference) {
+                    completion(.success(()))
+                } else {
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: "Model",
+                                code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: String(localized: "Model did not produce any textual output.")],
+                            ),
+                        ),
+                    )
+                }
+            } catch {
+                completion(.failure(error))
             }
         }
-        guard let data = try? JSONSerialization.data(withJSONObject: dic),
-              let endpoint = URL(string: model.endpoint)
-        else {
-            completion(
-                .failure(
-                    NSError(
-                        domain: "Model",
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid model configuration.")]
-                    )
-                )
-            )
-            return
-        }
-        var request = URLRequest(url: endpoint, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        if !model.token.isEmpty { request.setValue("Bearer \(model.token)", forHTTPHeaderField: "Authorization") }
-        // model.headers can override default headers including Authorization
-        for value in model.headers {
-            request.setValue(value.value, forHTTPHeaderField: value.key)
-        }
-        request.httpBody = data
-        URLSession.shared.dataTask(with: request) { _, resp, _ in
-            guard let resp = resp as? HTTPURLResponse else {
-                completion(
-                    .failure(
-                        NSError(
-                            domain: "Model",
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid response.")]
-                        )
-                    )
-                )
-                return
-            }
-            guard resp.statusCode == 200 else {
-                completion(
-                    .failure(
-                        NSError(
-                            domain: "Model",
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: String(format: String(localized: "Invalid status code: %d"), resp.statusCode)]
-                        )
-                    )
-                )
-                return
-            }
-            completion(.success(()))
-        }.resume()
     }
 
     func testAppleIntelligenceModel(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -218,15 +174,17 @@ extension ModelManager {
                             .system(content: .text("Reply YES to every query.")),
                             .user(content: .text("YES or NO")),
                         ],
-                        temperature: 0
+                        temperature: 0,
                     )
-                    let response = try await client.chatCompletionRequest(body: body)
-                    if let content = response.choices.first?.message.content, !content.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                        completion(.success(()))
-                    } else if let toolCalls = response.choices.first?.message.toolCalls, !toolCalls.isEmpty {
+                    let response = try await client.chat(body: body)
+                    if !isEmptyResponse(response) {
                         completion(.success(()))
                     } else {
-                        completion(.failure(NSError(domain: "AppleIntelligence", code: -1, userInfo: [NSLocalizedDescriptionKey: "No response from Apple Intelligence."])))
+                        completion(.failure(NSError(
+                            domain: "AppleIntelligence",
+                            code: -1,
+                            userInfo: [NSLocalizedDescriptionKey: "No response from Apple Intelligence."],
+                        )))
                     }
                 } catch {
                     completion(.failure(error))
@@ -244,8 +202,8 @@ extension ModelManager {
     /// - Returns: A dictionary of body fields, or empty dictionary if not found or empty
     public func modelBodyFields(for identifier: ModelIdentifier) -> [String: Any] {
         guard let model = cloudModel(identifier: identifier),
-              !model.bodyFields.isEmpty,
-              let data = model.bodyFields.data(using: .utf8),
+              !model.body_fields.isEmpty,
+              let data = model.body_fields.data(using: .utf8),
               let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
         else {
             return [:]
@@ -253,62 +211,92 @@ extension ModelManager {
         return jsonObject
     }
 
+    private static func hasNonEmptyText(_ text: String) -> Bool {
+        !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
+
+    private func isEmptyResponse(_ response: ChatResponse) -> Bool {
+        !Self.hasNonEmptyText(response.text)
+            && !Self.hasNonEmptyText(response.reasoning)
+            && response.tools.isEmpty
+            && response.images.isEmpty
+    }
+
     private func chatService(
         for identifier: ModelIdentifier,
-        additionalBodyField: [String: Any]
+        additionalBodyField: [String: Any],
     ) throws -> any ChatService {
         if #available(iOS 26.0, macCatalyst 26.0, *), identifier == AppleIntelligenceModel.shared.modelIdentifier {
             return AppleIntelligenceChatClient()
         }
         if let model = cloudModel(identifier: identifier) {
-            // Use additionalBodyField directly without merging model's bodyFields
-            // Callers should explicitly merge bodyFields if needed
-            return RemoteCompletionsChatClient(
-                model: model.model_identifier,
-                baseURL: model.endpoint,
-                apiKey: model.token,
-                additionalHeaders: model.headers,
-                additionalBodyField: additionalBodyField
-            )
+            let endpoint = resolveEndpointComponents(from: model.endpoint)
+            // Use additionalBodyField directly without merging model's body_fields
+            // Callers should explicitly merge body_fields if needed
+            switch model.response_format {
+            case .chatCompletions:
+                return RemoteCompletionsChatClient(
+                    model: model.model_identifier,
+                    baseURL: endpoint.baseURL,
+                    path: endpoint.path,
+                    apiKey: model.token,
+                    additionalHeaders: model.headers,
+                    additionalBodyField: additionalBodyField,
+                )
+            case .responses:
+                return RemoteResponsesChatClient(
+                    model: model.model_identifier,
+                    baseURL: endpoint.baseURL,
+                    path: endpoint.path,
+                    apiKey: model.token,
+                    additionalHeaders: model.headers,
+                    additionalBodyField: additionalBodyField,
+                )
+            }
         } else if let model = localModel(identifier: identifier) {
             let preferredKind: MLXModelKind = model.capabilities.contains(.visual) ? .vlm : .llm
             return MLXChatClient(
                 url: modelContent(for: model),
-                preferredKind: preferredKind
+                preferredKind: preferredKind,
             )
         } else {
             throw NSError(
                 domain: "Model",
                 code: -1,
-                userInfo: [NSLocalizedDescriptionKey: String(localized: "Model not found.")]
+                userInfo: [NSLocalizedDescriptionKey: String(localized: "Model not found.")],
             )
         }
     }
 
-    struct InferenceMessage: Hashable {
-        var reasoningContent: String
-        var content: String
-        var reasoningDetails: [ReasoningDetail]
-
-        // a json representation for tool call
-        var toolCallRequests: [ToolCallRequest]
-
-        init(
-            reasoningContent: String = .init(),
-            content: String = .init(),
-            reasoningDetails: [ReasoningDetail] = .init(),
-            tool: [ToolCallRequest] = []
-        ) {
-            self.reasoningContent = reasoningContent
-            self.content = content
-            self.reasoningDetails = reasoningDetails
-            toolCallRequests = tool
+    private func resolveEndpointComponents(from endpoint: String) -> (baseURL: String?, path: String?) {
+        guard !endpoint.isEmpty,
+              let components = URLComponents(string: endpoint),
+              components.host != nil
+        else {
+            return (endpoint.isEmpty ? nil : endpoint, endpoint.isEmpty ? nil : "/")
         }
+
+        var baseComponents = URLComponents()
+        baseComponents.scheme = components.scheme
+        baseComponents.user = components.user
+        baseComponents.password = components.password
+        baseComponents.host = components.host
+        baseComponents.port = components.port
+        let baseURL = baseComponents.string
+
+        var pathComponents = URLComponents()
+        let pathValue = components.path.isEmpty ? "/" : components.path
+        pathComponents.path = pathValue
+        pathComponents.queryItems = components.queryItems
+        pathComponents.fragment = components.fragment
+        let normalizedPath = pathComponents.string ?? pathValue
+
+        return (baseURL, normalizedPath)
     }
 
     func prepareRequestBody(
         modelID: ModelIdentifier,
-        messages: [ChatRequestBody.Message]
+        messages: [ChatRequestBody.Message],
     ) throws -> [ChatRequestBody.Message] {
         var messages = messages
         if let model = cloudModel(identifier: modelID) {
@@ -331,185 +319,48 @@ extension ModelManager {
         with modelID: ModelIdentifier,
         maxCompletionTokens: Int? = nil,
         input: [ChatRequestBody.Message],
-        tools: [ChatRequestBody.Tool]? = nil
-    ) async throws -> InferenceMessage {
-        let stream = try await streamingInfer(
-            with: modelID,
-            maxCompletionTokens: maxCompletionTokens,
-            input: input,
-            tools: tools
+        tools: [ChatRequestBody.Tool]? = nil,
+    ) async throws -> ChatResponse {
+        let client = try chatService(
+            for: modelID,
+            additionalBodyField: modelBodyFields(for: modelID),
         )
-
-        var latest: InferenceMessage?
-        for try await message in stream {
-            latest = message
-        }
-        return latest ?? .init()
+        let body = try ChatRequestBody(
+            messages: prepareRequestBody(modelID: modelID, messages: input),
+            maxCompletionTokens: maxCompletionTokens,
+            temperature: .init(temperature),
+            tools: tools,
+        )
+        return try await client.chat(body: body)
     }
 
     func streamingInfer(
         with modelID: ModelIdentifier,
         maxCompletionTokens: Int? = nil,
         input: [ChatRequestBody.Message],
-        tools: [ChatRequestBody.Tool]? = nil
-    ) async throws -> AsyncThrowingStream<InferenceMessage, any Error> {
+        tools: [ChatRequestBody.Tool]? = nil,
+    ) async throws -> AnyAsyncSequence<ChatResponseChunk> {
         let client = try chatService(
             for: modelID,
-            additionalBodyField: modelBodyFields(for: modelID)
+            additionalBodyField: modelBodyFields(for: modelID),
         )
-        await client.errorCollector.clear()
-
-        let stream = try await client.streamingChatCompletionRequest(
-            body: .init(
-                messages: prepareRequestBody(modelID: modelID, messages: input),
-                maxCompletionTokens: maxCompletionTokens,
-                temperature: .init(temperature),
-                tools: tools
-            )
-        ).compactMap { streamObject -> InferenceMessage in
-            var msg = InferenceMessage()
-            switch streamObject {
-            case let .chatCompletionChunk(chunk):
-                let delta = chunk.choices.first?.delta
-                let reasoning = delta?.reasoning ?? .init()
-                let reasoningContent = delta?.reasoningContent ?? .init()
-
-                msg.reasoningDetails = delta?.reasoningDetails ?? []
-                msg.reasoningContent = if reasoning == reasoningContent, !reasoning.isEmpty {
-                    reasoning
-                } else {
-                    [reasoning, reasoningContent].filter { !$0.isEmpty }.joined()
-                }
-                msg.content = delta?.content ?? .init()
-            case let .tool(call):
-                msg.toolCallRequests = [call]
-            }
-            return msg
-        }
-        var responseContent: InferenceMessage = .init()
-        return AsyncThrowingStream { continuation in
-            Task {
-                do {
-                    var collectedToolCalls: [ToolCallRequest] = []
-                    var collectedReasoningDetails: [ReasoningDetail] = []
-
-                    for try await chunk in stream {
-                        //
-                        // we assuming server sent us delta content with 0.5s each time
-                        // so make sure all of our content is shown before that
-                        //
-                        // on average 2ms is required to display the text content
-                        // and by running at 120fps we need to update no longer then 8ms
-                        //
-
-                        // by calculating for 10ms each time, 0.5s to show all, max update is 50 times
-                        var counter = 0
-
-                        if !chunk.reasoningDetails.isEmpty {
-                            collectedReasoningDetails = AssistantTurnContent.mergeReasoningDetails(
-                                existing: collectedReasoningDetails,
-                                incoming: chunk.reasoningDetails,
-                                fallback: nil
-                            )
-                        }
-
-                        // 10ms
-                        func sleepOnce() async {
-                            try? await Task.sleep(nanoseconds: 10 * 1_000_000)
-                            counter = 0
-                        }
-
-                        let newReasoningContentLength = chunk.reasoningContent.count
-                        let newReasoningContentChunkSize = max(1, newReasoningContentLength / 50)
-                        counter = 0
-
-                        for char in chunk.reasoningContent {
-                            responseContent.reasoningContent += String(char)
-                            counter += 1
-                            if counter > newReasoningContentChunkSize {
-                                continuation.yield(.init(
-                                    reasoningContent: responseContent.reasoningContent
-                                        .trimmingCharacters(in: .whitespacesAndNewlines),
-                                    content: responseContent.content
-                                        .trimmingCharacters(in: .whitespacesAndNewlines),
-                                    reasoningDetails: collectedReasoningDetails
-                                ))
-                                await sleepOnce()
-                            }
-                        }
-
-                        let newContentLength = chunk.content.count
-                        let newContentChunkSize = max(1, newContentLength / 50)
-                        counter = 0
-
-                        for char in chunk.content {
-                            responseContent.content += String(char)
-                            counter += 1
-                            if counter > newContentChunkSize {
-                                continuation.yield(.init(
-                                    reasoningContent: responseContent.reasoningContent
-                                        .trimmingCharacters(in: .whitespacesAndNewlines),
-                                    content: responseContent.content
-                                        .trimmingCharacters(in: .whitespacesAndNewlines),
-                                    reasoningDetails: collectedReasoningDetails
-                                ))
-                                await sleepOnce()
-                            }
-                        }
-
-                        collectedToolCalls.append(contentsOf: chunk.toolCallRequests)
-                    }
-
-                    let _reasoningContent = responseContent.reasoningContent
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-                    var _responseContent = responseContent.content
-                        .trimmingCharacters(in: .whitespacesAndNewlines)
-
-                    for terminator in ChatClientConstants.additionalTerminatingTokens {
-                        while _responseContent.hasSuffix(terminator) {
-                            _responseContent.removeLast(terminator.count)
-                        }
-                    }
-
-                    let final = InferenceMessage(
-                        reasoningContent: _reasoningContent,
-                        content: _responseContent,
-                        reasoningDetails: collectedReasoningDetails,
-                        tool: collectedToolCalls
-                    )
-                    continuation.yield(final)
-
-                    // upon finish, check if any thing was returned
-                    if final.content.isEmpty,
-                       final.reasoningContent.isEmpty,
-                       final.toolCallRequests.isEmpty
-                    {
-                        // if not, collect the error if we had any
-                        if let error = await client.collectedErrors {
-                            throw NSError(
-                                domain: String(localized: "Inference Service"),
-                                code: -1,
-                                userInfo: [NSLocalizedDescriptionKey: error]
-                            )
-                        }
-                    }
-
-                    continuation.finish()
-                } catch {
-                    continuation.finish(throwing: error)
-                }
-            }
-        }
+        let body = try ChatRequestBody(
+            messages: prepareRequestBody(modelID: modelID, messages: input),
+            maxCompletionTokens: maxCompletionTokens,
+            temperature: .init(temperature),
+            tools: tools,
+        )
+        return try await client.streamingChat(body: body)
     }
 
     func calculateEstimateTokensUsingCommonEncoder(
         input: [ChatRequestBody.Message],
-        tools: [ChatRequestBody.Tool]
+        tools: [ChatRequestBody.Tool],
     ) -> Int {
         assert(!Thread.isMainThread)
 
         func text(
-            _ content: ChatRequestBody.Message.MessageContent<String, [String]>
+            _ content: ChatRequestBody.Message.MessageContent<String, [String]>,
         ) -> String {
             switch content {
             case let .text(text):
@@ -527,12 +378,15 @@ extension ModelManager {
 
         for message in input {
             switch message {
-            case let .assistant(content, name, refusal, calls):
+            case let .assistant(content, toolCalls, reasoning):
                 estimatedInferenceText += "role: assistant\n"
                 if let content { estimatedInferenceText += text(content) }
-                if let name { estimatedInferenceText += "name: \(name)\n" }
-                if let refusal { estimatedInferenceText += "refusal: \(refusal)\n" }
-                if let calls { estimatedInferenceText += "calls: \(calls)\n" }
+                if let reasoning, !reasoning.isEmpty {
+                    estimatedInferenceText += "reasoning: \(reasoning)\n"
+                }
+                if let toolCalls, !toolCalls.isEmpty {
+                    estimatedInferenceText += "calls: \(toolCalls)\n"
+                }
             case let .system(content, name):
                 estimatedInferenceText += "role: assistant\n"
                 estimatedInferenceText += text(content)

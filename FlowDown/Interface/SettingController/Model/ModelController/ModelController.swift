@@ -70,7 +70,7 @@ extension SettingController.SettingContent {
 
             Publishers.CombineLatest(
                 ModelManager.shared.localModels.removeDuplicates(),
-                ModelManager.shared.cloudModels.removeDuplicates()
+                ModelManager.shared.cloudModels.removeDuplicates(),
             )
             .ensureMainThread()
             .sink { [weak self] _ in self?.updateDataSource() }
@@ -90,7 +90,7 @@ extension SettingController.SettingContent {
         lazy var addItem: UIBarButtonItem = {
             let item = UIBarButtonItem(
                 image: .init(systemName: "plus"),
-                menu: UIMenu(children: createAddModelMenuItems())
+                menu: UIMenu(children: createAddModelMenuItems()),
             )
             return item
         }()
@@ -105,7 +105,7 @@ extension SettingController.SettingContent {
             }
             let item = UIBarButtonItem(
                 image: .init(systemName: "line.3.horizontal.decrease.circle"),
-                menu: UIMenu(title: String(localized: "Filter Options"), children: [deferredMenu])
+                menu: UIMenu(title: String(localized: "Filter Options"), children: [deferredMenu]),
             )
             return item
         }()

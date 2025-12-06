@@ -111,14 +111,14 @@ class ModelToolsManager {
         }
     }
 
-    func tool(for request: ToolCallRequest) -> ModelTool? {
+    func tool(for request: ToolRequest) -> ModelTool? {
         Logger.model.debugFile("finding tool call with function name \(request.name)")
         return enabledTools.first {
             $0.functionName.lowercased() == request.name.lowercased()
         }
     }
 
-    func findTool(for request: ToolCallRequest) async -> ModelTool? {
+    func findTool(for request: ToolRequest) async -> ModelTool? {
         Logger.model.debugFile("finding tool call with function name \(request.name)")
         let allTools = await getEnabledToolsIncludeMCP()
         return allTools.first {
@@ -154,7 +154,7 @@ class ModelToolsManager {
                                     code: 500,
                                     userInfo: [
                                         NSLocalizedDescriptionKey: String(localized: "Tool execution cancelled by user"),
-                                    ]
+                                    ],
                                 )
                                 continuation.resume(throwing: error)
                             }
@@ -172,7 +172,7 @@ class ModelToolsManager {
                                             code: 500,
                                             userInfo: [
                                                 NSLocalizedDescriptionKey: String(localized: "Tool execution failed: \(error.localizedDescription)"),
-                                            ]
+                                            ],
                                         )
                                         continuation.resume(throwing: error)
                                     }
@@ -185,13 +185,13 @@ class ModelToolsManager {
                         AlertViewController(
                             title: "Execute MCP Tool",
                             message: "The model wants to execute '\(tool.toolInfo.name)' from \(tool.toolInfo.serverName). This tool can access external resources.\n\nDescription: \(tool.toolInfo.description?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "No description available")",
-                            setupActions: setupContext
+                            setupActions: setupContext,
                         )
                     } else {
                         AlertViewController(
                             title: "Tool Call",
                             message: "Your model is calling a tool: \(tool.interfaceName)",
-                            setupActions: setupContext
+                            setupActions: setupContext,
                         )
                     }
 
@@ -202,7 +202,7 @@ class ModelToolsManager {
                             code: 500,
                             userInfo: [
                                 NSLocalizedDescriptionKey: String(localized: "Tool execution failed: parent view controller not found."),
-                            ]
+                            ],
                         )
                         continuation.resume(throwing: error)
                         return
@@ -214,7 +214,7 @@ class ModelToolsManager {
                             code: 500,
                             userInfo: [
                                 NSLocalizedDescriptionKey: String(localized: "Tool execution failed: authorization dialog is already presented."),
-                            ]
+                            ],
                         )
                         continuation.resume(throwing: error)
                         return
@@ -246,7 +246,7 @@ class ModelToolsManager {
                         imageAttachments.append(.init(
                             name: name,
                             data: data,
-                            mimeType: mimeType.nilIfEmpty
+                            mimeType: mimeType.nilIfEmpty,
                         ))
                     } else {
                         Logger.model.errorFile("failed to parse image data from string")
@@ -261,7 +261,7 @@ class ModelToolsManager {
                         audioAttachments.append(.init(
                             name: name,
                             data: data,
-                            mimeType: mimeType.nilIfEmpty
+                            mimeType: mimeType.nilIfEmpty,
                         ))
                     } else {
                         Logger.model.errorFile("failed to parse audio data from string")
@@ -273,7 +273,7 @@ class ModelToolsManager {
             return .init(
                 text: textContent.joined(separator: "\n"),
                 imageAttachments: imageAttachments,
-                audioAttachments: audioAttachments
+                audioAttachments: audioAttachments,
             )
         } else {
             return .init(text: ans, imageAttachments: [], audioAttachments: [])
@@ -281,40 +281,6 @@ class ModelToolsManager {
     }
 
     private func parseDataFromString(_ dataString: String) -> Data? {
-        // Handle data URL format: data:image/png;base64,<base64_string>
-        if dataString.hasPrefix("data:") {
-            // Extract the part after ";base64," or after the first comma
-            if let base64Range = dataString.range(of: ";base64,") {
-                let base64String = String(dataString[base64Range.upperBound...])
-                return Data(base64Encoded: base64String)
-            } else if let commaIndex = dataString.firstIndex(of: ",") {
-                // Handle data URL without base64 encoding
-                let afterComma = String(dataString[dataString.index(after: commaIndex)...])
-                // Try base64 first, then fallback to URL-encoded or plain text
-                return Data(base64Encoded: afterComma) ?? afterComma.data(using: .utf8)
-            }
-            return nil
-        }
-
-        // Handle URL string (for data URLs parsed as URL)
-        if let url = URL(string: dataString), url.scheme == "data" {
-            let absoluteString = url.absoluteString
-            if let base64Range = absoluteString.range(of: ";base64,") {
-                let base64String = String(absoluteString[base64Range.upperBound...])
-                return Data(base64Encoded: base64String)
-            } else if let commaIndex = absoluteString.firstIndex(of: ",") {
-                let afterComma = String(absoluteString[absoluteString.index(after: commaIndex)...])
-                return Data(base64Encoded: afterComma) ?? afterComma.data(using: .utf8)
-            }
-            return nil
-        }
-
-        // Try as direct base64 string (most common case for MCP tools)
-        if let data = Data(base64Encoded: dataString, options: .ignoreUnknownCharacters) {
-            return data
-        }
-
-        // Fallback: treat as UTF-8 string data (should rarely happen)
-        return dataString.data(using: .utf8)
+        AttachmentDataParser.decodeData(from: dataString)
     }
 }

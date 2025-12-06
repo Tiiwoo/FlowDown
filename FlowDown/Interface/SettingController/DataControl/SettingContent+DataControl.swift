@@ -38,8 +38,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "iCloud Sync"
-                )
+                    header: "iCloud Sync",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -47,7 +47,7 @@ extension SettingController.SettingContent {
             syncToggle.configure(icon: UIImage(systemName: "icloud"))
             syncToggle.configure(title: "Enable iCloud Sync")
             syncToggle.configure(
-                description: "Enable iCloud sync to keep data consistent across your devices. Turning off does not delete existing data."
+                description: "Enable iCloud sync to keep data consistent across your devices. Turning off does not delete existing data.",
             )
             syncToggle.boolValue = SyncEngine.isSyncEnabled
             syncToggle.actionBlock = { [weak self] value in
@@ -83,22 +83,22 @@ extension SettingController.SettingContent {
                     guard let self else { return }
                     let controller = SyncScopePage()
                     navigationController?.pushViewController(controller, animated: true)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(syncScopeMenu)
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "When sync is off, no new changes are shared. Existing data remains intact. Re‑enable sync to fetch the latest state before resuming."
-                )
+                    footer: "When sync is off, no new changes are shared. Existing data remains intact. Re‑enable sync to fetch the latest state before resuming.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Database"
-                )
+                    header: "Database",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -108,15 +108,15 @@ extension SettingController.SettingContent {
                 explain: "Replace all local data with a previous database export.",
                 ephemeralAnnotation: .action { [weak self] controller in
                     self?.presentImportConfirmation(from: controller)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(importDatabase)
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Database Export"
-                )
+                    header: "Database Export",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -128,7 +128,7 @@ extension SettingController.SettingContent {
                 ephemeralAnnotation: .action { controller in
                     Indicator.progress(
                         title: "Exporting...",
-                        controller: controller
+                        controller: controller,
                     ) { progressCompletion in
                         let result = sdb.exportZipFile()
                         let url = try result.get()
@@ -137,7 +137,7 @@ extension SettingController.SettingContent {
                                 .run(anchor: exportDatabaseReader ?? controller.view)
                         }
                     }
-                }
+                },
             ).createView()
 
             exportDatabaseReader = exportDatabase
@@ -146,15 +146,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "Exported database contains all conversations data and cloud model configurations, but does not include local model data, also known as weights, and application settings. To export local models, please go to the model management page. Application settings are not supported for export."
-                )
+                    footer: "Exported database contains all conversations data and cloud model configurations, but does not include local model data, also known as weights, and application settings. To export local models, please go to the model management page. Application settings are not supported for export.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Conversation"
-                )
+                    header: "Conversation",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -165,7 +165,7 @@ extension SettingController.SettingContent {
                 ephemeralAnnotation: .action { controller in
                     let alert = AlertViewController(
                         title: "Delete All Conversations",
-                        message: "Are you sure you want to delete all conversations and related data?"
+                        message: "Are you sure you want to delete all conversations and related data?",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -174,13 +174,13 @@ extension SettingController.SettingContent {
                             context.dispose { ConversationManager.shared.eraseAll()
                                 Indicator.present(
                                     title: "Deleted",
-                                    referencingView: controller.view
+                                    referencingView: controller.view,
                                 )
                             }
                         }
                     }
                     controller.present(alert, animated: true)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(deleteAllConv)
             stackView.addArrangedSubview(SeparatorView())
@@ -190,15 +190,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "These operations cannot be undone."
-                )
+                    footer: "These operations cannot be undone.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Cache"
-                )
+                    header: "Cache",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -209,7 +209,7 @@ extension SettingController.SettingContent {
                 ephemeralAnnotation: .action { controller in
                     let alert = AlertViewController(
                         title: "Clean Cache",
-                        message: "Are you sure you want to clean the cache? This will also delete partial downloads."
+                        message: "Are you sure you want to clean the cache? This will also delete partial downloads.",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -219,13 +219,13 @@ extension SettingController.SettingContent {
                             DiggerCache.cleanDownloadTempFiles()
                             Indicator.present(
                                 title: "Cleaned",
-                                referencingView: controller.view
+                                referencingView: controller.view,
                             )
                             context.dispose {}
                         }
                     }
                     controller.present(alert, animated: true)
-                }
+                },
             ).createView()
 
             stackView.addArrangedSubviewWithMargin(downloadCache)
@@ -238,7 +238,7 @@ extension SettingController.SettingContent {
                 ephemeralAnnotation: .action { controller in
                     let alert = AlertViewController(
                         title: "Reset Temporary Items",
-                        message: "Are you sure you want to remove all content inside temporary directory?"
+                        message: "Are you sure you want to remove all content inside temporary directory?",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -250,13 +250,13 @@ extension SettingController.SettingContent {
                                 try? FileManager.default.createDirectory(at: tempDir, withIntermediateDirectories: true)
                                 Indicator.present(
                                     title: "Done",
-                                    referencingView: controller.view
+                                    referencingView: controller.view,
                                 )
                             }
                         }
                     }
                     controller.present(alert, animated: true)
-                }
+                },
             ).createView()
 
             stackView.addArrangedSubviewWithMargin(removeTempDir)
@@ -264,15 +264,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "Usually, you don't need to clean caches and temporary files. But if you have any issues, try these."
-                )
+                    footer: "Usually, you don't need to clean caches and temporary files. But if you have any issues, try these.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Reset"
-                )
+                    header: "Reset",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -285,7 +285,7 @@ extension SettingController.SettingContent {
                     guard SyncEngine.isSyncEnabled else {
                         let alert = AlertViewController(
                             title: "Error Occurred",
-                            message: "iCloud synchronization is not enabled"
+                            message: "iCloud synchronization is not enabled",
                         ) { context in
                             context.addAction(title: "OK", attribute: .accent) {
                                 context.dispose()
@@ -297,7 +297,7 @@ extension SettingController.SettingContent {
 
                     let alert = AlertViewController(
                         title: "Delete iCloud Data",
-                        message: "This will remove your synced data from iCloud for this app. Local data on this device will remain."
+                        message: "This will remove your synced data from iCloud for this app. Local data on this device will remain.",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -312,7 +312,7 @@ extension SettingController.SettingContent {
                         }
                     }
                     controller.present(alert, animated: true)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(deleteICloud)
             stackView.addArrangedSubview(SeparatorView())
@@ -324,7 +324,7 @@ extension SettingController.SettingContent {
                 ephemeralAnnotation: .action { controller in
                     let alert = AlertViewController(
                         title: "Reset App",
-                        message: "Are you sure you want to remove all content and reset the entire database? App will close after reset."
+                        message: "Are you sure you want to remove all content and reset the entire database? App will close after reset.",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -349,7 +349,7 @@ extension SettingController.SettingContent {
                         }
                     }
                     controller.present(alert, animated: true)
-                }
+                },
             ).createView()
 
             stackView.addArrangedSubviewWithMargin(resetApp)
@@ -357,8 +357,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "These operations cannot be undone."
-                )
+                    footer: "These operations cannot be undone.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }
@@ -366,7 +366,7 @@ extension SettingController.SettingContent {
         private func presentSyncDisableAlert(confirmHandler: @escaping (Bool) -> Void) {
             let alert = AlertViewController(
                 title: "Disable iCloud Sync",
-                message: "Turning off sync only pauses future updates. Existing data stays in place. Re‑enable later to fetch and resume syncing."
+                message: "Turning off sync only pauses future updates. Existing data stays in place. Re‑enable later to fetch and resume syncing.",
             ) { context in
                 context.addAction(title: "Keep Enabled") {
                     context.dispose { confirmHandler(false) }
@@ -391,7 +391,7 @@ extension SettingController.SettingContent {
         private func presentImportConfirmation(from controller: UIViewController) {
             let alert = AlertViewController(
                 title: "Import Database",
-                message: "Importing a database backup will replace all current conversations, memories, and cloud model settings. This action cannot be undone."
+                message: "Importing a database backup will replace all current conversations, memories, and cloud model settings. This action cannot be undone.",
             ) { [weak self] context in
                 context.allowSimpleDispose()
                 context.addAction(title: "Cancel") {
@@ -418,7 +418,7 @@ extension SettingController.SettingContent {
         private func performDatabaseImport(from url: URL, controller: UIViewController) {
             Indicator.progress(
                 title: "Importing...",
-                controller: controller
+                controller: controller,
             ) { progressCompletion in
                 let securityScoped = url.startAccessingSecurityScopedResource()
                 defer { if securityScoped { url.stopAccessingSecurityScopedResource() } }
@@ -436,7 +436,7 @@ extension SettingController.SettingContent {
                 await progressCompletion { [weak self] in
                     let alert = AlertViewController(
                         title: "Import Complete",
-                        message: "FlowDown will restart to apply the imported database."
+                        message: "FlowDown will restart to apply the imported database.",
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) {

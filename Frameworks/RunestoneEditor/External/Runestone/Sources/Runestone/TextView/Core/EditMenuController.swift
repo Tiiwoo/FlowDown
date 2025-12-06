@@ -94,7 +94,7 @@ extension EditMenuController: UIEditMenuInteractionDelegate {
     func editMenuInteraction(
         _: UIEditMenuInteraction,
         menuFor _: UIEditMenuConfiguration,
-        suggestedActions: [UIMenuElement]
+        suggestedActions: [UIMenuElement],
     ) -> UIMenu? {
         if let selectedRange = delegate?.selectedRange(for: self), let replaceAction = replaceActionIfAvailable(for: selectedRange) {
             UIMenu(children: [replaceAction] + suggestedActions)

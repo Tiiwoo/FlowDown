@@ -37,7 +37,7 @@ class MTStoreMemoryTool: ModelTool, @unchecked Sendable {
                 "required": ["content"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -48,7 +48,7 @@ class MTStoreMemoryTool: ModelTool, @unchecked Sendable {
             explain: "Allows AI to store important information for future conversations.",
             key: "wiki.qaq.ModelTools.StoreMemoryTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -60,7 +60,7 @@ class MTStoreMemoryTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTStoreMemoryTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid memory content"),
-                ]
+                ],
             )
         }
 

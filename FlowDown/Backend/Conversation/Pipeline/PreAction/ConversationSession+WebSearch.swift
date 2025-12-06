@@ -123,7 +123,7 @@ extension ConversationSessionManager.Session {
     private func generateWebSearchTemplate(
         input: String,
         documents: [String],
-        previousMessages: [String]
+        previousMessages: [String],
     ) -> [TemplateItem] {
         // prompt depends on sensitivity
         let sensitivity = ModelManager.shared.searchSensitivity
@@ -141,7 +141,7 @@ extension ConversationSessionManager.Session {
             task: task,
             user_input: input,
             attached_documents: attachedDocuments,
-            previous_messages: previousMessagesData
+            previous_messages: previousMessagesData,
         )
 
         let encoder = XMLEncoder()
@@ -164,7 +164,7 @@ extension ConversationSessionManager.Session {
                     Additional User Request: \(ModelManager.shared.additionalPrompt)
 
                     Important: Consider all provided context including conversation history and attached documents when determining if web search is needed and what queries to generate.
-                    """
+                    """,
                 ),
                 .init(participant: .user, document: xmlString),
             ]
@@ -190,7 +190,7 @@ extension ConversationSessionManager.Session {
 
     func gatheringWebContent(
         searchQueries: [String],
-        onSetWebDocumentResult: @escaping ([Scrubber.Document]) -> Void
+        onSetWebDocumentResult: @escaping ([Scrubber.Document]) -> Void,
     ) -> AsyncStream<WebSearchPhase> {
         .init { cont in
             Task.detached {
@@ -256,7 +256,7 @@ extension ConversationSessionManager.Session {
         let messages: [ChatRequestBody.Message] = generateWebSearchTemplate(
             input: query,
             documents: attachments,
-            previousMessages: previousMessages
+            previousMessages: previousMessages,
         ).map {
             switch $0.participant {
             case .system: .system(content: .text($0.document))
@@ -271,10 +271,10 @@ extension ConversationSessionManager.Session {
             let ans = try await ModelManager.shared.infer(
                 with: model,
                 maxCompletionTokens: 256,
-                input: messages
+                input: messages,
             )
 
-            let content = ans.content.trimmingCharacters(in: .whitespacesAndNewlines)
+            let content = ans.text.trimmingCharacters(in: .whitespacesAndNewlines)
 
             if let (queries, searchRequired) = extractQueriesFromXMLWithSearchRequired(content) {
                 return (validateQueries(queries), searchRequired)
@@ -438,7 +438,7 @@ extension ConversationSession {
     func preprocessSearchQueries(
         _ currentMessageListView: MessageListView,
         _ object: inout RichEditorView.Object,
-        requestLinkContentIndex: @escaping (URL) -> Int
+        requestLinkContentIndex: @escaping (URL) -> Int,
     ) async throws {
         guard case let .bool(value) = object.options[.browsing], value else {
             return
@@ -473,7 +473,7 @@ extension ConversationSession {
         let searchResult = await generateSearchQueries(
             for: object.text,
             attachments: attachmentTexts,
-            previousMessages: prevMsgs
+            previousMessages: prevMsgs,
         )
 
         let searchQueries = searchResult.queries
@@ -519,9 +519,9 @@ extension ConversationSession {
                     textRepresentation: self.formatAsWebArchive(
                         document: doc.textDocument,
                         title: doc.title,
-                        atIndex: index
+                        atIndex: index,
                     ),
-                    storageSuffix: UUID().uuidString
+                    storageSuffix: UUID().uuidString,
                 ))
             }
             let storableContent: [Message.WebSearchStatus.SearchResult] = documents.map { doc in
@@ -534,7 +534,7 @@ extension ConversationSession {
 
         for try await phase in gatheringWebContent(
             searchQueries: searchQueries,
-            onSetWebDocumentResult: onSetWebContents
+            onSetWebDocumentResult: onSetWebContents,
         ) {
             try checkCancellation()
             var status = webSearchMessage.webSearchStatus
@@ -564,7 +564,7 @@ extension ConversationSession {
                 code: -1,
                 userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "No web search results."),
-                ]
+                ],
             )
         }
 

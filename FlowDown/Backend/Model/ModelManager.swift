@@ -17,6 +17,7 @@ import UIKit
 class ModelManager: NSObject {
     static let shared = ModelManager()
     static let flowdownModelConfigurationExtension = "fdmodel"
+    static let appleIntelligenceEnabledKey = "Model.Inference.AppleIntelligence.Enabled"
 
     typealias ModelIdentifier = String
     typealias LocalModelIdentifier = LocalModel.ID
@@ -41,6 +42,12 @@ class ModelManager: NSObject {
     var temperature: Float
     @BareCodableStorage(key: "Model.Inference.SearchSensitivity", defaultValue: SearchSensitivity.balanced)
     var searchSensitivity: SearchSensitivity
+
+    @BareCodableStorage(
+        key: ModelManager.appleIntelligenceEnabledKey,
+        defaultValue: true,
+    )
+    var appleIntelligenceEnabled: Bool
 
     @BareCodableStorage(key: "Model.Default.Conversation", defaultValue: "")
     // swiftformat:disable:next redundantFileprivate
@@ -90,12 +97,12 @@ class ModelManager: NSObject {
         try? FileManager.default.createDirectory(
             at: localModelDir,
             withIntermediateDirectories: true,
-            attributes: nil
+            attributes: nil,
         )
         try? FileManager.default.createDirectory(
             at: localModelDownloadTempDir,
             withIntermediateDirectories: true,
-            attributes: nil
+            attributes: nil,
         )
 
         localModels.send(scanLocalModels())
@@ -104,7 +111,7 @@ class ModelManager: NSObject {
         // make sure after scan!
         Publishers.CombineLatest(
             localModels,
-            cloudModels
+            cloudModels,
         )
         .ensureMainThread()
         .sink { [weak self] _ in
@@ -230,7 +237,7 @@ class ModelManager: NSObject {
     func importModels(at urls: [URL], controller: UIViewController) {
         Indicator.progress(
             title: "Importing Model",
-            controller: controller
+            controller: controller,
         ) { completionHandler in
             assert(!Thread.isMainThread)
             var success: [String] = []
@@ -264,10 +271,25 @@ class ModelManager: NSObject {
             await completionHandler {
                 let message = String(
                     format: String(localized: "Imported %d Models"),
-                    count
+                    count,
                 )
                 Indicator.present(title: "\(message)")
             }
+        }
+    }
+}
+
+extension ModelManager {
+    func responseFormat(for identifier: ModelIdentifier) -> CloudModelResponseFormat {
+        cloudModel(identifier: identifier)?.response_format ?? .default
+    }
+
+    func updateResponseFormat(
+        for identifier: ModelIdentifier,
+        to newFormat: CloudModelResponseFormat,
+    ) {
+        editCloudModel(identifier: identifier) { model in
+            model.update(\.response_format, to: newFormat)
         }
     }
 }

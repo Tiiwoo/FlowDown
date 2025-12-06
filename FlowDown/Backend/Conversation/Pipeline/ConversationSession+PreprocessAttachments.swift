@@ -15,7 +15,7 @@ extension ConversationSession {
         _ object: inout RichEditorView.Object,
         _ modelSupportsVisualInput: Bool,
         _ currentMessageListView: MessageListView,
-        _ userMessage: Message
+        _ userMessage: Message,
     ) async throws {
         let skipImageRecognition = ModelManager.shared.defaultModelForAuxiliaryVisualTaskSkipIfPossible
             && modelSupportsVisualInput
@@ -48,7 +48,7 @@ extension ConversationSession {
             await currentMessageListView.loading(with: hint)
             let text = try await self.processImageToText(
                 image: image,
-                currentMessageListView
+                currentMessageListView,
             )
             object.attachments[idx].textRepresentation = text
         }

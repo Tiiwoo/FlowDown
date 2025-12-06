@@ -44,7 +44,7 @@ extension SettingController.SettingContent.MCPController {
 
         let configurableView = ConfigurableActionView(
             responseEverywhere: true,
-            actionBlock: { _ in }
+            actionBlock: { _ in },
         )
 
         var clientId: ModelContextServer.ID?
@@ -113,7 +113,7 @@ extension SettingController.SettingContent.MCPController {
 
         func contextMenuInteraction(
             _: UIContextMenuInteraction,
-            configurationForMenuAtLocation _: CGPoint
+            configurationForMenuAtLocation _: CGPoint,
         ) -> UIContextMenuConfiguration? {
             guard let clientId else { return nil }
             let menu = UIMenu(options: [.displayInline], children: [

@@ -57,7 +57,7 @@ final class LineFragment {
         descent: CGFloat,
         baseSize: CGSize,
         scaledSize: CGSize,
-        yPosition: CGFloat
+        yPosition: CGFloat,
     ) {
         self.init(
             id: id,
@@ -68,7 +68,7 @@ final class LineFragment {
             descent: descent,
             baseSize: baseSize,
             scaledSize: scaledSize,
-            yPosition: yPosition
+            yPosition: yPosition,
         )
     }
 
@@ -81,7 +81,7 @@ final class LineFragment {
         descent: CGFloat,
         baseSize: CGSize,
         scaledSize: CGSize,
-        yPosition: CGFloat
+        yPosition: CGFloat,
     ) {
         self.id = id
         self.index = index
@@ -104,7 +104,7 @@ final class LineFragment {
             descent: descent,
             baseSize: baseSize,
             scaledSize: scaledSize,
-            yPosition: yPosition
+            yPosition: yPosition,
         )
     }
 

@@ -10,13 +10,13 @@ class RichEditorView: EditorSectionView {
             self,
             selector: #selector(applicationWillResignActive),
             name: UIApplication.willResignActiveNotification,
-            object: nil
+            object: nil,
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(applicationDidBecomeActive),
             name: UIApplication.didBecomeActiveNotification,
-            object: nil
+            object: nil,
         )
     }
 
@@ -126,7 +126,7 @@ class RichEditorView: EditorSectionView {
                     x: spacing - horizontalAdjustment,
                     y: y,
                     width: bounds.width - spacing * 2 + horizontalAdjustment * 2,
-                    height: subview.heightPublisher.value
+                    height: subview.heightPublisher.value,
                 )
                 finalHeight = subview.frame.maxY
                 y = finalHeight + spacing
@@ -135,7 +135,7 @@ class RichEditorView: EditorSectionView {
                     x: spacing - horizontalAdjustment,
                     y: y,
                     width: bounds.width - spacing * 2 + horizontalAdjustment * 2,
-                    height: 0
+                    height: 0,
                 )
             }
         }
@@ -146,7 +146,7 @@ class RichEditorView: EditorSectionView {
                 x: spacing,
                 y: attachmentsBar.frame.minX,
                 width: bounds.width - spacing * 2,
-                height: inputEditor.frame.maxY - attachmentsBar.frame.minY
+                height: inputEditor.frame.maxY - attachmentsBar.frame.minY,
             )
         } else {
             attachmentSeprator.alpha = 0
@@ -161,18 +161,18 @@ class RichEditorView: EditorSectionView {
                 x: shadowInset + shadowBlur,
                 y: shadowInset + shadowBlur,
                 width: shadowContainer.frame.width,
-                height: shadowContainer.frame.height
+                height: shadowContainer.frame.height,
             ),
             cornerRadius: shadowContainer.layer.cornerRadius,
             blur: shadowBlur,
-            offset: .zero
+            offset: .zero,
         ))
 
         attachmentSeprator.frame = .init(
             x: shadowContainer.frame.minX,
             y: inputEditor.frame.minY - 0.5,
             width: shadowContainer.frame.width,
-            height: 1
+            height: 1,
         )
 
         dropContainer.frame = shadowContainer.frame
@@ -232,7 +232,7 @@ class RichEditorView: EditorSectionView {
                 .browsing: .bool(quickSettingBar.browsingToggle.isOn),
                 .tools: .bool(quickSettingBar.toolsToggle.isOn),
                 .ephemeral: .bool(false), // .ephemeral: .bool(quickSettingBar.ephemeralChatToggle.isOn),
-            ]
+            ],
         )
     }
 }

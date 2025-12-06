@@ -139,7 +139,7 @@ package final class MockSyncEngine: SyncEngineProtocol {
             savedZones: savedZones,
             failedZoneSaves: failedZoneSaves,
             deletedZoneIDs: deletedZoneIDs,
-            failedZoneDeletes: failedZoneDeletes
+            failedZoneDeletes: failedZoneDeletes,
         )
 
         await parentSyncEngine.handleEvent(event, syncEngine: self)
@@ -167,7 +167,7 @@ package final class MockSyncEngine: SyncEngineProtocol {
             saving: batch.recordsToSave,
             deleting: batch.recordIDsToDelete,
             savePolicy: .ifServerRecordUnchanged,
-            atomically: batch.atomicByZone
+            atomically: batch.atomicByZone,
         )
 
         if saveResults.isEmpty, deleteResults.isEmpty {
@@ -210,18 +210,18 @@ package final class MockSyncEngine: SyncEngineProtocol {
                 }
 
                 return .saveRecord(CKRecord.ID(recordName: sentQueueId, zoneID: $0.recordID.zoneID))
-            }
+            },
         )
 
         state.remove(
-            pendingRecordZoneChanges: deletedRecordIDs.map { .deleteRecord($0) }
+            pendingRecordZoneChanges: deletedRecordIDs.map { .deleteRecord($0) },
         )
 
         let event = SyncEngine.Event.sentRecordZoneChanges(
             savedRecords: savedRecords,
             failedRecordSaves: failedRecordSaves,
             deletedRecordIDs: deletedRecordIDs,
-            failedRecordDeletes: failedRecordDeletes
+            failedRecordDeletes: failedRecordDeletes,
         )
 
         await parentSyncEngine.handleEvent(event, syncEngine: self)
@@ -264,11 +264,10 @@ package final class MockSyncEngine: SyncEngineProtocol {
 
 package final class MockSyncEngineState: CKSyncEngineStateProtocol {
     package let _pendingRecordZoneChanges = LockIsolated<
-        OrderedSet<CKSyncEngine.PendingRecordZoneChange>
-    >([]
-    )
+        OrderedSet<CKSyncEngine.PendingRecordZoneChange>,
+    >([])
     package let _pendingDatabaseChanges = LockIsolated<
-        OrderedSet<CKSyncEngine.PendingDatabaseChange>
+        OrderedSet<CKSyncEngine.PendingDatabaseChange>,
     >([])
 
     package var pendingRecordZoneChanges: [CKSyncEngine.PendingRecordZoneChange] {

@@ -31,7 +31,7 @@ final class WebSearchStateView: MessageListRowView {
                     UIMenu(title: result.title, children: [
                         UIAction(
                             title: String(localized: "View"),
-                            image: UIImage(systemName: "eye")
+                            image: UIImage(systemName: "eye"),
                         ) { [weak self] _ in
                             Indicator.present(result.url, referencedView: self)
                         },
@@ -43,7 +43,7 @@ final class WebSearchStateView: MessageListRowView {
                             },
                             UIAction(
                                 title: String(localized: "Open in Default Browser"),
-                                image: UIImage(systemName: "safari")
+                                image: UIImage(systemName: "safari"),
                             ) { _ in
                                 UIApplication.shared.open(result.url)
                             },
@@ -63,7 +63,7 @@ final class WebSearchStateView: MessageListRowView {
             x: 0,
             y: 0,
             width: min(indicatorSize.width, contentView.bounds.width),
-            height: contentView.bounds.height
+            height: contentView.bounds.height,
         )
 
         menuButton.frame = searchIndicatorView.frame
@@ -132,8 +132,8 @@ extension WebSearchStateView {
             let magnifyImageView = UIImageView(
                 image: .init(
                     systemName: "rectangle.and.text.magnifyingglass",
-                    withConfiguration: imageConfiguration
-                )
+                    withConfiguration: imageConfiguration,
+                ),
             )
             magnifyImageView.tintColor = .label
             self.magnifyImageView = magnifyImageView
@@ -170,7 +170,7 @@ extension WebSearchStateView {
                 x: Self.horizontalPadding,
                 y: (bounds.height - imageSize.height) / 2,
                 width: imageSize.width,
-                height: imageSize.height
+                height: imageSize.height,
             )
 
             let textX = magnifyImageView.frame.maxX + Self.spacing
@@ -178,7 +178,7 @@ extension WebSearchStateView {
                 x: textX,
                 y: 0,
                 width: bounds.width - textX - Self.horizontalPadding,
-                height: bounds.height
+                height: bounds.height,
             )
 
             updateProgressBarFrame()
@@ -189,7 +189,7 @@ extension WebSearchStateView {
                 x: 0,
                 y: bounds.height - Self.barHeight,
                 width: bounds.width * progressFraction,
-                height: Self.barHeight
+                height: Self.barHeight,
             )
         }
 

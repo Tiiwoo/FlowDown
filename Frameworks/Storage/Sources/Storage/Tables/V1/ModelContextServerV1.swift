@@ -75,7 +75,7 @@ package final class ModelContextServerV1: Identifiable, Codable, TableNamed, Tab
         templateEnabled: ModelContextServer.EnableCodable = .init(),
         lastConnected: Date? = nil,
         connectionStatus: ModelContextServer.ConnectionStatus = .disconnected,
-        capabilities: StringArrayCodable = StringArrayCodable([])
+        capabilities: StringArrayCodable = StringArrayCodable([]),
     ) {
         self.id = id
         self.name = name

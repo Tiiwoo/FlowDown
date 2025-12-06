@@ -23,7 +23,7 @@ final class ConversationSession: Identifiable {
 
     private lazy var messagesSubject: CurrentValueSubject<
         ([Message], Bool),
-        Never
+        Never,
     > = .init((messages, false))
     var messagesDidChange: AnyPublisher<([Message], Bool), Never> {
         messagesSubject.eraseToAnyPublisher()
@@ -346,7 +346,7 @@ final class ConversationSession: Identifiable {
                 previewImage: attachment.previewImageData,
                 imageRepresentation: attachment.imageRepresentation,
                 textRepresentation: attachment.representedDocument,
-                storageSuffix: attachment.storageSuffix
+                storageSuffix: attachment.storageSuffix,
             )
         }
 
@@ -359,7 +359,7 @@ final class ConversationSession: Identifiable {
             self.doInfere(
                 modelID: modelID,
                 currentMessageListView: currentMessageListView,
-                inputObject: editorObject
+                inputObject: editorObject,
             ) {}
         }
     }

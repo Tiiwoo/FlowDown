@@ -17,7 +17,7 @@ struct ShowConversationIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Switch to a conversation without sending any messages."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 
@@ -45,7 +45,7 @@ struct ShowConversationIntent: AppIntent {
         }
 
         let message = String(
-            localized: "Switched to conversation"
+            localized: "Switched to conversation",
         )
         let dialog = IntentDialog(.init(stringLiteral: message))
         return .result(dialog: dialog)

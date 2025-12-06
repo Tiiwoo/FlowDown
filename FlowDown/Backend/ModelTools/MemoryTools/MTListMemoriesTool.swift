@@ -36,7 +36,7 @@ class MTListMemoriesTool: ModelTool, @unchecked Sendable {
                 "required": ["limit"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -47,7 +47,7 @@ class MTListMemoriesTool: ModelTool, @unchecked Sendable {
             explain: "Allows AI to list memories with IDs for management operations.",
             key: "wiki.qaq.ModelTools.ListMemoriesTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 

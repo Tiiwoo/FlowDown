@@ -48,7 +48,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                 "required": ["locale"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -59,7 +59,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
             explain: "Allows LLM to access your current location information.",
             key: "wiki.qaq.ModelTools.LocationTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -81,12 +81,12 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                 userInfo: [
                     NSLocalizedDescriptionKey: String(
                         localized: "Could not find view controller"),
-                ]
+                ],
             )
         }
 
         return try await requestLocationWithUserInteraction(
-            controller: viewController, locale: locale
+            controller: viewController, locale: locale,
         )
     }
 
@@ -102,7 +102,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                         domain: "Tool", code: -1,
                         userInfo: [
                             NSLocalizedDescriptionKey: result,
-                        ]
+                        ],
                     ))
                 }
             }
@@ -110,7 +110,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
     }
 
     private func getLocationAndAddress(
-        controller: UIViewController, locale: Locale, completion: @escaping (String, Bool) -> Void
+        controller: UIViewController, locale: Locale, completion: @escaping (String, Bool) -> Void,
     ) {
         var isCompletionCalled = false
         let wrappedCompletion: (String, Bool) -> Void = { text, success in
@@ -120,7 +120,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
         }
 
         let indicator = AlertProgressIndicatorViewController(
-            title: "Retrieving Location"
+            title: "Retrieving Location",
         )
 
         controller.present(indicator, animated: true)
@@ -155,8 +155,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                             wrappedCompletion(
                                 String(
                                     localized:
-                                    "Location access is not available. Please check your device settings."
-                                ), false
+                                    "Location access is not available. Please check your device settings.",
+                                ), false,
                             )
                         }
                         return
@@ -167,7 +167,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                     @unknown default:
                         indicator.dismiss(animated: true) {
                             wrappedCompletion(
-                                String(localized: "Unknown authorization status for location services."), false
+                                String(localized: "Unknown authorization status for location services."), false,
                             )
                         }
                         return
@@ -206,8 +206,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                         completion(
                             String(
                                 localized:
-                                "Error getting location details: \(error.localizedDescription)"
-                            ), false
+                                "Error getting location details: \(error.localizedDescription)",
+                            ), false,
                         )
                         return
                     }
@@ -226,7 +226,7 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                     addressComponents.append(
                         String(
                             localized:
-                            "Coordinates: \(String(format: "%.6f", latitude)), \(String(format: "%.6f", longitude))"
+                            "Coordinates: \(String(format: "%.6f", latitude)), \(String(format: "%.6f", longitude))",
                         ))
 
                     if let name = placemark.name, !name.isEmpty {
@@ -303,7 +303,7 @@ extension MTLocationTool: CLLocationManagerDelegate {
         @unknown default:
             loadingIndicator?.dismiss(animated: true) {
                 self.locationCompletion?(
-                    String(localized: "Unknown authorization status for location services."), false
+                    String(localized: "Unknown authorization status for location services."), false,
                 )
             }
         }

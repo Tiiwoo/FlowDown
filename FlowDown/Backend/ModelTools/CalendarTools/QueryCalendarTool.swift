@@ -55,7 +55,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
                 "required": ["start_date", "include_all_day_events", "end_date"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -66,7 +66,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             explain: "Allows LLM to read your calendar events.",
             key: "wiki.qaq.ModelTools.QueryCalendarTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -78,7 +78,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTQueryCalendarTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid input parameters"),
-                ]
+                ],
             )
         }
 
@@ -93,7 +93,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTQueryCalendarTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid start date format. Use YYYY-MM-DD."),
-                ]
+                ],
             )
         }
 
@@ -111,7 +111,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
                 throw NSError(
                     domain: "MTQueryCalendarTool", code: 400, userInfo: [
                         NSLocalizedDescriptionKey: String(localized: "Date range cannot exceed 7 days"),
-                    ]
+                    ],
                 )
             }
         } else {
@@ -124,7 +124,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTQueryCalendarTool", code: 500, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Could not find view controller"),
-                ]
+                ],
             )
         }
 
@@ -132,7 +132,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             startDate: startDate,
             endDate: endDate,
             includeAllDayEvents: includeAllDayEvents,
-            controller: viewController
+            controller: viewController,
         )
 
         return result
@@ -153,7 +153,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
                         fetchCalendarEvents(
                             startDate: startDate,
                             endDate: endDate,
-                            includeAllDayEvents: includeAllDayEvents
+                            includeAllDayEvents: includeAllDayEvents,
                         ) { result, error in
                             if let error {
                                 cont.resume(throwing: NSError(domain: String(localized: "Tool"), code: -1, userInfo: [
@@ -184,7 +184,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
 
         let alert = AlertViewController(
             title: "Calendar Events",
-            message: "\(displayText)"
+            message: "\(displayText)",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose {

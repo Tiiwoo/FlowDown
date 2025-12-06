@@ -13,5 +13,5 @@ let package = Package(
     ],
     targets: [
         .target(name: "TreeSitter", sources: ["src/lib.c"]),
-    ]
+    ],
 )
