@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Update missing i18n translations in Localizable.xcstrings.
-This script adds missing English localizations and fixes 'new' state translations.
+Update missing i18n translations (Spanish preset).
+Thin wrapper around shared i18n_tools to avoid duplicated logic.
 """
 
 import sys
@@ -15,9 +15,19 @@ from i18n_tools import (
     update_missing_translations,
 )
 
-# Populate this map with explicit translations when introducing new keys.
-# Format: {"Key": {"zh-Hans": "示例", "es": "Ejemplo"}}
-NEW_STRINGS: dict[str, dict[str, str]] = {}
+NEW_STRINGS: dict[str, dict[str, str]] = {
+    "[%@] %@": {"es": "[%@] %@"},
+    "%d. [%@] %@": {"es": "%d. [%@] %@"},
+    "Apple Intelligence": {"es": "Apple Intelligence"},
+    "Audio": {"es": "Audio"},
+    "Chat": {"es": "Chat"},
+    "Editor": {"es": "Editor"},
+    "Endpoint": {"es": "Endpoint"},
+    "Error": {"es": "Error"},
+    "General": {"es": "General"},
+    "Local": {"es": "Local"},
+    "OK": {"es": "OK"},
+}
 
 
 if __name__ == "__main__":

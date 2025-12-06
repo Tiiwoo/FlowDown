@@ -17,11 +17,7 @@ import json
 import sys
 import os
 
-# Exceptions: strings that are the same in English and Chinese (proper nouns, brand names, etc.)
 EXCEPTIONS = {
-    "Discord",
-    "FlowDown",
-    "GitHub",
 }
 
 def check_untranslated(file_path):
