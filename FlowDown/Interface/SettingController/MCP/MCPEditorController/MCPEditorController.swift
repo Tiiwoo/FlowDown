@@ -163,14 +163,14 @@ class MCPEditorController: StackScrollController {
         typeView.use {
             [
                 UIAction(
-                    title: String(localized: "Streamble HTTP"),
+                    title: String(localized: "Streamable HTTP"),
                     image: UIImage(systemName: "network"),
                 ) { _ in
                     MCPService.shared.edit(identifier: self.serverId) {
                         $0.update(\.type, to: .http)
                     }
                     self.refreshUI()
-                    typeView.configure(value: String(localized: "Streamble HTTP"))
+                    typeView.configure(value: String(localized: "Streamable HTTP"))
                 },
             ]
         }
