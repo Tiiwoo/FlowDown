@@ -16,19 +16,19 @@ class ControlPanel: EditorSectionView {
 
     let cameraButton = GiantButton(
         title: NSLocalizedString("Camera", comment: ""),
-        icon: "camera"
+        icon: "camera",
     )
     let photoButton = GiantButton(
         title: NSLocalizedString("Photo", comment: ""),
-        icon: "image.up"
+        icon: "image.up",
     )
     let fileButton = GiantButton(
         title: NSLocalizedString("File", comment: ""),
-        icon: "attachment"
+        icon: "attachment",
     )
     let webButton = GiantButton(
         title: NSLocalizedString("Web", comment: ""),
-        icon: "link"
+        icon: "link",
     )
 
     #if targetEnvironment(macCatalyst)
@@ -96,7 +96,7 @@ class ControlPanel: EditorSectionView {
                 x: CGFloat(idx) * (buttonWidth + buttonSpacing),
                 y: 0,
                 width: buttonWidth,
-                height: buttonHeight
+                height: buttonHeight,
             )
             view.alpha = isPanelOpen.value ? 1 : 0
         }

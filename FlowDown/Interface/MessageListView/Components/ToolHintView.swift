@@ -78,14 +78,14 @@ final class ToolHintView: MessageListRowView {
             x: 12,
             y: (contentView.bounds.height - labelSize.height) / 2,
             width: labelSize.height, // 1:1
-            height: labelSize.height
+            height: labelSize.height,
         )
 
         label.frame = .init(
             x: symbolView.frame.maxX + 8,
             y: (contentView.bounds.height - labelSize.height) / 2,
             width: labelSize.width,
-            height: labelSize.height
+            height: labelSize.height,
         )
 
         contentView.frame.size.width = label.frame.maxX + 18

@@ -223,7 +223,7 @@ package extension Storage {
     /// - Returns: 三个数组：新增、更新、删除
     func diffSyncable<T: Syncable & SyncQueryable>(
         objects: [T],
-        handle: Handle? = nil
+        handle: Handle? = nil,
     ) throws -> DiffSyncableResult<T> {
         guard !objects.isEmpty else {
             return DiffSyncableResult()
@@ -315,7 +315,7 @@ package extension Storage {
                     fromTable: UploadQueue.tableName,
                     where: UploadQueue.Properties.id <= item.queueId
                         && UploadQueue.Properties.tableName == item.tableName
-                        && UploadQueue.Properties.objectId == item.objectId
+                        && UploadQueue.Properties.objectId == item.objectId,
                 )
             }
         }
@@ -336,13 +336,13 @@ package extension Storage {
                     fromTable: UploadQueue.tableName,
                     where:
                     UploadQueue.Properties.tableName == item.tableName
-                        && UploadQueue.Properties.objectId == item.objectId
+                        && UploadQueue.Properties.objectId == item.objectId,
                 )
 
                 let recordName = "\(item.objectId)\(UploadQueue.CKRecordIDSeparator)\(item.tableName)"
                 try $0.delete(
                     fromTable: SyncMetadata.tableName,
-                    where: SyncMetadata.Properties.recordName == recordName
+                    where: SyncMetadata.Properties.recordName == recordName,
                 )
             }
         }
@@ -389,7 +389,7 @@ package extension Storage {
             .to(UploadQueue.State.pending)
             .where(
                 UploadQueue.Properties.state == UploadQueue.State.failed
-                    && UploadQueue.Properties.failCount < 100
+                    && UploadQueue.Properties.failCount < 100,
             )
 
         if let handle {
@@ -450,7 +450,7 @@ package extension Storage {
 
         select.where(
             //            UploadQueue.Properties.id.in(subSelect.asExpression())
-            UploadQueue.Properties.id.in(ids)
+            UploadQueue.Properties.id.in(ids),
         )
         .order(by: [
             UploadQueue.Properties.id.order(.ascending),
@@ -486,7 +486,7 @@ package extension Storage {
         select.where(
             UploadQueue.Properties.id.in(queueIds)
                 && UploadQueue.Properties.state != UploadQueue.State.finish
-                && UploadQueue.Properties.failCount < 100
+                && UploadQueue.Properties.failCount < 100,
         )
         .order(by: [
             UploadQueue.Properties.id.order(.ascending),
@@ -587,7 +587,7 @@ package extension Storage {
                     orderBy: [
                         T.SyncQuery.creation.order(.ascending),
                     ],
-                    limit: batchSize
+                    limit: batchSize,
                 )
             } else {
                 try handle.getObjects(
@@ -595,7 +595,7 @@ package extension Storage {
                     orderBy: [
                         T.SyncQuery.creation.order(.ascending),
                     ],
-                    limit: batchSize
+                    limit: batchSize,
                 )
             }
 

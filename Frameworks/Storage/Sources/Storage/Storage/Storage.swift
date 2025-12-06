@@ -263,7 +263,7 @@ public extension Storage {
                         where:
                         UploadQueue.Properties.tableName.in(syncTables)
                             && (UploadQueue.Properties.state == UploadQueue.State.finish
-                                || (UploadQueue.Properties.state.in([UploadQueue.State.pending, UploadQueue.State.failed]) && UploadQueue.Properties.failCount >= 100))
+                                || (UploadQueue.Properties.state.in([UploadQueue.State.pending, UploadQueue.State.failed]) && UploadQueue.Properties.failCount >= 100)),
                     )
 
                 })
@@ -285,7 +285,7 @@ public extension Storage {
             .appendingPathComponent(UUID().uuidString)
         try? FileManager.default.createDirectory(
             at: exportDir,
-            withIntermediateDirectories: true
+            withIntermediateDirectories: true,
         )
 
         do {

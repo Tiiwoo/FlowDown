@@ -19,7 +19,7 @@ public extension TreeSitterIndentationScopes {
                 "else",
                 "}",
                 "]",
-            ]
+            ],
         )
     }
 }

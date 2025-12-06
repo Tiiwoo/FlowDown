@@ -53,20 +53,20 @@ class GiantButton: UIView {
             x: 0,
             y: 0,
             width: bounds.width,
-            height: bounds.height - labelHeight
+            height: bounds.height - labelHeight,
         )
         let imageSize = CGSize(width: 28, height: 28)
         imageView.frame = .init(
             x: (backgroundView.bounds.width - imageSize.width) / 2,
             y: (backgroundView.bounds.height - imageSize.height) / 2,
             width: imageSize.width,
-            height: imageSize.height
+            height: imageSize.height,
         )
         labelView.frame = .init(
             x: 0,
             y: backgroundView.frame.maxY,
             width: bounds.width,
-            height: labelHeight
+            height: labelHeight,
         )
     }
 

@@ -5,8 +5,8 @@
 //  Created by GPT-5 Codex on 2025/12/06.
 //
 
-@testable import Storage
 import Foundation
+@testable import Storage
 import Testing
 import WCDBSwift
 
@@ -51,7 +51,9 @@ struct CloudModelMigrationTests {
 }
 
 private func fetchColumnNames(in table: String, database: Database) throws -> [String] {
-    let pragma = StatementPragma().pragma(.tableInfo, ofTable: table)
+    let pragma = StatementPragma()
+        .pragma(.tableInfo)
+        .with(table)
     let rows = try database.getRows(from: pragma)
     return rows.map { $0[1].stringValue }
 }
@@ -120,5 +122,3 @@ private struct LegacyCloudModel: TableNamed, TableCodable {
         case temperature_preference
     }
 }
-
-

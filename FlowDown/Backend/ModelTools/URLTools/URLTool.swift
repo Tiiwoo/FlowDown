@@ -44,7 +44,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
                 "required": ["url", "reason"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -55,7 +55,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
             explain: "Allows LLM to suggest URLs for you to open.",
             key: "wiki.qaq.ModelTools.URLTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -84,7 +84,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
         }
 
         return try await requestURLOpenWithUserInteraction(
-            url: url, reason: reason, controller: viewController, referencedView: view
+            url: url, reason: reason, controller: viewController, referencedView: view,
         )
     }
 
@@ -93,7 +93,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
         url: URL,
         reason: String,
         controller: UIViewController,
-        referencedView: UIView
+        referencedView: UIView,
     ) async throws -> String {
         try await withCheckedThrowingContinuation { continuation in
             let scheme = url.scheme?.lowercased() ?? ""
@@ -111,14 +111,14 @@ class MTURLTool: ModelTool, @unchecked Sendable {
 
             let alert = AlertViewController(
                 title: "Open \(urlTypeDescription.capitalized)",
-                message: "The AI assistant suggests opening this URL:\n\n\(url.absoluteString)\n\nReason: \(reason)"
+                message: "The AI assistant suggests opening this URL:\n\n\(url.absoluteString)\n\nReason: \(reason)",
             ) { context in
                 context.addAction(title: "Cancel") {
                     context.dispose {
                         continuation.resume(
                             throwing: NSError(domain: String(localized: "Tool"), code: -1, userInfo: [
                                 NSLocalizedDescriptionKey: String(localized: "User cancelled the operation."),
-                            ])
+                            ]),
                         )
                     }
                 }
@@ -131,7 +131,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
                         }
 
                         continuation.resume(
-                            returning: String(localized: "Operation completed.")
+                            returning: String(localized: "Operation completed."),
                         )
                     }
                 }
@@ -142,7 +142,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
                 continuation.resume(
                     throwing: NSError(domain: String(localized: "Tool"), code: -1, userInfo: [
                         NSLocalizedDescriptionKey: String(localized: "Tool execution failed: authorization dialog is already presented."),
-                    ])
+                    ]),
                 )
                 return
             }
@@ -152,7 +152,7 @@ class MTURLTool: ModelTool, @unchecked Sendable {
                     continuation.resume(
                         throwing: NSError(domain: String(localized: "Tool"), code: -1, userInfo: [
                             NSLocalizedDescriptionKey: String(localized: "Failed to display URL open request dialog."),
-                        ])
+                        ]),
                     )
                     return
                 }

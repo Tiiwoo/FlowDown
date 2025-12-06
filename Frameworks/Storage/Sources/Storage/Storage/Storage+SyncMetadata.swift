@@ -34,14 +34,14 @@ package extension Storage {
                 fromTable: SyncMetadata.tableName,
                 where: SyncMetadata.Properties.recordName == recordName
                     && SyncMetadata.Properties.zoneName == zoneName
-                    && SyncMetadata.Properties.ownerName == ownerName
+                    && SyncMetadata.Properties.ownerName == ownerName,
             )
         } else {
             try db.delete(
                 fromTable: SyncMetadata.tableName,
                 where: SyncMetadata.Properties.recordName == recordName
                     && SyncMetadata.Properties.zoneName == zoneName
-                    && SyncMetadata.Properties.ownerName == ownerName
+                    && SyncMetadata.Properties.ownerName == ownerName,
             )
         }
     }
@@ -52,14 +52,14 @@ package extension Storage {
                 fromTable: SyncMetadata.tableName,
                 where: SyncMetadata.Properties.recordName == recordName
                     && SyncMetadata.Properties.zoneName == zoneName
-                    && SyncMetadata.Properties.ownerName == ownerName
+                    && SyncMetadata.Properties.ownerName == ownerName,
             )
         } else {
             try db.getObject(
                 fromTable: SyncMetadata.tableName,
                 where: SyncMetadata.Properties.recordName == recordName
                     && SyncMetadata.Properties.zoneName == zoneName
-                    && SyncMetadata.Properties.ownerName == ownerName
+                    && SyncMetadata.Properties.ownerName == ownerName,
             )
         }
 

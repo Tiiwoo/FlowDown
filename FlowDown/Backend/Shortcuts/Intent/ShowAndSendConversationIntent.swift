@@ -17,7 +17,7 @@ struct ShowAndSendConversationIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Switch to a conversation and automatically send the message."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 
@@ -46,13 +46,13 @@ struct ShowAndSendConversationIntent: AppIntent {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 NotificationCenter.default.post(
                     name: NSNotification.Name("TriggerSendMessage"),
-                    object: identifier
+                    object: identifier,
                 )
             }
         }
 
         let message = String(
-            localized: "Switched to conversation and triggered send"
+            localized: "Switched to conversation and triggered send",
         )
         let dialog = IntentDialog(.init(stringLiteral: message))
         return .result(dialog: dialog)

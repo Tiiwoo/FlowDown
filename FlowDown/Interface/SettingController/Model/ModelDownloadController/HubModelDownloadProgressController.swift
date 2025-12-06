@@ -411,7 +411,7 @@ class HubModelDownloadProgressController: UIViewController {
         progressBarFillWidthConstraint?.isActive = false
         progressBarFillWidthConstraint = progressBarFill.widthAnchor.constraint(
             equalTo: progressBarContainer.widthAnchor,
-            multiplier: progress.overall.fractionCompleted
+            multiplier: progress.overall.fractionCompleted,
         )
         progressBarFillWidthConstraint?.isActive = true
 
@@ -421,7 +421,7 @@ class HubModelDownloadProgressController: UIViewController {
 
         currentFileLabel.text = String(
             format: String(localized: "Process %@..."),
-            progress.currentFilename
+            progress.currentFilename,
         )
 
         cancelButton.isEnabled = progress.cancellable
@@ -448,7 +448,7 @@ class HubModelDownloadProgressController: UIViewController {
         do {
             try await ModelManager.shared.downloadModelFromHuggingFace(
                 identifier: model.id,
-                populateProgressTo: progress
+                populateProgressTo: progress,
             )
             await MainActor.run {
                 UIView.animate(withDuration: 0.3) {

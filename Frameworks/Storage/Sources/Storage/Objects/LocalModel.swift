@@ -23,7 +23,7 @@ public struct LocalModel: Codable, Equatable, Hashable, Identifiable {
         size: UInt64,
         capabilities: Set<ModelCapabilities>,
         context: ModelContextLength = .short_8k,
-        temperature_preference: ModelTemperaturePreference = .inherit
+        temperature_preference: ModelTemperaturePreference = .inherit,
     ) {
         self.id = id
         self.model_identifier = model_identifier

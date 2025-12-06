@@ -13,14 +13,14 @@ struct LineBreakSuggester {
             let lineBreakSuggester = WordWrappingLineBreakSuggester(
                 typesetter: typesetter,
                 attributedString: attributedString,
-                constrainingWidth: constrainingWidth
+                constrainingWidth: constrainingWidth,
             )
             return lineBreakSuggester.suggestLineBreak(startingAt: startOffset)
         case .byCharWrapping:
             let lineBreakSuggester = CharacterLineBreakSuggester(
                 typesetter: typesetter,
                 attributedString: attributedString,
-                constrainingWidth: constrainingWidth
+                constrainingWidth: constrainingWidth,
             )
             return lineBreakSuggester.suggestLineBreak(startingAt: startOffset)
         }

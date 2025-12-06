@@ -29,7 +29,7 @@ public final class StringSyntaxHighlighter {
     public init(
         theme: Theme = DefaultTheme(),
         language: TreeSitterLanguage,
-        languageProvider: TreeSitterLanguageProvider? = nil
+        languageProvider: TreeSitterLanguageProvider? = nil,
     ) {
         self.theme = theme
         self.language = language
@@ -52,7 +52,7 @@ public final class StringSyntaxHighlighter {
         let languageMode = TreeSitterLanguageMode(language: language, languageProvider: languageProvider)
         let internalLanguageMode = languageMode.makeInternalLanguageMode(
             stringView: stringView,
-            lineManager: lineManager
+            lineManager: lineManager,
         )
         internalLanguageMode.parse(mutableString)
         let tabWidth = TabWidthMeasurer.tabWidth(tabLength: tabLength, font: theme.font)
@@ -61,7 +61,7 @@ public final class StringSyntaxHighlighter {
             textColor: theme.textColor,
             font: theme.font,
             kern: kern,
-            tabWidth: tabWidth
+            tabWidth: tabWidth,
         )
         defaultAttributes.apply(to: mutableAttributedString)
         applyLineHeightMultiplier(to: mutableAttributedString)
@@ -70,7 +70,7 @@ public final class StringSyntaxHighlighter {
         syntaxHighlighter.theme = theme
         let syntaxHighlighterInput = LineSyntaxHighlighterInput(
             attributedString: mutableAttributedString,
-            byteRange: byteRange
+            byteRange: byteRange,
         )
         syntaxHighlighter.syntaxHighlight(syntaxHighlighterInput)
         return mutableAttributedString
@@ -90,7 +90,7 @@ private extension StringSyntaxHighlighter {
     }
 
     private func getMutableParagraphStyle(
-        from attributedString: NSMutableAttributedString
+        from attributedString: NSMutableAttributedString,
     ) -> NSMutableParagraphStyle {
         guard let attributeValue = attributedString.attribute(.paragraphStyle, at: 0, effectiveRange: nil) else {
             return NSMutableParagraphStyle()

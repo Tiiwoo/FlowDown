@@ -161,7 +161,7 @@ private extension TreeSitterLanguageLayer {
                 languageProvider: languageProvider,
                 parser: parser,
                 stringView: stringView,
-                lineManager: lineManager
+                lineManager: lineManager,
             )
             childLanguageLayer.parentLanguageLayer = self
             childLanguageLayerStore.storeLayer(childLanguageLayer, forKey: id)

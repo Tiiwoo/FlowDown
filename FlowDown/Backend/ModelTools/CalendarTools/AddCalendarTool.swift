@@ -44,7 +44,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
                 "required": ["ics_file"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -55,7 +55,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
             explain: "Allows LLM to save events to your calendar.",
             key: "wiki.qaq.ModelTools.AddCalendarTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -67,7 +67,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTAddCalendarTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid ICS file content"),
-                ]
+                ],
             )
         }
 
@@ -83,7 +83,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTAddCalendarTool", code: 500, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Could not find view controller"),
-                ]
+                ],
             )
         }
 
@@ -116,7 +116,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
         name _: String,
         icsFile: String,
         controller: UIViewController,
-        continuation: CheckedContinuation<String, any Swift.Error>
+        continuation: CheckedContinuation<String, any Swift.Error>,
     ) {
         // 首先解析ICS内容获取更多信息
         let eventStore = EKEventStore()
@@ -151,7 +151,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
 
         let alert = AlertViewController(
             title: "Add To Calendar",
-            message: "\(eventDetails.joined(separator: "\n"))"
+            message: "\(eventDetails.joined(separator: "\n"))",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose {
@@ -213,7 +213,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
                     completion(false, NSError(
                         domain: "MTAddCalendarTool", code: 2, userInfo: [
                             NSLocalizedDescriptionKey: String(localized: "Failed to parse ICS content"),
-                        ]
+                        ],
                     ))
                     return
                 }

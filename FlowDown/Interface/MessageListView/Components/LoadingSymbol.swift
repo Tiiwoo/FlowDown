@@ -76,7 +76,7 @@ final class LoadingSymbol: UIView {
                 x: (rect.width - contentWidth) / 2 + CGFloat(index) * (dotRadius * 2 + spacing),
                 y: centerY - dotRadius,
                 width: dotRadius * 2,
-                height: dotRadius * 2
+                height: dotRadius * 2,
             )
 
             context.setFillColor(UIColor.label.cgColor)

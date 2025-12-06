@@ -15,11 +15,11 @@ class QuickSettingBar: EditorSectionView {
 
     let browsingToggle = ToggleBlockButton(
         text: NSLocalizedString("Web Browsing", comment: ""),
-        icon: "server"
+        icon: "server",
     )
     let toolsToggle = ToggleBlockButton(
         text: NSLocalizedString("Tools", comment: ""),
-        icon: "tools"
+        icon: "tools",
     )
 
     lazy var buttons: [BlockButton] = [
@@ -91,7 +91,7 @@ class QuickSettingBar: EditorSectionView {
                 let isEnabled = self?.toolsToggle.isOn ?? false
                 let elements = self?.delegate?.quickSettingBarBuildAlternativeToolsMenu(
                     isEnabled: isEnabled,
-                    requestReload: requestReload
+                    requestReload: requestReload,
                 ) ?? []
                 provider(elements)
             }])
@@ -114,7 +114,7 @@ class QuickSettingBar: EditorSectionView {
                     x: (bounds.width - contentSizeWidth) / 2,
                     y: 0,
                     width: contentSizeWidth,
-                    height: bounds.height
+                    height: bounds.height,
                 )
             }
         }
@@ -135,7 +135,7 @@ class QuickSettingBar: EditorSectionView {
                 x: anchorX,
                 y: 0,
                 width: size.width,
-                height: size.height
+                height: size.height,
             )
             anchorX += size.width + 10
         }

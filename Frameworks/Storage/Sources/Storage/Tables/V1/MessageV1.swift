@@ -44,7 +44,7 @@ package final class MessageV1: Identifiable, Codable, TableNamed, TableCodable {
                 foreignKey: ForeignKey()
                     .references(with: ConversationV1.tableName)
                     .columns(ConversationV1.CodingKeys.id)
-                    .onDelete(.cascade)
+                    .onDelete(.cascade),
             )
         }
 

@@ -23,7 +23,7 @@ final class TreeSitterTextRange {
             start_point: startPoint.rawValue,
             end_point: endPoint.rawValue,
             start_byte: UInt32(startByte.value),
-            end_byte: UInt32(endByte.value)
+            end_byte: UInt32(endByte.value),
         )
     }
 }

@@ -12,7 +12,7 @@ struct GenerateResponseIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Send a message and get the model's response."),
-            categoryName: LocalizedStringResource("Generation")
+            categoryName: LocalizedStringResource("Generation"),
         )
     }
 
@@ -55,8 +55,8 @@ struct GenerateResponseIntent: AppIntent {
             options: .init(
                 allowsImages: false,
                 saveToConversation: saveToConversation,
-                enableMemory: enableMemory
-            )
+                enableMemory: enableMemory,
+            ),
         )
         let dialog = IntentDialog(.init(stringLiteral: response))
         return .result(value: response, dialog: dialog)
@@ -72,7 +72,7 @@ struct GenerateChatResponseWithImagesIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Send a message and get the model's response."),
-            categoryName: LocalizedStringResource("Generation")
+            categoryName: LocalizedStringResource("Generation"),
         )
     }
 
@@ -120,8 +120,8 @@ struct GenerateChatResponseWithImagesIntent: AppIntent {
             options: .init(
                 allowsImages: true,
                 saveToConversation: saveToConversation,
-                enableMemory: enableMemory
-            )
+                enableMemory: enableMemory,
+            ),
         )
         let dialog = IntentDialog(.init(stringLiteral: response))
         return .result(value: response, dialog: dialog)

@@ -12,7 +12,7 @@ import Storage
 extension ConversationSession {
     func buildInitialRequestMessages(
         _ requestMessages: inout [ChatRequestBody.Message],
-        _ modelCapabilities: Set<ModelCapabilities>
+        _ modelCapabilities: Set<ModelCapabilities>,
     ) async {
         for message in messages {
             switch message.role {
@@ -30,12 +30,12 @@ extension ConversationSession {
                         previewImage: $0.previewImageData,
                         imageRepresentation: $0.imageRepresentation,
                         textRepresentation: $0.representedDocument,
-                        storageSuffix: $0.storageSuffix
+                        storageSuffix: $0.storageSuffix,
                     )
                 }
                 let attachmentMessages = await makeMessageFromAttachments(
                     attachments,
-                    modelCapabilities: modelCapabilities
+                    modelCapabilities: modelCapabilities,
                 )
                 if !attachmentMessages.isEmpty {
                     // Add the content of the previous attachments to the conversation context.
@@ -70,7 +70,7 @@ extension ConversationSession {
                 let webSearchContent = content.joined(separator: "\n")
                 requestMessages.append(.tool(
                     content: .text(webSearchContent.isEmpty ? String(localized: "Search completed with no results") : webSearchContent),
-                    toolCallID: toolRequest.id
+                    toolCallID: toolRequest.id,
                 ))
             case .toolHint:
                 let content = message.toolStatus.message
@@ -83,7 +83,7 @@ extension ConversationSession {
                 let toolContent = content.trimmingCharacters(in: .whitespacesAndNewlines)
                 requestMessages.append(.tool(
                     content: .text(toolContent.isEmpty ? String(localized: "Tool executed successfully with no output") : content),
-                    toolCallID: toolRequest.id
+                    toolCallID: toolRequest.id,
                 ))
             default:
                 continue
@@ -135,7 +135,7 @@ extension ConversationSession {
 
     func makeMessageFromAttachments(
         _ attachments: [RichEditorView.Object.Attachment],
-        modelCapabilities: Set<ModelCapabilities>
+        modelCapabilities: Set<ModelCapabilities>,
     ) async -> [ChatRequestBody.Message] {
         let supportsVision = modelCapabilities.contains(.visual)
         let supportsAudio = modelCapabilities.contains(.auditory)
@@ -144,7 +144,7 @@ extension ConversationSession {
             if let message = await processAttachments(
                 attach,
                 supportsVision: supportsVision,
-                supportsAudio: supportsAudio
+                supportsAudio: supportsAudio,
             ) {
                 result.append(message)
             }
@@ -155,7 +155,7 @@ extension ConversationSession {
     private func processAttachments(
         _ attachment: RichEditorView.Object.Attachment,
         supportsVision: Bool,
-        supportsAudio: Bool
+        supportsAudio: Bool,
     ) async -> ChatRequestBody.Message? {
         switch attachment.type {
         case .text:
@@ -174,7 +174,7 @@ extension ConversationSession {
                         content: .parts([
                             .imageURL(url),
                             .text(attachment.textRepresentation),
-                        ])
+                        ]),
                     )
                 } else {
                     return .user(content: .parts([.imageURL(url)]))

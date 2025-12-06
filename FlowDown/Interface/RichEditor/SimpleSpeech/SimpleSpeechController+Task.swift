@@ -90,7 +90,7 @@ extension SimpleSpeechController {
             self.textView.doWithAnimation {
                 self.textView.contentOffset = .init(
                     x: 0,
-                    y: max(0, self.textView.contentSize.height - self.textView.bounds.size.height)
+                    y: max(0, self.textView.contentSize.height - self.textView.bounds.size.height),
                 )
             }
         }

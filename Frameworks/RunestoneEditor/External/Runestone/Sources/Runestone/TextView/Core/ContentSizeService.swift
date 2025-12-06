@@ -42,7 +42,7 @@ final class ContentSizeService {
                     + gutterWidthService.gutterWidth
                     + textContainerInset.left
                     + textContainerInset.right
-                    + invisibleCharacterConfiguration.maximumLineBreakSymbolWidth
+                    + invisibleCharacterConfiguration.maximumLineBreakSymbolWidth,
             )
             return max(preferredWidth, minimumWidth)
         }

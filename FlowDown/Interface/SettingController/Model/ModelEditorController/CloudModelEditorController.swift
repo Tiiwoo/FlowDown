@@ -45,13 +45,13 @@ class CloudModelEditorController: StackScrollController {
             image: UIImage(systemName: "checkmark"),
             style: .done,
             target: self,
-            action: #selector(checkTapped)
+            action: #selector(checkTapped),
         )
         let actionsItem = UIBarButtonItem(
             image: UIImage(systemName: "ellipsis.circle"),
             style: .plain,
             target: nil,
-            action: nil
+            action: nil,
         )
         actionsItem.accessibilityLabel = String(localized: "More Actions")
         actionsItem.menu = buildActionsMenu()
@@ -87,7 +87,7 @@ class CloudModelEditorController: StackScrollController {
     private func makeActionMenuElements() -> [UIMenuElement] {
         let verifyAction = UIAction(
             title: String(localized: "Verify Model"),
-            image: UIImage(systemName: "testtube.2")
+            image: UIImage(systemName: "testtube.2"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -97,7 +97,7 @@ class CloudModelEditorController: StackScrollController {
 
         let exportAction = UIAction(
             title: String(localized: "Export Model"),
-            image: UIImage(systemName: "square.and.arrow.up")
+            image: UIImage(systemName: "square.and.arrow.up"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -107,7 +107,7 @@ class CloudModelEditorController: StackScrollController {
 
         let duplicateAction = UIAction(
             title: String(localized: "Duplicate"),
-            image: UIImage(systemName: "doc.on.doc")
+            image: UIImage(systemName: "doc.on.doc"),
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -118,7 +118,7 @@ class CloudModelEditorController: StackScrollController {
         let deleteAction = UIAction(
             title: String(localized: "Delete Model"),
             image: UIImage(systemName: "trash"),
-            attributes: [.destructive]
+            attributes: [.destructive],
         ) { [weak self] _ in
             guard let self else { return }
             Task { @MainActor in
@@ -141,20 +141,20 @@ class CloudModelEditorController: StackScrollController {
         if let comment = model?.comment, !comment.isEmpty {
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView()
-                    .with(header: "Comment")
+                    .with(header: "Comment"),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView()
-                    .with(rawFooter: comment)
+                    .with(rawFooter: comment),
             )
             stackView.addArrangedSubview(SeparatorView())
         }
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Metadata")
+                .with(header: "Metadata"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -179,7 +179,7 @@ class CloudModelEditorController: StackScrollController {
                 title: "Edit Workgroup (Optional)",
                 message: "This value will be added to the request to distinguish the workgroup on the remote. This part is optional, if not used, leave it blank.",
                 placeholder: "xx-xxx",
-                text: model.token
+                text: model.token,
             ) { newToken in
                 ModelManager.shared.editCloudModel(identifier: model.id) {
                     $0.update(\.token, to: newToken)
@@ -191,7 +191,7 @@ class CloudModelEditorController: StackScrollController {
                 if !list.isEmpty {
                     let alert = AlertViewController(
                         title: "Update All Models",
-                        message: "Would you like to apply the new workgroup to all? This requires the inference endpoint and the old workgroup equal to the current editing."
+                        message: "Would you like to apply the new workgroup to all? This requires the inference endpoint and the old workgroup equal to the current editing.",
                     ) { context in
                         context.addAction(title: "Cancel") {
                             context.dispose()
@@ -217,7 +217,7 @@ class CloudModelEditorController: StackScrollController {
         tokenView.configure(
             value: (model?.token.isEmpty ?? true)
                 ? String(localized: "N/A")
-                : String(localized: "Configured")
+                : String(localized: "Configured"),
         )
 
         stackView.addArrangedSubviewWithMargin(tokenView)
@@ -242,20 +242,20 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "The endpoint needs to be written in full path to work. The path is usually /v1/chat/completions.")
+                .with(footer: "The endpoint needs to be written in full path to work. The path is usually /v1/chat/completions."),
         ) {
             $0.top /= 2
             $0.bottom = 0
         }
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "After setting up, click the model identifier to edit it or retrieve a list from the server.")
+                .with(footer: "After setting up, click the model identifier to edit it or retrieve a list from the server."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Capabilities")
+                .with(header: "Capabilities"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -283,13 +283,13 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "We cannot determine whether this model includes additional capabilities. However, if supported, features such as visual recognition can be enabled manually here. Please note that if the model does not actually support these capabilities, attempting to enable them may result in errors.")
+                .with(footer: "We cannot determine whether this model includes additional capabilities. However, if supported, features such as visual recognition can be enabled manually here. Please note that if the model does not actually support these capabilities, attempting to enable them may result in errors."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Parameters")
+                .with(header: "Parameters"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -299,7 +299,7 @@ class CloudModelEditorController: StackScrollController {
                 title: "Edit Model Name",
                 message: "Custom display name for this model.",
                 placeholder: "Nickname (Optional)",
-                text: model.name
+                text: model.name,
             ) { output in
                 ModelManager.shared.editCloudModel(identifier: model.id) {
                     $0.update(\.name, to: output)
@@ -331,7 +331,7 @@ class CloudModelEditorController: StackScrollController {
             ModelContextLength.allCases.map { item in
                 UIAction(
                     title: item.title,
-                    image: UIImage(systemName: item.icon)
+                    image: UIImage(systemName: item.icon),
                 ) { _ in
                     ModelManager.shared.editCloudModel(identifier: model?.id) {
                         $0.update(\.context, to: item)
@@ -345,13 +345,13 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference.")
+                .with(footer: "We cannot determine the context length supported by the model. Please choose the correct configuration here. Configuring a context length smaller than the capacity can save costs. A context that is too long may be truncated during inference."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionHeaderView()
-                .with(header: "Networking (Optional)")
+                .with(header: "Networking (Optional)"),
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -439,8 +439,8 @@ class CloudModelEditorController: StackScrollController {
 
         let responseFormatView = ConfigurableInfoView()
         responseFormatView.configure(icon: .init(systemName: "arrow.triangle.2.circlepath"))
-        responseFormatView.configure(title: String(localized: "Response Format"))
-        responseFormatView.configure(description: String(localized: "Select which API format this model should use when performing network requests."))
+        responseFormatView.configure(title: "Response Format")
+        responseFormatView.configure(description: "Select which API format this model should use when performing network requests.")
         let currentFormat = model?.response_format ?? .default
         responseFormatView.configure(value: currentFormat.localizedTitle)
         responseFormatView.use { [weak self, weak responseFormatView] in
@@ -450,9 +450,9 @@ class CloudModelEditorController: StackScrollController {
                 UIAction(
                     title: format.localizedTitle,
                     image: UIImage(systemName: format.symbolName),
-                    state: format == current ? .on : .off
+                    state: format == current ? .on : .off,
                 ) { _ in
-                    ModelManager.shared.updateResponseFormat(for: identifier, to: format)
+                    ModelManager.shared.updateResponseFormat(for: self.identifier, to: format)
                     responseFormatView?.configure(value: format.localizedTitle)
                 }
             }
@@ -462,7 +462,7 @@ class CloudModelEditorController: StackScrollController {
 
         stackView.addArrangedSubviewWithMargin(
             ConfigurableSectionFooterView()
-                .with(footer: "Extra headers and body fields can be used to fine-tune model behavior and performance, such as enabling reasoning or setting reasoning budgets. The specific parameters vary across different service providers—please refer to their official documentation.")
+                .with(footer: "Extra headers and body fields can be used to fine-tune model behavior and performance, such as enabling reasoning or setting reasoning budgets. The specific parameters vary across different service providers—please refer to their official documentation."),
         ) { $0.top /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
@@ -481,7 +481,7 @@ class CloudModelEditorController: StackScrollController {
         let footer = UILabel().with {
             $0.font = .rounded(
                 ofSize: UIFont.preferredFont(forTextStyle: .footnote).pointSize,
-                weight: .regular
+                weight: .regular,
             )
             $0.textColor = .label.withAlphaComponent(0.25)
             $0.numberOfLines = 0
@@ -499,7 +499,7 @@ class CloudModelEditorController: StackScrollController {
         guard let model = ModelManager.shared.cloudModel(identifier: identifier) else { return }
         Indicator.progress(
             title: "Verifying Model",
-            controller: self
+            controller: self,
         ) { completionHandler in
             let result = await withCheckedContinuation { continuation in
                 ModelManager.shared.testCloudModel(model) { result in
@@ -510,7 +510,7 @@ class CloudModelEditorController: StackScrollController {
             await completionHandler {
                 Indicator.present(
                     title: "Model Verified",
-                    referencingView: self.view
+                    referencingView: self.view,
                 )
             }
         }
@@ -527,7 +527,7 @@ class CloudModelEditorController: StackScrollController {
             data: data,
             name: fileName,
             pathExtension: ModelManager.flowdownModelConfigurationExtension,
-            title: "Export Model"
+            title: "Export Model",
         ).run(anchor: navigationController?.view ?? view)
     }
 
@@ -552,7 +552,7 @@ class CloudModelEditorController: StackScrollController {
     @objc func deleteModel() {
         let alert = AlertViewController(
             title: "Delete Model",
-            message: "Are you sure you want to delete this model? This action cannot be undone."
+            message: "Are you sure you want to delete this model? This action cannot be undone.",
         ) { context in
             context.addAction(title: "Cancel") {
                 context.dispose()
@@ -575,14 +575,14 @@ class CloudModelEditorController: StackScrollController {
 
         let editAction = UIAction(
             title: String(localized: "Edit"),
-            image: UIImage(systemName: "character.cursor.ibeam")
+            image: UIImage(systemName: "character.cursor.ibeam"),
         ) { _ in
             guard let model = ModelManager.shared.cloudModel(identifier: modelId) else { return }
             let input = AlertInputViewController(
                 title: "Edit Endpoint",
                 message: "This endpoint is used to send inference requests.",
                 placeholder: "https://",
-                text: model.endpoint.isEmpty ? "https://" : model.endpoint
+                text: model.endpoint.isEmpty ? "https://" : model.endpoint,
             ) { output in
                 ModelManager.shared.editCloudModel(identifier: model.id) {
                     $0.update(\.endpoint, to: output)
@@ -598,7 +598,7 @@ class CloudModelEditorController: StackScrollController {
         if !model.endpoint.isEmpty {
             let copyAction = UIAction(
                 title: String(localized: "Copy"),
-                image: UIImage(systemName: "doc.on.doc")
+                image: UIImage(systemName: "doc.on.doc"),
             ) { _ in
                 UIPasteboard.general.string = model.endpoint
             }
@@ -624,7 +624,7 @@ class CloudModelEditorController: StackScrollController {
                 title: String(localized: "Select from Existing"),
                 image: UIImage(systemName: "list.bullet"),
                 options: [.displayInline],
-                children: selectActions
+                children: selectActions,
             ))
         }
 
@@ -636,14 +636,14 @@ class CloudModelEditorController: StackScrollController {
 
         let editAction = UIAction(
             title: String(localized: "Edit"),
-            image: UIImage(systemName: "character.cursor.ibeam")
+            image: UIImage(systemName: "character.cursor.ibeam"),
         ) { _ in
             guard let model = ModelManager.shared.cloudModel(identifier: modelId) else { return }
             let input = AlertInputViewController(
                 title: "Edit Model Identifier",
                 message: "The name of the model to be used.",
                 placeholder: "Model Identifier",
-                text: model.model_identifier
+                text: model.model_identifier,
             ) { output in
                 ModelManager.shared.editCloudModel(identifier: model.id) {
                     $0.update(\.model_identifier, to: output)
@@ -663,7 +663,7 @@ class CloudModelEditorController: StackScrollController {
         if !model.model_identifier.isEmpty {
             let copyAction = UIAction(
                 title: String(localized: "Copy"),
-                image: UIImage(systemName: "doc.on.doc")
+                image: UIImage(systemName: "doc.on.doc"),
             ) { _ in
                 UIPasteboard.general.string = model.model_identifier
             }
@@ -680,7 +680,7 @@ class CloudModelEditorController: StackScrollController {
                 if list.isEmpty {
                     completion([UIAction(
                         title: String(localized: "(None)"),
-                        attributes: .disabled
+                        attributes: .disabled,
                     ) { _ in }])
                     return
                 }
@@ -697,7 +697,7 @@ class CloudModelEditorController: StackScrollController {
         menuElements.append(UIMenu(
             title: String(localized: "Select from Server"),
             image: UIImage(systemName: "icloud.and.arrow.down"),
-            children: [deferredElement]
+            children: [deferredElement],
         ))
 
         return menuElements
@@ -705,7 +705,7 @@ class CloudModelEditorController: StackScrollController {
 
     private func buildModelSelectionMenu(
         from list: [String],
-        selectionHandler: @escaping (String) -> Void
+        selectionHandler: @escaping (String) -> Void,
     ) -> [UIMenuElement] {
         var buildSections: [String: [(String, String)]] = [:]
         for item in list {
@@ -734,7 +734,7 @@ class CloudModelEditorController: StackScrollController {
                     UIAction(title: item.0) { _ in
                         selectionHandler(item.1)
                     }
-                }
+                },
             ))
         }
 
@@ -817,7 +817,7 @@ private extension CloudModelEditorController {
                     if !existingReasoningKeys.isEmpty, existingReasoningKeys != [type] {
                         let alert = AlertViewController(
                             title: "Duplicated Content",
-                            message: "Another key already exists, which usually causes errors. You can choose to replace it."
+                            message: "Another key already exists, which usually causes errors. You can choose to replace it.",
                         ) { context in
                             context.addAction(title: "Cancel") { context.dispose() }
                             context.addAction(title: "Replace", attribute: .accent) {
@@ -841,7 +841,7 @@ private extension CloudModelEditorController {
                 title: String(localized: "Reasoning Keys"),
                 image: UIImage(systemName: "key"),
                 options: [.displayInline],
-                children: reasoningParmsActions
+                children: reasoningParmsActions,
             )
 
             let dic = controller.currentDictionary
@@ -870,7 +870,7 @@ private extension CloudModelEditorController {
                         title: String(localized: "Reasoning Budget"),
                         image: UIImage(systemName: "gauge"),
                         options: [.displayInline],
-                        children: budgetActions
+                        children: budgetActions,
                     )
                 }
 
@@ -885,16 +885,16 @@ private extension CloudModelEditorController {
                         UIAction(
                             title: String(localized: title),
                             image: UIImage(systemName: "xmark.circle"),
-                            attributes: [.disabled]
+                            attributes: [.disabled],
                         ) { _ in },
-                    ]
+                    ],
                 )
             }()
 
             children.append(UIMenu(
                 title: String(localized: "Reasoning Parameters"),
                 image: UIImage(systemName: "brain.head.profile"),
-                children: [reasoningKeysMenu, reasoningBudgetMenu]
+                children: [reasoningKeysMenu, reasoningBudgetMenu],
             ))
 
             let samplingActions: [UIAction] = [
@@ -984,38 +984,38 @@ private extension CloudModelEditorController {
             children.append(UIMenu(
                 title: String(localized: "Sampling Parameters"),
                 image: UIImage(systemName: "slider.horizontal.3"),
-                children: samplingActions
+                children: samplingActions,
             ))
 
             var providerChildren: [UIMenuElement] = []
             providerChildren.append(
                 UIAction(
                     title: String(localized: "Set \("data_collection") to \("deny")"),
-                    image: UIImage(systemName: "hand.raised.fill")
+                    image: UIImage(systemName: "hand.raised.fill"),
                 ) { _ in
                     controller.updateValue { dic in
                         var provider = dic["provider"] as? [String: Any] ?? [:]
                         provider["data_collection"] = "deny"
                         dic["provider"] = provider
                     }
-                }
+                },
             )
             providerChildren.append(
                 UIAction(
                     title: String(localized: "Set \("zdr") to \("true")"),
-                    image: UIImage(systemName: "hand.raised.fill")
+                    image: UIImage(systemName: "hand.raised.fill"),
                 ) { _ in
                     controller.updateValue { dic in
                         var provider = dic["provider"] as? [String: Any] ?? [:]
                         provider["zdr"] = true
                         dic["provider"] = provider
                     }
-                }
+                },
             )
             children.append(UIMenu(
                 title: String(localized: "Provider Options"),
                 image: UIImage(systemName: "server.rack"),
-                children: providerChildren
+                children: providerChildren,
             ))
 
             comp(children)

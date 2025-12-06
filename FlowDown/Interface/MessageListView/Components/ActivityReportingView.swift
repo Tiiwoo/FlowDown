@@ -50,14 +50,14 @@ final class ActivityReportingLabel: UIView {
             x: 0,
             y: 0,
             width: textSize.width,
-            height: bounds.height
+            height: bounds.height,
         )
 
         loadingSymbol.frame = CGRect(
             x: textLabel.frame.maxX,
             y: (bounds.height - Self.loadingSymbolSize.height) / 2,
             width: Self.loadingSymbolSize.width,
-            height: Self.loadingSymbolSize.height
+            height: Self.loadingSymbolSize.height,
         )
     }
 
@@ -92,7 +92,7 @@ final class ActivityReportingView: MessageListRowView {
             x: 0,
             y: 0,
             width: labelSize.width + Self.loadingSymbolSize.width,
-            height: contentView.bounds.height
+            height: contentView.bounds.height,
         )
     }
 

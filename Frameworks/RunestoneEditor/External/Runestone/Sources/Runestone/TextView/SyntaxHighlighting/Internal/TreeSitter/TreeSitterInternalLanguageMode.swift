@@ -29,7 +29,7 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
             languageProvider: languageProvider,
             parser: parser,
             stringView: stringView,
-            lineManager: lineManager
+            lineManager: lineManager,
         )
         parser.delegate = self
     }
@@ -71,7 +71,7 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
             newEndByte: change.byteRange.location + bytesAdded,
             startPoint: TreeSitterTextPoint(change.startLinePosition),
             oldEndPoint: TreeSitterTextPoint(change.oldEndLinePosition),
-            newEndPoint: TreeSitterTextPoint(change.newEndLinePosition)
+            newEndPoint: TreeSitterTextPoint(change.newEndLinePosition),
         )
         return rootLanguageLayer.apply(edit)
     }
@@ -100,7 +100,7 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
                 indentationScopes: indentationScopes,
                 stringView: stringView,
                 lineManager: lineManager,
-                tabLength: indentStrategy.tabLength
+                tabLength: indentStrategy.tabLength,
             )
             let startNode = startLayerAndNode?.node
             let endNode = endLayerAndNode?.node
@@ -108,7 +108,7 @@ final class TreeSitterInternalLanguageMode: InternalLanguageMode {
                 between: startNode,
                 and: endNode,
                 caretStartPosition: startLinePosition,
-                caretEndPosition: endLinePosition
+                caretEndPosition: endLinePosition,
             )
         } else {
             return InsertLineBreakIndentStrategy(indentLevel: 0, insertExtraLineBreak: false)

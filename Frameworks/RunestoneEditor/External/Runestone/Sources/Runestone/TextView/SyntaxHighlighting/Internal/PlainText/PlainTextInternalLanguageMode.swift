@@ -34,7 +34,7 @@ final class PlainTextInternalLanguageMode: InternalLanguageMode {
     func strategyForInsertingLineBreak(
         from _: LinePosition,
         to _: LinePosition,
-        using _: IndentStrategy
+        using _: IndentStrategy,
     ) -> InsertLineBreakIndentStrategy {
         InsertLineBreakIndentStrategy(indentLevel: 0, insertExtraLineBreak: false)
     }

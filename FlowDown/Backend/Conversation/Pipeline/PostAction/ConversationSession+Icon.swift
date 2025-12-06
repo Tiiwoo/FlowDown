@@ -59,7 +59,7 @@ extension ConversationSessionManager.Session {
             task: task,
             last_user_message: userMessage,
             last_assistant_message: assistantMessage,
-            output_format: IconConversationXML.OutputFormat(icon: "💬")
+            output_format: IconConversationXML.OutputFormat(icon: "💬"),
         )
 
         do {
@@ -77,7 +77,7 @@ extension ConversationSessionManager.Session {
             let ans = try await ModelManager.shared.infer(
                 with: model,
                 maxCompletionTokens: 256,
-                input: messages
+                input: messages,
             )
 
             let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: ans.content)

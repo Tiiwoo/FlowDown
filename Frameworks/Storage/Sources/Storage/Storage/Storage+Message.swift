@@ -41,8 +41,8 @@ public extension Storage {
                 orderBy: [
                     Message.Properties.creation
                         .order(.ascending),
-                ]
-            )
+                ],
+            ),
         ) ?? []
     }
 
@@ -54,7 +54,7 @@ public extension Storage {
                 orderBy: [
                     Message.Properties.creation
                         .order(.ascending),
-                ]
+                ],
             )
         } else {
             try? db.getObjects(
@@ -63,7 +63,7 @@ public extension Storage {
                 orderBy: [
                     Message.Properties.creation
                         .order(.ascending),
-                ]
+                ],
             )
         }
 
@@ -129,7 +129,7 @@ public extension Storage {
 
         let message: Message? = try? db.getObject(
             fromTable: Message.tableName,
-            where: Message.Properties.objectId == identifier && Message.Properties.removed == false
+            where: Message.Properties.objectId == identifier && Message.Properties.removed == false,
         )
 
         guard let identifier = message?.conversationId else {
@@ -148,7 +148,7 @@ public extension Storage {
         // list all messages in the same conversation
         guard let message: Message = try? db.getObject(
             fromTable: Message.tableName,
-            where: Message.Properties.objectId == messageIdentifier
+            where: Message.Properties.objectId == messageIdentifier,
         ) else {
             assertionFailure()
             return
@@ -159,7 +159,7 @@ public extension Storage {
             where: Message.Properties.objectId != messageIdentifier && Message.Properties.creation <= message.creation,
             orderBy: [
                 Message.Properties.creation.order(.ascending),
-            ]
+            ],
         ), !messages.isEmpty else {
             return
         }
@@ -247,13 +247,13 @@ public extension Storage {
             try handle.getObjects(
                 fromTable: Message.tableName,
                 where: Message.Properties.conversationId == conversationID
-                    && Message.Properties.removed == false
+                    && Message.Properties.removed == false,
             )
         } else {
             try db.getObjects(
                 fromTable: Message.tableName,
                 where: Message.Properties.conversationId == conversationID
-                    && Message.Properties.removed == false
+                    && Message.Properties.removed == false,
             )
         }
 
@@ -305,7 +305,7 @@ public extension Storage {
 
         guard let message: Message = try? db.getObject(
             fromTable: Message.tableName,
-            where: Message.Properties.objectId == messageId
+            where: Message.Properties.objectId == messageId,
         ) else {
             assertionFailure()
             return

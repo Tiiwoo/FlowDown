@@ -9,7 +9,7 @@ struct SummarizeTextIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Summarize content into a short paragraph."),
-            categoryName: LocalizedStringResource("Writing Assistance")
+            categoryName: LocalizedStringResource("Writing Assistance"),
         )
     }
 
@@ -38,8 +38,8 @@ struct SummarizeTextIntent: AppIntent {
             model: model,
             text: text,
             directive: String(
-                localized: "Summarize the following content into a concise paragraph that captures the main ideas. Reply with the summary only."
-            )
+                localized: "Summarize the following content into a concise paragraph that captures the main ideas. Reply with the summary only.",
+            ),
         )
         let dialog = IntentDialog(.init(stringLiteral: response))
         return .result(value: response, dialog: dialog)
@@ -54,7 +54,7 @@ struct SummarizeTextUsingListIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Summarize content into a list of key points."),
-            categoryName: LocalizedStringResource("Writing Assistance")
+            categoryName: LocalizedStringResource("Writing Assistance"),
         )
     }
 
@@ -83,8 +83,8 @@ struct SummarizeTextUsingListIntent: AppIntent {
             model: model,
             text: text,
             directive: String(
-                localized: "Summarize the following content into a list of short bullet points that highlight the essential facts. Reply with the bullet list only."
-            )
+                localized: "Summarize the following content into a list of short bullet points that highlight the essential facts. Reply with the bullet list only.",
+            ),
         )
         let dialog = IntentDialog(.init(stringLiteral: response))
         return .result(value: response, dialog: dialog)
@@ -95,7 +95,7 @@ enum SummarizeIntentHelper {
     static func performSummarization(
         model: ShortcutsEntities.ModelEntity?,
         text: String,
-        directive: String
+        directive: String,
     ) async throws -> String {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { throw ShortcutError.emptyMessage }
@@ -113,7 +113,7 @@ enum SummarizeIntentHelper {
             message: message,
             image: nil,
             audio: nil,
-            options: .init(allowsImages: false)
+            options: .init(allowsImages: false),
         )
     }
 }

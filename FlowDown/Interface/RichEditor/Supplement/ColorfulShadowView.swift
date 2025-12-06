@@ -24,7 +24,7 @@ final class ColorfulShadowView: UIView {
             innerRect: .zero,
             cornerRadius: 0,
             blur: 0,
-            offset: .zero
+            offset: .zero,
         )
     }
 
@@ -66,7 +66,7 @@ final class ColorfulShadowView: UIView {
             cornerRadius: 1,
             direction: .clockwise,
             movementRate: 0.05,
-            positionResponseRate: 100
+            positionResponseRate: 100,
         )
         gradientView = AnimatedMulticolorGradientView(animationDirector: director)
 
@@ -171,12 +171,12 @@ private extension ColorfulShadowView {
         NSObject.cancelPreviousPerformRequests(
             withTarget: self,
             selector: #selector(stopAnimation),
-            object: nil
+            object: nil,
         )
         perform(
             #selector(stopAnimation),
             with: nil,
-            afterDelay: 2.0
+            afterDelay: 2.0,
         )
     }
 

@@ -192,7 +192,7 @@ public extension Message {
             let data = value.dataValue
             guard let object = try? JSONDecoder().decode(
                 Message.WebSearchStatus.self,
-                from: data
+                from: data,
             ) else {
                 return nil
             }
@@ -221,7 +221,7 @@ public extension Message {
             let data = value.dataValue
             guard let object = try? JSONDecoder().decode(
                 Message.ToolStatus.self,
-                from: data
+                from: data,
             ) else {
                 return nil
             }
@@ -294,7 +294,7 @@ extension MarkdownBlockNode: @retroactive ColumnCodable {
         let data = value.dataValue
         let object = try? Self.decoder.decode(
             MarkdownBlockNode.self,
-            from: data
+            from: data,
         )
         if let object {
             self = object
@@ -320,7 +320,7 @@ extension Message.WebSearchStatus.SearchResult: ColumnCodable {
         let data = value.dataValue
         let object = try? Self.decoder.decode(
             Message.WebSearchStatus.SearchResult.self,
-            from: data
+            from: data,
         )
         if let object {
             self = object

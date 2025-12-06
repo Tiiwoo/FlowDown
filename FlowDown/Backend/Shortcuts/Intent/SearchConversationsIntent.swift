@@ -10,7 +10,7 @@ struct SearchConversationsIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Search saved conversations by keyword and return formatted summaries."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 
@@ -37,7 +37,7 @@ struct SearchConversationsIntent: AppIntent {
 
         let results = SearchConversationsIntentHelper.search(
             keyword: sanitizedKeyword,
-            maxResults: normalizedLimit
+            maxResults: normalizedLimit,
         )
 
         if results.isEmpty {
@@ -47,7 +47,7 @@ struct SearchConversationsIntent: AppIntent {
         }
 
         let summaryFormat = String(
-            localized: "%d conversation(s) matched your criteria."
+            localized: "%d conversation(s) matched your criteria.",
         )
         let dialogMessage = String(format: summaryFormat, results.count)
         let dialog = IntentDialog(.init(stringLiteral: dialogMessage))
@@ -65,7 +65,7 @@ enum SearchConversationsIntentHelper {
 
     static func search(
         keyword: String?,
-        maxResults: Int
+        maxResults: Int,
     ) -> [String] {
         let conversations = sdb.conversationList()
         guard !conversations.isEmpty else { return [] }
@@ -105,7 +105,7 @@ enum SearchConversationsIntentHelper {
                 conversation: conversation,
                 messages: filteredMessages,
                 headerFormatter: headerFormatter,
-                messageFormatter: messageFormatter
+                messageFormatter: messageFormatter,
             )
             results.append(formatted)
 
@@ -121,12 +121,12 @@ enum SearchConversationsIntentHelper {
         conversation: Conversation,
         messages: [Message],
         headerFormatter: DateFormatter,
-        messageFormatter: DateFormatter
+        messageFormatter: DateFormatter,
     ) -> String {
         let title = conversation.title.trimmingCharacters(in: .whitespacesAndNewlines).nilIfEmpty
             ?? String(localized: "Conversation")
         let headerFormat = String(
-            localized: "%@ • %@"
+            localized: "%@ • %@",
         )
         let header = String(format: headerFormat, title, headerFormatter.string(from: conversation.creation))
 
@@ -152,7 +152,7 @@ enum SearchConversationsIntentHelper {
             }
 
             let entryHeaderFormat = String(
-                localized: "[%@] %@"
+                localized: "[%@] %@",
             )
             let entryHeader = String(format: entryHeaderFormat, timestamp, roleDescription)
 

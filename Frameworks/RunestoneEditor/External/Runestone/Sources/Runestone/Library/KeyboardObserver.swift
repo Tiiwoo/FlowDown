@@ -44,19 +44,19 @@ final class KeyboardObserver {
             self,
             selector: #selector(keyboardWillShow(notification:)),
             name: UIResponder.keyboardWillShowNotification,
-            object: nil
+            object: nil,
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillHide(notification:)),
             name: UIResponder.keyboardWillHideNotification,
-            object: nil
+            object: nil,
         )
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(keyboardWillChangeFrame(notification:)),
             name: UIResponder.keyboardWillChangeFrameNotification,
-            object: nil
+            object: nil,
         )
     }
 

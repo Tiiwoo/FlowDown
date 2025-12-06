@@ -1995,6 +1995,9 @@
         }
       }
     },
+    "Chat Completions" : {
+
+    },
     "Chat Template" : {
       "localizations" : {
         "en" : {
@@ -11272,6 +11275,12 @@
         }
       }
     },
+    "Response Format" : {
+
+    },
+    "Responses" : {
+
+    },
     "Restricted" : {
       "localizations" : {
         "en" : {
@@ -11991,6 +12000,9 @@
           }
         }
       }
+    },
+    "Select which API format this model should use when performing network requests." : {
+
     },
     "Send a message and get the model's response." : {
       "localizations" : {
@@ -15796,6 +15808,9 @@
         }
       }
     },
+    "Use OpenAI-compatible chat completions (POST /v1/chat/completions)." : {
+
+    },
     "Use the default model to classify the image" : {
       "localizations" : {
         "en" : {
@@ -15859,6 +15874,9 @@
           }
         }
       }
+    },
+    "Use the newer responses API (POST /v1/responses) for streaming and structured outputs." : {
+
     },
     "Use the Open URL action with %@ to launch the app and start a conversation" : {
       "localizations" : {

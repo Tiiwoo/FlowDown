@@ -16,7 +16,7 @@ class AttachmentsBar: EditorSectionView {
     let collectionView: UICollectionView
     let collectionViewLayout = AlignedCollectionViewFlowLayout(
         horizontalAlignment: .justified,
-        verticalAlignment: .center
+        verticalAlignment: .center,
     )
     var attachmetns: OrderedDictionary<ItemIdentifier, Item> = [:] {
         didSet { updateDataSource() }
@@ -50,21 +50,21 @@ class AttachmentsBar: EditorSectionView {
         collectionView.alwaysBounceHorizontal = true
         collectionView.register(
             AttachmentsImageCell.self,
-            forCellWithReuseIdentifier: String(describing: AttachmentsImageCell.self)
+            forCellWithReuseIdentifier: String(describing: AttachmentsImageCell.self),
         )
         collectionView.register(
             AttachmentsTextCell.self,
-            forCellWithReuseIdentifier: String(describing: AttachmentsTextCell.self)
+            forCellWithReuseIdentifier: String(describing: AttachmentsTextCell.self),
         )
         collectionView.register(
             AttachmentsAudioCell.self,
-            forCellWithReuseIdentifier: String(describing: AttachmentsAudioCell.self)
+            forCellWithReuseIdentifier: String(describing: AttachmentsAudioCell.self),
         )
         collectionViewLayout.sectionInset = .init(
             top: 0,
             left: inset.left,
             bottom: 0,
-            right: inset.right
+            right: inset.right,
         )
         super.init()
         collectionView.delegate = self
@@ -95,7 +95,7 @@ class AttachmentsBar: EditorSectionView {
         let spacingWidth = CGFloat(attachmetns.count) * itemSpacing
         return .init(
             width: itemWidth + spacingWidth + inset.left + inset.right,
-            height: itemSize.height + inset.top + inset.bottom
+            height: itemSize.height + inset.top + inset.bottom,
         )
     }
 
@@ -110,7 +110,7 @@ class AttachmentsBar: EditorSectionView {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: String(describing: AttachmentsImageCell.self),
-                    for: indexPath
+                    for: indexPath,
                 ) as! AttachmentsImageCell
             cell.isDeletable = isDeletable
             cell.configure(item: item)
@@ -119,7 +119,7 @@ class AttachmentsBar: EditorSectionView {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: String(describing: AttachmentsTextCell.self),
-                    for: indexPath
+                    for: indexPath,
                 ) as! AttachmentsTextCell
             cell.isDeletable = isDeletable
             cell.configure(item: item)
@@ -128,7 +128,7 @@ class AttachmentsBar: EditorSectionView {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: String(describing: AttachmentsAudioCell.self),
-                    for: indexPath
+                    for: indexPath,
                 ) as! AttachmentsAudioCell
             cell.isDeletable = isDeletable
             cell.configure(item: item)
@@ -297,7 +297,7 @@ extension AttachmentsBar: UICollectionViewDelegate, UICollectionViewDelegateFlow
                         return SingleItemDataSource(
                             item: destination,
                             name: NSLocalizedString("Image", comment: ""),
-                            cleanup: cleanup(for: destination)
+                            cleanup: cleanup(for: destination),
                         )
                     } catch {
                         // Fallback to other data sources below.
@@ -314,7 +314,7 @@ extension AttachmentsBar: UICollectionViewDelegate, UICollectionViewDelegateFlow
                     return SingleItemDataSource(
                         item: destination,
                         name: NSLocalizedString("Image", comment: ""),
-                        cleanup: cleanup(for: destination)
+                        cleanup: cleanup(for: destination),
                     )
                 } catch {
                     return nil
@@ -328,7 +328,7 @@ extension AttachmentsBar: UICollectionViewDelegate, UICollectionViewDelegateFlow
                     return SingleItemDataSource(
                         item: destination,
                         name: NSLocalizedString("Image", comment: ""),
-                        cleanup: cleanup(for: destination)
+                        cleanup: cleanup(for: destination),
                     )
                 } catch {
                     return nil
@@ -351,7 +351,7 @@ extension AttachmentsBar: UICollectionViewDelegate, UICollectionViewDelegateFlow
                         return SingleItemDataSource(
                             item: destination,
                             name: item.name,
-                            cleanup: cleanup(for: destination)
+                            cleanup: cleanup(for: destination),
                         )
                     } catch {
                         // Fallback to raw data below.
@@ -366,7 +366,7 @@ extension AttachmentsBar: UICollectionViewDelegate, UICollectionViewDelegateFlow
                     return SingleItemDataSource(
                         item: destination,
                         name: item.name,
-                        cleanup: cleanup(for: destination)
+                        cleanup: cleanup(for: destination),
                     )
                 } catch {
                     return nil

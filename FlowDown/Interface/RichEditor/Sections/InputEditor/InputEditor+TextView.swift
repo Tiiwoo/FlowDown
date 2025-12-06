@@ -99,7 +99,7 @@ extension InputEditor: UITextViewDelegate {
             },
             UIAction(
                 title: String(localized: "Paste as Attachment"),
-                attributes: canPasteAttachment ? [] : [.disabled]
+                attributes: canPasteAttachment ? [] : [.disabled],
             ) { [weak self] _ in
                 self?.delegate?.onInputEditorPasteAsAttachmentTapped()
             },
@@ -129,7 +129,7 @@ extension InputEditor: UITextViewDelegate {
         let attrText = textView.attributedText ?? .init()
         let textHeight = TextMeasurementHelper.shared.measureSize(
             of: attrText,
-            usingWidth: textView.frame.width
+            usingWidth: textView.frame.width,
         ).height
         let decision = ceil(max(textHeight, font.lineHeight))
         doWithAnimation { self.textHeight.send(decision) }
@@ -142,7 +142,7 @@ extension InputEditor: UITextViewDelegate {
             attributes: [
                 .font: UIFont.preferredFont(forTextStyle: .body),
                 .foregroundColor: UIColor.label,
-            ]
+            ],
         )
     }
 }

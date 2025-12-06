@@ -42,7 +42,7 @@ class MTUpdateMemoryTool: ModelTool, @unchecked Sendable {
                 "required": ["memory_id", "new_content"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -53,7 +53,7 @@ class MTUpdateMemoryTool: ModelTool, @unchecked Sendable {
             explain: "Allows AI to update existing memory content.",
             key: "wiki.qaq.ModelTools.UpdateMemoryTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -66,7 +66,7 @@ class MTUpdateMemoryTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTUpdateMemoryTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid parameters. Both memory_id and new_content are required."),
-                ]
+                ],
             )
         }
 

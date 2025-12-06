@@ -130,7 +130,7 @@ private extension LineTypesetter {
             until: condition,
             additionalLineFragmentCount: additionalLineFragmentCount,
             using: typesetter,
-            stringLength: stringLength
+            stringLength: stringLength,
         )
         updateState(from: typesetResult)
         return typesetResult.lineFragments
@@ -140,7 +140,7 @@ private extension LineTypesetter {
         until condition: TypesetEndCondition,
         additionalLineFragmentCount: Int = 0,
         using typesetter: CTTypesetter,
-        stringLength: Int
+        stringLength: Int,
     ) -> TypesetResult {
         guard constrainingWidth > 0 else {
             return TypesetResult(lineFragments: [], lineFragmentsMap: [:], maximumLineWidth: 0)
@@ -200,7 +200,7 @@ private extension LineTypesetter {
             lineBreakMode: lineBreakMode,
             typesetter: typesetter,
             attributedString: attributedString,
-            constrainingWidth: constrainingWidth
+            constrainingWidth: constrainingWidth,
         )
         return lineBreakSuggester.suggestLineBreak(startingAt: startOffset)
     }
@@ -222,7 +222,7 @@ private extension LineTypesetter {
         for visibleRange: CFRange,
         in typesetter: CTTypesetter,
         lineFragmentIndex: Int,
-        yPosition: CGFloat
+        yPosition: CGFloat,
     ) -> LineFragment {
         let line = CTTypesetterCreateLine(typesetter, visibleRange)
         var ascent: CGFloat = 0
@@ -242,7 +242,7 @@ private extension LineTypesetter {
             descent: descent,
             baseSize: baseSize,
             scaledSize: scaledSize,
-            yPosition: yPosition
+            yPosition: yPosition,
         )
     }
 }

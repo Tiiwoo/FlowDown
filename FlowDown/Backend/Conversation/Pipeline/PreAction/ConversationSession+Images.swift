@@ -28,7 +28,7 @@ private let languageIdentifiers: [String] = {
 extension ConversationSession {
     func processImageToText(
         image: UIImage,
-        _ currentMessageListView: MessageListView
+        _ currentMessageListView: MessageListView,
 
     ) async throws -> String {
         try checkCancellation()
@@ -47,8 +47,7 @@ extension ConversationSession {
                 7. Any other details that you find important or interesting, please include them.
 
                 If you are unable to describe the image, you may output [Unable to Identify the image.].
-                """
-            ))),
+                """))),
         ]
 
         guard let base64 = image.pngBase64String(),
@@ -77,7 +76,7 @@ extension ConversationSession {
         let message = appendNewMessage(role: .assistant)
         for try await resp in try await ModelManager.shared.streamingInfer(
             with: decision,
-            input: messages
+            input: messages,
         ) {
             await requestUpdate(view: currentMessageListView)
             startThinking(for: message.objectId)
@@ -165,7 +164,7 @@ extension ConversationSession {
         guard let detector = CIDetector(
             ofType: CIDetectorTypeQRCode,
             context: nil,
-            options: [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+            options: [CIDetectorAccuracy: CIDetectorAccuracyHigh],
         ) else {
             return nil
         }

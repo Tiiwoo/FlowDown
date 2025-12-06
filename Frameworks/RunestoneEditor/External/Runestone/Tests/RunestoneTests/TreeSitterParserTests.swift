@@ -29,7 +29,7 @@ final class TreeSitterParserTests: XCTestCase {
             newEndByte: string.byteCount,
             startPoint: TreeSitterTextPoint(row: 0, column: 0),
             oldEndPoint: TreeSitterTextPoint(row: 0, column: 23),
-            newEndPoint: TreeSitterTextPoint(row: 0, column: 23)
+            newEndPoint: TreeSitterTextPoint(row: 0, column: 23),
         )
         oldTree?.apply(inputEdit)
         delegate.string = string
@@ -67,7 +67,7 @@ final class TreeSitterParserTests: XCTestCase {
             newEndByte: 830,
             startPoint: TreeSitterTextPoint(row: 0, column: 0),
             oldEndPoint: TreeSitterTextPoint(row: 15, column: 0),
-            newEndPoint: TreeSitterTextPoint(row: 15, column: 0)
+            newEndPoint: TreeSitterTextPoint(row: 15, column: 0),
         )
         oldTree?.apply(inputEdit)
         delegate.string = string

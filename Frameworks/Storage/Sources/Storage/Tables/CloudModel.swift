@@ -109,7 +109,7 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         comment: String = "",
         name: String = "",
         temperature_preference: ModelTemperaturePreference = .inherit,
-        response_format: CloudModelResponseFormat = .default
+        response_format: CloudModelResponseFormat = .default,
     ) {
         self.deviceId = deviceId
         self.objectId = objectId

@@ -40,7 +40,7 @@ class MTDeleteMemoryTool: ModelTool, @unchecked Sendable {
                 "required": ["memory_id", "reason"],
                 "additionalProperties": false,
             ],
-            strict: true
+            strict: true,
         )
     }
 
@@ -51,7 +51,7 @@ class MTDeleteMemoryTool: ModelTool, @unchecked Sendable {
             explain: "Allows AI to delete specific memories that are no longer needed.",
             key: "wiki.qaq.ModelTools.DeleteMemoryTool.enabled",
             defaultValue: true,
-            annotation: .boolean
+            annotation: .boolean,
         )
     }
 
@@ -63,7 +63,7 @@ class MTDeleteMemoryTool: ModelTool, @unchecked Sendable {
             throw NSError(
                 domain: "MTDeleteMemoryTool", code: 400, userInfo: [
                     NSLocalizedDescriptionKey: String(localized: "Invalid parameters. memory_id is required."),
-                ]
+                ],
             )
         }
 

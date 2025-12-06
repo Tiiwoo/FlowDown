@@ -109,7 +109,7 @@ final class ReasoningContentView: MessageListRowView {
             x: 0,
             y: 0,
             width: thinkingTile.intrinsicContentSize.width,
-            height: isRevealed ? Self.revealedTileHeight : Self.unrevealedTileHeight
+            height: isRevealed ? Self.revealedTileHeight : Self.unrevealedTileHeight,
         )
 
         let indicatorY = thinkingTile.frame.maxY + 12
@@ -117,7 +117,7 @@ final class ReasoningContentView: MessageListRowView {
 
         let textViewOrigin = CGPoint(
             x: indicator.frame.maxX + 14,
-            y: indicator.frame.minY
+            y: indicator.frame.minY,
         )
         let textWidth = contentView.bounds.width - textViewOrigin.x
         textView.preferredMaxLayoutWidth = textWidth
@@ -125,7 +125,7 @@ final class ReasoningContentView: MessageListRowView {
             x: textViewOrigin.x,
             y: textViewOrigin.y,
             width: textWidth,
-            height: ceil(textView.intrinsicContentSize.height)
+            height: ceil(textView.intrinsicContentSize.height),
         )
         textView.alpha = isRevealed ? 1 : 0
     }
@@ -192,8 +192,8 @@ extension ReasoningContentView {
         private lazy var arrowView: UIImageView = .init(
             image: UIImage(
                 systemName: "chevron.right",
-                withConfiguration: UIImage.SymbolConfiguration(scale: .small)
-            )
+                withConfiguration: UIImage.SymbolConfiguration(scale: .small),
+            ),
         ).with {
             $0.contentMode = .scaleAspectFit
         }
@@ -249,13 +249,13 @@ extension ReasoningContentView {
                 x: 14,
                 y: isRevealed ? (bounds.height - ceil(titleSize.height)) / 2 : 12,
                 width: ceil(titleSize.width),
-                height: ceil(titleSize.height)
+                height: ceil(titleSize.height),
             )
             loadingSymbol.frame = .init(
                 x: titleLabel.frame.maxX + 3,
                 y: titleLabel.frame.midY - 4.5,
                 width: loadingSymbol.intrinsicContentSize.width,
-                height: 9
+                height: 9,
             )
 
             let arrowSize = arrowView.intrinsicContentSize
@@ -263,7 +263,7 @@ extension ReasoningContentView {
                 x: bounds.width - arrowSize.width - 12,
                 y: (bounds.height - arrowSize.height) / 2,
                 width: arrowSize.width,
-                height: arrowSize.height
+                height: arrowSize.height,
             )
 
             layoutTextView()
@@ -286,7 +286,7 @@ extension ReasoningContentView {
             let titleSize = titleLabel.intrinsicContentSize
             return .init(
                 width: titleSize.width + (isRevealed ? 80 : 180),
-                height: titleSize.height
+                height: titleSize.height,
             )
         }
 
@@ -300,14 +300,14 @@ extension ReasoningContentView {
                 x: 0,
                 y: ReasoningContentView.unrevealedTileHeight - textHeight - 12,
                 width: bounds.width - rightPadding,
-                height: textHeight
+                height: textHeight,
             )
             textContainerView.layer.mask?.frame = textContainerView.bounds
             textView.frame = .init(
                 x: bounds.width - textWidth - rightPadding,
                 y: 0,
                 width: textWidth,
-                height: textHeight
+                height: textHeight,
             )
         }
     }

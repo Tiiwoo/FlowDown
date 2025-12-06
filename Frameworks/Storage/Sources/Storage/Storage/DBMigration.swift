@@ -422,7 +422,7 @@ struct MigrationV1ToV2: DBMigration {
                         orderBy: [
                             T.SyncQuery.creation.order(.ascending),
                         ],
-                        limit: batchSize
+                        limit: batchSize,
                     )
                 } else {
                     try handle.getObjects(
@@ -430,7 +430,7 @@ struct MigrationV1ToV2: DBMigration {
                         orderBy: [
                             T.SyncQuery.creation.order(.ascending),
                         ],
-                        limit: batchSize
+                        limit: batchSize,
                     )
                 }
 
@@ -530,7 +530,9 @@ struct MigrationV4ToV5: DBMigration {
 
     private func renameLegacyBodyFieldsColumnIfNeeded(db: Database) throws {
         let tableName = CloudModel.tableName
-        let pragma = StatementPragma().pragma(.tableInfo, ofTable: tableName)
+        let pragma = StatementPragma()
+            .pragma(.tableInfo)
+            .with(tableName)
         guard let rows = try? db.getRows(from: pragma) else {
             return
         }
@@ -540,6 +542,9 @@ struct MigrationV4ToV5: DBMigration {
             return
         }
         Logger.database.infoFile("[*] migrating column bodyFields -> body_fields on table \(tableName)")
-        try db.exec("ALTER TABLE \"\(tableName)\" RENAME COLUMN bodyFields TO body_fields")
+        let renameColumn = StatementAlterTable()
+            .alter(table: tableName)
+            .rename(column: Column(named: "bodyFields"), to: Column(named: "body_fields"))
+        try db.exec(renameColumn)
     }
 }

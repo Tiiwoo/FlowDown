@@ -16,7 +16,7 @@ extension ConversationSession {
         modelID: ModelManager.ModelIdentifier,
         currentMessageListView: MessageListView,
         inputObject: RichEditorView.Object,
-        completion: @escaping () -> Void
+        completion: @escaping () -> Void,
     ) {
         cancelCurrentTask { [self] in
             Logger.app.infoFile("do infere called: \(id)")
@@ -56,7 +56,7 @@ extension ConversationSession {
                 await doInfereExecute(
                     modelID: modelID,
                     currentMessageListView: currentMessageListView,
-                    inputObject: inputObject
+                    inputObject: inputObject,
                 )
                 self.currentTask = nil
                 // Check if there's a pending refresh after task completion
@@ -83,7 +83,7 @@ extension ConversationSession {
     private nonisolated func doInfereExecute(
         modelID: ModelManager.ModelIdentifier,
         currentMessageListView: MessageListView,
-        inputObject: RichEditorView.Object
+        inputObject: RichEditorView.Object,
     ) async {
         var object = inputObject
 
@@ -123,7 +123,7 @@ extension ConversationSession {
                 modelWillExecuteTools,
                 modelWillGoSearchWeb,
                 modelContextLength,
-                modelID
+                modelID,
             )
             saveIfNeeded(object)
         } catch {
@@ -160,7 +160,7 @@ extension ConversationSession {
         _ modelWillExecuteTools: Bool,
         _ modelWillGoSearchWeb: Bool,
         _ modelContextLength: Int,
-        _ modelID: ModelManager.ModelIdentifier
+        _ modelID: ModelManager.ModelIdentifier,
     ) async throws {
         try checkCancellation()
         await currentMessageListView.loading()
@@ -188,7 +188,7 @@ extension ConversationSession {
             &object,
             modelCapabilities.contains(.visual),
             currentMessageListView,
-            userMessage
+            userMessage,
         )
         saveIfNeeded(object)
 
@@ -198,7 +198,7 @@ extension ConversationSession {
         try await preprocessSearchQueries(
             currentMessageListView,
             &object,
-            requestLinkContentIndex: requestLinkContentIndex
+            requestLinkContentIndex: requestLinkContentIndex,
         )
         saveIfNeeded(object)
 
@@ -208,7 +208,7 @@ extension ConversationSession {
             await currentMessageListView.loading(with: String(localized: "Processing Attachments"))
             let attachmentMessages = await makeMessageFromAttachments(
                 object.attachments,
-                modelCapabilities: modelCapabilities
+                modelCapabilities: modelCapabilities,
             )
             requestMessages.append(contentsOf: attachmentMessages)
             saveIfNeeded(object)
@@ -267,7 +267,7 @@ extension ConversationSession {
                 toolsDefinitions,
                 modelWillExecuteTools,
                 linkedContents: linkedContents,
-                requestLinkContentIndex: requestLinkContentIndex
+                requestLinkContentIndex: requestLinkContentIndex,
             )
             saveIfNeeded(object)
         } while shouldContinue

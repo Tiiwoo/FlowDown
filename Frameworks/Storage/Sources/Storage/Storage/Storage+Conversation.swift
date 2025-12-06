@@ -17,8 +17,8 @@ public extension Storage {
                 orderBy: [
                     Conversation.Properties.creation
                         .order(.descending),
-                ]
-            )
+                ],
+            ),
         ) ?? []
     }
 
@@ -26,7 +26,7 @@ public extension Storage {
         let identifiers = try? db.getColumn(
             on: Conversation.Properties.objectId,
             fromTable: Conversation.tableName,
-            where: Conversation.Properties.removed == false
+            where: Conversation.Properties.removed == false,
         )
         let items = identifiers?.map(\.stringValue) ?? []
         return .init(items)
@@ -108,7 +108,7 @@ public extension Storage {
     func conversationWith(identifier: Conversation.ID) -> Conversation? {
         try? db.getObject(
             fromTable: Conversation.tableName,
-            where: Conversation.Properties.objectId == identifier && Conversation.Properties.removed == false
+            where: Conversation.Properties.objectId == identifier && Conversation.Properties.removed == false,
         )
     }
 
@@ -162,7 +162,7 @@ public extension Storage {
                 let ret = try self.executeDuplicationTransaction(
                     identifier: identifier,
                     handle: handler,
-                    customize: customize
+                    customize: customize,
                 )
                 ans = ret
                 return true
@@ -177,11 +177,11 @@ public extension Storage {
     private func executeDuplicationTransaction(
         identifier: Conversation.ID,
         handle: Handle,
-        customize: (Conversation) -> Void
+        customize: (Conversation) -> Void,
     ) throws -> Conversation.ID {
         let conv: Conversation? = try handle.getObject(
             fromTable: Conversation.tableName,
-            where: Conversation.Properties.objectId == identifier
+            where: Conversation.Properties.objectId == identifier,
         )
         guard let conv else { throw NSError() }
 
@@ -211,7 +211,7 @@ public extension Storage {
             where: Message.Properties.conversationId == identifier,
             orderBy: [
                 Message.Properties.creation.order(.ascending),
-            ]
+            ],
         )
 
         var oldMessageIdentifierSet = Set<String>()
@@ -231,7 +231,7 @@ public extension Storage {
             var oldAttachmentIdentifierSet = Set<String>()
             let attachments: [Attachment] = try handle.getObjects(
                 fromTable: Attachment.tableName,
-                where: Attachment.Properties.messageId == oldMessageId
+                where: Attachment.Properties.messageId == oldMessageId,
             )
             for attachment in attachments {
                 oldAttachmentIdentifierSet.insert(attachment.id)
@@ -246,7 +246,7 @@ public extension Storage {
             }
             let newAttachments: [Attachment] = try handle.getObjects(
                 fromTable: Attachment.tableName,
-                where: Attachment.Properties.messageId == newMessageId
+                where: Attachment.Properties.messageId == newMessageId,
             )
 
             for attachment in newAttachments {
@@ -265,7 +265,7 @@ public extension Storage {
             where: Message.Properties.conversationId == newIdentifier,
             orderBy: [
                 Message.Properties.creation.order(.ascending),
-            ]
+            ],
         )
 
         for message in newMessages {
@@ -300,12 +300,12 @@ public extension Storage {
         let conv: Conversation? = if let handle {
             try handle.getObject(
                 fromTable: Conversation.tableName,
-                where: Conversation.Properties.objectId == conversationId
+                where: Conversation.Properties.objectId == conversationId,
             )
         } else {
             try db.getObject(
                 fromTable: Conversation.tableName,
-                where: Conversation.Properties.objectId == conversationId
+                where: Conversation.Properties.objectId == conversationId,
             )
         }
 

@@ -57,7 +57,7 @@ class BlockButton: UIButton {
     override var intrinsicContentSize: CGSize {
         .init(
             width: ceil(inset + iconSize + spacing + textLabel.intrinsicContentSize.width + inset),
-            height: ceil(max(iconSize, textLabel.intrinsicContentSize.height) + inset * 2)
+            height: ceil(max(iconSize, textLabel.intrinsicContentSize.height) + inset * 2),
         )
     }
 
@@ -68,13 +68,13 @@ class BlockButton: UIButton {
             x: inset,
             y: (bounds.height - iconSize) / 2,
             width: iconSize,
-            height: iconSize
+            height: iconSize,
         )
         textLabel.frame = .init(
             x: iconView.frame.maxX + spacing,
             y: inset,
             width: bounds.width - iconView.frame.maxX - spacing - inset,
-            height: bounds.height - inset * 2
+            height: bounds.height - inset * 2,
         )
     }
 
@@ -105,7 +105,7 @@ class BlockButton: UIButton {
         attrText?.addAttribute(
             .strikethroughStyle,
             value: strikeThrough ? 1 : 0,
-            range: NSRange(location: 0, length: attrText?.length ?? 0)
+            range: NSRange(location: 0, length: attrText?.length ?? 0),
         )
         textLabel.attributedText = attrText
     }

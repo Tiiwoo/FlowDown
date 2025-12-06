@@ -10,7 +10,7 @@ enum InternalLanguageModeFactory {
                 language: languageMode.language.internalLanguage,
                 languageProvider: languageMode.languageProvider,
                 stringView: stringView,
-                lineManager: lineManager
+                lineManager: lineManager,
             )
         default:
             fatalError("\(languageMode) is not a supported language mode")

@@ -12,13 +12,13 @@ extension ConversationSession {
     func removeOutOfContextContents(
         _ requestMessages: inout [ChatRequestBody.Message],
         _ tools: [ChatRequestBody.Tool]?,
-        _ modelContextLength: Int
+        _ modelContextLength: Int,
     ) throws -> Bool {
         var isTrimmed = false
 
         var estimatedTokenCount = ModelManager.shared.calculateEstimateTokensUsingCommonEncoder(
             input: requestMessages,
-            tools: tools ?? []
+            tools: tools ?? [],
         )
         Logger.model.debugFile("estimated token count: \(estimatedTokenCount)")
 
@@ -27,7 +27,7 @@ extension ConversationSession {
             defer {
                 estimatedTokenCount = ModelManager.shared.calculateEstimateTokensUsingCommonEncoder(
                     input: requestMessages,
-                    tools: tools ?? []
+                    tools: tools ?? [],
                 )
             }
             // 所有的 system prompt 不删除 除此以外 从前往后删除
@@ -43,7 +43,7 @@ extension ConversationSession {
             throw NSError(
                 domain: String(localized: "Inference Service"),
                 code: 1,
-                userInfo: ["reason": "unable to remove any more messages"]
+                userInfo: ["reason": "unable to remove any more messages"],
             )
         }
 

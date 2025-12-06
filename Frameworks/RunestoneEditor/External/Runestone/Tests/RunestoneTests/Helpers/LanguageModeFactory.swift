@@ -21,7 +21,7 @@ enum LanguageModeFactory {
                 "else",
                 "}",
                 "]",
-            ]
+            ],
         )
         let language = TreeSitterLanguage(tree_sitter_javascript(), indentationScopes: indentationScopes)
         let languageMode = languageMode(language: language, text: text)
@@ -58,7 +58,7 @@ enum LanguageModeFactory {
                 "if_statement",
                 "try_statement",
             ],
-            whitespaceDenotesBlocks: true
+            whitespaceDenotesBlocks: true,
         )
         let language = TreeSitterLanguage(tree_sitter_python(), indentationScopes: indentationScopes)
         let languageMode = languageMode(language: language, text: text)

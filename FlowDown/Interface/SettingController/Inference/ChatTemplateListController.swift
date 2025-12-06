@@ -36,10 +36,10 @@ class ChatTemplateListController: UIViewController {
 
     lazy var dataSource = UITableViewDiffableDataSource<
         Section,
-        ChatTemplate.ID
+        ChatTemplate.ID,
     >(tableView: tableView) { tableView, _, itemIdentifier in
         let cell = tableView.dequeueReusableCell(
-            withIdentifier: "Cell"
+            withIdentifier: "Cell",
         ) as! Cell
         cell.load(itemIdentifier)
         return cell
@@ -61,7 +61,7 @@ class ChatTemplateListController: UIViewController {
         dataSource.defaultRowAnimation = .fade
         tableView.register(
             Cell.self,
-            forCellReuseIdentifier: "Cell"
+            forCellReuseIdentifier: "Cell",
         )
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -69,7 +69,7 @@ class ChatTemplateListController: UIViewController {
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "plus"),
-            menu: UIMenu(children: createAddTemplateMenuItems())
+            menu: UIMenu(children: createAddTemplateMenuItems()),
         )
 
         ChatTemplateManager.shared.$templates
@@ -139,7 +139,7 @@ extension ChatTemplateListController: UITableViewDelegate {
         }
         let delete = UIContextualAction(
             style: .destructive,
-            title: "Delete"
+            title: "Delete",
         ) { _, _, completion in
             guard let template = ChatTemplateManager.shared.template(for: itemIdentifier) else {
                 assertionFailure()
@@ -210,7 +210,7 @@ extension ChatTemplateListController {
 
         func contextMenuInteraction(
             _: UIContextMenuInteraction,
-            configurationForMenuAtLocation _: CGPoint
+            configurationForMenuAtLocation _: CGPoint,
         ) -> UIContextMenuConfiguration? {
             guard let identifier else { return nil }
             let menu = UIMenu(options: [.displayInline], children: [
@@ -228,13 +228,13 @@ extension ChatTemplateListController {
 extension ChatTemplateListController: UIDocumentPickerDelegate {
     func documentPicker(
         _: UIDocumentPickerViewController,
-        didPickDocumentsAt urls: [URL]
+        didPickDocumentsAt urls: [URL],
     ) {
         guard !urls.isEmpty else { return }
 
         Indicator.progress(
             title: "Importing Templates",
-            controller: self
+            controller: self,
         ) { completionHandler in
             var success = 0
             var failure: [Error] = .init()
@@ -263,7 +263,7 @@ extension ChatTemplateListController: UIDocumentPickerDelegate {
                 if !failure.isEmpty {
                     let alert = AlertViewController(
                         title: "Import Failed",
-                        message: String(localized: "\(success) templates imported successfully, \(failure.count) failed.")
+                        message: String(localized: "\(success) templates imported successfully, \(failure.count) failed."),
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) {
@@ -275,7 +275,7 @@ extension ChatTemplateListController: UIDocumentPickerDelegate {
                     Indicator.present(
                         title: "Imported \(success) templates.",
                         preset: .done,
-                        referencingView: self.view
+                        referencingView: self.view,
                     )
                 }
             }
@@ -298,7 +298,7 @@ extension ChatTemplateListController: UITableViewDragDelegate, UITableViewDropDe
             let data = try encoder.encode(template)
             itemProvider.registerDataRepresentation(
                 forTypeIdentifier: fdTemplateTypeIdentifier,
-                visibility: .all
+                visibility: .all,
             ) { completion in
                 completion(data, nil)
                 return nil
@@ -324,7 +324,7 @@ extension ChatTemplateListController: UITableViewDragDelegate, UITableViewDropDe
         var snapshot = dataSource.snapshot()
         if sourceIndexPath.row < destinationIndexPath.row {
             if let destinationItem = dataSource.itemIdentifier(
-                for: IndexPath(row: destinationIndexPath.row, section: 0)
+                for: IndexPath(row: destinationIndexPath.row, section: 0),
             ) {
                 guard sourceItem != destinationItem else { return }
                 snapshot.moveItem(sourceItem, afterItem: destinationItem)

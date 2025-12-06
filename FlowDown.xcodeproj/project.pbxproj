@@ -401,7 +401,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin/\nswiftformat . --swiftversion 6.0 || true\n\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin/\nswiftformat . --swiftversion 6.2 || true\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

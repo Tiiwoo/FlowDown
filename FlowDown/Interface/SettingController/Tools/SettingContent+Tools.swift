@@ -34,32 +34,32 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Web Search"
-                )
+                    header: "Web Search",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
-                ModelManager.searchSensitivityConfigurableObject.createView()
+                ModelManager.searchSensitivityConfigurableObject.createView(),
             )
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
-                ScrubberConfiguration.limitConfigurableObject.createView()
+                ScrubberConfiguration.limitConfigurableObject.createView(),
             )
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "Pages that exceed the model's context length will be ignored. Too many pages may increase network usage and slow down inference."
-                )
+                    footer: "Pages that exceed the model's context length will be ignored. Too many pages may increase network usage and slow down inference.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Web Search Engines"
-                )
+                    header: "Web Search Engines",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -77,15 +77,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "You must enable at least one search engine for web search to work properly."
-                )
+                    footer: "You must enable at least one search engine for web search to work properly.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Tool Call"
-                )
+                    header: "Tool Call",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -93,7 +93,7 @@ extension SettingController.SettingContent {
                 icon: "server.rack",
                 title: "MCP Tools",
                 explain: "Manage tools provided by MCP servers.",
-                ephemeralAnnotation: .page { MCPController() }
+                ephemeralAnnotation: .page { MCPController() },
             )
             stackView.addArrangedSubviewWithMargin(mcpObject.createView())
             stackView.addArrangedSubview(SeparatorView())
@@ -105,15 +105,15 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "These tools can only be used by models that support tool calls, and whether to use them is determined by the model."
-                )
+                    footer: "These tools can only be used by models that support tool calls, and whether to use them is determined by the model.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Automation"
-                )
+                    header: "Automation",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -122,8 +122,8 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "We strongly recommend that you do not enable this feature unless you are sure what you are doing. It may cause unexpected behavior and even data loss."
-                )
+                    footer: "We strongly recommend that you do not enable this feature unless you are sure what you are doing. It may cause unexpected behavior and even data loss.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }

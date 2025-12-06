@@ -33,7 +33,7 @@ final class ConversationSessionManager {
         messageChangedObserver = NotificationCenter.default.addObserver(
             forName: SyncEngine.MessageChanged,
             object: nil,
-            queue: .main
+            queue: .main,
         ) { [weak self] notification in
             guard let self else { return }
             handleMessageChanged(notification)

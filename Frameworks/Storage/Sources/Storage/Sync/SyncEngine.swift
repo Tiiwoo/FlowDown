@@ -220,12 +220,12 @@ public final actor SyncEngine: Sendable {
         self.init(
             storage: storage,
             container: container,
-            automaticallySync: automaticallySync
+            automaticallySync: automaticallySync,
         ) { syncEngine in
             var configuration = CKSyncEngine.Configuration(
                 database: container.privateCloudDatabase,
                 stateSerialization: SyncEngine.stateSerialization,
-                delegate: syncEngine
+                delegate: syncEngine,
             )
             configuration.automaticallySync = syncEngine.isAutomaticallySyncEnabled
             let ckSyncEngine = CKSyncEngine(configuration)
@@ -278,7 +278,7 @@ public extension SyncEngine {
                 object: nil,
                 userInfo: [
                     "isSynchronizing": false,
-                ]
+                ],
             )
         }
 
@@ -340,7 +340,7 @@ public extension SyncEngine {
         await MainActor.run {
             NotificationCenter.default.post(
                 name: SyncEngine.LocalDataDeleted,
-                object: nil
+                object: nil,
             )
         }
     }
@@ -488,7 +488,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         "isSynchronizing": true,
-                    ]
+                    ],
                 )
             }
         }
@@ -510,7 +510,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         "isSynchronizing": false,
-                    ]
+                    ],
                 )
             }
         }
@@ -528,7 +528,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         "isSynchronizing": true,
-                    ]
+                    ],
                 )
             }
         }
@@ -550,7 +550,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         "isSynchronizing": false,
-                    ]
+                    ],
                 )
             }
         }
@@ -562,7 +562,7 @@ private extension SyncEngine {
 
     func handleAccountChange(
         changeType: CKSyncEngine.Event.AccountChange.ChangeType,
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async {
         let shouldDeleteLocalData: Bool
         let shouldReUploadLocalData: Bool
@@ -600,7 +600,7 @@ private extension SyncEngine {
 
     func handleStateUpdate(
         stateSerialization: CKSyncEngine.State.Serialization,
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async {
         SyncEngine.stateSerialization = stateSerialization
     }
@@ -608,7 +608,7 @@ private extension SyncEngine {
     func handleFetchedDatabaseChanges(
         modifications: [CKRecordZone.ID],
         deletions: [(zoneID: CKRecordZone.ID, reason: CKDatabase.DatabaseChange.Deletion.Reason)],
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async {
         Logger.syncEngine.infoFile("Received DatabaseChanges modifications: \(modifications.count) deletions: \(deletions.count)")
 
@@ -632,7 +632,7 @@ private extension SyncEngine {
     func handleFetchedRecordZoneChanges(
         modifications: [CKRecord] = [],
         deletions: [(recordID: CKRecord.ID, recordType: CKRecord.RecordType)] = [],
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async {
         Logger.syncEngine.infoFile("Received RecordZoneChanges modifications: \(modifications.count) deletions: \(deletions.count)")
 
@@ -726,7 +726,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         SyncEngine.ConversationNotificationKey: conversationNotificationInfo,
-                    ]
+                    ],
                 )
             }
 
@@ -736,7 +736,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         SyncEngine.MessageNotificationKey: messageNotificationInfo,
-                    ]
+                    ],
                 )
             }
 
@@ -746,7 +746,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         SyncEngine.CloudModelNotificationKey: cloudModelNotificationInfo,
-                    ]
+                    ],
                 )
             }
 
@@ -756,7 +756,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         SyncEngine.ModelContextServerNotificationKey: MCPNotificationInfo,
-                    ]
+                    ],
                 )
             }
 
@@ -766,7 +766,7 @@ private extension SyncEngine {
                     object: nil,
                     userInfo: [
                         SyncEngine.MemoryNotificationKey: MCPNotificationInfo,
-                    ]
+                    ],
                 )
             }
         }
@@ -777,7 +777,7 @@ private extension SyncEngine {
         failedRecordZoneSaves: [(zone: CKRecordZone, error: CKError)] = [],
         deletedRecordZoneIDs: [CKRecordZone.ID] = [],
         failedRecordZoneDeletes: [CKRecordZone.ID: CKError] = [:],
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async {
         for savedRecordZone in savedRecordZones {
             Logger.syncEngine.infoFile("SavedRecordZone: \(savedRecordZone.zoneID)")
@@ -799,7 +799,7 @@ private extension SyncEngine {
                         object: nil,
                         userInfo: [
                             "success": true,
-                        ]
+                        ],
                     )
                 }
             }
@@ -815,7 +815,7 @@ private extension SyncEngine {
                         userInfo: [
                             "success": false,
                             "error": error,
-                        ]
+                        ],
                     )
                 }
             }
@@ -827,7 +827,7 @@ private extension SyncEngine {
         failedRecordSaves: [(record: CKRecord, error: CKError)] = [],
         deletedRecordIDs: [CKRecord.ID] = [],
         failedRecordDeletes: [CKRecord.ID: CKError] = [:],
-        syncEngine: any SyncEngineProtocol
+        syncEngine: any SyncEngineProtocol,
     ) async {
         var newPendingDatabaseChanges = [CKSyncEngine.PendingDatabaseChange]()
         var removePendingRecordZoneChanges = [CKSyncEngine.PendingRecordZoneChange]()
@@ -1058,42 +1058,42 @@ extension SyncEngine: SyncEngineDelegate {
             await handleFetchedDatabaseChanges(
                 modifications: modifications,
                 deletions: deletions,
-                syncEngine: syncEngine
+                syncEngine: syncEngine,
             )
 
         case let .fetchedRecordZoneChanges(modifications, deletions):
             await handleFetchedRecordZoneChanges(
                 modifications: modifications,
                 deletions: deletions,
-                syncEngine: syncEngine
+                syncEngine: syncEngine,
             )
 
         case let .sentDatabaseChanges(
             savedRecordZones,
             failedRecordZoneSaves,
             deletedRecordZoneIDs,
-            failedRecordZoneDeletes
+            failedRecordZoneDeletes,
         ):
             await handleSentDatabaseChanges(
                 savedRecordZones: savedRecordZones,
                 failedRecordZoneSaves: failedRecordZoneSaves,
                 deletedRecordZoneIDs: deletedRecordZoneIDs,
                 failedRecordZoneDeletes: failedRecordZoneDeletes,
-                syncEngine: syncEngine
+                syncEngine: syncEngine,
             )
 
         case let .sentRecordZoneChanges(
             savedRecords,
             failedRecordSaves,
             deletedRecordIDs,
-            failedRecordDeletes
+            failedRecordDeletes,
         ):
             await handleSentRecordZoneChanges(
                 savedRecords: savedRecords,
                 failedRecordSaves: failedRecordSaves,
                 deletedRecordIDs: deletedRecordIDs,
                 failedRecordDeletes: failedRecordDeletes,
-                syncEngine: syncEngine
+                syncEngine: syncEngine,
             )
 
         case .willFetchRecordZoneChanges:
@@ -1126,7 +1126,7 @@ extension SyncEngine: SyncEngineDelegate {
     package func nextRecordZoneChangeBatch(
         reason: CKSyncEngine.SyncReason,
         options: CKSyncEngine.SendChangesOptions,
-        syncEngine: any SyncEngineProtocol
+        syncEngine: any SyncEngineProtocol,
     ) async -> CKSyncEngine.RecordZoneChangeBatch? {
         Logger.syncEngine.infoFile("Next push by reason: \(reason)")
 
@@ -1202,8 +1202,8 @@ extension SyncEngine: SyncEngineDelegate {
                     CKRecord.ID(recordName: SyncEngine.makeCKRecordSentQueueId(
                         queueId: old.id,
                         objectId: old.objectId,
-                        deviceId: deviceId
-                    ), zoneID: SyncEngine.zoneID)
+                        deviceId: deviceId,
+                    ), zoneID: SyncEngine.zoneID),
                 )
                 staleRecordChanges.append(staleChange)
             }
@@ -1256,7 +1256,7 @@ extension SyncEngine: SyncEngineDelegate {
     package func nextFetchChangesOptions(
         reason: CKSyncEngine.SyncReason,
         options _: CKSyncEngine.FetchChangesOptions,
-        syncEngine _: any SyncEngineProtocol
+        syncEngine _: any SyncEngineProtocol,
     ) async -> CKSyncEngine.FetchChangesOptions {
         Logger.syncEngine.infoFile("Next fetch by reason: \(reason)")
         let options = CKSyncEngine.FetchChangesOptions()

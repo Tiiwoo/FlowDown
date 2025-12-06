@@ -90,7 +90,7 @@ final class RedBlackTree<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNode
                 nodeStartLocation: nodeStartLocation,
                 index: node.index,
                 offset: offset,
-                value: node.value
+                value: node.value,
             )
         } else {
             var nodeStartLocation = minimumValue
@@ -113,7 +113,7 @@ final class RedBlackTree<NodeID: RedBlackTreeNodeID, NodeValue: RedBlackTreeNode
                             nodeStartLocation: nodeStartLocation,
                             index: node.index,
                             offset: offset,
-                            value: node.value
+                            value: node.value,
                         )
                     } else {
                         node = node.right!

@@ -50,14 +50,14 @@ extension InputEditor {
             x: bounds.width - inset.right - iconSize.width,
             y: bounds.height - iconSize.height - inset.bottom,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         sendButton.alpha = 1
         moreButton.frame = CGRect(
             x: bounds.width - inset.right - iconSize.width,
             y: bounds.height - iconSize.height - inset.bottom,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         defer { moreButton.transform = CGAffineTransform(scaleX: 0.5, y: 0.5) }
         moreButton.alpha = 0
@@ -65,7 +65,7 @@ extension InputEditor {
             x: sendButton.frame.minX - iconSize.width - iconSpacing,
             y: sendButton.frame.minY,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         voiceButton.alpha = 1
 
@@ -74,7 +74,7 @@ extension InputEditor {
             x: inset.left,
             y: (bounds.height - textLayoutHeight) / 2,
             width: voiceButton.frame.minX - inset.left - iconSpacing,
-            height: textLayoutHeight
+            height: textLayoutHeight,
         )
         placeholderLabel.frame = textView.frame
 
@@ -83,7 +83,7 @@ extension InputEditor {
             x: 0 - inset.left - iconSize.width,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         bossButton.alpha = 0
     }
@@ -97,7 +97,7 @@ extension InputEditor {
             x: 0 - inset.left - iconSize.width,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         bossButton.alpha = 0
 
@@ -105,14 +105,14 @@ extension InputEditor {
             x: bounds.width - inset.right - iconSize.width,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         moreButton.alpha = 1
         voiceButton.frame = CGRect(
             x: moreButton.frame.minX - iconSize.width - iconSpacing,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         voiceButton.alpha = 1
         // reset textField width to fill the space
@@ -121,7 +121,7 @@ extension InputEditor {
             x: inset.left,
             y: (bounds.height - textLayoutHeight) / 2,
             width: voiceButton.frame.minX - inset.left - iconSpacing,
-            height: textLayoutHeight
+            height: textLayoutHeight,
         )
         textView.alpha = 1
         placeholderLabel.frame = textView.frame
@@ -131,7 +131,7 @@ extension InputEditor {
             x: bounds.width + iconSpacing + inset.right,
             y: bounds.height - iconSize.height - inset.bottom,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         sendButton.alpha = 0
     }
@@ -144,14 +144,14 @@ extension InputEditor {
             x: inset.left,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         bossButton.alpha = 1
         moreButton.frame = CGRect(
             x: bounds.width - inset.right - iconSize.width,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         moreButton.alpha = 1
         moreButton.transform = .identity
@@ -159,7 +159,7 @@ extension InputEditor {
             x: moreButton.frame.minX - iconSize.width - iconSpacing,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         voiceButton.alpha = 1
         // reset textField width to fill the space
@@ -168,7 +168,7 @@ extension InputEditor {
             x: bossButton.frame.maxX + iconSpacing,
             y: (bounds.height - textLayoutHeight) / 2,
             width: voiceButton.frame.minX - bossButton.frame.maxX - iconSpacing * 2,
-            height: textLayoutHeight
+            height: textLayoutHeight,
         )
         textView.alpha = 1
         placeholderLabel.frame = textView.frame
@@ -178,7 +178,7 @@ extension InputEditor {
             x: bounds.width + inset.right,
             y: inset.top,
             width: iconSize.width,
-            height: iconSize.height
+            height: iconSize.height,
         )
         sendButton.alpha = 0
     }

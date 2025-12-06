@@ -17,7 +17,7 @@ struct CreateNewConversationIntent: AppIntent {
     static var description: IntentDescription {
         IntentDescription(
             LocalizedStringResource("Create a new conversation and optionally switch to it."),
-            categoryName: LocalizedStringResource("Conversations")
+            categoryName: LocalizedStringResource("Conversations"),
         )
     }
 

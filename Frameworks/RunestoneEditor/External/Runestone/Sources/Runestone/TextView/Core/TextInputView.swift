@@ -894,7 +894,7 @@ final class TextInputView: UIView, UITextInput {
         let internalLanguageMode = InternalLanguageModeFactory.internalLanguageMode(
             from: languageMode,
             stringView: stringView,
-            lineManager: lineManager
+            lineManager: lineManager,
         )
         self.languageMode = internalLanguageMode
         layoutManager.languageMode = internalLanguageMode

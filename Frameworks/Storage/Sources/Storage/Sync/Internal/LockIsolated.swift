@@ -47,7 +47,7 @@ public final class LockIsolated<Value>: @unchecked Sendable {
     /// - Parameter operation: An operation to be performed on the the underlying value with a lock.
     /// - Returns: The result of the operation.
     public func withValue<T: Sendable>(
-        _ operation: @Sendable (inout Value) throws -> T
+        _ operation: @Sendable (inout Value) throws -> T,
     ) rethrows -> T {
         try self.lock.sync {
             var value = self._value

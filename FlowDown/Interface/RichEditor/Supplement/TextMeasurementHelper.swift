@@ -29,7 +29,7 @@ class TextMeasurementHelper {
         of attributedString: NSAttributedString,
         usingWidth width: CGFloat,
         lineLimit: Int = 0,
-        lineBreakMode: NSLineBreakMode = .byTruncatingTail
+        lineBreakMode: NSLineBreakMode = .byTruncatingTail,
     ) -> CGSize {
         lock.lock()
         defer { lock.unlock() }

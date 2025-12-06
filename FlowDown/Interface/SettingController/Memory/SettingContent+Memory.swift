@@ -35,8 +35,8 @@ extension SettingController.SettingContent {
             // Proactive Memory Section
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Proactive Memory"
-                )
+                    header: "Proactive Memory",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -45,16 +45,16 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "When enabled, we will include stored memories in system prompts even if memory tools are disabled."
-                )
+                    footer: "When enabled, we will include stored memories in system prompts even if memory tools are disabled.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             // Memory Tools Section
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Memory Tools"
-                )
+                    header: "Memory Tools",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -75,16 +75,16 @@ extension SettingController.SettingContent {
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "These tools allow the AI to store, recall, and manage important information from conversations for better context awareness."
-                )
+                    footer: "These tools allow the AI to store, recall, and manage important information from conversations for better context awareness.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
             // Data Management Section
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionHeaderView().with(
-                    header: "Data Management"
-                )
+                    header: "Data Management",
+                ),
             ) { $0.bottom /= 2 }
             stackView.addArrangedSubview(SeparatorView())
 
@@ -93,7 +93,7 @@ extension SettingController.SettingContent {
                 icon: "waveform.path.ecg",
                 title: "Memory List",
                 explain: "Browse, search, and manage stored memories.",
-                ephemeralAnnotation: .page { MemoryListController() }
+                ephemeralAnnotation: .page { MemoryListController() },
             ).createView()
             stackView.addArrangedSubviewWithMargin(viewMemories)
             stackView.addArrangedSubview(SeparatorView())
@@ -105,7 +105,7 @@ extension SettingController.SettingContent {
                 explain: "Export all memories as JSON file.",
                 ephemeralAnnotation: .action { controller in
                     await self.exportMemories(from: controller)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(exportMemories)
             stackView.addArrangedSubview(SeparatorView())
@@ -117,15 +117,15 @@ extension SettingController.SettingContent {
                 explain: "Delete all stored memories permanently.",
                 ephemeralAnnotation: .action { controller in
                     await self.clearAllMemories(from: controller)
-                }
+                },
             ).createView()
             stackView.addArrangedSubviewWithMargin(clearMemories)
             stackView.addArrangedSubview(SeparatorView())
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
-                    footer: "All memory data is stored locally on your device. Export operations allow you to backup your memory data."
-                )
+                    footer: "All memory data is stored locally on your device. Export operations allow you to backup your memory data.",
+                ),
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }
@@ -138,7 +138,7 @@ extension SettingController.SettingContent {
                 guard !memories.isEmpty else {
                     let alert = AlertViewController(
                         title: "No Memories",
-                        message: "There are no memories to export."
+                        message: "There are no memories to export.",
                     ) { context in
                         context.allowSimpleDispose()
                         context.addAction(title: "OK", attribute: .accent) {
@@ -171,7 +171,7 @@ extension SettingController.SettingContent {
             } catch {
                 let alert = AlertViewController(
                     title: "Export Failed",
-                    message: "Failed to export memories: \(error.localizedDescription)"
+                    message: "Failed to export memories: \(error.localizedDescription)",
                 ) { context in
                     context.allowSimpleDispose()
                     context.addAction(title: "OK", attribute: .accent) {
@@ -186,7 +186,7 @@ extension SettingController.SettingContent {
         private func clearAllMemories(from controller: UIViewController) async {
             let alert = AlertViewController(
                 title: "Clear All Memories",
-                message: "Are you sure you want to delete all stored memories? This action cannot be undone."
+                message: "Are you sure you want to delete all stored memories? This action cannot be undone.",
             ) { context in
                 context.addAction(title: "Cancel") {
                     context.dispose()
@@ -198,14 +198,14 @@ extension SettingController.SettingContent {
                             await MainActor.run {
                                 Indicator.present(
                                     title: "Memories Cleared",
-                                    referencingView: controller.view
+                                    referencingView: controller.view,
                                 )
                             }
                         } catch {
                             await MainActor.run {
                                 let errorAlert = AlertViewController(
                                     title: "Error",
-                                    message: "Failed to clear memories: \(error.localizedDescription)"
+                                    message: "Failed to clear memories: \(error.localizedDescription)",
                                 ) { context in
                                     context.allowSimpleDispose()
                                     context.addAction(title: "OK", attribute: .accent) {

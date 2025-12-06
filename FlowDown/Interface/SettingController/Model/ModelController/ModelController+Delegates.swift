@@ -32,7 +32,7 @@ extension SettingController.SettingContent.ModelController: UITableViewDelegate 
         }
         let delete = UIContextualAction(
             style: .destructive,
-            title: String(localized: "Delete")
+            title: String(localized: "Delete"),
         ) { _, _, completion in
             switch itemIdentifier.type {
             case .local:
@@ -57,13 +57,13 @@ extension SettingController.SettingContent.ModelController: UITableViewDelegate 
         case .cloud:
             actions.append(UIAction(
                 title: String(localized: "Export Model"),
-                image: UIImage(systemName: "square.and.arrow.up")
+                image: UIImage(systemName: "square.and.arrow.up"),
             ) { _ in
                 self.exportModel(itemIdentifier)
             })
             actions.append(UIAction(
                 title: String(localized: "Duplicate"),
-                image: UIImage(systemName: "doc.on.doc")
+                image: UIImage(systemName: "doc.on.doc"),
             ) { _ in
                 switch itemIdentifier.type {
                 case .local:
@@ -85,7 +85,7 @@ extension SettingController.SettingContent.ModelController: UITableViewDelegate 
         actions.append(UIAction(
             title: String(localized: "Delete"),
             image: UIImage(systemName: "trash"),
-            attributes: .destructive
+            attributes: .destructive,
         ) { _ in
             switch itemIdentifier.type {
             case .local:

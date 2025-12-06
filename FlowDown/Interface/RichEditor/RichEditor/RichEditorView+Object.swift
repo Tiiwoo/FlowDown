@@ -40,7 +40,7 @@ extension RichEditorView.Object {
             previewImage: Data,
             imageRepresentation: Data,
             textRepresentation: String,
-            storageSuffix: String
+            storageSuffix: String,
         ) {
             self.id = id
             self.type = type

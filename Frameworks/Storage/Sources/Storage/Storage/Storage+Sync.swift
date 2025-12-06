@@ -12,7 +12,7 @@ import WCDBSwift
 package extension Storage {
     func handleRemoteDeleted(
         deletions: [(recordID: CKRecord.ID, recordType: CKRecord.RecordType)],
-        handle: Handle? = nil
+        handle: Handle? = nil,
     ) throws {
         guard !deletions.isEmpty else {
             return
@@ -29,7 +29,7 @@ package extension Storage {
 
                 try $0.delete(
                     fromTable: SyncMetadata.tableName,
-                    where: SyncMetadata.Properties.recordName == recordID.recordName
+                    where: SyncMetadata.Properties.recordName == recordID.recordName,
                 )
             }
         }
@@ -63,7 +63,7 @@ package extension Storage {
     private func handleRemoteDeletedConversation(conversationId: String, handle: Handle) throws {
         try handle.delete(
             fromTable: Conversation.tableName,
-            where: Conversation.Properties.objectId == conversationId
+            where: Conversation.Properties.objectId == conversationId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedConversation \(conversationId)")
@@ -72,7 +72,7 @@ package extension Storage {
     private func handleRemoteDeletedMessage(messageId: String, handle: Handle) throws {
         try handle.delete(
             fromTable: Message.tableName,
-            where: Message.Properties.objectId == messageId
+            where: Message.Properties.objectId == messageId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedMessage \(messageId)")
@@ -81,7 +81,7 @@ package extension Storage {
     private func handleRemoteDeletedAttachment(attachmentId: String, handle: Handle) throws {
         try handle.delete(
             fromTable: Attachment.tableName,
-            where: Attachment.Properties.objectId == attachmentId
+            where: Attachment.Properties.objectId == attachmentId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedAttachment \(attachmentId)")
@@ -90,7 +90,7 @@ package extension Storage {
     private func handleRemoteDeletedCloudModel(objectId: String, handle: Handle) throws {
         try handle.delete(
             fromTable: CloudModel.tableName,
-            where: CloudModel.Properties.objectId == objectId
+            where: CloudModel.Properties.objectId == objectId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedCloudModel \(objectId)")
@@ -99,7 +99,7 @@ package extension Storage {
     private func handleRemoteDeletedModelContextServer(objectId: String, handle: Handle) throws {
         try handle.delete(
             fromTable: ModelContextServer.tableName,
-            where: ModelContextServer.Properties.objectId == objectId
+            where: ModelContextServer.Properties.objectId == objectId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedModelContextServer \(objectId)")
@@ -108,7 +108,7 @@ package extension Storage {
     private func handleRemoteDeletedMemory(objectId: String, handle: Handle, modified _: Date = .now) throws {
         try handle.delete(
             fromTable: Memory.tableName,
-            where: Memory.Properties.objectId == objectId
+            where: Memory.Properties.objectId == objectId,
         )
 
         Logger.syncEngine.infoFile("handleRemoteDeletedMemory \(objectId)")
@@ -118,7 +118,7 @@ package extension Storage {
 package extension Storage {
     func handleRemoteUpsert(
         modifications: [CKRecord],
-        handle: Handle? = nil
+        handle: Handle? = nil,
     ) throws {
         guard !modifications.isEmpty else {
             return
@@ -172,7 +172,7 @@ package extension Storage {
 
         let localObject: Conversation? = try? handle.getObject(
             fromTable: Conversation.tableName,
-            where: Conversation.Properties.objectId == remoteObject.objectId
+            where: Conversation.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
@@ -206,7 +206,7 @@ package extension Storage {
 
         let localObject: Message? = try? handle.getObject(
             fromTable: Message.tableName,
-            where: Message.Properties.objectId == remoteObject.objectId
+            where: Message.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
@@ -240,7 +240,7 @@ package extension Storage {
 
         let localObject: Attachment? = try? handle.getObject(
             fromTable: Attachment.tableName,
-            where: Attachment.Properties.objectId == remoteObject.objectId
+            where: Attachment.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
@@ -274,7 +274,7 @@ package extension Storage {
 
         let localObject: CloudModel? = try? handle.getObject(
             fromTable: CloudModel.tableName,
-            where: CloudModel.Properties.objectId == remoteObject.objectId
+            where: CloudModel.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
@@ -308,7 +308,7 @@ package extension Storage {
 
         let localObject: ModelContextServer? = try? handle.getObject(
             fromTable: ModelContextServer.tableName,
-            where: ModelContextServer.Properties.objectId == remoteObject.objectId
+            where: ModelContextServer.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
@@ -352,7 +352,7 @@ package extension Storage {
 
         let localObject: Memory? = try? handle.getObject(
             fromTable: Memory.tableName,
-            where: Memory.Properties.objectId == remoteObject.objectId
+            where: Memory.Properties.objectId == remoteObject.objectId,
         )
 
         guard let localObject else {
