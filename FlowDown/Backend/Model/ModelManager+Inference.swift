@@ -328,7 +328,7 @@ extension ModelManager {
         let body = try ChatRequestBody(
             messages: prepareRequestBody(modelID: modelID, messages: input),
             maxCompletionTokens: maxCompletionTokens,
-            temperature: .init(temperature),
+            temperature: temperature < 0 ? nil : .init(temperature),
             tools: tools,
         )
         return try await client.chat(body: body)
@@ -347,7 +347,7 @@ extension ModelManager {
         let body = try ChatRequestBody(
             messages: prepareRequestBody(modelID: modelID, messages: input),
             maxCompletionTokens: maxCompletionTokens,
-            temperature: .init(temperature),
+            temperature: temperature < 0 ? nil : .init(temperature),
             tools: tools,
         )
         return try await client.streamingChat(body: body)

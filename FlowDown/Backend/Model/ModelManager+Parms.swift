@@ -100,6 +100,11 @@ extension ModelManager {
         annotation: .list {
             [
                 .init(
+                    icon: "gear",
+                    title: "N/A @ -1",
+                    rawValue: -1,
+                ),
+                .init(
                     icon: "snowflake",
                     title: "Freezing @ 0.0",
                     rawValue: 0.1,
