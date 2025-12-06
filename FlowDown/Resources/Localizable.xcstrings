@@ -9232,6 +9232,22 @@
     "N/A" : {
       "shouldTranslate" : false
     },
+    "N/A @ -1" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "N/A @ -1"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不适用 @ -1"
+          }
+        }
+      }
+    },
     "Name" : {
       "localizations" : {
         "en" : {
