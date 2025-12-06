@@ -439,8 +439,8 @@ class CloudModelEditorController: StackScrollController {
 
         let responseFormatView = ConfigurableInfoView()
         responseFormatView.configure(icon: .init(systemName: "arrow.triangle.2.circlepath"))
-        responseFormatView.configure(title: "Response Format")
-        responseFormatView.configure(description: "Select which API format this model should use when performing network requests.")
+        responseFormatView.configure(title: "Content Format")
+        responseFormatView.configure(description: "Select which format this model should use when performing network requests.")
         let currentFormat = model?.response_format ?? .default
         responseFormatView.configure(value: currentFormat.localizedTitle)
         responseFormatView.use { [weak self, weak responseFormatView] in

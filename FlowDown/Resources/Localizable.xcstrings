@@ -1995,8 +1995,15 @@
         }
       }
     },
-    "Chat Completions" : {
-
+    "Chat Completions Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对话补全格式"
+          }
+        }
+      }
     },
     "Chat Template" : {
       "localizations" : {
@@ -2843,6 +2850,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "内容"
+          }
+        }
+      }
+    },
+    "Content Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容格式"
           }
         }
       }
@@ -7553,22 +7570,6 @@
         }
       }
     },
-    "Invalid model configuration." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid model configuration."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的模型配置。"
-          }
-        }
-      }
-    },
     "Invalid model file." : {
       "localizations" : {
         "en" : {
@@ -7633,22 +7634,6 @@
         }
       }
     },
-    "Invalid response." : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid response."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的响应。"
-          }
-        }
-      }
-    },
     "Invalid start date format. Use YYYY-MM-DD." : {
       "localizations" : {
         "en" : {
@@ -7661,22 +7646,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无效的日期格式：请使用 YYYY-MM-DD。"
-          }
-        }
-      }
-    },
-    "Invalid status code: %d" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Invalid status code: %d"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "无效的响应代码：%d"
           }
         }
       }
@@ -8858,6 +8827,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "模型详情"
+          }
+        }
+      }
+    },
+    "Model did not produce any textual output." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模型没有生成任何文本内容。"
           }
         }
       }
@@ -11275,11 +11254,15 @@
         }
       }
     },
-    "Response Format" : {
-
-    },
-    "Responses" : {
-
+    "Responses Format" : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "响应格式"
+          }
+        }
+      }
     },
     "Restricted" : {
       "localizations" : {
@@ -12001,8 +11984,15 @@
         }
       }
     },
-    "Select which API format this model should use when performing network requests." : {
-
+    "Select which format this model should use when performing network requests." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择网络请求所使用的格式。"
+          }
+        }
+      }
     },
     "Send a message and get the model's response." : {
       "localizations" : {
@@ -15808,8 +15798,25 @@
         }
       }
     },
-    "Use OpenAI-compatible chat completions (POST /v1/chat/completions)." : {
-
+    "Use OpenAI-compatible chat completions." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenAI 兼容的对话补全格式。"
+          }
+        }
+      }
+    },
+    "Use OpenAI-compatible chat response format." : {
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 OpenAI 兼容的响应格式。"
+          }
+        }
+      }
     },
     "Use the default model to classify the image" : {
       "localizations" : {
@@ -15874,9 +15881,6 @@
           }
         }
       }
-    },
-    "Use the newer responses API (POST /v1/responses) for streaming and structured outputs." : {
-
     },
     "Use the Open URL action with %@ to launch the app and start a conversation" : {
       "localizations" : {

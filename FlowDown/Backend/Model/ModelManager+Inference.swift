@@ -129,106 +129,37 @@ extension ModelManager {
     }
 
     func testCloudModel(_ model: CloudModel, completion: @escaping (Result<Void, Error>) -> Void) {
-        func mergeBodyFields(into payload: inout [String: Any]) {
-            guard !model.body_fields.isEmpty,
-                  let data = model.body_fields.data(using: .utf8),
-                  let jsonObject = try? JSONSerialization.jsonObject(with: data) as? [String: Any]
-            else {
-                return
-            }
-            for (key, value) in jsonObject where payload[key] == nil {
-                payload[key] = value
-            }
-        }
-
-        var payload: [String: Any] = [:]
-        switch model.response_format {
-        case .chatCompletions:
-            payload = [
-                "model": model.model_identifier,
-                "stream": true,
-                "messages": [
-                    [
-                        "role": "system",
-                        "content": "Reply YES to every query.",
+        Task.detached { [weak self] in
+            guard let self else { return }
+            do {
+                let inference = try await infer(
+                    with: model.id,
+                    maxCompletionTokens: 64,
+                    input: [
+                        .system(content: .text("Reply YES to every query.")),
+                        .user(content: .text("YES or NO")),
                     ],
-                    [
-                        "role": "user",
-                        "content": "YES or NO",
-                    ],
-                ],
-            ]
-        case .responses:
-            payload = [
-                "model": model.model_identifier,
-                "instructions": "Reply YES to every query.",
-                "input": [
-                    [
-                        "type": "message",
-                        "role": "user",
-                        "content": [
-                            [
-                                "type": "input_text",
-                                "text": "YES or NO",
-                            ],
-                        ],
-                    ],
-                ],
-                "stream": false,
-            ]
-        }
-        mergeBodyFields(into: &payload)
-
-        guard let data = try? JSONSerialization.data(withJSONObject: payload),
-              let endpoint = URL(string: model.endpoint)
-        else {
-            completion(
-                .failure(
-                    NSError(
-                        domain: "Model",
-                        code: -1,
-                        userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid model configuration.")],
-                    ),
-                ),
-            )
-            return
-        }
-        var request = URLRequest(url: endpoint, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 60)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        if !model.token.isEmpty { request.setValue("Bearer \(model.token)", forHTTPHeaderField: "Authorization") }
-        // model.headers can override default headers including Authorization
-        for value in model.headers {
-            request.setValue(value.value, forHTTPHeaderField: value.key)
-        }
-        request.httpBody = data
-        URLSession.shared.dataTask(with: request) { _, resp, _ in
-            guard let resp = resp as? HTTPURLResponse else {
-                completion(
-                    .failure(
-                        NSError(
-                            domain: "Model",
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: String(localized: "Invalid response.")],
-                        ),
-                    ),
                 )
-                return
-            }
-            guard resp.statusCode == 200 else {
-                completion(
-                    .failure(
-                        NSError(
-                            domain: "Model",
-                            code: -1,
-                            userInfo: [NSLocalizedDescriptionKey: String(format: String(localized: "Invalid status code: %d"), resp.statusCode)],
+                if Self.hasNonEmptyText(inference.content)
+                    || Self.hasNonEmptyText(inference.reasoningContent)
+                    || !inference.toolCallRequests.isEmpty
+                {
+                    completion(.success(()))
+                } else {
+                    completion(
+                        .failure(
+                            NSError(
+                                domain: "Model",
+                                code: -1,
+                                userInfo: [NSLocalizedDescriptionKey: String(localized: "Model did not produce any textual output.")],
+                            ),
                         ),
-                    ),
-                )
-                return
+                    )
+                }
+            } catch {
+                completion(.failure(error))
             }
-            completion(.success(()))
-        }.resume()
+        }
     }
 
     func testAppleIntelligenceModel(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -278,6 +209,10 @@ extension ModelManager {
             return [:]
         }
         return jsonObject
+    }
+
+    private static func hasNonEmptyText(_ text: String) -> Bool {
+        !text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 
     private func chatService(
