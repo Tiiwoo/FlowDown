@@ -35,19 +35,19 @@ extension SettingController.SettingContent {
         let microphoneUsage = ConfigurableInfoView().with {
             $0.configure(icon: UIImage(systemName: "mic"))
             $0.configure(title: "Microphone")
-            $0.configure(description: "We use your audio data for speech recognition. Your data is processed by system, we do not collect those infomation.")
+            $0.configure(description: "We use your audio data for speech recognition. Your data is processed by system; we do not collect that information.")
         }
 
         let speechRecognizeUsage = ConfigurableInfoView().with {
             $0.configure(icon: UIImage(systemName: "waveform"))
             $0.configure(title: "Speech Recognition")
-            $0.configure(description: "We use your audio data for speech recognition. Your data is processed by system, we do not collect those infomation.")
+            $0.configure(description: "We use your audio data for speech recognition. Your data is processed by system; we do not collect that information.")
         }
 
         let lanUsage = ConfigurableInfoView().with {
             $0.configure(icon: UIImage(systemName: "network"))
             $0.configure(title: "Local Area Network")
-            $0.configure(description: "We requires LAN access for interact with local service providers. We do not collect any information from your LAN.")
+            $0.configure(description: "We require LAN access to interact with local service providers. We do not collect any information from your LAN.")
         }
 
         let calendarUsage = ConfigurableInfoView().with {

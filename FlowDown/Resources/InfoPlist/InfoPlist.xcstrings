@@ -531,43 +531,43 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Wir verwenden deine Audiodaten zur Spracherkennung. Die Daten werden vom System verarbeitet; wir sammeln sie nicht."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "We use your audio data for speech recognition. Your data is processed by system, we do not collect those infomation."
+            "value" : "We use your audio data for speech recognition. Your data is processed by system; we do not collect that information."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Usamos tus datos de audio para el reconocimiento de voz. Los procesa el sistema; nosotros no los recopilamos."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nous utilisons vos données audio pour la reconnaissance vocale. Elles sont traitées par le système et ne sont pas collectées par nous."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "音声認識のために音声データを利用します。データはシステムで処理され、当社では収集しません。"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "음성 인식을 위해 오디오 데이터를 사용합니다. 데이터는 시스템에서 처리되며 우리가 수집하지 않습니다."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我们需要音频输入权限来进行听写。我们不会收集你的数据，但可能会被系统上传处理。"
           }
         }
@@ -627,43 +627,43 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Wir verwenden deine Audiodaten zur Spracherkennung. Die Daten werden vom System verarbeitet; wir sammeln sie nicht."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "new",
-            "value" : "We use your audio data for speech recognition. Your data is processed by system, we do not collect those infomation."
+            "value" : "We use your audio data for speech recognition. Your data is processed by system; we do not collect that information."
           }
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Usamos tus datos de audio para el reconocimiento de voz. Los procesa el sistema; nosotros no los recopilamos."
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "Nous utilisons vos données audio pour la reconnaissance vocale. Elles sont traitées par le système et ne sont pas collectées par nous."
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "音声認識のために音声データを利用します。データはシステムで処理され、当社では収集しません。"
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "음성 인식을 위해 오디오 데이터를 사용합니다. 데이터는 시스템에서 처리되며 우리가 수집하지 않습니다."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
+            "state" : "needs_review",
             "value" : "我们需要音频输入权限来进行听写。我们不会收集你的数据，但可能会被系统上传处理。"
           }
         }

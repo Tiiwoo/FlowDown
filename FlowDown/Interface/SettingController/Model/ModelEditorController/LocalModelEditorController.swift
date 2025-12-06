@@ -387,7 +387,7 @@ class LocalModelEditorController: StackScrollController {
         super.viewDidAppear(animated)
         if !MLX.GPU.isSupported {
             let alert = AlertViewController(
-                title: "Unsupporte",
+                title: "Unsupported",
                 message: "Your device does not support MLX.",
             ) { context in
                 context.allowSimpleDispose()
