@@ -279,8 +279,7 @@
         }
       }
     },
-    "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect for your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**" : {
-      "extractionState" : "stale",
+    "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -325,9 +324,6 @@
           }
         }
       }
-    },
-    "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**" : {
-
     },
     "%@" : {
       "localizations" : {
