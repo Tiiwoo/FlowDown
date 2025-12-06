@@ -1036,14 +1036,33 @@ private extension CloudModelEditorController {
             ))
 
             let modalitiesActions: [UIAction] = [
-                UIAction(title: String(localized: "Add modalities: text + image"), image: UIImage(systemName: "photo.on.rectangle")) { _ in
-                    controller.updateValue { $0["modalities"] = ["text", "image"] }
+                UIAction(title: String(localized: "Add modalities: text"), image: UIImage(systemName: "text.bubble")) { _ in
+                    controller.updateValue {
+                        var mods = $0["modalities"] as? [String] ?? []
+                        mods.append("text")
+                        $0["modalities"] = Array(Set(mods)).sorted()
+                    }
                 },
-                UIAction(title: String(localized: "Add modalities: text only"), image: UIImage(systemName: "text.bubble")) { _ in
-                    controller.updateValue { $0["modalities"] = ["text"] }
+                UIAction(title: String(localized: "Add modalities: image"), image: UIImage(systemName: "photo.on.rectangle")) { _ in
+                    controller.updateValue {
+                        var mods = $0["modalities"] as? [String] ?? []
+                        mods.append("image")
+                        $0["modalities"] = Array(Set(mods)).sorted()
+                    }
                 },
-                UIAction(title: String(localized: "Remove modalities"), image: UIImage(systemName: "xmark.circle")) { _ in
-                    controller.updateValue { $0.removeValue(forKey: "modalities") }
+                UIAction(title: String(localized: "Add modalities: text"), image: UIImage(systemName: "text.bubble")) { _ in
+                    controller.updateValue {
+                        var mods = $0["output_modalities"] as? [String] ?? []
+                        mods.append("text")
+                        $0["output_modalities"] = Array(Set(mods)).sorted()
+                    }
+                },
+                UIAction(title: String(localized: "Add modalities: image"), image: UIImage(systemName: "photo.on.rectangle")) { _ in
+                    controller.updateValue {
+                        var mods = $0["output_modalities"] as? [String] ?? []
+                        mods.append("image")
+                        $0["output_modalities"] = Array(Set(mods)).sorted()
+                    }
                 },
             ]
             children.append(UIMenu(
@@ -1074,6 +1093,16 @@ private extension CloudModelEditorController {
                         var provider = dic["provider"] as? [String: Any] ?? [:]
                         provider["zdr"] = true
                         dic["provider"] = provider
+                    }
+                },
+            )
+            providerChildren.append(
+                UIAction(
+                    title: String(localized: "Add \("order")"),
+                    image: UIImage(systemName: "list.number"),
+                ) { _ in
+                    controller.updateValue { dic in
+                        dic["order"] = []
                     }
                 },
             )

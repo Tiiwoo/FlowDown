@@ -5,4 +5,3 @@ public enum LogLevel: String {
     case info = "INFO"
     case error = "ERROR"
 }
-

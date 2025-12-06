@@ -441,10 +441,10 @@
         }
       }
     },
-    "Add modalities: text + image" : {
+    "Add modalities: image" : {
 
     },
-    "Add modalities: text only" : {
+    "Add modalities: text" : {
 
     },
     "Add Model" : {
@@ -11133,9 +11133,6 @@
           }
         }
       }
-    },
-    "Remove modalities" : {
-
     },
     "Rename" : {
       "localizations" : {
