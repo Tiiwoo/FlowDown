@@ -4924,7 +4924,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "启用 Foundation 模型"
+            "value" : "启用 Foundation Model"
           }
         }
       }
@@ -12516,7 +12516,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "可用时在模型选择器中显示 Apple Intelligence Foundation Model。"
+            "value" : "可用时在模型选择器中显示 Foundation Model。"
           }
         }
       }

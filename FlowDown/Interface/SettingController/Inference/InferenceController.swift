@@ -63,7 +63,7 @@ extension SettingController.SettingContent {
         )).with {
             $0.configure(icon: UIImage(systemName: "switch.2"))
             $0.configure(title: "Enable Foundation Model")
-            $0.configure(description: "Show Apple Intelligence Foundation Model in the model picker when available.")
+            $0.configure(description: "Show Foundation Model in the model picker when available.")
         }
 
         private let skipVisualAssessmentView = ConfigurableObject(
