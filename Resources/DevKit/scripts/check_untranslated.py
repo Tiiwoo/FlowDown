@@ -10,7 +10,7 @@ import sys
 
 from i18n_tools import default_file_path, find_untranslated, load_strings
 
-EXCEPTIONS: set[str] = set()
+EXCEPTIONS: set[str] = {"%@", "%lld"}
 
 
 if __name__ == "__main__":
