@@ -27217,6 +27217,38 @@
         }
       }
     },
+    "Chat Templates" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Chat Templates"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "对话模板"
+          }
+        }
+      }
+    },
+    "Sync your saved chat templates across devices." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sync your saved chat templates across devices."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在设备间同步你保存的对话模板。"
+          }
+        }
+      }
+    },
     "No configurable settings were found to export." : {
       "localizations" : {
         "en" : {

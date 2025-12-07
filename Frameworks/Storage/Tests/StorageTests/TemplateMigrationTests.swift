@@ -33,4 +33,3 @@ struct TemplateMigrationTests {
         #expect(userVersion == DBVersion.Version6.rawValue)
     }
 }
-

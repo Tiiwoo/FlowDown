@@ -207,7 +207,6 @@ struct MigrationV1ToV2: DBMigration {
             update.headers = cloudModel.headers
             update.capabilities = cloudModel.capabilities
             update.context = cloudModel.context
-            update.temperature_preference = cloudModel.temperature_preference
             update.comment = cloudModel.comment
 
             migrateCloudModels.append(update)
@@ -397,6 +396,10 @@ struct MigrationV1ToV2: DBMigration {
         let row = try db.getRow(on: UploadQueue.Properties.id.max(), fromTable: UploadQueue.tableName)
         var startId = row[0].int64Value
         for table in tables {
+            guard try db.isTableExists(table.tableName) else {
+                Logger.database.infoFile("[*] migrate version \(fromVersion.rawValue) -> \(toVersion.rawValue) skip upload init for missing table \(table.tableName)")
+                continue
+            }
             startId = try initializeMigrationUploadQueue(table: table, db: db, startId: startId + 1)
         }
 

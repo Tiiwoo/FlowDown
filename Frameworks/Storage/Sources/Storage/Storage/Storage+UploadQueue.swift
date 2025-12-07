@@ -576,6 +576,10 @@ package extension Storage {
             let row = try $0.getRow(on: UploadQueue.Properties.id.max(), fromTable: UploadQueue.tableName)
             var startId = row[0].int64Value
             for table in tables {
+                guard try db.isTableExists(table.tableName) else {
+                    Logger.database.infoFile("[*] reinitializeUploadQueue skip missing table \(table.tableName)")
+                    continue
+                }
                 startId = try initializeMigrationUploadQueue(table: table, handle: $0, startId: startId + 1)
             }
 

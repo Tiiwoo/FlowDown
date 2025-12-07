@@ -35,7 +35,7 @@ class ChatTemplateManager {
             from: template,
             existing: nil,
             sortIndex: sdb.templateNextSortIndex(),
-            shouldMarkModified: false
+            shouldMarkModified: false,
         )
         sdb.templateSave(record: record)
         reloadFromStorage()
@@ -53,7 +53,7 @@ class ChatTemplateManager {
                 from: template,
                 existing: record,
                 sortIndex: record.sortIndex,
-                shouldMarkModified: true
+                shouldMarkModified: true,
             )
             sdb.templateSave(record: updated)
         } else {
@@ -103,7 +103,7 @@ class ChatTemplateManager {
                 from: template,
                 existing: record,
                 sortIndex: record.sortIndex,
-                shouldMarkModified: true
+                shouldMarkModified: true,
             )
             sdb.templateSave(record: fixedRecord)
         }
@@ -131,7 +131,7 @@ class ChatTemplateManager {
         existing: ChatTemplateRecord?,
         sortIndex: Double? = nil,
         creation: Date? = nil,
-        shouldMarkModified: Bool = false
+        shouldMarkModified: Bool = false,
     ) -> ChatTemplateRecord {
         let record = ChatTemplateRecord(
             deviceId: existing?.deviceId ?? Storage.deviceId,
@@ -141,7 +141,7 @@ class ChatTemplateManager {
             prompt: template.prompt,
             inheritApplicationPrompt: template.inheritApplicationPrompt,
             sortIndex: sortIndex ?? existing?.sortIndex ?? sdb.templateNextSortIndex(),
-            creation: creation ?? existing?.creation ?? Date.now
+            creation: creation ?? existing?.creation ?? Date.now,
         )
         if shouldMarkModified {
             record.markModified()
@@ -178,7 +178,7 @@ class ChatTemplateManager {
                 existing: nil,
                 sortIndex: Double(index),
                 creation: now,
-                shouldMarkModified: false
+                shouldMarkModified: false,
             )
         }
 
