@@ -94,50 +94,7 @@ jobs:
           NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64: ${{ secrets.NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64 }}
         run: |
           set -euo pipefail
-          if [[ -z "${NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64:-}" ]]; then
-            echo "NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64 is empty" >&2
-            exit 1
-          fi
-          PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
-          PROFILE_DIR_XCODE="$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"
-          mkdir -p "$PROFILE_DIR"
-          mkdir -p "$PROFILE_DIR_XCODE"
-          RAW_PROFILE="$(mktemp)"
-          PLIST_TMP="$(mktemp)"
-          echo "${NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64}" | base64 -D > "$RAW_PROFILE"
-          security cms -D -i "$RAW_PROFILE" > "$PLIST_TMP"
-          PROFILE_NAME=$(/usr/libexec/PlistBuddy -c "Print :Name" "$PLIST_TMP")
-          if [[ -z "$PROFILE_NAME" ]]; then
-            echo "Failed to read profile name" >&2
-            exit 1
-          fi
-          PROFILE_PATH="${PROFILE_DIR}/NotaryToolbox.provisionprofile"
-          cp "$RAW_PROFILE" "$PROFILE_PATH"
-          cp "$RAW_PROFILE" "${PROFILE_DIR_XCODE}/NotaryToolbox.provisionprofile"
-          rm -f "$RAW_PROFILE" "$PLIST_TMP"
-          echo "installed profile: ${PROFILE_NAME} -> ${PROFILE_PATH}"
-          echo "PROVISIONING_PROFILE_SPECIFIER=${PROFILE_NAME}" >> "$GITHUB_ENV"
-          echo "NOTARY_PROVISION_PROFILE_NAME=${PROFILE_NAME}" >> "$GITHUB_ENV"
-          echo "NOTARY_PROVISION_PROFILE_PATH=${PROFILE_PATH}" >> "$GITHUB_ENV"
-      - name: Generate GitHubAction.xcconfig
-        if: steps.tag_check.outputs.ok == 'true'
-        env:
-          CODE_SIGNING_IDENTITY: ${{ steps.setup_notary.outputs.code_signing_identity }}
-          CODE_SIGNING_TEAM: ${{ steps.setup_notary.outputs.code_signing_team }}
-          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
-        run: |
-          set -euo pipefail
-          CONFIG_PATH="FlowDown/Configuration/GitHubAction.xcconfig"
-          : > "$CONFIG_PATH"
-          echo "CODE_SIGN_IDENTITY[sdk=macosx*] = ${CODE_SIGNING_IDENTITY}" >> "$CONFIG_PATH"
-          echo "CODE_SIGN_STYLE[sdk=macosx*] = Manual" >> "$CONFIG_PATH"
-          echo "DEVELOPMENT_TEAM[sdk=macosx*] = ${CODE_SIGNING_TEAM}" >> "$CONFIG_PATH"
-          echo "PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*] = ${PROVISIONING_PROFILE_SPECIFIER}" >> "$CONFIG_PATH"
-          echo "generated GitHubAction.xcconfig at $CONFIG_PATH"
-          ls -l "$CONFIG_PATH"
-          echo "--- GitHubAction.xcconfig ---"
-          cat "$CONFIG_PATH"
-          echo "-----------------------------"
+          ./Resources/DevKit/scripts/install-notary-profile.sh "$GITHUB_ENV"
       - name: Run notarization action
         if: steps.tag_check.outputs.ok == 'true'
         id: notarize_action

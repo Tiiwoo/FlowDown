@@ -30,7 +30,14 @@ if [[ -z "${ENABLE_NOTARIZE:-}" ]]; then
   fi
 fi
 
-REQUIRED_VARS=(CODE_SIGNING_IDENTITY CODE_SIGNING_TEAM KEYCHAIN_DB)
+REQUIRED_VARS=(
+  CODE_SIGNING_IDENTITY
+  CODE_SIGNING_TEAM
+  KEYCHAIN_DB
+  PROVISIONING_PROFILE_SPECIFIER
+  NOTARY_PROVISION_PROFILE_NAME
+  NOTARIZE_KEYCHAIN_PROFILE
+)
 for var in "${REQUIRED_VARS[@]}"; do
   if [[ -z "${(P)var:-}" ]]; then
     fatal "${var} is required for notarization workflow"
@@ -49,6 +56,16 @@ xcodebuild -downloadComponent MetalToolchain || true
 
 log "resolving packages"
 "${SCRIPT_DIR}/resolve-packages.sh"
+
+log "installing notary config"
+env \
+  NOTARY_PROVISION_PROFILE_NAME="$NOTARY_PROVISION_PROFILE_NAME" \
+  PROVISIONING_PROFILE_SPECIFIER="$PROVISIONING_PROFILE_SPECIFIER" \
+  CODE_SIGNING_IDENTITY="$CODE_SIGNING_IDENTITY" \
+  CODE_SIGNING_TEAM="$CODE_SIGNING_TEAM" \
+  KEYCHAIN_DB="$KEYCHAIN_DB" \
+  NOTARIZE_KEYCHAIN_PROFILE="$NOTARIZE_KEYCHAIN_PROFILE" \
+  "${SCRIPT_DIR}/install-notary-config.sh"
 
 log "archiving signed macOS build"
 env \
