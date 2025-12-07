@@ -2,15 +2,8 @@ name: Notarize Release
 
 on:
   push:
-    branches: [ main, release ]
     tags:
       - "*.*.*"
-  workflow_dispatch:
-    inputs:
-      tag:
-        description: "Release tag (x.y.z)"
-        required: true
-        type: string
 
 permissions:
   contents: write
@@ -20,23 +13,12 @@ jobs:
     name: Notarize macOS build
     runs-on: macos-26
     env:
-      VERSION: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
-      RELEASE_BRANCH: release
+      VERSION: ${{ github.ref_name }}
     steps:
       - name: Validate ref
         id: tag_check
         run: |
           set -euo pipefail
-          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
-            echo "ok=true" >> "$GITHUB_OUTPUT"
-            echo "mode=main" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          if [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
-            echo "ok=true" >> "$GITHUB_OUTPUT"
-            echo "mode=release" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
           if [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
             echo "mode=tag" >> "$GITHUB_OUTPUT"
@@ -44,41 +26,13 @@ jobs:
           fi
           echo "ok=false" >> "$GITHUB_OUTPUT"
           echo "Tag ${VERSION} does not match x.x.x (no v/beta/rev); skipping notarization." >> "$GITHUB_STEP_SUMMARY"
-      - name: Restrict manual dispatch to Lakr233
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          set -euo pipefail
-          if [[ "${GITHUB_ACTOR}" != "Lakr233" ]]; then
-            echo "This workflow dispatch is restricted to Lakr233." >&2
-            exit 1
-          fi
       - name: Checkout
         if: steps.tag_check.outputs.ok == 'true'
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref }}
+          ref: ${{ github.ref }}
           fetch-depth: 0
           submodules: recursive
-      - name: Ensure tag commit is on release branch
-        if: github.event_name != 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/') && steps.tag_check.outputs.ok == 'true'
-        id: release_branch
-        env:
-          RELEASE_BRANCH: ${{ env.RELEASE_BRANCH }}
-        run: |
-          set -euo pipefail
-          HEAD_SHA="$(git rev-parse HEAD)"
-          if git ls-remote --exit-code origin "${RELEASE_BRANCH}" >/dev/null 2>&1; then
-            git fetch origin "${RELEASE_BRANCH}"
-            if git merge-base --is-ancestor "${HEAD_SHA}" "origin/${RELEASE_BRANCH}"; then
-              echo "on_release=true" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            echo "on_release=false" >> "$GITHUB_OUTPUT"
-            echo "Tag commit is not on ${RELEASE_BRANCH}; skipping notarization." >> "$GITHUB_STEP_SUMMARY"
-            exit 0
-          fi
-          echo "on_release=false" >> "$GITHUB_OUTPUT"
-          echo "Release branch ${RELEASE_BRANCH} not found; skipping notarization." >> "$GITHUB_STEP_SUMMARY"
       - name: Setup notary keychain and signing env
         if: steps.tag_check.outputs.ok == 'true'
         id: setup_notary
@@ -104,14 +58,14 @@ jobs:
           KEYCHAIN_DB: ${{ steps.setup_notary.outputs.keychain_db }}
           NOTARIZE_KEYCHAIN_PROFILE: ${{ steps.setup_notary.outputs.notarize_keychain_profile }}
           PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
-          ENABLE_NOTARIZE: ${{ github.event_name == 'workflow_dispatch' && '1' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true' && '1' || '0') }}
+          ENABLE_NOTARIZE: '1'
           VERSION: ${{ env.VERSION }}
           NOTARIZE_ZIP_OUTPUT: ${{ format('{0}/BuildArtifacts/FlowDown-{1}.zip', github.workspace, env.VERSION) }}
         run: |
           set -euo pipefail
           ./Resources/DevKit/scripts/notary-action.sh "$GITHUB_OUTPUT"
       - name: Upload build outputs
-        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || steps.release_branch.outputs.on_release == 'true')
+        if: steps.tag_check.outputs.ok == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: FlowDown-${{ env.VERSION }}-build-pre-notarize
@@ -120,19 +74,19 @@ jobs:
             BuildArtifacts/macos-notary.xcresult
           if-no-files-found: error
           retention-days: 7
-      - name: Create release if missing
-        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
+      - name: Create release (replace if exists)
+        if: steps.tag_check.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           if gh release view "${VERSION}" >/dev/null 2>&1; then
-            echo "Release ${VERSION} already exists"
-          else
-            gh release create "${VERSION}" --title "${VERSION}" --notes "Automated release for ${VERSION}"
+            echo "Release ${VERSION} already exists; deleting to replace"
+            gh release delete "${VERSION}" --yes
           fi
+          gh release create "${VERSION}" --title "${VERSION}" --notes "Automated release for ${VERSION}"
       - name: Upload notarized ZIP to release
-        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
+        if: steps.tag_check.outputs.ok == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ env.VERSION }}
@@ -145,7 +99,7 @@ jobs:
           fi
           gh release upload "${VERSION}" "$ZIP_PATH#FlowDown-${VERSION}.zip" --clobber
       - name: Upload notarized ZIP as artifact
-        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
+        if: steps.tag_check.outputs.ok == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: FlowDown-${{ env.VERSION }}-notarized-zip
