@@ -273,7 +273,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
             var newTemplate = template
             newTemplate.id = UUID()
             newTemplate.name = template.name + " " + String(localized: "Copy")
-            ChatTemplateManager.shared.templates[newTemplate.id] = newTemplate
+            ChatTemplateManager.shared.addTemplate(newTemplate)
             let editor = ChatTemplateEditorController(templateIdentifier: newTemplate.id)
             navigationController?.pushViewController(editor, animated: true)
         }

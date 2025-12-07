@@ -35,7 +35,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
     public package(set) var body_fields: String = "" // additional body fields as JSON string
     public package(set) var capabilities: Set<ModelCapabilities> = []
     public package(set) var context: ModelContextLength = .short_8k
-    public package(set) var temperature_preference: ModelTemperaturePreference = .inherit
     public package(set) var response_format: CloudModelResponseFormat = .default
     // can be used when loading model from our server
     // present to user on the top of the editor page
@@ -65,7 +64,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
             BindColumnConstraint(response_format, isNotNull: true, defaultTo: CloudModelResponseFormat.default)
             BindColumnConstraint(comment, isNotNull: true, defaultTo: "")
             BindColumnConstraint(name, isNotNull: true, defaultTo: "")
-            BindColumnConstraint(temperature_preference, isNotNull: true, defaultTo: ModelTemperaturePreference.inherit)
 
             BindIndex(creation, namedWith: "_creationIndex")
             BindIndex(modified, namedWith: "_modifiedIndex")
@@ -85,7 +83,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         case response_format
         case comment
         case name
-        case temperature_preference
 
         case removed
         case modified
@@ -108,7 +105,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         capabilities: Set<ModelCapabilities> = [],
         comment: String = "",
         name: String = "",
-        temperature_preference: ModelTemperaturePreference = .inherit,
         response_format: CloudModelResponseFormat = .default,
     ) {
         self.deviceId = deviceId
@@ -125,7 +121,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         self.comment = comment
         self.name = name
         self.context = context
-        self.temperature_preference = temperature_preference
         self.response_format = response_format
     }
 
@@ -145,7 +140,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         context = try container.decodeIfPresent(ModelContextLength.self, forKey: .context) ?? .short_8k
         comment = try container.decodeIfPresent(String.self, forKey: .comment) ?? ""
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
-        temperature_preference = try container.decodeIfPresent(ModelTemperaturePreference.self, forKey: .temperature_preference) ?? .inherit
         response_format = try container.decodeIfPresent(CloudModelResponseFormat.self, forKey: .response_format) ?? .default
         removed = try container.decodeIfPresent(Bool.self, forKey: .removed) ?? false
     }
@@ -174,7 +168,6 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
         hasher.combine(response_format)
         hasher.combine(comment)
         hasher.combine(name)
-        hasher.combine(temperature_preference)
         hasher.combine(removed)
     }
 }

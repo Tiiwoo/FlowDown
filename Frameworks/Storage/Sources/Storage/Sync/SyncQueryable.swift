@@ -28,6 +28,8 @@ package struct SyncQueryProperties {
             Message.SyncQuery.objectId
         case Attachment.tableName:
             Attachment.SyncQuery.objectId
+        case ChatTemplateRecord.tableName:
+            ChatTemplateRecord.SyncQuery.objectId
         default:
             WCDBSwift.Property(named: "objectId", with: nil)
         }
@@ -47,6 +49,8 @@ package struct SyncQueryProperties {
             Message.SyncQuery.creation
         case Attachment.tableName:
             Attachment.SyncQuery.creation
+        case ChatTemplateRecord.tableName:
+            ChatTemplateRecord.SyncQuery.creation
         default:
             WCDBSwift.Property(named: "creation", with: nil)
         }
@@ -66,6 +70,8 @@ package struct SyncQueryProperties {
             Message.SyncQuery.modified
         case Attachment.tableName:
             Attachment.SyncQuery.modified
+        case ChatTemplateRecord.tableName:
+            ChatTemplateRecord.SyncQuery.modified
         default:
             WCDBSwift.Property(named: "modified", with: nil)
         }
@@ -85,6 +91,8 @@ package struct SyncQueryProperties {
             Message.SyncQuery.removed
         case Attachment.tableName:
             Attachment.SyncQuery.removed
+        case ChatTemplateRecord.tableName:
+            ChatTemplateRecord.SyncQuery.removed
         default:
             WCDBSwift.Property(named: "removed", with: nil)
         }

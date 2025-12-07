@@ -74,6 +74,19 @@ public final class MessageNotificationInfo: Sendable {
     }
 }
 
+public final class ChatTemplateNotificationInfo: Sendable {
+    public let modifications: [ChatTemplateRecord.ID]
+    public let deletions: [ChatTemplateRecord.ID]
+    public var isEmpty: Bool {
+        modifications.isEmpty && deletions.isEmpty
+    }
+
+    public init(modifications: [ChatTemplateRecord.ID], deletions: [ChatTemplateRecord.ID]) {
+        self.modifications = modifications
+        self.deletions = deletions
+    }
+}
+
 public final actor SyncEngine: Sendable {
     /// 会话列表变化通知, 在 MainActor 中发布。可安全的在UI线程中访问
     public static let ConversationChanged: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.ConversationChanged")
@@ -85,6 +98,8 @@ public final actor SyncEngine: Sendable {
     public static let ModelContextServerChanged: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.ModelContextServerChanged")
     /// 记忆列表变化通知, 在 MainActor 中发布。可安全的在UI线程中访问
     public static let MemoryChanged: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.MemoryChanged")
+    /// 模板列表变化通知, 在 MainActor 中发布。可安全的在UI线程中访问
+    public static let ChatTemplateChanged: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.ChatTemplateChanged")
     /// 本地数据删除通知, 在 MainActor 中发布。可安全的在UI线程中访问
     public static let LocalDataDeleted: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.LocalDataDeleted")
     /// 云端数据删除通知, 在 MainActor 中发布。可安全的在UI线程中访问
@@ -96,6 +111,7 @@ public final actor SyncEngine: Sendable {
     public static let CloudModelNotificationKey: String = "CloudModel"
     public static let ModelContextServerNotificationKey: String = "ModelContextServer"
     public static let MemoryNotificationKey: String = "Memory"
+    public static let ChatTemplateNotificationKey: String = "ChatTemplate"
 
     public nonisolated static let syncEnabledDefaultsKey = "com.flowdown.storage.sync.manually.enabled"
 
@@ -665,6 +681,7 @@ private extension SyncEngine {
         var modificationCloudModels: [CloudModel.ID] = []
         var modificationMCPS: [ModelContextServer.ID] = []
         var modificationMemorys: [Memory.ID] = []
+        var modificationTemplates: [ChatTemplateRecord.ID] = []
 
         for modification in filteredModifications {
             let recordID = modification.recordID
@@ -679,6 +696,8 @@ private extension SyncEngine {
                 modificationMCPS.append(objectId)
             } else if tableName == Memory.tableName {
                 modificationMemorys.append(objectId)
+            } else if tableName == ChatTemplateRecord.tableName {
+                modificationTemplates.append(objectId)
             }
         }
 
@@ -687,6 +706,7 @@ private extension SyncEngine {
         var deletedCloudModels: [CloudModel.ID] = []
         var deletedMCPS: [ModelContextServer.ID] = []
         var deletedMemorys: [Memory.ID] = []
+        var deletedTemplates: [ChatTemplateRecord.ID] = []
         for deletion in filteredDeletions {
             let recordID = deletion.recordID
             guard let (objectId, tableName) = UploadQueue.parseCKRecordID(recordID.recordName) else { continue }
@@ -700,6 +720,8 @@ private extension SyncEngine {
                 deletedMCPS.append(objectId)
             } else if tableName == Memory.tableName {
                 deletedMemorys.append(objectId)
+            } else if tableName == ChatTemplateRecord.tableName {
+                deletedTemplates.append(objectId)
             }
         }
 
@@ -718,6 +740,7 @@ private extension SyncEngine {
         let cloudModelNotificationInfo = CloudModelNotificationInfo(modifications: modificationCloudModels, deletions: deletedCloudModels)
         let MCPNotificationInfo = ModelContextServerNotificationInfo(modifications: modificationMCPS, deletions: deletedMCPS)
         let memoryNotificationInfo = MemoryNotificationInfo(modifications: modificationMemorys, deletions: deletedMemorys)
+        let templateNotificationInfo = ChatTemplateNotificationInfo(modifications: modificationTemplates, deletions: deletedTemplates)
 
         await MainActor.run {
             if !conversationNotificationInfo.isEmpty {
@@ -765,7 +788,17 @@ private extension SyncEngine {
                     name: SyncEngine.MemoryChanged,
                     object: nil,
                     userInfo: [
-                        SyncEngine.MemoryNotificationKey: MCPNotificationInfo,
+                        SyncEngine.MemoryNotificationKey: memoryNotificationInfo,
+                    ],
+                )
+            }
+
+            if !templateNotificationInfo.isEmpty {
+                NotificationCenter.default.post(
+                    name: SyncEngine.ChatTemplateChanged,
+                    object: nil,
+                    userInfo: [
+                        SyncEngine.ChatTemplateNotificationKey: templateNotificationInfo,
                     ],
                 )
             }
