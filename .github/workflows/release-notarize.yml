@@ -2,6 +2,7 @@ name: Notarize Release
 
 on:
   push:
+    branches: [ main, release ]
     tags:
       - "*.*.*"
   workflow_dispatch:
@@ -18,17 +19,27 @@ jobs:
   notarize:
     name: Notarize macOS build
     runs-on: macos-26
-    if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
     env:
       VERSION: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag || github.ref_name }}
       RELEASE_BRANCH: release
     steps:
-      - name: Validate tag format (x.x.x, no v/beta/rev)
+      - name: Validate ref
         id: tag_check
         run: |
           set -euo pipefail
+          if [[ "${GITHUB_REF}" == "refs/heads/main" ]]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "mode=main" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [[ "${GITHUB_REF}" == "refs/heads/release" ]]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "mode=release" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           if [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "ok=true" >> "$GITHUB_OUTPUT"
+            echo "mode=tag" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           echo "ok=false" >> "$GITHUB_OUTPUT"
@@ -49,7 +60,7 @@ jobs:
           fetch-depth: 0
           submodules: recursive
       - name: Ensure tag commit is on release branch
-        if: steps.tag_check.outputs.ok == 'true'
+        if: github.event_name != 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/') && steps.tag_check.outputs.ok == 'true'
         id: release_branch
         env:
           RELEASE_BRANCH: ${{ env.RELEASE_BRANCH }}
@@ -68,20 +79,8 @@ jobs:
           fi
           echo "on_release=false" >> "$GITHUB_OUTPUT"
           echo "Release branch ${RELEASE_BRANCH} not found; skipping notarization." >> "$GITHUB_STEP_SUMMARY"
-      - name: Select newest Xcode in /Applications
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
-        run: |
-          set -euo pipefail
-          ./Resources/DevKit/scripts/select_newest_xcode.sh
-      - name: Anchor Release Version (tag -> CFBundleShortVersionString, build=0)
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
-        env:
-          VERSION: ${{ env.VERSION }}
-        run: |
-          set -euo pipefail
-          ./Resources/DevKit/scripts/anchor-release-version.sh
       - name: Setup notary keychain and signing env
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+        if: steps.tag_check.outputs.ok == 'true'
         id: setup_notary
         env:
           NOTARY_TOOLBOX_ZIP_BASE64: ${{ secrets.NOTARY_TOOLBOX_ZIP_BASE64 }}
@@ -89,22 +88,73 @@ jobs:
         run: |
           set -euo pipefail
           ./Resources/DevKit/scripts/notary-setup-keychain.sh "$GITHUB_OUTPUT" "$GITHUB_ENV"
-      - name: Resolve packages
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+      - name: Install notarize provisioning profile
+        if: steps.tag_check.outputs.ok == 'true'
+        env:
+          NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64: ${{ secrets.NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64 }}
         run: |
           set -euo pipefail
-          ./Resources/DevKit/scripts/resolve-packages.sh
-      - name: Archive macOS build (signed)
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+          if [[ -z "${NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64:-}" ]]; then
+            echo "NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64 is empty" >&2
+            exit 1
+          fi
+          PROFILE_DIR="$HOME/Library/MobileDevice/Provisioning Profiles"
+          PROFILE_DIR_XCODE="$HOME/Library/Developer/Xcode/UserData/Provisioning Profiles"
+          mkdir -p "$PROFILE_DIR"
+          mkdir -p "$PROFILE_DIR_XCODE"
+          RAW_PROFILE="$(mktemp)"
+          PLIST_TMP="$(mktemp)"
+          echo "${NOTARY_TOOLBOX_PROVISION_PROFILE_BASE64}" | base64 -D > "$RAW_PROFILE"
+          security cms -D -i "$RAW_PROFILE" > "$PLIST_TMP"
+          PROFILE_NAME=$(/usr/libexec/PlistBuddy -c "Print :Name" "$PLIST_TMP")
+          if [[ -z "$PROFILE_NAME" ]]; then
+            echo "Failed to read profile name" >&2
+            exit 1
+          fi
+          PROFILE_PATH="${PROFILE_DIR}/NotaryToolbox.provisionprofile"
+          cp "$RAW_PROFILE" "$PROFILE_PATH"
+          cp "$RAW_PROFILE" "${PROFILE_DIR_XCODE}/NotaryToolbox.provisionprofile"
+          rm -f "$RAW_PROFILE" "$PLIST_TMP"
+          echo "installed profile: ${PROFILE_NAME} -> ${PROFILE_PATH}"
+          echo "PROVISIONING_PROFILE_SPECIFIER=${PROFILE_NAME}" >> "$GITHUB_ENV"
+          echo "NOTARY_PROVISION_PROFILE_NAME=${PROFILE_NAME}" >> "$GITHUB_ENV"
+          echo "NOTARY_PROVISION_PROFILE_PATH=${PROFILE_PATH}" >> "$GITHUB_ENV"
+      - name: Generate GitHubAction.xcconfig
+        if: steps.tag_check.outputs.ok == 'true'
         env:
-          KEYCHAIN_DB: ${{ steps.setup_notary.outputs.keychain_db }}
           CODE_SIGNING_IDENTITY: ${{ steps.setup_notary.outputs.code_signing_identity }}
           CODE_SIGNING_TEAM: ${{ steps.setup_notary.outputs.code_signing_team }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
         run: |
           set -euo pipefail
-          ./Resources/DevKit/scripts/xcodebuild-archive-macos.sh
-      - name: Upload build outputs (pre-notarize)
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+          CONFIG_PATH="FlowDown/Configuration/GitHubAction.xcconfig"
+          : > "$CONFIG_PATH"
+          echo "CODE_SIGN_IDENTITY[sdk=macosx*] = ${CODE_SIGNING_IDENTITY}" >> "$CONFIG_PATH"
+          echo "CODE_SIGN_STYLE[sdk=macosx*] = Manual" >> "$CONFIG_PATH"
+          echo "DEVELOPMENT_TEAM[sdk=macosx*] = ${CODE_SIGNING_TEAM}" >> "$CONFIG_PATH"
+          echo "PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*] = ${PROVISIONING_PROFILE_SPECIFIER}" >> "$CONFIG_PATH"
+          echo "generated GitHubAction.xcconfig at $CONFIG_PATH"
+          ls -l "$CONFIG_PATH"
+          echo "--- GitHubAction.xcconfig ---"
+          cat "$CONFIG_PATH"
+          echo "-----------------------------"
+      - name: Run notarization action
+        if: steps.tag_check.outputs.ok == 'true'
+        id: notarize_action
+        env:
+          CODE_SIGNING_IDENTITY: ${{ steps.setup_notary.outputs.code_signing_identity }}
+          CODE_SIGNING_TEAM: ${{ steps.setup_notary.outputs.code_signing_team }}
+          KEYCHAIN_DB: ${{ steps.setup_notary.outputs.keychain_db }}
+          NOTARIZE_KEYCHAIN_PROFILE: ${{ steps.setup_notary.outputs.notarize_keychain_profile }}
+          PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
+          ENABLE_NOTARIZE: ${{ github.event_name == 'workflow_dispatch' && '1' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true' && '1' || '0') }}
+          VERSION: ${{ env.VERSION }}
+          NOTARIZE_ZIP_OUTPUT: ${{ format('{0}/BuildArtifacts/FlowDown-{1}.zip', github.workspace, env.VERSION) }}
+        run: |
+          set -euo pipefail
+          ./Resources/DevKit/scripts/notary-action.sh "$GITHUB_OUTPUT"
+      - name: Upload build outputs
+        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || steps.release_branch.outputs.on_release == 'true')
         uses: actions/upload-artifact@v4
         with:
           name: FlowDown-${{ env.VERSION }}-build-pre-notarize
@@ -113,28 +163,8 @@ jobs:
             BuildArtifacts/macos-notary.xcresult
           if-no-files-found: error
           retention-days: 7
-      - name: Notarize ZIP
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
-        id: notarize
-        env:
-          CODE_SIGNING_IDENTITY: ${{ steps.setup_notary.outputs.code_signing_identity }}
-          NOTARIZE_KEYCHAIN_PROFILE: ${{ steps.setup_notary.outputs.notarize_keychain_profile }}
-          NOTARIZE_ZIP_OUTPUT: ${{ format('{0}/BuildArtifacts/FlowDown-{1}.zip', github.workspace, env.VERSION) }}
-        run: |
-          set -euo pipefail
-          APP_PATH="${GITHUB_WORKSPACE}/BuildArtifacts/FlowDown-macos.xcarchive/Products/Applications/FlowDown.app"
-          if [[ ! -d "$APP_PATH" ]]; then
-            echo "App not found at $APP_PATH" >&2
-            exit 1
-          fi
-          ./Resources/DevKit/scripts/notarize-zip.sh "$APP_PATH" "${NOTARIZE_ZIP_OUTPUT}"
-          if [[ ! -f "${NOTARIZE_ZIP_OUTPUT}" ]]; then
-            echo "Notarized ZIP not found at ${NOTARIZE_ZIP_OUTPUT}" >&2
-            exit 1
-          fi
-          echo "zip=${NOTARIZE_ZIP_OUTPUT}" >> "$GITHUB_OUTPUT"
       - name: Create release if missing
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -145,11 +175,11 @@ jobs:
             gh release create "${VERSION}" --title "${VERSION}" --notes "Automated release for ${VERSION}"
           fi
       - name: Upload notarized ZIP to release
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ env.VERSION }}
-          ZIP_PATH: ${{ steps.notarize.outputs.zip }}
+          ZIP_PATH: ${{ steps.notarize_action.outputs.zip_path }}
         run: |
           set -euo pipefail
           if [[ ! -f "$ZIP_PATH" ]]; then
@@ -158,11 +188,11 @@ jobs:
           fi
           gh release upload "${VERSION}" "$ZIP_PATH#FlowDown-${VERSION}.zip" --clobber
       - name: Upload notarized ZIP as artifact
-        if: steps.tag_check.outputs.ok == 'true' && steps.release_branch.outputs.on_release == 'true'
+        if: steps.tag_check.outputs.ok == 'true' && (github.event_name == 'workflow_dispatch' || (startsWith(github.ref, 'refs/tags/') && steps.release_branch.outputs.on_release == 'true'))
         uses: actions/upload-artifact@v4
         with:
           name: FlowDown-${{ env.VERSION }}-notarized-zip
-          path: ${{ steps.notarize.outputs.zip }}
+          path: ${{ steps.notarize_action.outputs.zip_path }}
           if-no-files-found: error
           retention-days: 7
 

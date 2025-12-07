@@ -327,8 +327,8 @@
       "localizations" : {
         "de" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         },
         "en" : {
@@ -339,32 +339,32 @@
         },
         "es" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         },
         "fr" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         },
         "ja" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         },
         "ko" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
-            "state" : "translated",
-            "value" : "%@ • %@"
+            "state" : "new",
+            "value" : ""
           }
         }
       }
@@ -18373,7 +18373,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Flags"
+            "value" : "Kennzeichnungen"
           }
         },
         "en" : {
@@ -19433,7 +19433,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Header"
+            "value" : "Kopfzeile"
           }
         },
         "en" : {
@@ -21639,6 +21639,52 @@
         }
       }
     },
+    "Input" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eingabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrada"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Entrée"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "入力"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "입력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输入"
+          }
+        }
+      }
+    },
     "Insert New Line" : {
       "localizations" : {
         "de" : {
@@ -23624,7 +23670,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Logs"
+            "value" : "Protokolle"
           }
         },
         "en" : {
@@ -28870,6 +28916,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "其他"
+          }
+        }
+      }
+    },
+    "Output" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ausgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Output"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Salida"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sortie"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出力"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "출력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "输出"
           }
         }
       }

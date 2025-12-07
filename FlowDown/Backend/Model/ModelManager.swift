@@ -222,18 +222,16 @@ class ModelManager: NSObject {
         return 8192
     }
 
-    var temperaturePresets: [(title: String, value: Double, icon: String)] {
-        [
-            (String(localized: "Disabled @ -1"), -1.0, "gear"),
-            (String(localized: "Freezing @ 0.0"), 0.0, "snowflake"),
-            (String(localized: "Precise @ 0.25"), 0.25, "thermometer.low"),
-            (String(localized: "Stable @ 0.5"), 0.5, "thermometer.low"),
-            (String(localized: "Humankind @ 0.75"), 0.75, "thermometer.medium"),
-            (String(localized: "Creative @ 1.0"), 1.0, "thermometer.medium"),
-            (String(localized: "Imaginative @ 1.5"), 1.5, "thermometer.high"),
-            (String(localized: "Magical @ 2.0"), 2.0, "thermometer.high"),
-        ]
-    }
+    static let temperaturePresets: [(title: String.LocalizationValue, value: Double, icon: String)] = [
+        ("Disabled @ -1", -1.0, "gear"),
+        ("Freezing @ 0.0", 0.0, "snowflake"),
+        ("Precise @ 0.25", 0.25, "thermometer.low"),
+        ("Stable @ 0.5", 0.5, "thermometer.low"),
+        ("Humankind @ 0.75", 0.75, "thermometer.medium"),
+        ("Creative @ 1.0", 1.0, "thermometer.medium"),
+        ("Imaginative @ 1.5", 1.5, "thermometer.high"),
+        ("Magical @ 2.0", 2.0, "thermometer.high"),
+    ]
 
     func importModels(at urls: [URL], controller: UIViewController) {
         Indicator.progress(

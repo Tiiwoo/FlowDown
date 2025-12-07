@@ -98,48 +98,13 @@ extension ModelManager {
         key: "CONFKIT.Model.Inference.Temperature",
         defaultValue: 0.75,
         annotation: .list {
-            [
+            ModelManager.temperaturePresets.map { preset in
                 .init(
-                    icon: "gear",
-                    title: "Disabled @ -1",
-                    rawValue: -1,
-                ),
-                .init(
-                    icon: "snowflake",
-                    title: "Freezing @ 0.0",
-                    rawValue: 0.1,
-                ),
-                .init(
-                    icon: "thermometer.low",
-                    title: "Precise @ 0.25",
-                    rawValue: 0.25,
-                ),
-                .init(
-                    icon: "thermometer.low",
-                    title: "Stable @ 0.5",
-                    rawValue: 0.5,
-                ),
-                .init(
-                    icon: "thermometer.medium",
-                    title: "Humankind @ 0.75",
-                    rawValue: 0.75,
-                ),
-                .init(
-                    icon: "thermometer.medium",
-                    title: "Creative @ 1.0",
-                    rawValue: 1,
-                ),
-                .init(
-                    icon: "thermometer.high",
-                    title: "Imaginative @ 1.5",
-                    rawValue: 1.5,
-                ),
-                .init(
-                    icon: "thermometer.high",
-                    title: "Magical @ 2.0",
-                    rawValue: 2.0,
-                ),
-            ]
+                    icon: preset.icon,
+                    title: preset.title,
+                    rawValue: preset.value,
+                )
+            }
         },
     )
 }

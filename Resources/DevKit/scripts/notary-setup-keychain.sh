@@ -4,13 +4,13 @@ set -euo pipefail
 
 # Usage:
 #   NOTARY_TOOLBOX_ZIP_BASE64=... NOTARY_TOOLBOX_PASSWORD=... \
-#   ./notary-setup-keychain.sh <github_output_file> <github_env_file>
+#     ./notary-setup-keychain.sh <github_output_file> <github_env_file>
+# or pre-supply KEYCHAIN_DB and KEYCHAIN_PASSWORD to reuse an existing keychain.
 #
 # The script will:
-# - Decode the provided base64 zip into a temp dir
-# - Locate the keychain file inside
-# - Unlock the keychain and extract signing identities and notary profile
-# - Emit outputs (for workflow) and append exports (for local use)
+# - Decode the provided base64 zip into .build/keychain
+# - Locate and unlock the keychain, extract signing identities and notary profile
+# - Emit outputs (for workflow) and append exports (for local use) without removing the toolbox
 
 OUTPUT_FILE="${1:-}"
 ENV_FILE="${2:-}"
@@ -24,43 +24,64 @@ fatal() {
   exit 1
 }
 
-if [[ -z "${NOTARY_TOOLBOX_ZIP_BASE64:-}" ]]; then
-  fatal "NOTARY_TOOLBOX_ZIP_BASE64 is not set"
+SCRIPT_DIR=$(cd "$(dirname "$0")" && pwd)
+PROJECT_ROOT=$(cd "$SCRIPT_DIR/../../.." && pwd)
+TOOLBOX_DIR="${PROJECT_ROOT}/.build/keychain"
+
+KEYCHAIN_DB="${KEYCHAIN_DB-}"
+KEYCHAIN_PASSWORD="${KEYCHAIN_PASSWORD-}"
+
+if [[ -z "$KEYCHAIN_DB" ]]; then
+  if [[ -z "${NOTARY_TOOLBOX_ZIP_BASE64:-}" ]]; then
+    fatal "NOTARY_TOOLBOX_ZIP_BASE64 is not set"
+  fi
+  if [[ -z "${NOTARY_TOOLBOX_PASSWORD:-}" ]]; then
+    fatal "NOTARY_TOOLBOX_PASSWORD is not set"
+  fi
+
+  mkdir -p "$TOOLBOX_DIR"
+  ZIP_PATH="${TOOLBOX_DIR}/toolbox.zip"
+  UNPACK_DIR="${TOOLBOX_DIR}/unpacked"
+  rm -rf "$UNPACK_DIR"
+
+  log "decoding toolbox zip to ${ZIP_PATH}"
+  echo "${NOTARY_TOOLBOX_ZIP_BASE64}" | base64 -D > "$ZIP_PATH"
+
+  log "unpacking toolbox into ${UNPACK_DIR}"
+  unzip -qo "$ZIP_PATH" -d "$UNPACK_DIR"
+
+  KEYCHAIN_PATH=$(find "$UNPACK_DIR" -type f -name "*.keychain*" | head -n 1)
+  if [[ -z "$KEYCHAIN_PATH" ]]; then
+    fatal "no keychain file found after unpacking"
+  fi
+
+  KEYCHAIN_DB=$(realpath "$KEYCHAIN_PATH")
+  KEYCHAIN_PASSWORD="$NOTARY_TOOLBOX_PASSWORD"
+  log "using keychain at: $KEYCHAIN_DB"
+else
+  if [[ -z "$KEYCHAIN_PASSWORD" ]]; then
+    fatal "KEYCHAIN_PASSWORD is not set"
+  fi
+  KEYCHAIN_DB=$(realpath "$KEYCHAIN_DB")
+  log "using existing keychain: $KEYCHAIN_DB"
 fi
 
-if [[ -z "${NOTARY_TOOLBOX_PASSWORD:-}" ]]; then
-  fatal "NOTARY_TOOLBOX_PASSWORD is not set"
-fi
-
-TEMP_DIR=$(mktemp -d)
-trap "rm -rf '$TEMP_DIR'" EXIT
-
-ZIP_PATH="$TEMP_DIR/toolbox.zip"
-log "decoding toolbox zip"
-echo "${NOTARY_TOOLBOX_ZIP_BASE64}" | base64 -D > "$ZIP_PATH"
-
-log "unpacking toolbox"
-unzip -qo "$ZIP_PATH" -d "$TEMP_DIR/unpacked"
-
-KEYCHAIN_PATH=$(find "$TEMP_DIR/unpacked" -type f -name "*.keychain*" | head -n 1)
-if [[ -z "$KEYCHAIN_PATH" ]]; then
-  fatal "no keychain file found after unpacking"
-fi
-
-KEYCHAIN_PATH=$(realpath "$KEYCHAIN_PATH")
-log "found keychain at: $KEYCHAIN_PATH"
-
-KEYCHAIN_DB="$KEYCHAIN_PATH"
-KEYCHAIN_PASSWORD="$NOTARY_TOOLBOX_PASSWORD"
+KEYCHAIN_TIMEOUT="${NOTARY_KEYCHAIN_TIMEOUT:-86400}"
 
 log "adding keychain to user search list"
-CURRENT_KEYCHAINS=$(security list-keychains -d user | sed 's/"//g' | tr '\n' ' ')
-security list-keychains -d user -s "$KEYCHAIN_DB" $CURRENT_KEYCHAINS
+CURRENT_KEYCHAINS=()
+while IFS= read -r line; do
+  line=$(echo "$line" | tr -d '"' | xargs)
+  [[ -n "$line" ]] && CURRENT_KEYCHAINS+=("$line")
+done < <(security list-keychains -d user)
+security list-keychains -d user -s "$KEYCHAIN_DB" "${CURRENT_KEYCHAINS[@]}"
 
+log "default user keychain: $(security default-keychain -d user | tr -d '"')"
 log "unlocking keychain"
 security unlock-keychain -p "$KEYCHAIN_PASSWORD" "$KEYCHAIN_DB"
 
-security set-keychain-settings -t 3600 -l "$KEYCHAIN_DB"
+log "setting keychain timeout to ${KEYCHAIN_TIMEOUT}s"
+security set-keychain-settings -t "$KEYCHAIN_TIMEOUT" -l "$KEYCHAIN_DB"
 
 log "reading signing identity"
 CODE_SIGNING_CONTENTS=$(security find-identity -v -p codesigning "$KEYCHAIN_DB")
@@ -122,5 +143,5 @@ emit_env "CODE_SIGNING_IDENTITY" "$CODE_SIGNING_IDENTITY"
 emit_env "CODE_SIGNING_TEAM" "$CODE_SIGNING_TEAM"
 emit_env "NOTARIZE_KEYCHAIN_PROFILE" "$NOTARIZE_KEYCHAIN_PROFILE"
 
-log "setup completed successfully"
+log "setup completed successfully (toolbox kept at ${TOOLBOX_DIR})"
 

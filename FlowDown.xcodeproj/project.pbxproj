@@ -19,15 +19,11 @@
 		505FC6192D4945E500F4CB17 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = 505FC6182D4945E500F4CB17 /* SPIndicator */; };
 		506373A12EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 506373A02EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout */; };
 		506373A62EC0DC7900C8A9FB /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = 506373A52EC0DC7900C8A9FB /* ColorfulX */; };
-		506C93CB2EBE4BBC00CB87A9 /* PrivacyPolicy.md in Resources */ = {isa = PBXBuildFile; fileRef = 506C93C92EBE4BBC00CB87A9 /* PrivacyPolicy.md */; };
-		506C93CC2EBE4BBC00CB87A9 /* Emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 506C93C52EBE4BBC00CB87A9 /* Emoji.json */; };
-		506C93CD2EBE4BBC00CB87A9 /* OpenSourceLicenses.md in Resources */ = {isa = PBXBuildFile; fileRef = 506C93C62EBE4BBC00CB87A9 /* OpenSourceLicenses.md */; };
 		5078496A2D285B5900B1F430 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 507849692D285B5900B1F430 /* MarkdownView */; };
 		5081A0142D6DBBBA0079ECBE /* RunestoneEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 5081A0132D6DBBBA0079ECBE /* RunestoneEditor */; };
 		509EBAA12EE54FA100553C8A /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 509EBAA02EE54FA100553C8A /* LookinServer */; };
 		50B492942D4F609E00F4D2B3 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 50B492932D4F609E00F4D2B3 /* ZIPFoundation */; };
 		50B4CDAC2D4794F90028EB33 /* Digger in Frameworks */ = {isa = PBXBuildFile; productRef = 50B4CDAB2D4794F90028EB33 /* Digger */; };
-		50B5146B2D2305F20092284C /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B5146A2D2305F20092284C /* main.swift */; };
 		50B514782D23157A0092284C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50B514772D23157A0092284C /* SnapKit */; };
 		50B5149B2D2316EC0092284C /* SwifterSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 50B5149A2D2316EC0092284C /* SwifterSwift */; };
 		50C9035B2D428DAD00E6E3A8 /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 50C9035A2D428DAD00E6E3A8 /* Storage */; };
@@ -52,68 +48,29 @@
 
 /* Begin PBXFileReference section */
 		503498BD2D23053D004672BD /* FlowDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		506C93C52EBE4BBC00CB87A9 /* Emoji.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Emoji.json; sourceTree = "<group>"; };
-		506C93C62EBE4BBC00CB87A9 /* OpenSourceLicenses.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = OpenSourceLicenses.md; sourceTree = "<group>"; };
-		506C93C72EBE4BBC00CB87A9 /* en */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = en; path = en.lproj/PrivacyPolicy.md; sourceTree = "<group>"; };
-		506C93C82EBE4BBC00CB87A9 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = "zh-Hans"; path = "zh-Hans.lproj/PrivacyPolicy.md"; sourceTree = "<group>"; };
-		50B5146A2D2305F20092284C /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		50D6CB1C2EBDFCB50037488A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowDownUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		502C4C502EBE3FEA0067CE27 /* Exceptions for "Resources" folder in "FlowDown" target */ = {
+		509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				"InfoPlist/Info-Catalyst.plist",
-				"InfoPlist/Info-iOS.plist",
+				Configuration/BaseConfig.xcconfig,
+				"Resources/InfoPlist/Info-Catalyst.plist",
+				"Resources/InfoPlist/Info-iOS.plist",
 			);
 			target = 503498BC2D23053D004672BD /* FlowDown */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		3C2409992E97803B0055F162 /* Configuration */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Configuration;
-			sourceTree = "<group>";
-		};
-		5050EB812D478A5800634B81 /* Backend */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Backend;
-			sourceTree = "<group>";
-		};
-		5089F4192EA73B8E00258D85 /* DerivedSources */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = DerivedSources;
-			sourceTree = "<group>";
-		};
-		50B514652D2305C00092284C /* Application */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Application;
-			sourceTree = "<group>";
-		};
-		50B514682D2305E30092284C /* Resources */ = {
+		509EB03B2EE5411B00553C8A /* FlowDown */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				502C4C502EBE3FEA0067CE27 /* Exceptions for "Resources" folder in "FlowDown" target */,
+				509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */,
 			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		50B514732D23133F0092284C /* Extension */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Extension;
-			sourceTree = "<group>";
-		};
-		50B514922D2316700092284C /* Interface */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Interface;
-			sourceTree = "<group>";
-		};
-		50D148142D71F292008E9F03 /* PlatformSupport */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = PlatformSupport;
+			path = FlowDown;
 			sourceTree = "<group>";
 		};
 		50D757BB2EC10A4400AEC087 /* FlowDownUnitTests */ = {
@@ -179,7 +136,7 @@
 		503498B42D23053D004672BD = {
 			isa = PBXGroup;
 			children = (
-				50B5145B2D2305890092284C /* FlowDown */,
+				509EB03B2EE5411B00553C8A /* FlowDown */,
 				50D757BB2EC10A4400AEC087 /* FlowDownUnitTests */,
 				503498BE2D23053D004672BD /* Products */,
 				502BCBCF2D43DB2B00500180 /* Frameworks */,
@@ -193,33 +150,6 @@
 				50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		506C93CA2EBE4BBC00CB87A9 /* BundledResources */ = {
-			isa = PBXGroup;
-			children = (
-				506C93C52EBE4BBC00CB87A9 /* Emoji.json */,
-				506C93C62EBE4BBC00CB87A9 /* OpenSourceLicenses.md */,
-				506C93C92EBE4BBC00CB87A9 /* PrivacyPolicy.md */,
-			);
-			path = BundledResources;
-			sourceTree = "<group>";
-		};
-		50B5145B2D2305890092284C /* FlowDown */ = {
-			isa = PBXGroup;
-			children = (
-				50B5146A2D2305F20092284C /* main.swift */,
-				3C2409992E97803B0055F162 /* Configuration */,
-				50B514652D2305C00092284C /* Application */,
-				5050EB812D478A5800634B81 /* Backend */,
-				5089F4192EA73B8E00258D85 /* DerivedSources */,
-				50B514922D2316700092284C /* Interface */,
-				50B514732D23133F0092284C /* Extension */,
-				50D148142D71F292008E9F03 /* PlatformSupport */,
-				50B514682D2305E30092284C /* Resources */,
-				506C93CA2EBE4BBC00CB87A9 /* BundledResources */,
-			);
-			path = FlowDown;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,13 +169,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				5050EB812D478A5800634B81 /* Backend */,
-				5089F4192EA73B8E00258D85 /* DerivedSources */,
-				50B514652D2305C00092284C /* Application */,
-				50B514682D2305E30092284C /* Resources */,
-				50B514732D23133F0092284C /* Extension */,
-				50B514922D2316700092284C /* Interface */,
-				50D148142D71F292008E9F03 /* PlatformSupport */,
+				509EB03B2EE5411B00553C8A /* FlowDown */,
 			);
 			name = FlowDown;
 			packageProductDependencies = (
@@ -377,9 +301,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				506C93CB2EBE4BBC00CB87A9 /* PrivacyPolicy.md in Resources */,
-				506C93CC2EBE4BBC00CB87A9 /* Emoji.json in Resources */,
-				506C93CD2EBE4BBC00CB87A9 /* OpenSourceLicenses.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,7 +340,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				50B5146B2D2305F20092284C /* main.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -440,33 +360,22 @@
 		};
 /* End PBXTargetDependency section */
 
-/* Begin PBXVariantGroup section */
-		506C93C92EBE4BBC00CB87A9 /* PrivacyPolicy.md */ = {
-			isa = PBXVariantGroup;
-			children = (
-				506C93C72EBE4BBC00CB87A9 /* en */,
-				506C93C82EBE4BBC00CB87A9 /* zh-Hans */,
-			);
-			name = PrivacyPolicy.md;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
-
 /* Begin XCBuildConfiguration section */
 		503498D12D23053E004672BD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 3C2409992E97803B0055F162 /* Configuration */;
-			baseConfigurationReferenceRelativePath = BaseConfig.xcconfig;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/BaseConfig.xcconfig;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = "UIKit AppKit";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "$(CODE_SIGN_ENTITLEMENTS)";
-				CODE_SIGN_IDENTITY = "$(inherited)";
-				CODE_SIGN_STYLE = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = "FlowDown/Resources/Entitlements/Entitlements-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "FlowDown/Resources/Entitlements/Entitlements-Catalyst.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(inherited)";
+				DEVELOPMENT_TEAM = 964G86XT2P;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_ENHANCED_SECURITY = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -481,7 +390,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(INFOPLIST_FILE)";
+				INFOPLIST_FILE = "FlowDown/Resources/InfoPlist/Info-iOS.plist";
+				"INFOPLIST_FILE[sdk=macosx*]" = "FlowDown/Resources/InfoPlist/Info-Catalyst.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = FlowDown;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -498,14 +408,15 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
-				MARKETING_VERSION = 4.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
+				MARKETING_VERSION = 4.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -521,18 +432,19 @@
 		};
 		503498D22D23053E004672BD /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = 3C2409992E97803B0055F162 /* Configuration */;
-			baseConfigurationReferenceRelativePath = BaseConfig.xcconfig;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/BaseConfig.xcconfig;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOL_FRAMEWORKS = "UIKit AppKit";
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "$(CODE_SIGN_ENTITLEMENTS)";
-				CODE_SIGN_IDENTITY = "$(inherited)";
-				CODE_SIGN_STYLE = "$(inherited)";
+				CODE_SIGN_ENTITLEMENTS = "FlowDown/Resources/Entitlements/Entitlements-iOS.entitlements";
+				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "FlowDown/Resources/Entitlements/Entitlements-Catalyst.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "$(inherited)";
+				DEVELOPMENT_TEAM = 964G86XT2P;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_ENHANCED_SECURITY = YES;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = YES;
@@ -547,7 +459,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				ENABLE_USER_SELECTED_FILES = readwrite;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "$(INFOPLIST_FILE)";
+				INFOPLIST_FILE = "FlowDown/Resources/InfoPlist/Info-iOS.plist";
+				"INFOPLIST_FILE[sdk=macosx*]" = "FlowDown/Resources/InfoPlist/Info-Catalyst.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = FlowDown;
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
@@ -570,8 +483,8 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZED_STRING_SWIFTUI_SUPPORT = YES;
-				MARKETING_VERSION = 4.1.1;
-				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
+				MARKETING_VERSION = 4.1.2;
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -708,6 +621,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherit)";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;

@@ -221,7 +221,7 @@ extension CloudModelEditorController {
     }
 
     private func buildModalitiesMenu(controller: JsonEditorController) -> UIMenu {
-        let actions: [UIAction] = [
+        let inputActions: [UIAction] = [
             makeModalitiesAction(
                 title: "Add modalities: text",
                 key: "modalities",
@@ -236,6 +236,9 @@ extension CloudModelEditorController {
                 systemImage: "photo.on.rectangle",
                 controller: controller,
             ),
+        ]
+
+        let outputActions: [UIAction] = [
             makeModalitiesAction(
                 title: "Add modalities: text",
                 key: "output_modalities",
@@ -252,10 +255,22 @@ extension CloudModelEditorController {
             ),
         ]
 
+        let inputMenu = UIMenu(
+            title: String(localized: "Input"),
+            options: [.displayInline],
+            children: inputActions,
+        )
+
+        let outputMenu = UIMenu(
+            title: String(localized: "Output"),
+            options: [.displayInline],
+            children: outputActions,
+        )
+
         return UIMenu(
             title: String(localized: "Modalities"),
             image: UIImage(systemName: "rectangle.stack.badge.play"),
-            children: actions,
+            children: [inputMenu, outputMenu],
         )
     }
 

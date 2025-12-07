@@ -13,17 +13,7 @@
 
 import Storage
 
-#if !DEBUG
-    fclose(stdout)
-    fclose(stderr)
-
-    Security.removeDebugger()
-    guard Security.validateAppSignature() else {
-        Security.crashOut()
-    }
-#endif
-
-#if (os(macOS) || targetEnvironment(macCatalyst)) && ENABLE_SANDBOX_CHECK
+#if os(macOS) || targetEnvironment(macCatalyst)
     do {
         // make sure sandbox is enabled otherwise panic the app
         let sandboxTestDir = URL(fileURLWithPath: "/tmp/sandbox.test.\(UUID().uuidString)")

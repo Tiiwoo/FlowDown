@@ -222,11 +222,11 @@ extension ModelManager {
             let temperatureGroup = UIMenu(
                 title: String(localized: "Imagination"),
                 options: [.displayInline],
-                children: ModelManager.shared.temperaturePresets.map { preset -> UIAction in
+                children: ModelManager.temperaturePresets.map { preset -> UIAction in
                     let currentValue = Double(ModelManager.shared.temperature)
                     let isCurrent = abs(currentValue - preset.value) < 0.0001
                     let action = UIAction(
-                        title: preset.title,
+                        title: String(localized: preset.title),
                         image: UIImage(systemName: preset.icon),
                         state: isCurrent ? .on : .off,
                     ) { _ in
