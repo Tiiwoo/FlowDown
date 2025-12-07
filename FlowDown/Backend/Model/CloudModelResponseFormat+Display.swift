@@ -12,7 +12,7 @@ extension CloudModelResponseFormat {
     var localizedTitle: String {
         switch self {
         case .chatCompletions:
-            String(localized: "Chat Completions Format")
+            String(localized: "Completions Format")
         case .responses:
             String(localized: "Responses Format")
         }
@@ -24,15 +24,6 @@ extension CloudModelResponseFormat {
             String(localized: "Use OpenAI-compatible chat completions.") + " " + "(POST /v1/chat/completions)"
         case .responses:
             String(localized: "Use OpenAI-compatible chat response format.") + " " + "(POST /v1/responses)"
-        }
-    }
-
-    var symbolName: String {
-        switch self {
-        case .chatCompletions:
-            "1.circle"
-        case .responses:
-            "2.circle"
         }
     }
 }

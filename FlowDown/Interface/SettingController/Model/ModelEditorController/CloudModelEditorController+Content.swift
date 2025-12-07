@@ -433,7 +433,6 @@ private extension CloudModelEditorController {
             return CloudModelResponseFormat.allCases.map { format in
                 UIAction(
                     title: format.localizedTitle,
-                    image: UIImage(systemName: format.symbolName),
                     state: format == selected ? .on : .off,
                 ) { [weak self] _ in
                     guard let self else { return }

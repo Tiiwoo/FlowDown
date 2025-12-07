@@ -17,7 +17,16 @@ from i18n_tools import (
 
 # Populate this map with explicit translations when introducing new keys.
 # Format: {"Key": {"zh-Hans": "示例", "es": "Ejemplo"}}
-NEW_STRINGS: dict[str, dict[str, str]] = {}
+NEW_STRINGS: dict[str, dict[str, str]] = {
+    "Completions Format": {
+        "de": "Completions-Format",
+        "es": "Formato de completados",
+        "fr": "Format des complétions",
+        "ja": "コンプリーション形式",
+        "ko": "Completions 형식",
+        "zh-Hans": "补全格式",
+    },
+}
 
 
 if __name__ == "__main__":

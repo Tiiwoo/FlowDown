@@ -45,7 +45,13 @@ def load_strings(file_path: str) -> Dict[str, Any]:
 def save_strings(file_path: str, data: Dict[str, Any]) -> None:
     """Persist the xcstrings JSON."""
     with open(file_path, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
+        json.dump(
+            data,
+            f,
+            ensure_ascii=False,
+            indent=2,
+            separators=(",", " : "),
+        )
 
 
 def should_translate(entry: Dict[str, Any]) -> bool:
@@ -100,25 +106,24 @@ def update_missing_translations(
     new_strings: Dict[str, Dict[str, str]] | None = None,
     keep_languages: Iterable[str] | None = None,
 ) -> Dict[str, int]:
-    """Fill missing localizations and normalize 'new' states."""
+    """
+    Fill missing English anchors and apply explicit translations.
+
+    This intentionally avoids clearing or adding placeholder entries so
+    manual translation work is preserved.
+    """
     new_strings = new_strings or {}
-    keep_languages = set(keep_languages or DEFAULT_KEEP_LANGUAGES)
     strings = data["strings"]
 
     merge_new_strings(strings, new_strings)
 
-    languages: set[str] = collect_languages(strings)
-    languages.update(keep_languages)
-    languages.add("en")
-
     counts = {
         "added_en": 0,
         "fixed_en_state": 0,
-        "cleared": 0,
+        "applied_translations": 0,
     }
 
     for key, value in strings.items():
-        translatable = should_translate(value)
         locs = value.setdefault("localizations", {})
 
         if "en" not in locs:
@@ -138,36 +143,19 @@ def update_missing_translations(
             counts["fixed_en_state"] += 1
         english_value = en_unit.get("value", key)
 
-        for language in languages:
-            if language == "en":
+        for language, translation in new_strings.get(key, {}).items():
+            current_unit = locs.get(language, {}).get("stringUnit", {})
+            current_value = current_unit.get("value", "").strip()
+            if current_value:
                 continue
 
-            string_unit = locs.get(language, {}).get("stringUnit")
-            current_value = string_unit.get("value", "").strip() if string_unit else ""
-            current_state = string_unit.get("state") if string_unit else None
-
-            if not translatable:
-                if language not in locs or current_value:
-                    locs[language] = {"stringUnit": {"state": "new", "value": ""}}
-                    counts["cleared"] += 1
-                continue
-
-            if language not in locs:
-                locs[language] = {"stringUnit": {"state": "new", "value": ""}}
-                counts["cleared"] += 1
-                continue
-
-            if not current_value or current_value == english_value:
-                if key in new_strings and language in new_strings[key]:
-                    locs[language]["stringUnit"] = {
-                        "state": "translated",
-                        "value": new_strings[key][language],
-                    }
-                else:
-                    locs[language]["stringUnit"] = {"state": "new", "value": ""}
-                    counts["cleared"] += 1
-            elif current_state == "new" and current_value:
-                locs[language]["stringUnit"]["state"] = "translated"
+            locs[language] = {
+                "stringUnit": {
+                    "state": "translated",
+                    "value": translation,
+                }
+            }
+            counts["applied_translations"] += 1
 
     return counts
 
@@ -280,7 +268,7 @@ def print_update_summary(file_path: str, counts: Dict[str, int]) -> None:
     print(f"✅ Updated {file_path}")
     print(f"   - Added {counts['added_en']} missing English localizations")
     print(f"   - Fixed {counts['fixed_en_state']} 'new' English states")
-    print(f"   - Cleared {counts['cleared']} placeholders/fallbacks")
+    print(f"   - Applied {counts['applied_translations']} provided translations")
 
 
 def print_apply_summary(applied: int, file_path: str, target_language: str) -> None:
