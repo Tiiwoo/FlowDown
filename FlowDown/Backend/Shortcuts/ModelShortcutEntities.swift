@@ -157,7 +157,7 @@ enum ShortcutsEntities {
 
         func suggestedEntities() async throws -> [ModelEntity] {
             let available = await loadEntities()
-            return Array(available.prefix(6))
+            return available
         }
 
         func entities(matching string: String) async throws -> [ModelEntity] {
