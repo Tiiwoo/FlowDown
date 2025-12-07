@@ -123,3 +123,4 @@ FlowDown/DerivedSources/*
 !FlowDown/DerivedSources/DerivedSourcesReadme.swift
 
 /example*
+/References

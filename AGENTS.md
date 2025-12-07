@@ -47,6 +47,28 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
   - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDown/Resources/Localizable.xcstrings`
   - `python3 Resources/DevKit/scripts/update_missing_i18n.py FlowDown/Resources/Localizable.xcstrings` to scaffold missing locales; extend `NEW_STRINGS` in that script when adding new keys.
 
+## Shell Script Style
+
+### Core Principles
+- **Simplicity**: Keep scripts minimal and focused
+- **No unnecessary complexity**: Avoid features that aren't needed
+- **Visual clarity**: Use line breaks for readability
+- **Failure handling**: Use `set -euo pipefail`
+- **Use shebang for scripts**: Use `#!/bin/zsh`
+
+### Output Guidelines
+- Use `[+]` for successful operations
+- Use `[-]` for failed operations (when needed)
+- Keep echo messages lowercase
+- Simple status messages: "building...", "completed successfully"
+
+### Code Style
+- Minimal comments - focus on self-evident code
+- No unnecessary color output or visual fluff
+- Line breaks for long command chains
+- Assume required tools are available (e.g., xcbeautify)
+- Don't add if checks when pipefail handles failures
+
 ## Development Guidelines
 ### Swift Style
 - 4-space indentation with opening braces on the same line
