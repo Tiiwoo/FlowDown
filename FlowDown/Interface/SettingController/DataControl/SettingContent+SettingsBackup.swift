@@ -12,6 +12,17 @@ extension SettingController.SettingContent.DataControlController {
         ) { $0.bottom /= 2 }
         stackView.addArrangedSubview(SeparatorView())
 
+        let importSettings = ConfigurableObject(
+            icon: "square.and.arrow.down.on.square",
+            title: "Import Settings",
+            explain: "Restore a settings backup. The app will exit after import.",
+            ephemeralAnnotation: .action { [weak self] controller in
+                self?.presentSettingsImportPicker(from: controller)
+            },
+        ).createView()
+        stackView.addArrangedSubviewWithMargin(importSettings)
+        stackView.addArrangedSubview(SeparatorView())
+
         let exportSettings = ConfigurableObject(
             icon: "square.and.arrow.up.on.square",
             title: "Export Settings",
@@ -30,17 +41,6 @@ extension SettingController.SettingContent.DataControlController {
             },
         ).createView()
         stackView.addArrangedSubviewWithMargin(exportSettings)
-        stackView.addArrangedSubview(SeparatorView())
-
-        let importSettings = ConfigurableObject(
-            icon: "square.and.arrow.down.on.square",
-            title: "Import Settings",
-            explain: "Restore a settings backup. The app will exit after import.",
-            ephemeralAnnotation: .action { [weak self] controller in
-                self?.presentSettingsImportPicker(from: controller)
-            },
-        ).createView()
-        stackView.addArrangedSubviewWithMargin(importSettings)
         stackView.addArrangedSubview(SeparatorView())
 
         stackView.addArrangedSubviewWithMargin(
