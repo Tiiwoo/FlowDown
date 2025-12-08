@@ -9,15 +9,15 @@ import Foundation
 import Storage
 
 /// Centralizes core services so they can be swapped (for previews/tests) without touching global singletons.
-enum AppEnvironment {
-    struct Container {
-        let storage: Storage
-        let syncEngine: SyncEngine
+nonisolated enum AppEnvironment {
+    nonisolated struct Container {
+        nonisolated let storage: Storage
+        nonisolated let syncEngine: SyncEngine
     }
 
     private static var containerStack: [Container] = []
 
-    static var current: Container {
+    nonisolated static var current: Container {
         guard let container = containerStack.last else {
             fatalError("Call AppEnvironment.bootstrap(_) before accessing dependencies.")
         }
@@ -25,18 +25,18 @@ enum AppEnvironment {
     }
 
     @discardableResult
-    static func bootstrap(_ container: Container) -> Container {
+    nonisolated static func bootstrap(_ container: Container) -> Container {
         containerStack = [container]
         apply(container)
         return container
     }
 
-    static func push(_ container: Container) {
+    nonisolated static func push(_ container: Container) {
         containerStack.append(container)
         apply(container)
     }
 
-    static func pop() {
+    nonisolated static func pop() {
         guard containerStack.count > 1 else {
             assertionFailure("Attempted to pop the root AppEnvironment container.")
             return
@@ -47,13 +47,13 @@ enum AppEnvironment {
         }
     }
 
-    private static func apply(_ container: Container) {
+    private nonisolated static func apply(_ container: Container) {
         Storage.setSyncEngine(container.syncEngine)
     }
 }
 
-extension AppEnvironment.Container {
-    static func live() -> AppEnvironment.Container {
+nonisolated extension AppEnvironment.Container {
+    nonisolated static func live() -> AppEnvironment.Container {
         let storage: Storage
         do {
             storage = try Storage.db()
@@ -72,5 +72,5 @@ extension AppEnvironment.Container {
 }
 
 // Convenience accessors to keep existing call sites small.
-var sdb: Storage { AppEnvironment.current.storage }
-var syncEngine: SyncEngine { AppEnvironment.current.syncEngine }
+nonisolated var sdb: Storage { AppEnvironment.current.storage }
+nonisolated var syncEngine: SyncEngine { AppEnvironment.current.syncEngine }

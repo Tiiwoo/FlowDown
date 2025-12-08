@@ -16,10 +16,8 @@ private let dateFormatter: DateFormatter = {
     return formatter
 }()
 
-extension Storage {
+nonisolated extension Storage {
     func exportZipFile() -> Result<URL, Error> {
-        assert(!Thread.isMainThread)
-
         let result = exportDatabase()
         switch result {
         case let .success(databaseOutput):
