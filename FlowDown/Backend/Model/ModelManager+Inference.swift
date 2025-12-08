@@ -339,7 +339,7 @@ extension ModelManager {
         maxCompletionTokens: Int? = nil,
         input: [ChatRequestBody.Message],
         tools: [ChatRequestBody.Tool]? = nil,
-    ) async throws -> AnyAsyncSequence<ChatResponseChunk> {
+    ) async throws -> AsyncThrowingStream<ChatResponseChunk, Error> {
         let client = try chatService(
             for: modelID,
             additionalBodyField: modelBodyFields(for: modelID),
@@ -350,7 +350,73 @@ extension ModelManager {
             temperature: temperature < 0 ? nil : .init(temperature),
             tools: tools,
         )
-        return try await client.streamingChat(body: body)
+        let sequence = try await client.streamingChat(body: body)
+        return AsyncThrowingStream(ChatResponseChunk.self, bufferingPolicy: .unbounded) { cont in
+            Task.detached {
+                let reasoningEmitter = BalancedEmitter(
+                    threshold: 2.0,
+                    frequency: 80,
+                ) { chunk in
+                    cont.yield(.reasoning(chunk))
+                }
+                let textEmitter = BalancedEmitter(
+                    threshold: 0.5,
+                    frequency: 20,
+                ) { chunk in
+                    cont.yield(.text(chunk))
+                }
+                let textCollectionEmitter = BalancedEmitter(
+                    threshold: 1.0,
+                    frequency: 4,
+                ) { chunk in
+                    cont.yield(.text(chunk))
+                }
+                cont.onTermination = { _ in
+                    Task.detached {
+                        await reasoningEmitter.cancel()
+                        await textEmitter.cancel()
+                        await textCollectionEmitter.cancel()
+                    }
+                }
+
+                // 这个逻辑是这样的 如果 UI 吃到了太多的数据 布局一次可能要 0.1 秒
+                // 布局完毕以后不会卡 但是一直在布局就会很卡
+                // 所以如果输出超过 n 字 就停止使用 emitter
+                // 由于 layout 只发生在 markdown 渲染的位置 因此只管 text 就行了
+                var emotionalDamage = 0
+
+                do {
+                    for try await chunk in sequence {
+                        switch chunk {
+                        case let .reasoning(string):
+                            await textEmitter.wait()
+                            await textCollectionEmitter.wait()
+                            await reasoningEmitter.add(string)
+                        case let .text(string):
+                            await reasoningEmitter.wait()
+                            if emotionalDamage >= 1000 {
+                                Logger.ui.infoFile("streaming inference: bypassing emitters due to emotional damage: \(emotionalDamage)")
+                                await textEmitter.wait()
+                                await textCollectionEmitter.add(string)
+                                emotionalDamage += string.count
+                            } else {
+                                await textCollectionEmitter.wait() // will not happen tho
+                                await textEmitter.add(string)
+                                emotionalDamage += string.count
+                            }
+                        default:
+                            cont.yield(chunk)
+                        }
+                    }
+                    await reasoningEmitter.wait()
+                    await textEmitter.wait()
+                    await textCollectionEmitter.wait()
+                    cont.finish()
+                } catch {
+                    cont.finish(throwing: error)
+                }
+            }
+        }
     }
 
     func calculateEstimateTokensUsingCommonEncoder(
