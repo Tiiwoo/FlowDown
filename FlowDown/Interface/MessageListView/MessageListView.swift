@@ -14,6 +14,12 @@ import UIKit
 
 final class MessageListView: UIView {
     private lazy var listView: ListViewKit.ListView = .init()
+    private lazy var animationBlockView: AnimationBlockView = {
+        let view = AnimationBlockView(install: listView)
+        view.clipsToBounds = false
+        return view
+    }()
+
     var contentSize: CGSize { listView.contentSize }
 
     lazy var dataSource: ListViewDiffableDataSource<Entry> = .init(listView: listView)
@@ -83,8 +89,8 @@ final class MessageListView: UIView {
         listView.contentInsetAdjustmentBehavior = .never
         listView.showsVerticalScrollIndicator = false
         listView.showsHorizontalScrollIndicator = false
-        addSubview(listView)
-        listView.snp.makeConstraints { make in
+        addSubview(animationBlockView)
+        animationBlockView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
 
