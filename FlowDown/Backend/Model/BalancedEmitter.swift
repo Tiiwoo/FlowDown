@@ -45,12 +45,14 @@ actor BalancedEmitter {
         guard !isRunning else { return }
         isRunning = true
         Task {
+            let stepDelay = (threshold * 1000) / Double(frequency)
+            let batch = Int(ceil(Double(buffer.count) / Double(frequency)))
             while !buffer.isEmpty {
-                let stepDelay = (threshold * 1000) / Double(frequency)
-                let len = max(1, Int(ceil(Double(buffer.count) / Double(frequency))))
+                let len = max(1, batch)
                 let emitText = String(buffer.prefix(len))
                 buffer.removeFirst(emitText.count)
                 onEmit(emitText)
+                if buffer.isEmpty { break }
                 try? await Task.sleep(for: .milliseconds(Int(stepDelay)))
             }
             isRunning = false

@@ -394,7 +394,7 @@ extension ModelManager {
                             await reasoningEmitter.add(string)
                         case let .text(string):
                             await reasoningEmitter.wait()
-                            if emotionalDamage >= 1000 {
+                            if emotionalDamage >= 2500 {
                                 Logger.ui.infoFile("streaming inference: bypassing emitters due to emotional damage: \(emotionalDamage)")
                                 await textEmitter.wait()
                                 await textCollectionEmitter.add(string)
