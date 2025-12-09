@@ -100,19 +100,17 @@ class ChatTemplateListController: UIViewController {
     func createAddTemplateMenuItems() -> [UIMenuElement] {
         [
             UIMenu(title: String(localized: "Chat Template"), options: [.displayInline], children: [
-                UIMenu(title: String(localized: "Chat Template"), options: [.displayInline], children: [
-                    UIAction(title: String(localized: "Create Template"), image: UIImage(systemName: "plus")) { [weak self] _ in
-                        var template = ChatTemplate()
-                        template.name = String(localized: "Template \(ChatTemplateManager.shared.templates.count + 1)")
-                        ChatTemplateManager.shared.addTemplate(template)
+                UIAction(title: String(localized: "Create Template"), image: UIImage(systemName: "plus")) { [weak self] _ in
+                    var template = ChatTemplate()
+                    template.name = String(localized: "Template \(ChatTemplateManager.shared.templates.count + 1)")
+                    ChatTemplateManager.shared.addTemplate(template)
 
-                        Task { @MainActor [weak self] in
-                            guard let self else { return }
-                            let controller = ChatTemplateEditorController(templateIdentifier: template.id)
-                            navigationController?.pushViewController(controller, animated: true)
-                        }
-                    },
-                ]),
+                    Task { @MainActor [weak self] in
+                        guard let self else { return }
+                        let controller = ChatTemplateEditorController(templateIdentifier: template.id)
+                        navigationController?.pushViewController(controller, animated: true)
+                    }
+                },
                 UIMenu(title: String(localized: "Import"), options: [.displayInline], children: [
                     UIAction(title: String(localized: "Import from File"), image: UIImage(systemName: "doc")) { [weak self] _ in
                         self?.presentDocumentPicker()
