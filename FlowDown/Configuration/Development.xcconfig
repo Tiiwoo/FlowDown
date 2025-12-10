@@ -1,12 +1,9 @@
 //
-//  BaseConfig.xcconfig
+//  Development.xcconfig
 //  FlowDown
 //
-//  Created by king on 2025/10/9.
+//  Created by qaq on 2025/12/11.
 //
-
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
 
 #include "Base.xcconfig"
 

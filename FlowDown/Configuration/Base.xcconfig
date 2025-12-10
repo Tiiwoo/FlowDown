@@ -5,8 +5,12 @@
 //  Created by king on 2025/10/9.
 //
 
+//
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
+//
+
+#include "Version.xcconfig"
 
 DEVELOPMENT_TEAM = 964G86XT2P;
 PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow;
