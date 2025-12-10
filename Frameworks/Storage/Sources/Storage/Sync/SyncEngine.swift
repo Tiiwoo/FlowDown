@@ -1041,9 +1041,7 @@ private extension UploadQueue {
 
         let payload = try? realObject.encodePayload()
 
-        #if DEBUG
-            Logger.syncEngine.debugFile("populateRecord \(record.recordID) payload \(UploadQueue.formatter.string(fromByteCount: Int64(payload?.count ?? 0)))")
-        #endif
+        Logger.syncEngine.debugFile("populateRecord \(record.recordID) payload \(UploadQueue.formatter.string(fromByteCount: Int64(payload?.count ?? 0)))")
 
         guard let payload else {
             record.encryptedValues[.payload] = nil
