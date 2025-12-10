@@ -9,6 +9,17 @@ import Foundation
 import Storage
 
 extension CloudModel.ResponseFormat {
+    var defaultModelListEndpoint: String {
+        switch self {
+        case .chatCompletions:
+            "$INFERENCE_ENDPOINT$/../../models"
+        case .responses:
+            "$INFERENCE_ENDPOINT$/../models"
+        }
+    }
+}
+
+extension CloudModel.ResponseFormat {
     var localizedTitle: String {
         switch self {
         case .chatCompletions:

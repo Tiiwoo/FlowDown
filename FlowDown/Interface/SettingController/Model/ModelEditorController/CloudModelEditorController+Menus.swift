@@ -222,6 +222,15 @@ extension CloudModelEditorController {
         }
 
         responseFormatInfoView?.configure(value: inferredFormat.localizedTitle)
+
+        if let model = ModelManager.shared.cloudModel(identifier: modelId) {
+            let defaultEndpoints = Set(CloudModel.ResponseFormat.allCases.map(\.defaultModelListEndpoint))
+            if defaultEndpoints.contains(model.model_list_endpoint) {
+                ModelManager.shared.editCloudModel(identifier: modelId) { editable in
+                    editable.update(\.model_list_endpoint, to: inferredFormat.defaultModelListEndpoint)
+                }
+            }
+        }
     }
 
     func presentEndpointFormatMismatchAlert() {
