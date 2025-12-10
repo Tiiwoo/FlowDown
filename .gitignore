@@ -118,7 +118,7 @@ xcuserdata/
 yarn-debug.log*
 yarn-error.log*
 
-FlowDown/Configuration/Developer.xcconfig
+FlowDown/Configuration/*Developer*.xcconfig
 FlowDown/Configuration/GitHubAction.xcconfig
 FlowDown/DerivedSources/*
 !FlowDown/DerivedSources/DerivedSourcesReadme.swift

@@ -13,4 +13,5 @@
 CLOUDKIT_CONTAINER_ENVIRONMENT = Production;
 APS_ENVIRONMENT = production;
 
+#include? "Developer.xcconfig"
 #include? "DeveloperRelease.xcconfig"
