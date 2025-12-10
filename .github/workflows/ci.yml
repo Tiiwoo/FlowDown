@@ -3,15 +3,15 @@ name: Build
 on:
   pull_request:
     paths:
-      - 'FlowDown/**'
-      - 'Frameworks/**'
-      - 'FlowDownUnitTests/**'
-      - 'Resources/**'
-      - 'FlowDown.xcodeproj/**'
-      - 'FlowDown.xcworkspace/**'
-      - '.github/workflows/ci.yml'
-      - 'Makefile'
-      - 'Package.resolved'
+      - "FlowDown/**"
+      - "Frameworks/**"
+      - "FlowDownUnitTests/**"
+      - "Resources/**"
+      - "FlowDown.xcodeproj/**"
+      - "FlowDown.xcworkspace/**"
+      - ".github/workflows/ci.yml"
+      - "Makefile"
+      - "Package.resolved"
 
 jobs:
   build:

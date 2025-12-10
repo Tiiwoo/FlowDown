@@ -47,7 +47,6 @@ Every model behaves differently based on its capabilities, deployment method, an
 
 For bulk management, FlowDown supports importing and exporting model configurations (`.fdmodel` files). You can script the generation of configuration files and import them all at once. Join our [Discord](https://discord.gg/UHKMRyJcgc) to discuss setups, but remember: community advice doesn't replace your own testing.
 
-
 ## Star History
 
 [![Star History Chart](https://api.star-history.com/svg?repos=Lakr233/FlowDown&type=date&legend=top-left)](https://www.star-history.com/#Lakr233/FlowDown&type=date&legend=top-left)

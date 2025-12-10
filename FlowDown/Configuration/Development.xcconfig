@@ -1,0 +1,17 @@
+//
+//  BaseConfig.xcconfig
+//  FlowDown
+//
+//  Created by king on 2025/10/9.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Base.xcconfig"
+
+CLOUDKIT_CONTAINER_ENVIRONMENT = Development;
+APS_ENVIRONMENT = development;
+
+#include? "DevelopmentDeveloper.xcconfig"
+

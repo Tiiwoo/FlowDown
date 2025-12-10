@@ -7,7 +7,7 @@ Simple package to load [Runstone](https://github.com/simonbs/Runestone) with use
 To create a new text editor, you can use the suggested figure with code below.
 
 ```
-let textView = RunestoneEditorView.new()        
+let textView = RunestoneEditorView.new()
 textView.apply(language: .bash)
 textView.apply(theme: TomorrowTheme(size: 14))
 ```

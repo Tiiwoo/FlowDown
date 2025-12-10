@@ -58,7 +58,7 @@ jobs:
           KEYCHAIN_DB: ${{ steps.setup_notary.outputs.keychain_db }}
           NOTARIZE_KEYCHAIN_PROFILE: ${{ steps.setup_notary.outputs.notarize_keychain_profile }}
           PROVISIONING_PROFILE_SPECIFIER: ${{ env.PROVISIONING_PROFILE_SPECIFIER }}
-          ENABLE_NOTARIZE: '1'
+          ENABLE_NOTARIZE: "1"
           VERSION: ${{ env.VERSION }}
           NOTARIZE_ZIP_OUTPUT: ${{ format('{0}/BuildArtifacts/FlowDown-{1}.zip', github.workspace, env.VERSION) }}
         run: |
@@ -106,4 +106,3 @@ jobs:
           path: ${{ steps.notarize_action.outputs.zip_path }}
           if-no-files-found: error
           retention-days: 7
-

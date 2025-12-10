@@ -3,10 +3,13 @@
 This file provides guidance to AI coding agents working inside this repository.
 
 ## Overview
+
 FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a privacy-first mindset. The workspace hosts the main app plus several Swift Package Manager frameworks (e.g. `ChatClientKit`, `Storage`, `Logger`) that power storage, editing, model integrations, and on-device MLX inference. Persistent configuration lives in the `ConfigurableKit` package.
+
 - All code text (UI strings, comments, logs) must remain in English.
 
 ## Environment & Tooling
+
 - Prefer opening `FlowDown.xcworkspace` so the app and frameworks resolve together under shared schemes.
 - Use Xcode 26.x (Swift 6.0 toolchain) or newer to satisfy package manifests and the Swift `Testing` library.
 - Build on macOS 26 or later to ensure compatibility with the required toolchain.
@@ -15,6 +18,7 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - Use `make` for release archives; clean artifacts with `make clean` (wrapper around `Resources/DevKit/scripts/archive.all.sh`).
 
 ## Platform Requirements & Dependencies
+
 - Target platforms reflect framework minimums: iOS 17.0+, macCatalyst 17.0+ (macOS 14+ for Catalyst helpers).
 - Toolchain: Swift 6.0 (`swift-tools-version: 6.0`) and the Xcode 26 SDK line are required. MLX currently resolves to `mlx-swift` 0.21.x and `mlx-swift-examples` on `main`.
 - Core SwiftPM dependencies include MLX/MLX examples, ConfigurableKit, SnapKit, SwifterSwift, MarkdownView, WCDB prebuilt binaries, ZIPFoundation, ScrubberKit, AlertController, GlyphixTextFx, ColorfulX, UIEffectKit, DpkgVersion, swift-transformers, and additional UI/tooling libraries listed in `FlowDown.xcodeproj`.
@@ -22,6 +26,7 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - MLX GPU support is automatically detected and disabled in simulator/x86_64 builds (see `FlowDown/main.swift`).
 
 ## Project Structure
+
 - `FlowDown.xcworkspace`: Entry point with app and frameworks.
 - `FlowDown/`: Application sources divided into `Application/` (entry surfaces), `Backend/` (conversations, models, storage, security), `Interface/` (UIKit), `PlatformSupport/` (macOS/Catalyst glue), and `BundledResources/` (curated assets shipped with the app).
 - `FlowDown/DerivedSources/`: Generated during builds (`BuildInfo.swift`, `CloudKitConfig.swift`). Treat as generated—schemes will overwrite changes.
@@ -32,6 +37,7 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - `Playgrounds/`: Exploratory prototypes; do not assume production readiness.
 
 ## Build & Run Commands
+
 - Open the workspace: `open FlowDown.xcworkspace`.
 - Debug builds:
   - iOS: `xcodebuild -workspace FlowDown.xcworkspace -scheme FlowDown -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 15' | xcbeautify -qq`
@@ -51,6 +57,7 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 ## Shell Script Style
 
 ### Core Principles
+
 - **Simplicity**: Keep scripts minimal and focused
 - **No unnecessary complexity**: Avoid features that aren't needed
 - **Visual clarity**: Use line breaks for readability
@@ -58,12 +65,14 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - **Use shebang for scripts**: Use `#!/bin/zsh`
 
 ### Output Guidelines
+
 - Use `[+]` for successful operations
 - Use `[-]` for failed operations (when needed)
 - Keep echo messages lowercase
 - Simple status messages: "building...", "completed successfully"
 
 ### Code Style
+
 - Minimal comments - focus on self-evident code
 - No unnecessary color output or visual fluff
 - Line breaks for long command chains
@@ -71,7 +80,9 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - Don't add if checks when pipefail handles failures
 
 ## Development Guidelines
+
 ### Swift Style
+
 - 4-space indentation with opening braces on the same line
 - Single spaces around operators and after commas
 - PascalCase types; camelCase properties, methods, and file names
@@ -79,6 +90,7 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - Lean on modern Swift patterns: `@Observable`, structured concurrency (`async`/`await`), result builders, and protocol-oriented design
 
 ### Architecture & Key Services
+
 - Respect the established managers: `ModelManager`, `ModelToolsManager`, `ConversationManager`, `MCPService`, and `UpdateManager`. Consult them before adding new singletons.
 - Compose features via dependency injection and protocols instead of inheritance.
 - Keep Catalyst-specific behaviour under `PlatformSupport/` to avoid leaking platform checks throughout the codebase.
@@ -88,12 +100,14 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - `ConfigurableKit` powers persisted user settings—add keys through dedicated `Value+*.swift` helpers and publish updates via its typed publishers.
 
 ## Testing Expectations
+
 - Add or update unit/UI tests alongside behavioural changes. `FlowDownUnitTests` leverages the Swift `Testing` library—author tests as `@Test func featureScenario_expectation()`.
 - Expand coverage inside Swift packages via their `Tests/` targets (`swift test --package-path Frameworks/<Package>`).
 - Run app-level tests with `xcodebuild -workspace FlowDown.xcworkspace -scheme FlowDown -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 15' test | xcbeautify -qq`.
 - Document manual verification steps whenever UI or integration flows lack automation.
 
 ## Security & Privacy
+
 - Never hardcode secrets; rely on user-supplied keys and platform keychains.
 - Validate new managers or services against the sanctioned singleton list above.
 - Use `assert`/`precondition` to capture invariants during development.
@@ -102,18 +116,21 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - Keep CloudKit identifiers, entitlements, and derived `CloudKitConfig.swift` generation in sync with deployment environments.
 
 ## Documentation & Knowledge Sharing
+
 - Capture key findings from external research in PR descriptions so future contributors can trace decisions.
 - Reference official docs, WWDC sessions, or sample projects when introducing new APIs.
 - Keep architectural rationale and trade-offs close to the code (doc comments or dedicated markdown) when complexity grows.
 - Call out changes to generated assets or DevKit scripts (`FlowDown/DerivedSources`, `Resources/DevKit/scripts/`) in PR summaries so reviewers can trace automation impacts.
 
 ## Collaboration Workflow
+
 - Craft concise, capitalized commit subjects (e.g., `Adjust Compiler Settings`) and use bodies to explain decisions or link issues (`#123`).
 - Group related work per commit and avoid bundling unrelated refactors.
 - Pull requests must include a summary, testing checklist, and before/after visuals for UI changes. Mention localization or asset updates when relevant.
 - Tag reviewers responsible for the affected modules and outline any follow-up tasks or risks.
 
 ## Localization Guidelines
+
 - `AlertViewController` and `ConfigurableKit` APIs expect `String.LocalizationValue`; pass localization values directly for consistency
 - Other UI entry points should continue using `String(localized: ...)` for user-facing strings
 - Source all user-visible strings from `FlowDown/Resources/Localizable.xcstrings` instead of hardcoded literals

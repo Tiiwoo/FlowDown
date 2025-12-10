@@ -56,7 +56,9 @@
 		509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Configuration/Regular.xcconfig,
+				Configuration/Base.xcconfig,
+				Configuration/Development.xcconfig,
+				Configuration/Release.xcconfig,
 				"Resources/InfoPlist/Info-Catalyst.plist",
 				"Resources/InfoPlist/Info-iOS.plist",
 			);
@@ -159,7 +161,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 503498D02D23053E004672BD /* Build configuration list for PBXNativeTarget "FlowDown" */;
 			buildPhases = (
-				5082D04F2E1E66FB0024A0BC /* Swift Format */,
+				5082D04F2E1E66FB0024A0BC /* Code Style Format */,
 				503498B92D23053D004672BD /* Sources */,
 				503498BA2D23053D004672BD /* Frameworks */,
 				503498BB2D23053D004672BD /* Resources */,
@@ -314,7 +316,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		5082D04F2E1E66FB0024A0BC /* Swift Format */ = {
+		5082D04F2E1E66FB0024A0BC /* Code Style Format */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -324,14 +326,14 @@
 			);
 			inputPaths = (
 			);
-			name = "Swift Format";
+			name = "Code Style Format";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin/\nswiftformat . --swiftversion 6.2 || true\n\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin/\n\nswiftformat . --swiftversion 6.2 || true\nnpx prettier --write . || true\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -364,7 +366,7 @@
 		503498D12D23053E004672BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
-			baseConfigurationReferenceRelativePath = Configuration/Regular.xcconfig;
+			baseConfigurationReferenceRelativePath = Configuration/Development.xcconfig;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -433,7 +435,7 @@
 		503498D22D23053E004672BD /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
-			baseConfigurationReferenceRelativePath = Configuration/Regular.xcconfig;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
