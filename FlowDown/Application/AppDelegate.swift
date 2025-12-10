@@ -128,10 +128,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 }
 
-func terminateApplication() {
+func terminateApplication() -> Never {
     UIApplication.shared.perform(#selector(NSXPCConnection.suspend))
     Task.detached {
         try await Task.sleep(for: .seconds(1))
         exit(0)
     }
+    sleep(5)
+    fatalError()
 }

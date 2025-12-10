@@ -77,6 +77,6 @@ private func boot() throws -> Never {
 do {
     try boot()
 } catch {
-    logger.errorFile("startup failed: \(error)")
+    logger.errorFile("startup failed \(error)")
     RecoveryMode.launch(with: error)
 }

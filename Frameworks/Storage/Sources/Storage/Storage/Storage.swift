@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 import WCDBSwift
 import ZIPFoundation
 
@@ -63,7 +64,21 @@ public class Storage {
                 .appendingPathComponent("Objects.db")
         #endif
 
-        try self.init(name: name, databaseDir: databaseDir)
+        do {
+            try self.init(name: name, databaseDir: databaseDir)
+        } catch {
+            Logger.database.error("unable to initialize database at \(databaseDir): \(error.localizedDescription)")
+            // copy to a backup path
+            let backupPath = FileManager.default
+                .urls(for: .documentDirectory, in: .userDomainMask)
+                .first!
+                .appendingPathComponent("Objects+Recovery+\(Date().timeIntervalSince1970).db")
+            try? FileManager.default.removeItem(at: backupPath)
+            try FileManager.default.moveItem(at: databaseDir, to: backupPath)
+            Logger.database.info("moved corrupted database to \(backupPath)")
+            // try again
+            try self.init(name: name, databaseDir: databaseDir)
+        }
     }
 
     private init(name: String, databaseDir: URL) throws {
