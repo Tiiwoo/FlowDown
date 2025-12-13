@@ -28,7 +28,7 @@ extension TranslationProviderView {
                             .contentTransition(.numericText())
                             .frame(maxWidth: .infinity, alignment: .leading)
                     } else if translationTask == nil {
-                        Text(String(localized: "(Empty Content)"))
+                        Text("(Empty Content)")
                             .opacity(0.5)
                             .frame(maxWidth: .infinity, alignment: .center)
                     }
@@ -45,10 +45,10 @@ extension TranslationProviderView {
         } else {
             ZStack {
                 if inputText.isEmpty {
-                    Text(String(localized: "Please select text to translate"))
+                    Text("Please select text to translate")
                         .underline()
                 } else if models.isEmpty {
-                    Text(String(localized: "No cloud models available for translation. Please add cloud models in FlowDown app."))
+                    Text("No cloud models available for translation. Please add cloud models in FlowDown app.")
                         .underline()
                 }
             }
