@@ -120,6 +120,13 @@ class ModelManager: NSObject {
         }
         .store(in: &cancellables)
 
+        cloudModels
+            .throttle(for: .seconds(1), scheduler: DispatchQueue.global(), latest: true)
+            .sink { [weak self] _ in
+                self?.dumpEligibleModelsToAppGroup()
+            }
+            .store(in: &cancellables)
+
         NotificationCenter.default.publisher(for: SyncEngine.CloudModelChanged)
             .debounce(for: .seconds(2), scheduler: RunLoop.main)
             .sink { [weak self] _ in
@@ -273,6 +280,39 @@ class ModelManager: NSObject {
                     count,
                 )
                 Indicator.present(title: "\(message)")
+            }
+        }
+    }
+
+    func dumpEligibleModelsToAppGroup() {
+        let cloudModelsGroupSharingDir = AppGroup.sharedCloudModelsURL
+        guard let cloudModelsGroupSharingDir else {
+            Logger.model.errorFile("unable to determine app group location, skipping model sync")
+            return
+        }
+        Logger.model.infoFile("syncing eligible model configurations to \(cloudModelsGroupSharingDir)")
+
+        // due to limitations from appex
+        // only cloud models are eligible for sharing via app group
+        // and to be used in translation and keyboards
+        if FileManager.default.fileExists(atPath: cloudModelsGroupSharingDir.path) {
+            try? FileManager.default.removeItem(at: cloudModelsGroupSharingDir)
+        }
+        try? FileManager.default.createDirectory(at: cloudModelsGroupSharingDir, withIntermediateDirectories: true)
+        lazy var encoder = PropertyListEncoder()
+        for model in cloudModels.value {
+            guard let data = try? encoder.encode(model) else {
+                assertionFailure()
+                continue
+            }
+            let url = cloudModelsGroupSharingDir
+                .appendingPathComponent(model.id)
+                .appendingPathExtension("plist")
+            do {
+                try data.write(to: url)
+                Logger.model.infoFile("successfully write to \(url.path)")
+            } catch {
+                Logger.model.errorFile("unable to write on \(url.path) with error \(error.localizedDescription)")
             }
         }
     }

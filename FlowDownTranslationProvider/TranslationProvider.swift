@@ -9,7 +9,6 @@ import ExtensionKit
 import SwiftUI
 import TranslationUIProvider
 
-@main
 class TranslationProviderExtension: TranslationUIProviderExtension {
     required init() {}
 

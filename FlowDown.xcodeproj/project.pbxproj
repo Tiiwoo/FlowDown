@@ -13,7 +13,6 @@
 		502272D22EB3DE3200AF9D28 /* UIEffectKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502272D12EB3DE3200AF9D28 /* UIEffectKit */; };
 		502BCBD12D43DB2B00500180 /* ConfigurableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502BCBD02D43DB2B00500180 /* ConfigurableKit */; };
 		50383CEA2D2E1E0D00426941 /* BetterCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 50383CE92D2E1E0D00426941 /* BetterCodable */; };
-		5050EACF2D46D41400634B81 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = 5050EACE2D46D41400634B81 /* MLX */; };
 		5053972E2EED55AF00655FF7 /* ChatClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5053972D2EED55AF00655FF7 /* ChatClientKit */; };
 		505535BC2D72F38900F54B28 /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 505535BB2D72F38900F54B28 /* AlignedCollectionViewFlowLayout */; };
 		505742472E1B8B8100A26090 /* DpkgVersion in Frameworks */ = {isa = PBXBuildFile; productRef = 505742462E1B8B8100A26090 /* DpkgVersion */; };
@@ -21,6 +20,8 @@
 		505FC6192D4945E500F4CB17 /* SPIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = 505FC6182D4945E500F4CB17 /* SPIndicator */; };
 		506373A12EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 506373A02EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout */; };
 		506373A62EC0DC7900C8A9FB /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = 506373A52EC0DC7900C8A9FB /* ColorfulX */; };
+		506837F32EED628000EBF35F /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 506837F22EED628000EBF35F /* Storage */; };
+		506837F42EED62CB00EBF35F /* ChatClientKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = ED16359B2D5C5BDA0081BD0B /* ChatClientKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5078496A2D285B5900B1F430 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 507849692D285B5900B1F430 /* MarkdownView */; };
 		5081A0142D6DBBBA0079ECBE /* RunestoneEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 5081A0132D6DBBBA0079ECBE /* RunestoneEditor */; };
 		50B492942D4F609E00F4D2B3 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 50B492932D4F609E00F4D2B3 /* ZIPFoundation */; };
@@ -65,6 +66,17 @@
 				5017A3EF2EED53FD0023F420 /* FlowDownTranslationProvider.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		506837F52EED62CB00EBF35F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				506837F42EED62CB00EBF35F /* ChatClientKit in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -126,6 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				506837F32EED628000EBF35F /* Storage in Frameworks */,
 				5053972E2EED55AF00655FF7 /* ChatClientKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,7 +157,6 @@
 				505742472E1B8B8100A26090 /* DpkgVersion in Frameworks */,
 				506373A12EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout in Frameworks */,
 				50E3FA092D6D7FB8000405BD /* GPTEncoder in Frameworks */,
-				5050EACF2D46D41400634B81 /* MLX in Frameworks */,
 				ED16359C2D5C5BDA0081BD0B /* ChatClientKit in Frameworks */,
 				50B5149B2D2316EC0092284C /* SwifterSwift in Frameworks */,
 				86B4FDC22E1190C000C6DC8F /* MCP in Frameworks */,
@@ -224,6 +236,7 @@
 			name = FlowDownTranslationProvider;
 			packageProductDependencies = (
 				5053972D2EED55AF00655FF7 /* ChatClientKit */,
+				506837F22EED628000EBF35F /* Storage */,
 			);
 			productName = FlowDownTranslationProvider;
 			productReference = 5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */;
@@ -238,6 +251,7 @@
 				503498BA2D23053D004672BD /* Frameworks */,
 				503498BB2D23053D004672BD /* Resources */,
 				5017A3F02EED53FD0023F420 /* Embed ExtensionKit Extensions */,
+				506837F52EED62CB00EBF35F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -256,7 +270,6 @@
 				50C9035A2D428DAD00E6E3A8 /* Storage */,
 				505BC6F82D42A73600894BB0 /* AlertController */,
 				502BCBD02D43DB2B00500180 /* ConfigurableKit */,
-				5050EACE2D46D41400634B81 /* MLX */,
 				50B4CDAB2D4794F90028EB33 /* Digger */,
 				505FC6182D4945E500F4CB17 /* SPIndicator */,
 				50B492932D4F609E00F4D2B3 /* ZIPFoundation */,
@@ -347,7 +360,6 @@
 				50B514982D2316CA0092284C /* XCRemoteSwiftPackageReference "SwifterSwift" */,
 				50383CE82D2E1DF200426941 /* XCRemoteSwiftPackageReference "BetterCodable" */,
 				502BCBCE2D43DADD00500180 /* XCRemoteSwiftPackageReference "ConfigurableKit" */,
-				5050EA6C2D46B44000634B81 /* XCRemoteSwiftPackageReference "mlx-swift" */,
 				505FC6172D4945B300F4CB17 /* XCRemoteSwiftPackageReference "SPIndicator" */,
 				50B492922D4F602C00F4D2B3 /* XCRemoteSwiftPackageReference "ZIPFoundation" */,
 				EDF9A13C2D67788A001D183C /* XCRemoteSwiftPackageReference "Respring" */,
@@ -937,14 +949,6 @@
 				minimumVersion = 0.4.0;
 			};
 		};
-		5050EA6C2D46B44000634B81 /* XCRemoteSwiftPackageReference "mlx-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ml-explore/mlx-swift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.21.3;
-			};
-		};
 		505742432E1B8B2A00A26090 /* XCRemoteSwiftPackageReference "DpkgVersion" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Lakr233/DpkgVersion";
@@ -1084,11 +1088,6 @@
 			package = 50383CE82D2E1DF200426941 /* XCRemoteSwiftPackageReference "BetterCodable" */;
 			productName = BetterCodable;
 		};
-		5050EACE2D46D41400634B81 /* MLX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5050EA6C2D46B44000634B81 /* XCRemoteSwiftPackageReference "mlx-swift" */;
-			productName = MLX;
-		};
 		5053972D2EED55AF00655FF7 /* ChatClientKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatClientKit;
@@ -1120,6 +1119,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 506373A42EC0DC7900C8A9FB /* XCRemoteSwiftPackageReference "ColorfulX" */;
 			productName = ColorfulX;
+		};
+		506837F22EED628000EBF35F /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Storage;
 		};
 		507849692D285B5900B1F430 /* MarkdownView */ = {
 			isa = XCSwiftPackageProductDependency;
