@@ -133,7 +133,12 @@ extension [Tool.Content] {
 extension MCPTool {
     private func convertMCPSchemaToJSONValues(_ mcpSchema: Value?) -> [String: AnyCodingValue] {
         guard let mcpSchema else {
-            return ["type": .string("object"), "properties": .object([:]), "additionalProperties": .bool(false)]
+            return [
+                "type": .string("object"),
+                "properties": .object([:]),
+                "required": .array([]),
+                "additionalProperties": .bool(false),
+            ]
         }
 
         if case let .object(dict) = convertMCPValueToJSONValue(mcpSchema) {
@@ -150,9 +155,160 @@ extension MCPTool {
             } else {
                 result["additionalProperties"] = .bool(false)
             }
-            return result
+
+            return normalizeStrictJSONSchema(result)
         }
-        return ["type": .string("object"), "properties": .object([:]), "additionalProperties": .bool(false)]
+        return [
+            "type": .string("object"),
+            "properties": .object([:]),
+            "required": .array([]),
+            "additionalProperties": .bool(false),
+        ]
+    }
+
+    private func normalizeStrictJSONSchema(_ schema: [String: AnyCodingValue]) -> [String: AnyCodingValue] {
+        var schema = schema
+
+        if let additionalProps = schema["additionalProperties"],
+           case let .object(obj) = additionalProps, obj.isEmpty
+        {
+            schema["additionalProperties"] = .bool(false)
+        }
+
+        if case let .object(properties) = schema["properties"] {
+            var normalizedProperties = properties
+
+            let originalRequired = extractStringArray(from: schema["required"]) ?? []
+            let propertyKeys = normalizedProperties.keys.sorted()
+            let propertyKeySet = Set(propertyKeys)
+            let originalRequiredSet = Set(originalRequired)
+
+            let newlyRequired = propertyKeySet.subtracting(originalRequiredSet)
+            if !newlyRequired.isEmpty {
+                for key in newlyRequired {
+                    if let propertySchema = normalizedProperties[key] {
+                        normalizedProperties[key] = allowNullInSchema(propertySchema)
+                    }
+                }
+            }
+
+            for (key, value) in normalizedProperties {
+                normalizedProperties[key] = normalizeStrictJSONSchemaValue(value)
+            }
+
+            schema["properties"] = .object(normalizedProperties)
+            schema["required"] = .array(propertyKeys.map { .string($0) })
+        } else {
+            if schema["required"] == nil {
+                schema["required"] = .array([])
+            }
+        }
+
+        if let itemsValue = schema["items"] {
+            schema["items"] = normalizeStrictJSONSchemaValue(itemsValue)
+        }
+
+        if let anyOfValue = schema["anyOf"], case let .array(anyOfArray) = anyOfValue {
+            schema["anyOf"] = .array(anyOfArray.map { normalizeStrictJSONSchemaValue($0) })
+        }
+
+        if let oneOfValue = schema["oneOf"], case let .array(oneOfArray) = oneOfValue {
+            schema["oneOf"] = .array(oneOfArray.map { normalizeStrictJSONSchemaValue($0) })
+        }
+
+        if let allOfValue = schema["allOf"], case let .array(allOfArray) = allOfValue {
+            schema["allOf"] = .array(allOfArray.map { normalizeStrictJSONSchemaValue($0) })
+        }
+
+        return schema
+    }
+
+    private func normalizeStrictJSONSchemaValue(_ value: AnyCodingValue) -> AnyCodingValue {
+        switch value {
+        case let .object(dict):
+            .object(normalizeStrictJSONSchema(dict))
+        case let .array(array):
+            .array(array.map { normalizeStrictJSONSchemaValue($0) })
+        default:
+            value
+        }
+    }
+
+    private func extractStringArray(from value: AnyCodingValue?) -> [String]? {
+        guard let value else { return nil }
+        guard case let .array(array) = value else { return nil }
+        let strings = array.compactMap { element -> String? in
+            guard case let .string(s) = element else { return nil }
+            return s
+        }
+        return strings.count == array.count ? strings : nil
+    }
+
+    private func allowNullInSchema(_ schema: AnyCodingValue) -> AnyCodingValue {
+        if schemaAllowsNull(schema) {
+            return schema
+        }
+
+        if case let .object(dict) = schema {
+            if let typeValue = dict["type"] {
+                switch typeValue {
+                case let .string(typeString):
+                    var updated = dict
+                    updated["type"] = .array([.string(typeString), .string("null")])
+                    return .object(updated)
+                case let .array(typeArray):
+                    var updated = dict
+                    var next = typeArray
+                    if !next.contains(where: { if case let .string(s) = $0 { s == "null" } else { false } }) {
+                        next.append(.string("null"))
+                    }
+                    updated["type"] = .array(next)
+                    return .object(updated)
+                default:
+                    break
+                }
+            }
+
+            if let anyOfValue = dict["anyOf"], case let .array(anyOfArray) = anyOfValue {
+                var updated = dict
+                let hasNull = anyOfArray.contains { schemaAllowsNull($0) }
+                if !hasNull {
+                    updated["anyOf"] = .array(anyOfArray + [.object(["type": .string("null")])])
+                }
+                return .object(updated)
+            }
+        }
+
+        return .object([
+            "anyOf": .array([
+                schema,
+                .object(["type": .string("null")]),
+            ]),
+        ])
+    }
+
+    private func schemaAllowsNull(_ schema: AnyCodingValue) -> Bool {
+        guard case let .object(dict) = schema else { return false }
+
+        if let typeValue = dict["type"] {
+            switch typeValue {
+            case let .string(typeString):
+                return typeString == "null"
+            case let .array(typeArray):
+                return typeArray.contains { element in
+                    if case let .string(s) = element { return s == "null" }
+                    return false
+                }
+            default:
+                break
+            }
+        }
+
+        if let anyOfValue = dict["anyOf"], case let .array(anyOfArray) = anyOfValue {
+            return anyOfArray.contains { schemaAllowsNull($0) }
+        }
+
+        return false
     }
 
     private func convertMCPValueToJSONValue(_ value: Value) -> AnyCodingValue {

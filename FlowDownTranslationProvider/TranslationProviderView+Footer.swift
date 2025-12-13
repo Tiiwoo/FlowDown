@@ -6,18 +6,8 @@
 //
 
 import ExtensionKit
-import Storage
 import SwiftUI
 import TranslationUIProvider
-
-private extension CloudModel {
-    var buttonName: String {
-        if !name.isEmpty {
-            return name
-        }
-        return model_identifier
-    }
-}
 
 extension TranslationProviderView {
     private var footerActivatd: Bool {
@@ -25,14 +15,6 @@ extension TranslationProviderView {
             return false
         }
         return true
-    }
-
-    private var selectedLanguageHintText: String {
-        selectedLanguageHint.isEmpty ? currentLocaleDescription : selectedLanguageHint
-    }
-
-    private var controlText: String {
-        "\(model.buttonName) - \(selectedLanguageHintText)"
     }
 
     var footer: some View {
@@ -44,64 +26,35 @@ extension TranslationProviderView {
                     .underline()
                     .transition(.opacity)
             }
-            buttons
-            Text(controlText)
-                .opacity(0.5)
-                .contentTransition(.numericText())
-                .font(.caption)
-                .underline()
-        }
-    }
-
-    private var buttons: some View {
-        HStack {
-            Menu {
-                ForEach(models) { model in
-                    Toggle(model.buttonName, isOn: .init(get: {
-                        selectedModelIdentifier == model.id
-                    }, set: { newValue in
-                        if newValue {
-                            selectedModelIdentifier = model.id
-                            translate()
-                        }
-                    }))
-                }
-            } label: {
-                IconButtonContainer(icon: "person", foregroundColor: .primary)
-            }
-            .menuStyle(.button)
-            .buttonStyle(.plain)
-            Menu {
-                ForEach(CommonTranslationLanguage.allCases) { language in
-                    Toggle(language.title, isOn: .init(get: {
-                        selectedLanguageHint == language.localizedDescription
-                    }, set: { newValue in
-                        if newValue {
+            HStack {
+                Menu {
+                    ForEach(CommonTranslationLanguage.allCases) { language in
+                        Button(language.title) {
                             selectedLanguageHint = language.localizedDescription
                             translate()
                         }
-                    }))
+                    }
+                } label: {
+                    IconButtonContainer(icon: "globe", foregroundColor: .primary)
                 }
-            } label: {
-                IconButtonContainer(icon: "globe", foregroundColor: .primary)
+                .menuStyle(.button)
+                .buttonStyle(.plain)
+                Button {
+                    translate()
+                } label: {
+                    IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
+                }
+                .buttonStyle(.plain)
+                Button {
+                    UIPasteboard.general.string = translationPlainResult
+                    context.finish(translation: nil)
+                } label: {
+                    IconButtonContainer(icon: "doc.on.doc.fill", foregroundColor: .accent)
+                }
+                .buttonStyle(.plain)
             }
-            .menuStyle(.button)
-            .buttonStyle(.plain)
-            Button {
-                translate()
-            } label: {
-                IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
-            }
-            .buttonStyle(.plain)
-            Button {
-                UIPasteboard.general.string = translationPlainResult
-                context.finish(translation: nil)
-            } label: {
-                IconButtonContainer(icon: "doc.on.doc.fill", foregroundColor: .accent)
-            }
-            .buttonStyle(.plain)
+            .disabled(!footerActivatd)
+            .opacity(footerActivatd ? 1.0 : 0.25)
         }
-        .disabled(!canTranslate)
-        .opacity(canTranslate ? 1.0 : 0.25)
     }
 }

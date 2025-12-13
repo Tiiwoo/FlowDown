@@ -12,5 +12,4 @@ struct TranslationSegment: Identifiable, Equatable, Hashable {
 
     let input: String
     let translated: String
-    let comment: String
 }

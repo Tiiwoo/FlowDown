@@ -42,15 +42,12 @@ extension TranslationProviderView {
             let translationPrompt =
                 """
                 You are a professional translator. Your task is to translate the input text into \(language).
-                Please follow the language variants more then the region. (eg zh-Hans-HK should do Simplified Chinese as Hans)
 
                 Strict Rules:
                 1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.
                 2. **Pure Output**: Output ONLY the translated result. No explanations, no "Here is the translation", no quotes.
                 3. **Plain Text**: Do NOT use Markdown, XML tags, or any special formatting.
                 4. **Empty Lines**: If a specific line in the source is empty, keep it empty in the translation.
-
-                IMPORTANT: If tools are available, do BOTH steps below as instructed.
 
                 The text to translate will be provided as the user message.
                 """
@@ -61,12 +58,17 @@ extension TranslationProviderView {
             }
         }
 
+        do { // user input
+            messages.append(.user(content: .parts([.text(inputText)])))
+        }
+
         var tools: [ChatRequestBody.Tool] = []
         if model.capabilities.contains(.tool) {
             tools.append(outputTranslationTool)
             do { // tool prompt
                 let toolInstruction =
                     """
+                    IMPORTANT: Tools are available, do BOTH steps below.
 
                     Step 1: Output the full translation as normal assistant text (streaming is allowed).
                     - The output must preserve the exact number of lines from the input.
@@ -86,16 +88,6 @@ extension TranslationProviderView {
             }
         }
 
-        do { // user input
-            messages.append(.user(content: .parts([.text(
-                """
-                <translation_content>
-                \(inputText)
-                </translation_content>
-                """,
-            )])))
-        }
-
         let request = ChatRequestBody(
             model: model.model_identifier,
             messages: messages,
@@ -109,7 +101,6 @@ extension TranslationProviderView {
             struct Segment: Decodable {
                 let input: String
                 let translated: String
-                let comment: String?
             }
 
             let segments: [Segment]
@@ -140,27 +131,12 @@ extension TranslationProviderView {
                         TranslationSegment(
                             input: $0.input,
                             translated: $0.translated,
-                            comment: $0.comment ?? "",
                         )
                     }
                 }
             default:
                 break
             }
-        }
-
-        var empty = false
-
-        await MainActor.run {
-            translationPlainResult = translationPlainResult.trimmingCharacters(in: .whitespacesAndNewlines)
-            empty = translationPlainResult.isEmpty
-        }
-
-        if empty {
-            let text = service.collectedErrors ?? String(localized: "Empty Response form Server")
-            throw NSError(domain: "Translation", code: -1, userInfo: [
-                NSLocalizedDescriptionKey: text,
-            ])
         }
     }
 
@@ -193,10 +169,6 @@ extension TranslationProviderView {
                                 "translated": [
                                     "type": "string",
                                     "description": "The translated segment text.",
-                                ],
-                                "comment": [
-                                    "type": "string",
-                                    "description": "Optional comment for the segment.",
                                 ],
                             ],
                             "required": ["input", "translated"],
