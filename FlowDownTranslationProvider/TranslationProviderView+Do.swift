@@ -12,7 +12,7 @@ import Foundation
 import SwiftUI
 
 extension TranslationProviderView {
-    func translateEx(language: String?) async throws {
+    func translateEx(language: String) async throws {
         let endpoint = resolveEndpointComponents(from: model.endpoint)
         let body = try resolveBodyFields(model.bodyFields)
 
@@ -39,10 +39,9 @@ extension TranslationProviderView {
         var messages: [ChatRequestBody.Message] = []
 
         do { // system prompt
-            let targetLanguage = language ?? currentLocaleDescription
             let translationPrompt =
                 """
-                You are a professional translator. Your task is to translate the input text into \(targetLanguage).
+                You are a professional translator. Your task is to translate the input text into \(language).
 
                 Strict Rules:
                 1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.

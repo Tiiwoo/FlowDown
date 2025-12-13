@@ -73,9 +73,10 @@ struct TranslationProviderView: View {
     }
 
     func translate(language: String?) {
+        let targetLanguage = language ?? currentLocaleDescription
         translationTask = .detached {
             do {
-                try await translateEx(language: language)
+                try await translateEx(language: targetLanguage)
             } catch {
                 await MainActor.run { translationError = error }
             }
