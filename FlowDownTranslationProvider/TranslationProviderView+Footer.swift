@@ -6,9 +6,9 @@
 //
 
 import ExtensionKit
+@preconcurrency import Storage
 import SwiftUI
 import TranslationUIProvider
-@preconcurrency import Storage
 
 private extension CloudModel {
     var buttonName: String {
