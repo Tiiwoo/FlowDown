@@ -257,8 +257,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "b1fa4ef41fe21b13120c034854042d12c43f66b2",
-        "version" : "1.7.1"
+        "revision" : "bc386b95f2a16ccd0150a8235e7c69eab2b866ca",
+        "version" : "1.8.0"
       }
     },
     {
@@ -293,8 +293,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huggingface/swift-transformers",
       "state" : {
-        "revision" : "296c0e901c6b37164af82c57bbdcc0d69190f5ce",
-        "version" : "1.1.4"
+        "revision" : "deea50c380b07535c81f838d10e1efcc8f9019bb",
+        "version" : "1.1.5"
       }
     },
     {
@@ -320,8 +320,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/scinfu/SwiftSoup",
       "state" : {
-        "revision" : "c1f3348d1845302b8e99b1c0787d9417ffa11053",
-        "version" : "2.11.2"
+        "revision" : "d86f244ed497d48012782e2f59c985a55e77b3f5",
+        "version" : "2.11.3"
       }
     },
     {
