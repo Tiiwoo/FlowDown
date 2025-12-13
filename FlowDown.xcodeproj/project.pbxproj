@@ -22,6 +22,7 @@
 		506373A62EC0DC7900C8A9FB /* ColorfulX in Frameworks */ = {isa = PBXBuildFile; productRef = 506373A52EC0DC7900C8A9FB /* ColorfulX */; };
 		506837F32EED628000EBF35F /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 506837F22EED628000EBF35F /* Storage */; };
 		506837F42EED62CB00EBF35F /* ChatClientKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = ED16359B2D5C5BDA0081BD0B /* ChatClientKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		506837FA2EED63FB00EBF35F /* Storage in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 50C9035A2D428DAD00E6E3A8 /* Storage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5078496A2D285B5900B1F430 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 507849692D285B5900B1F430 /* MarkdownView */; };
 		5081A0142D6DBBBA0079ECBE /* RunestoneEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 5081A0132D6DBBBA0079ECBE /* RunestoneEditor */; };
 		50B492942D4F609E00F4D2B3 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 50B492932D4F609E00F4D2B3 /* ZIPFoundation */; };
@@ -74,6 +75,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				506837FA2EED63FB00EBF35F /* Storage in Embed Frameworks */,
 				506837F42EED62CB00EBF35F /* ChatClientKit in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";

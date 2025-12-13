@@ -8,12 +8,16 @@
 import ExtensionKit
 import Foundation
 
-NSLog("[*] starting translation provider")
-
-guard let groupDir = FileManager.default.containerURL(
-    forSecurityApplicationGroupIdentifier: AppGroup.identifier,
-) else {
-    fatalError("unable to located shared models")
+func print(_ items: Any..., separator: String = " ", terminator: String = "\n") {
+    let text = items
+        .map { "\($0)" }
+        .joined(separator: separator)
+        + terminator
+    NSLog(text)
 }
+
+print("[*] starting translation provider")
+
+_ = scanModels()
 
 try TranslationProviderExtension.main()

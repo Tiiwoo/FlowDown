@@ -9,7 +9,7 @@ let package = Package(
         .macCatalyst(.v17),
     ],
     products: [
-        .library(name: "Storage", targets: ["Storage"]),
+        .library(name: "Storage", type: .dynamic, targets: ["Storage"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Lakr233/MarkdownView", from: "3.4.2"),
