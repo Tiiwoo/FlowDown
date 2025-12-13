@@ -22,6 +22,7 @@ extension TranslationProviderView {
                         .transition(.opacity)
                     } else if !translationPlainResult.isEmpty {
                         Text(translationPlainResult)
+                            .textSelection(.enabled)
                             .font(.body)
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
