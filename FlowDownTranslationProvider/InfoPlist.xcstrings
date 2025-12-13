@@ -46,8 +46,7 @@
             "value" : "FlowDown 翻译"
           }
         }
-      },
-      "shouldTranslate" : false
+      }
     },
     "CFBundleName" : {
       "comment" : "Bundle name",
