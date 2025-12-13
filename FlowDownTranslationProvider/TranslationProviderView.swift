@@ -17,8 +17,10 @@ struct TranslationProviderView: View {
     @State var inputText: String
 
     let models: [CloudModel]
-    @State var selectedModelIdentifier: CloudModel.ID
-    @State var selectedLanguageHint: String? = nil
+    @AppStorage("wiki.qaq.fd.tp.selectedModelIdentifier")
+    var selectedModelIdentifier: CloudModel.ID = ""
+    @AppStorage("wiki.qaq.fd.tp.selectedLanguageHint")
+    var selectedLanguageHint: String = ""
     @State var translationReasoning: String = ""
     @State var translationPlainResult: String = ""
     @State var translationSegmentedResult: [TranslationSegment] = []
@@ -45,7 +47,6 @@ struct TranslationProviderView: View {
     init(context c: TranslationUIProviderContext) {
         context = c
         models = scanModels()
-        _selectedModelIdentifier = .init(initialValue: models.first?.id ?? "")
         inputText = ""
     }
 
@@ -58,12 +59,14 @@ struct TranslationProviderView: View {
                 .animation(.spring, value: booting)
             footer
         }
-        .padding()
+        .padding(.horizontal)
         .animation(.spring, value: translationError?.localizedDescription)
         .animation(.spring, value: translationReasoning)
         .animation(.spring, value: translationPlainResult)
         .animation(.spring, value: translationSegmentedResult)
         .animation(.spring, value: translationTask != nil ? 1 : 0)
+        .animation(.spring, value: selectedModelIdentifier)
+        .animation(.spring, value: selectedLanguageHint)
         .onAppear {
             guard translateOnAppear else { return }
             translateOnAppear = false
@@ -76,6 +79,9 @@ struct TranslationProviderView: View {
                 }
                 inputText = candidate
             }
+            if selectedModelIdentifier == "" {
+                selectedModelIdentifier = models.first?.id ?? ""
+            }
             translate()
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                 booting = false
@@ -84,7 +90,7 @@ struct TranslationProviderView: View {
     }
 
     func translate() {
-        let targetLanguage = selectedLanguageHint ?? currentLocaleDescription
+        let targetLanguage = selectedLanguageHint.isEmpty ? currentLocaleDescription : selectedLanguageHint
         let oldTask = translationTask
         oldTask?.cancel()
         Task.detached {

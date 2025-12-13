@@ -27,6 +27,14 @@ extension TranslationProviderView {
         return true
     }
 
+    private var selectedLanguageHintText: String {
+        selectedLanguageHint.isEmpty ? currentLocaleDescription : selectedLanguageHint
+    }
+
+    private var controlText: String {
+        "\(model.buttonName) - \(selectedLanguageHintText)"
+    }
+
     var footer: some View {
         VStack(spacing: 8) {
             if let translationError {
@@ -36,55 +44,64 @@ extension TranslationProviderView {
                     .underline()
                     .transition(.opacity)
             }
-            HStack {
-                Menu {
-                    ForEach(models) { model in
-                        Button {
+            buttons
+            Text(controlText)
+                .opacity(0.5)
+                .contentTransition(.numericText())
+                .font(.caption)
+                .underline()
+        }
+    }
+
+    private var buttons: some View {
+        HStack {
+            Menu {
+                ForEach(models) { model in
+                    Toggle(model.buttonName, isOn: .init(get: {
+                        selectedModelIdentifier == model.id
+                    }, set: { newValue in
+                        if newValue {
                             selectedModelIdentifier = model.id
                             translate()
-                        } label: {
-                            HStack {
-                                Text(model.buttonName)
-                                Spacer()
-                                if selectedModelIdentifier == model.id {
-                                    Image(systemName: "checkmark")
-                                }
-                            }
                         }
-                    }
-                } label: {
-                    IconButtonContainer(icon: "person", foregroundColor: .primary)
+                    }))
                 }
-                .menuStyle(.button)
-                .buttonStyle(.plain)
-                Menu {
-                    ForEach(CommonTranslationLanguage.allCases) { language in
-                        Button(language.title) {
+            } label: {
+                IconButtonContainer(icon: "person", foregroundColor: .primary)
+            }
+            .menuStyle(.button)
+            .buttonStyle(.plain)
+            Menu {
+                ForEach(CommonTranslationLanguage.allCases) { language in
+                    Toggle(language.title, isOn: .init(get: {
+                        selectedLanguageHint == language.localizedDescription
+                    }, set: { newValue in
+                        if newValue {
                             selectedLanguageHint = language.localizedDescription
                             translate()
                         }
-                    }
-                } label: {
-                    IconButtonContainer(icon: "globe", foregroundColor: .primary)
+                    }))
                 }
-                .menuStyle(.button)
-                .buttonStyle(.plain)
-                Button {
-                    translate()
-                } label: {
-                    IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
-                }
-                .buttonStyle(.plain)
-                Button {
-                    UIPasteboard.general.string = translationPlainResult
-                    context.finish(translation: nil)
-                } label: {
-                    IconButtonContainer(icon: "doc.on.doc.fill", foregroundColor: .accent)
-                }
-                .buttonStyle(.plain)
+            } label: {
+                IconButtonContainer(icon: "globe", foregroundColor: .primary)
             }
-            .disabled(!canTranslate)
-            .opacity(canTranslate ? 1.0 : 0.25)
+            .menuStyle(.button)
+            .buttonStyle(.plain)
+            Button {
+                translate()
+            } label: {
+                IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
+            }
+            .buttonStyle(.plain)
+            Button {
+                UIPasteboard.general.string = translationPlainResult
+                context.finish(translation: nil)
+            } label: {
+                IconButtonContainer(icon: "doc.on.doc.fill", foregroundColor: .accent)
+            }
+            .buttonStyle(.plain)
         }
+        .disabled(!canTranslate)
+        .opacity(canTranslate ? 1.0 : 0.25)
     }
 }
