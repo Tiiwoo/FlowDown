@@ -6,10 +6,27 @@
 //
 
 import ExtensionKit
+import Storage
 import SwiftUI
 import TranslationUIProvider
 
+private extension CloudModel {
+    var buttonName: String {
+        if !name.isEmpty {
+            return name
+        }
+        return model_identifier
+    }
+}
+
 extension TranslationProviderView {
+    private var footerActivatd: Bool {
+        guard canTranslate, translationTask == nil else {
+            return false
+        }
+        return true
+    }
+
     var footer: some View {
         VStack(spacing: 8) {
             if let translationError {
@@ -20,20 +37,53 @@ extension TranslationProviderView {
                     .transition(.opacity)
             }
             HStack {
+                Menu {
+                    ForEach(models) { model in
+                        Button {
+                            selectedModelIdentifier = model.id
+                        } label: {
+                            HStack {
+                                Text(model.buttonName)
+                                Spacer()
+                                if selectedModelIdentifier == model.id {
+                                    Image(systemName: "checkmark")
+                                }
+                            }
+                        }
+                    }
+                } label: {
+                    IconButtonContainer(icon: "person", foregroundColor: .primary)
+                }
+                .menuStyle(.button)
+                .buttonStyle(.plain)
+                Menu {
+                    ForEach(CommonTranslationLanguage.allCases) { language in
+                        Button(language.title) {
+                            selectedLanguageHint = language.localizedDescription
+                            translate()
+                        }
+                    }
+                } label: {
+                    IconButtonContainer(icon: "globe", foregroundColor: .primary)
+                }
+                .menuStyle(.button)
+                .buttonStyle(.plain)
                 Button {
-                    translate(language: nil)
+                    translate()
                 } label: {
                     IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
                 }
+                .buttonStyle(.plain)
                 Button {
                     UIPasteboard.general.string = translationPlainResult
                     context.finish(translation: nil)
                 } label: {
-                    IconButtonContainer(icon: "doc.on.doc", foregroundColor: .accent)
+                    IconButtonContainer(icon: "doc.on.doc.fill", foregroundColor: .accent)
                 }
+                .buttonStyle(.plain)
             }
             .disabled(!canTranslate)
-            .disabled(translationTask != nil)
+            .opacity(canTranslate ? 1.0 : 0.25)
         }
     }
 }

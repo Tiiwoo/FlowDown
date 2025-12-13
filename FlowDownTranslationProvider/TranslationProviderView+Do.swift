@@ -42,12 +42,17 @@ extension TranslationProviderView {
             let translationPrompt =
                 """
                 You are a professional translator. Your task is to translate the input text into \(language).
+                Please follow the language variants more then the region. (eg zh-Hans-HK should do Simplified Chinese as Hans)
 
                 Strict Rules:
                 1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.
                 2. **Pure Output**: Output ONLY the translated result. No explanations, no "Here is the translation", no quotes.
                 3. **Plain Text**: Do NOT use Markdown, XML tags, or any special formatting.
                 4. **Empty Lines**: If a specific line in the source is empty, keep it empty in the translation.
+
+                IMPORTANT: If tools are available, do BOTH steps below as instructed.
+
+                The text to translate will be provided as the user message.
                 """
             if model.capabilities.contains(.developerRole) {
                 messages.append(.developer(content: .text(translationPrompt)))
@@ -62,14 +67,15 @@ extension TranslationProviderView {
             do { // tool prompt
                 let toolInstruction =
                     """
-                    IMPORTANT: Tools are available, do BOTH steps below.
 
                     Step 1: Output the full translation as normal assistant text (streaming is allowed).
                     - The output must preserve the exact number of lines from the input.
                     - Output ONLY the translated result. No explanations, no quotes.
 
                     Step 2: After finishing the translation text, call the tool `output_translation` exactly once.
-                    - Provide the structured segments in `segments` (line-by-line, same line count as the input).
+                    - Provide the structured segments in `segments`.
+                    - Each segment must correspond to exactly one line in the input (including empty lines).
+                    - The number of segments MUST equal the number of input lines.
                     - Do not add any extra assistant text after the tool call.
                     """
                 if model.capabilities.contains(.developerRole) {
@@ -78,6 +84,16 @@ extension TranslationProviderView {
                     messages.append(.system(content: .text(toolInstruction)))
                 }
             }
+        }
+
+        do { // user input
+            messages.append(.user(content: .parts([.text(
+                """
+                <translation_content>
+                \(inputText)
+                </translation_content>
+                """,
+            )])))
         }
 
         let request = ChatRequestBody(
@@ -100,6 +116,7 @@ extension TranslationProviderView {
         }
 
         await MainActor.run {
+            translationReasoning = ""
             translationPlainResult = ""
             translationSegmentedResult = []
             translationError = nil
@@ -107,45 +124,43 @@ extension TranslationProviderView {
 
         let stream = try await service.streamingChat(body: request)
 
-        try await withCheckedThrowingContinuation { cont in
-            Task.detached {
-                do {
-                    var reasoningAllowance = true
-                    for try await chunk in stream {
-                        switch chunk {
-                        case let .reasoning(value):
-                            if reasoningAllowance {
-                                await MainActor.run { translationPlainResult += value }
-                            }
-                        case let .text(value):
-                            defer { reasoningAllowance = false }
-                            if reasoningAllowance {
-                                await MainActor.run { translationPlainResult = value }
-                            } else {
-                                await MainActor.run { translationPlainResult += value }
-                            }
-                        case let .tool(call):
-                            guard call.name.lowercased() == "output_translation" else { break }
-                            guard let data = call.args.data(using: .utf8) else { break }
-                            guard let payload = try? JSONDecoder().decode(OutputTranslationToolPayload.self, from: data) else { break }
-                            await MainActor.run {
-                                translationSegmentedResult = payload.segments.map {
-                                    TranslationSegment(
-                                        input: $0.input,
-                                        translated: $0.translated,
-                                        comment: $0.comment ?? "",
-                                    )
-                                }
-                            }
-                        default:
-                            break
-                        }
+        for try await chunk in stream {
+            if Task.isCancelled { break }
+            switch chunk {
+            case let .reasoning(value):
+                await MainActor.run { translationReasoning += value }
+            case let .text(value):
+                await MainActor.run { translationPlainResult += value }
+            case let .tool(call):
+                guard call.name.lowercased() == "output_translation" else { break }
+                guard let data = call.args.data(using: .utf8) else { break }
+                guard let payload = try? JSONDecoder().decode(OutputTranslationToolPayload.self, from: data) else { break }
+                await MainActor.run {
+                    translationSegmentedResult = payload.segments.map {
+                        TranslationSegment(
+                            input: $0.input,
+                            translated: $0.translated,
+                            comment: $0.comment ?? "",
+                        )
                     }
-                    cont.resume()
-                } catch {
-                    cont.resume(throwing: error)
                 }
+            default:
+                break
             }
+        }
+
+        var empty = false
+
+        await MainActor.run {
+            translationPlainResult = translationPlainResult.trimmingCharacters(in: .whitespacesAndNewlines)
+            empty = translationPlainResult.isEmpty
+        }
+
+        if empty {
+            let text = service.collectedErrors ?? String(localized: "Empty Response form Server")
+            throw NSError(domain: "Translation", code: -1, userInfo: [
+                NSLocalizedDescriptionKey: text,
+            ])
         }
     }
 

@@ -13,7 +13,7 @@ struct IconButtonContainer: View {
 
     var body: some View {
         RoundedRectangle(cornerRadius: Self.cornerRadius)
-            .foregroundStyle(foregroundColor.opacity(0.05))
+            .foregroundStyle(foregroundColor.opacity(foregroundColor == .accent ? 0.2 : 0.1))
             .overlay {
                 Image(systemName: icon)
                     .fontWeight(.semibold)

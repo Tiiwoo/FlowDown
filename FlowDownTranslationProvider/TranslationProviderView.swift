@@ -14,10 +14,12 @@ import TranslationUIProvider
 @MainActor
 struct TranslationProviderView: View {
     @State var context: TranslationUIProviderContext
-    let inputText: String
+    @State var inputText: String
 
     let models: [CloudModel]
-    @State var selectedModels: CloudModel.ID
+    @State var selectedModelIdentifier: CloudModel.ID
+    @State var selectedLanguageHint: String? = nil
+    @State var translationReasoning: String = ""
     @State var translationPlainResult: String = ""
     @State var translationSegmentedResult: [TranslationSegment] = []
 
@@ -26,14 +28,14 @@ struct TranslationProviderView: View {
     @State var translateOnAppear = true
 
     var canTranslate: Bool {
-        guard models.map(\.id).contains(selectedModels),
+        guard models.map(\.id).contains(selectedModelIdentifier),
               !inputText.isEmpty
         else { return false }
         return true
     }
 
     var model: CloudModel {
-        models.first { $0.id == selectedModels } ?? .init(deviceId: "")
+        models.first { $0.id == selectedModelIdentifier } ?? .init(deviceId: "")
     }
 
     var currentLocaleDescription: String {
@@ -43,44 +45,60 @@ struct TranslationProviderView: View {
     init(context c: TranslationUIProviderContext) {
         context = c
         models = scanModels()
-        _selectedModels = .init(initialValue: models.first?.id ?? "")
-        if let input = c.inputText {
-            var candidate = NSAttributedString(input)
-                .string
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            while candidate.contains("\n\n") {
-                candidate = candidate.replacingOccurrences(of: "\n\n", with: "\n")
-            }
-            inputText = candidate
-        } else {
-            inputText = ""
-        }
+        _selectedModelIdentifier = .init(initialValue: models.first?.id ?? "")
+        inputText = ""
     }
+
+    @State var booting = true
 
     var body: some View {
         VStack {
-            header
             content
+                .opacity(booting ? 0 : 1)
+                .animation(.spring, value: booting)
             footer
         }
         .padding()
         .animation(.spring, value: translationError?.localizedDescription)
+        .animation(.spring, value: translationReasoning)
+        .animation(.spring, value: translationPlainResult)
+        .animation(.spring, value: translationSegmentedResult)
+        .animation(.spring, value: translationTask != nil ? 1 : 0)
         .onAppear {
             guard translateOnAppear else { return }
             translateOnAppear = false
-            translate(language: nil)
+            if let input = context.inputText {
+                var candidate = NSAttributedString(input)
+                    .string
+                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                while candidate.contains("\n\n") {
+                    candidate = candidate.replacingOccurrences(of: "\n\n", with: "\n")
+                }
+                inputText = candidate
+            }
+            translate()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                booting = false
+            }
         }
     }
 
-    func translate(language: String?) {
-        let targetLanguage = language ?? currentLocaleDescription
-        translationTask = .detached {
-            do {
-                try await translateEx(language: targetLanguage)
-            } catch {
-                await MainActor.run { translationError = error }
+    func translate() {
+        let targetLanguage = selectedLanguageHint ?? currentLocaleDescription
+        let oldTask = translationTask
+        oldTask?.cancel()
+        Task.detached {
+            _ = await oldTask?.result
+            await MainActor.run {
+                translationTask = .detached {
+                    do {
+                        try await translateEx(language: targetLanguage)
+                    } catch {
+                        await MainActor.run { translationError = error }
+                    }
+                    await MainActor.run { translationTask = nil }
+                }
             }
-            await MainActor.run { translationTask = nil }
         }
     }
 }
