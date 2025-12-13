@@ -13,23 +13,6 @@ import SwiftUI
 
 extension TranslationProviderView {
     func translateEx(language: String?) async throws {
-        let targetLanguage = language ?? currentLocaleDescription
-        let translationPrompt =
-            """
-            You are a professional translator. Your task is to translate the input text into \(targetLanguage).
-
-            Strict Rules:
-            1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.
-            2. **Pure Output**: Output ONLY the translated result. No explanations, no "Here is the translation", no quotes.
-            3. **Plain Text**: Do NOT use Markdown, XML tags, or any special formatting.
-            4. **Empty Lines**: If a specific line in the source is empty, keep it empty in the translation.
-
-            Input content is enclosed in <translation_content> tags below:
-            <translation_content>
-            \(inputText)
-            </translation_content>
-            """
-
         let endpoint = resolveEndpointComponents(from: model.endpoint)
         let body = try resolveBodyFields(model.bodyFields)
 
@@ -54,13 +37,50 @@ extension TranslationProviderView {
             )
         }
         var messages: [ChatRequestBody.Message] = []
-        if model.capabilities.contains(.developerRole) {
-            messages.append(.developer(content: .text(translationPrompt)))
-        } else {
-            messages.append(.system(content: .text(translationPrompt)))
+
+        do { // system prompt
+            let targetLanguage = language ?? currentLocaleDescription
+            let translationPrompt =
+                """
+                You are a professional translator. Your task is to translate the input text into \(targetLanguage).
+
+                Strict Rules:
+                1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.
+                2. **Pure Output**: Output ONLY the translated result. No explanations, no "Here is the translation", no quotes.
+                3. **Plain Text**: Do NOT use Markdown, XML tags, or any special formatting.
+                4. **Empty Lines**: If a specific line in the source is empty, keep it empty in the translation.
+                """
+            if model.capabilities.contains(.developerRole) {
+                messages.append(.developer(content: .text(translationPrompt)))
+            } else {
+                messages.append(.system(content: .text(translationPrompt)))
+            }
         }
+
         var tools: [ChatRequestBody.Tool] = []
-        if model.capabilities.contains(.tool) {}
+        if model.capabilities.contains(.tool) {
+            tools.append(outputTranslationTool)
+            do { // tool prompt
+                let toolInstruction =
+                    """
+                    IMPORTANT: Tools are available, do BOTH steps below.
+
+                    Step 1: Output the full translation as normal assistant text (streaming is allowed).
+                    - The output must preserve the exact number of lines from the input.
+                    - Output ONLY the translated result. No explanations, no quotes.
+
+                    Step 2: After finishing the translation text, call the tool `output_translation` exactly once.
+                    - Provide the structured segments in `segments` (line-by-line, same line count as the input).
+                    - Do not add any extra assistant text after the tool call.
+                    """
+                if model.capabilities.contains(.developerRole) {
+                    messages.append(.developer(content: .text(toolInstruction)))
+                } else {
+                    messages.append(.system(content: .text(toolInstruction)))
+                }
+            }
+        }
+
         let request = ChatRequestBody(
             model: model.model_identifier,
             messages: messages,
@@ -69,11 +89,110 @@ extension TranslationProviderView {
             temperature: nil, // dont use it yet
             tools: tools.isEmpty ? nil : tools,
         )
-        
-        let stream = try await service.streamingChat(request)
-        for try await chunk in stream {
-                
+
+        struct OutputTranslationToolPayload: Decodable {
+            struct Segment: Decodable {
+                let input: String
+                let translated: String
+                let comment: String?
+            }
+
+            let segments: [Segment]
         }
+
+        await MainActor.run {
+            translationPlainResult = ""
+            translationSegmentedResult = []
+            translationError = nil
+        }
+
+        let stream = try await service.streamingChat(body: request)
+
+        try await withCheckedThrowingContinuation { cont in
+            Task.detached {
+                do {
+                    var reasoningAllowance = true
+                    for try await chunk in stream {
+                        switch chunk {
+                        case let .reasoning(value):
+                            if reasoningAllowance {
+                                await MainActor.run { translationPlainResult += value }
+                            }
+                        case let .text(value):
+                            defer { reasoningAllowance = false }
+                            if reasoningAllowance {
+                                await MainActor.run { translationPlainResult = value }
+                            } else {
+                                await MainActor.run { translationPlainResult += value }
+                            }
+                        case let .tool(call):
+                            guard call.name.lowercased() == "output_translation" else { break }
+                            guard let data = call.args.data(using: .utf8) else { break }
+                            guard let payload = try? JSONDecoder().decode(OutputTranslationToolPayload.self, from: data) else { break }
+                            await MainActor.run {
+                                translationSegmentedResult = payload.segments.map {
+                                    TranslationSegment(
+                                        input: $0.input,
+                                        translated: $0.translated,
+                                        comment: $0.comment ?? "",
+                                    )
+                                }
+                            }
+                        default:
+                            break
+                        }
+                    }
+                    cont.resume()
+                } catch {
+                    cont.resume(throwing: error)
+                }
+            }
+        }
+    }
+
+    private var outputTranslationTool: ChatRequestBody.Tool {
+        .function(
+            name: "output_translation",
+            description: """
+            Outputs the translation as structured segments.
+
+            Use this tool AFTER streaming the full translation as assistant text.
+            The segments must be line-by-line and preserve the exact number of lines from the source.
+
+            You must use this tool.
+            """,
+            parameters: [
+                "type": "object",
+                "additionalProperties": false,
+                "properties": [
+                    "segments": [
+                        "type": "array",
+                        "description": "Structured segments (line-by-line). Must preserve the exact number of lines from the source.",
+                        "items": [
+                            "type": "object",
+                            "additionalProperties": false,
+                            "properties": [
+                                "input": [
+                                    "type": "string",
+                                    "description": "The source segment text.",
+                                ],
+                                "translated": [
+                                    "type": "string",
+                                    "description": "The translated segment text.",
+                                ],
+                                "comment": [
+                                    "type": "string",
+                                    "description": "Optional comment for the segment.",
+                                ],
+                            ],
+                            "required": ["input", "translated"],
+                        ],
+                    ],
+                ],
+                "required": ["segments"],
+            ],
+            strict: true,
+        )
     }
 
     private func resolveBodyFields(_ input: String) throws -> [String: Any] {
