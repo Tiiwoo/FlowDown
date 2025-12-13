@@ -8,6 +8,16 @@
 import ExtensionKit
 import SwiftUI
 import TranslationUIProvider
+@preconcurrency import Storage
+
+private extension CloudModel {
+    var buttonName: String {
+        if !name.isEmpty {
+            return name
+        }
+        return model_identifier
+    }
+}
 
 extension TranslationProviderView {
     private var footerActivatd: Bool {
@@ -27,6 +37,22 @@ extension TranslationProviderView {
                     .transition(.opacity)
             }
             HStack {
+                Menu {
+                    ForEach(models) { model in
+                        Toggle(model.buttonName, isOn: .init(get: {
+                            selectedModelIdentifier == model.id
+                        }, set: { newValue in
+                            if newValue {
+                                selectedModelIdentifier = model.id
+                                translate()
+                            }
+                        }))
+                    }
+                } label: {
+                    IconButtonContainer(icon: "person", foregroundColor: .primary)
+                }
+                .menuStyle(.button)
+                .buttonStyle(.plain)
                 Menu {
                     ForEach(CommonTranslationLanguage.allCases) { language in
                         Button(language.title) {

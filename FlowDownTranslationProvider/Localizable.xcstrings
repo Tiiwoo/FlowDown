@@ -231,52 +231,6 @@
         }
       }
     },
-    "Empty Response form Server" : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Leere Antwort vom Server"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Empty Response form Server"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Respuesta vacía del servidor"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Réponse vide du serveur"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "サーバーからの空の応答"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "서버의 빈 응답"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "服务器返回空响应"
-          }
-        }
-      }
-    },
     "English (UK)" : {
       "localizations" : {
         "de" : {
@@ -733,53 +687,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "没有可用的云端模型用于翻译。请在 FlowDown 应用中添加云端模型。"
-          }
-        }
-      }
-    },
-    "No models available for translation or the text is empty" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Keine Modelle für die Übersetzung verfügbar oder der Text ist leer"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No models available for translation or the text is empty"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "No hay modelos disponibles para la traducción o el texto está vacío"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Aucun modèle disponible pour la traduction ou le texte est vide"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "翻訳に使用できるモデルがないか、テキストが空です"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "번역에 사용할 수 있는 모델이 없거나 텍스트가 비어 있습니다"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "没有可用的翻译模型或文本为空"
           }
         }
       }
