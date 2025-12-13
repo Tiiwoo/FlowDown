@@ -13,8 +13,20 @@ extension TranslationProviderView {
     @ViewBuilder
     var content: some View {
         if canTranslate {
-            ScrollView {}
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            ScrollView {
+                VStack(alignment: .leading, spacing: 12) {
+                    if !translationPlainResult.isEmpty {
+                        Text(translationPlainResult)
+                            .font(.body)
+                            .multilineTextAlignment(.leading)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .contentTransition(.numericText())
+                    }
+                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .animation(.interactiveSpring, value: translationPlainResult)
+            .animation(.interactiveSpring, value: translationSegmentedResult)
         } else {
             ZStack {
                 Text("No models available for translation or the text is empty")

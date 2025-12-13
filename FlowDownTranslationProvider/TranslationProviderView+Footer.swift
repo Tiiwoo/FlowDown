@@ -26,7 +26,7 @@ extension TranslationProviderView {
                     IconButtonContainer(icon: "arrow.clockwise", foregroundColor: .primary)
                 }
                 Button {
-                    UIPasteboard.general.string = translated
+                    UIPasteboard.general.string = translationPlainResult
                     context.finish(translation: nil)
                 } label: {
                     IconButtonContainer(icon: "doc.on.doc", foregroundColor: .accent)

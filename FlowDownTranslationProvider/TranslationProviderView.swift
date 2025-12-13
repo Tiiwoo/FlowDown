@@ -18,7 +18,9 @@ struct TranslationProviderView: View {
 
     let models: [CloudModel]
     @State var selectedModels: CloudModel.ID
-    @State var translated: String = ""
+    @State var translationPlainResult: String = ""
+    @State var translationSegmentedResult: [TranslationSegment] = []
+
     @State var translationTask: Task<Void, Never>? = nil
     @State var translationError: Error? = nil
     @State var translateOnAppear = true
@@ -79,24 +81,5 @@ struct TranslationProviderView: View {
             }
             await MainActor.run { translationTask = nil }
         }
-    }
-
-    func translateEx(language: String?) async throws {
-        let targetLanguage = language ?? currentLocaleDescription
-        let translationPrompt =
-            """
-            You are a professional translator. Your task is to translate the input text into \(targetLanguage).
-
-            Strict Rules:
-            1. **Line-by-Line Correspondence**: The translated output must have exactly the same number of lines as the source text. Do not merge or split lines.
-            2. **Pure Output**: Output ONLY the translated result. No explanations, no "Here is the translation", no quotes.
-            3. **Plain Text**: Do NOT use Markdown, XML tags, or any special formatting.
-            4. **Empty Lines**: If a specific line in the source is empty, keep it empty in the translation.
-
-            Input content is enclosed in <translation_content> tags below:
-            <translation_content>
-            \(inputText)
-            </translation_content>
-            """
     }
 }
