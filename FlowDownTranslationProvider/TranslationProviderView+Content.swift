@@ -34,7 +34,6 @@ extension TranslationProviderView {
                     }
                     if translationTask != nil {
                         ProgressView()
-                            .frame(height: 100)
                             .frame(maxWidth: .infinity)
                             .transition(.opacity)
                     }

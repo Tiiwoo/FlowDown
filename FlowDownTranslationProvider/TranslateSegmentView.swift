@@ -13,12 +13,15 @@ struct TranslateSegmentView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(segment.input)
+                .textSelection(.enabled)
                 .multilineTextAlignment(.leading)
                 .font(.body)
                 .opacity(0.5)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .fixedSize(horizontal: false, vertical: true)
+
             Text(segment.translated)
+                .textSelection(.enabled)
                 .multilineTextAlignment(.leading)
                 .font(.body)
                 .frame(maxWidth: .infinity, alignment: .leading)

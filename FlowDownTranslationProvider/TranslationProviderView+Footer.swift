@@ -20,13 +20,6 @@ private extension CloudModel {
 }
 
 extension TranslationProviderView {
-    private var footerActivatd: Bool {
-        guard canTranslate, translationTask == nil else {
-            return false
-        }
-        return true
-    }
-
     var footer: some View {
         VStack(spacing: 8) {
             if let translationError {
@@ -79,8 +72,8 @@ extension TranslationProviderView {
                 }
                 .buttonStyle(.plain)
             }
-            .disabled(!footerActivatd)
-            .opacity(footerActivatd ? 1.0 : 0.25)
+            .disabled(!canTranslate)
+            .opacity(canTranslate ? 1.0 : 0.25)
         }
     }
 }
