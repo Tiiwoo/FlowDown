@@ -81,8 +81,6 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
-	<key>CLOUDKIT_SYNC_CONTAINER_IDENTIFIER</key>
-	<string>$(CLOUDKIT_SYNC_CONTAINER_IDENTIFIER)</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<false/>
 	<key>NSSupportsSuddenTermination</key>
@@ -230,5 +228,7 @@
 			</dict>
 		</dict>
 	</array>
+	<key>CLOUDKIT_SYNC_CONTAINER_IDENTIFIER</key>
+	<string>$(CLOUDKIT_SYNC_CONTAINER_IDENTIFIER)</string>
 </dict>
 </plist>

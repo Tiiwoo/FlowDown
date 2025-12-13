@@ -9,10 +9,12 @@
 /* Begin PBXBuildFile section */
 		50014D7F2D8A9B3C00C10932 /* GlyphixTextFx in Frameworks */ = {isa = PBXBuildFile; productRef = 50014D7E2D8A9B3C00C10932 /* GlyphixTextFx */; };
 		500373C52D62757700585574 /* ScrubberKit in Frameworks */ = {isa = PBXBuildFile; productRef = 500373C42D62757700585574 /* ScrubberKit */; };
+		5017A3EF2EED53FD0023F420 /* FlowDownTranslationProvider.appex in Embed ExtensionKit Extensions */ = {isa = PBXBuildFile; fileRef = 5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		502272D22EB3DE3200AF9D28 /* UIEffectKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502272D12EB3DE3200AF9D28 /* UIEffectKit */; };
 		502BCBD12D43DB2B00500180 /* ConfigurableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502BCBD02D43DB2B00500180 /* ConfigurableKit */; };
 		50383CEA2D2E1E0D00426941 /* BetterCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 50383CE92D2E1E0D00426941 /* BetterCodable */; };
 		5050EACF2D46D41400634B81 /* MLX in Frameworks */ = {isa = PBXBuildFile; productRef = 5050EACE2D46D41400634B81 /* MLX */; };
+		5053972E2EED55AF00655FF7 /* ChatClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5053972D2EED55AF00655FF7 /* ChatClientKit */; };
 		505535BC2D72F38900F54B28 /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 505535BB2D72F38900F54B28 /* AlignedCollectionViewFlowLayout */; };
 		505742472E1B8B8100A26090 /* DpkgVersion in Frameworks */ = {isa = PBXBuildFile; productRef = 505742462E1B8B8100A26090 /* DpkgVersion */; };
 		505BC6F92D42A73600894BB0 /* AlertController in Frameworks */ = {isa = PBXBuildFile; productRef = 505BC6F82D42A73600894BB0 /* AlertController */; };
@@ -37,6 +39,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		5017A3ED2EED53FD0023F420 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 503498B52D23053D004672BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5017A3E72EED53FD0023F420;
+			remoteInfo = FlowDownTranslationProvider;
+		};
 		50D757BE2EC10A4400AEC087 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 503498B52D23053D004672BD /* Project object */;
@@ -46,13 +55,35 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5017A3F02EED53FD0023F420 /* Embed ExtensionKit Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				5017A3EF2EED53FD0023F420 /* FlowDownTranslationProvider.appex in Embed ExtensionKit Extensions */,
+			);
+			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = FlowDownTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		503498BD2D23053D004672BD /* FlowDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D6CB1C2EBDFCB50037488A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowDownUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		5017A3F42EED53FD0023F420 /* Exceptions for "FlowDownTranslationProvider" folder in "FlowDownTranslationProvider" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */;
+		};
 		509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
@@ -67,6 +98,14 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5017A3F42EED53FD0023F420 /* Exceptions for "FlowDownTranslationProvider" folder in "FlowDownTranslationProvider" target */,
+			);
+			path = FlowDownTranslationProvider;
+			sourceTree = "<group>";
+		};
 		509EB03B2EE5411B00553C8A /* FlowDown */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -83,6 +122,14 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5017A3E52EED53FD0023F420 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5053972E2EED55AF00655FF7 /* ChatClientKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		503498BA2D23053D004672BD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -140,6 +187,7 @@
 			children = (
 				509EB03B2EE5411B00553C8A /* FlowDown */,
 				50D757BB2EC10A4400AEC087 /* FlowDownUnitTests */,
+				5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */,
 				503498BE2D23053D004672BD /* Products */,
 				502BCBCF2D43DB2B00500180 /* Frameworks */,
 			);
@@ -150,6 +198,7 @@
 			children = (
 				503498BD2D23053D004672BD /* FlowDown.app */,
 				50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */,
+				5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -157,6 +206,29 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5017A3F32EED53FD0023F420 /* Build configuration list for PBXNativeTarget "FlowDownTranslationProvider" */;
+			buildPhases = (
+				5017A3E42EED53FD0023F420 /* Sources */,
+				5017A3E52EED53FD0023F420 /* Frameworks */,
+				5017A3E62EED53FD0023F420 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */,
+			);
+			name = FlowDownTranslationProvider;
+			packageProductDependencies = (
+				5053972D2EED55AF00655FF7 /* ChatClientKit */,
+			);
+			productName = FlowDownTranslationProvider;
+			productReference = 5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */;
+			productType = "com.apple.product-type.extensionkit-extension";
+		};
 		503498BC2D23053D004672BD /* FlowDown */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 503498D02D23053E004672BD /* Build configuration list for PBXNativeTarget "FlowDown" */;
@@ -165,10 +237,12 @@
 				503498B92D23053D004672BD /* Sources */,
 				503498BA2D23053D004672BD /* Frameworks */,
 				503498BB2D23053D004672BD /* Resources */,
+				5017A3F02EED53FD0023F420 /* Embed ExtensionKit Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5017A3EE2EED53FD0023F420 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				509EB03B2EE5411B00553C8A /* FlowDown */,
@@ -240,6 +314,9 @@
 				LastSwiftUpdateCheck = 2610;
 				LastUpgradeCheck = 2610;
 				TargetAttributes = {
+					5017A3E72EED53FD0023F420 = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 					503498BC2D23053D004672BD = {
 						CreatedOnToolsVersion = 16.2;
 					};
@@ -293,12 +370,20 @@
 			projectRoot = "";
 			targets = (
 				503498BC2D23053D004672BD /* FlowDown */,
+				5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */,
 				50D757B92EC10A4400AEC087 /* FlowDownUnitTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		5017A3E62EED53FD0023F420 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		503498BB2D23053D004672BD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -338,6 +423,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		5017A3E42EED53FD0023F420 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		503498B92D23053D004672BD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -355,6 +447,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5017A3EE2EED53FD0023F420 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */;
+			targetProxy = 5017A3ED2EED53FD0023F420 /* PBXContainerItemProxy */;
+		};
 		50D757BF2EC10A4400AEC087 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 503498BC2D23053D004672BD /* FlowDown */;
@@ -363,6 +461,72 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		5017A3F12EED53FD0023F420 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Development.xcconfig;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FlowDownTranslationProvider/Entitlements.entitlements;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				DEVELOPMENT_TEAM = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlowDownTranslationProvider/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FlowDownTranslationProvider;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow.FlowDownTranslationProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5017A3F22EED53FD0023F420 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FlowDownTranslationProvider/Entitlements.entitlements;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				DEVELOPMENT_TEAM = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlowDownTranslationProvider/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FlowDownTranslationProvider;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow.FlowDownTranslationProvider;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		503498D12D23053E004672BD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
@@ -376,7 +540,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "FlowDown/Resources/Entitlements/Entitlements-Catalyst.entitlements";
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				CODE_SIGN_STYLE = "$(inherited)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEVELOPMENT_TEAM = "$(inherited)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_ENHANCED_SECURITY = YES;
@@ -420,6 +584,7 @@
 				MARKETING_VERSION = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -445,7 +610,7 @@
 				"CODE_SIGN_ENTITLEMENTS[sdk=macosx*]" = "FlowDown/Resources/Entitlements/Entitlements-Catalyst.entitlements";
 				CODE_SIGN_IDENTITY = "$(inherited)";
 				CODE_SIGN_STYLE = "$(inherited)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEVELOPMENT_TEAM = "$(inherited)";
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_ENHANCED_SECURITY = YES;
@@ -489,6 +654,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "$(inherited)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "$(inherited)";
+				REGISTER_APP_GROUPS = YES;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -632,11 +798,13 @@
 		};
 		50D757C12EC10A4400AEC087 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Development.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = "$(inherited)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEVELOPMENT_TEAM = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -656,11 +824,13 @@
 		};
 		50D757C22EC10A4400AEC087 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = "$(inherited)";
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEVELOPMENT_TEAM = "$(inherited)";
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 26.0;
@@ -680,6 +850,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		5017A3F32EED53FD0023F420 /* Build configuration list for PBXNativeTarget "FlowDownTranslationProvider" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5017A3F12EED53FD0023F420 /* Debug */,
+				5017A3F22EED53FD0023F420 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		503498B82D23053D004672BD /* Build configuration list for PBXProject "FlowDown" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -909,6 +1088,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 5050EA6C2D46B44000634B81 /* XCRemoteSwiftPackageReference "mlx-swift" */;
 			productName = MLX;
+		};
+		5053972D2EED55AF00655FF7 /* ChatClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatClientKit;
 		};
 		505535BB2D72F38900F54B28 /* AlignedCollectionViewFlowLayout */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -7226,6 +7226,9 @@
         }
       }
     },
+    "Cloud Models" : {
+
+    },
     "Code Viewer" : {
       "localizations" : {
         "de" : {
@@ -23838,6 +23841,9 @@
           }
         }
       }
+    },
+    "Local Models" : {
+
     },
     "Local models will use different loaders based on the selected capabilities. For visual models, make sure to enable visual capabilities. Selecting the wrong model capability may result in a crash. If you still cannot load, try switching the model." : {
       "localizations" : {
