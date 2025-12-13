@@ -180,12 +180,14 @@ extension ModelManager {
 
         if !localMenuChildren.isEmpty {
             finalChildren.append(UIMenu(
+                title: finalOptions.contains(.displayInline) ? "" : String(localized: "Local Models"),
                 options: finalOptions,
                 children: localMenuChildren,
             ))
         }
         if !cloudMenuChildren.isEmpty {
             finalChildren.append(UIMenu(
+                title: finalOptions.contains(.displayInline) ? "" : String(localized: "Cloud Models"),
                 options: finalOptions,
                 children: cloudMenuChildren,
             ))

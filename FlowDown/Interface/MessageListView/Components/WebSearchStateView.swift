@@ -135,6 +135,7 @@ extension WebSearchStateView {
                     withConfiguration: imageConfiguration,
                 ),
             )
+            magnifyImageView.contentMode = .scaleAspectFit
             magnifyImageView.tintColor = .label
             self.magnifyImageView = magnifyImageView
             addSubview(magnifyImageView)
