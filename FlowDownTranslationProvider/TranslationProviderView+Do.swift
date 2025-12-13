@@ -16,6 +16,9 @@ extension TranslationProviderView {
         let endpoint = resolveEndpointComponents(from: model.endpoint)
         let body = try resolveBodyFields(model.bodyFields)
 
+        var dependencies = RemoteClientDependencies.live
+        dependencies.requestSanitizer = EmptyRequestSanitizer()
+
         let service: ChatService = switch model.response_format {
         case .chatCompletions:
             RemoteCompletionsChatClient(
@@ -25,6 +28,7 @@ extension TranslationProviderView {
                 apiKey: model.token,
                 additionalHeaders: model.headers,
                 additionalBodyField: body,
+                dependencies: dependencies,
             )
         case .responses:
             RemoteResponsesChatClient(
@@ -34,6 +38,7 @@ extension TranslationProviderView {
                 apiKey: model.token,
                 additionalHeaders: model.headers,
                 additionalBodyField: body,
+                dependencies: dependencies,
             )
         }
         var messages: [ChatRequestBody.Message] = []
