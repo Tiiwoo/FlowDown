@@ -36,6 +36,11 @@ struct TranslationProviderView: View {
                 Text("Replace With Translation")
             }.disabled(!context.allowsReplacement)
 
+            Button("Test Network") {
+                URLSession.shared.dataTask(with: .init(url: .init(string: "https://example.com")!)) { _, _, _ in
+                }.resume()
+            }
+
         }.padding(8)
     }
 

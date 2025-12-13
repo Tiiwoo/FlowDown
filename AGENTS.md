@@ -133,7 +133,13 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 
 - `AlertViewController` and `ConfigurableKit` APIs expect `String.LocalizationValue`; pass localization values directly for consistency
 - Other UI entry points should continue using `String(localized: ...)` for user-facing strings
-- Source all user-visible strings from `FlowDown/Resources/Localizable.xcstrings` instead of hardcoded literals
+- Source all user-visible strings from localization files instead of hardcoded literals
+- Main app localization files:
+  - `FlowDown/Resources/Localizable.xcstrings`: Main app UI strings
+  - `FlowDown/Resources/InfoPlist.xcstrings`: Info.plist localization strings
+- Translation provider localization files:
+  - `FlowDownTranslationProvider/Localizable.xcstrings`: Translation provider UI strings
+  - `FlowDownTranslationProvider/InfoPlist.xcstrings`: Translation provider Info.plist localization strings
 - We ship multiple locales (en base plus de, es, fr, ja, ko, zh-Hans); keep all locales populated when adding or updating strings—do not leave only English/Chinese
 - Use the provided scripts to manage translations:
   - `python3 Resources/DevKit/scripts/update_missing_i18n.py FlowDown/Resources/Localizable.xcstrings` to scaffold new keys (extend `NEW_STRINGS` as required)
