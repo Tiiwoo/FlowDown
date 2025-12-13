@@ -41,6 +41,7 @@ extension TranslationProviderView {
                     ForEach(models) { model in
                         Button {
                             selectedModelIdentifier = model.id
+                            translate()
                         } label: {
                             HStack {
                                 Text(model.buttonName)

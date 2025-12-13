@@ -27,15 +27,16 @@ extension TranslationProviderView {
                             .fixedSize(horizontal: false, vertical: true)
                             .contentTransition(.numericText())
                             .frame(maxWidth: .infinity, alignment: .leading)
-                    } else if translationTask != nil {
+                    } else if translationTask == nil {
+                        Text(String(localized: "(Empty Content)"))
+                            .opacity(0.5)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                    if translationTask != nil {
                         ProgressView()
                             .frame(height: 100)
                             .frame(maxWidth: .infinity)
                             .transition(.opacity)
-                    } else {
-                        Text(String(localized: "(Empty Content)"))
-                            .opacity(0.5)
-                            .frame(maxWidth: .infinity, alignment: .center)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
