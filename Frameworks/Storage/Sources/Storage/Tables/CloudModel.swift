@@ -29,8 +29,14 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
     public package(set) var capabilities: Set<ModelCapabilities> = []
     public package(set) var context: ModelContextLength = .short_8k
 
-    @available(*, deprecated, message: "已废弃不再使用, 请勿删除,需要保留")
-    package var temperature_preference: ModelTemperaturePreference = .inherit
+    // this value is deprecated, but should be kept for legacy support
+    // this value can now be configured inside extra body field
+    package var temperature_preference: ModelTemperaturePreference = .inherit {
+        didSet {
+            assert(temperature_preference == .inherit)
+            assert(oldValue == temperature_preference)
+        }
+    }
 
     public package(set) var response_format: CloudModel.ResponseFormat = .default
     // can be used when loading model from our server
