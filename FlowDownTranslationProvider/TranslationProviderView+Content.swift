@@ -46,10 +46,8 @@ extension TranslationProviderView {
             ZStack {
                 if inputText.isEmpty {
                     Text("Please select text to translate")
-                        .underline()
                 } else if models.isEmpty {
                     Text("No cloud models available for translation. Please add cloud models in FlowDown app.")
-                        .underline()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

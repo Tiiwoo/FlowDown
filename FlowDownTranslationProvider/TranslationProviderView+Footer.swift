@@ -34,7 +34,6 @@ extension TranslationProviderView {
                 Text(translationError.localizedDescription)
                     .foregroundStyle(.red)
                     .font(.caption)
-                    .underline()
                     .transition(.opacity)
             }
             HStack {
@@ -46,7 +45,6 @@ extension TranslationProviderView {
                 .opacity(0.5)
                 .contentTransition(.numericText())
                 .font(.caption)
-                .underline()
         }
     }
 
