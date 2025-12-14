@@ -79,11 +79,11 @@ struct TranslationProviderView: View {
                 }
                 inputText = candidate
             }
-            if selectedModelIdentifier == "" {
+            if selectedModelIdentifier == "" || !models.map(\.id).contains(selectedModelIdentifier) {
                 selectedModelIdentifier = models.first?.id ?? ""
             }
             translate()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                 booting = false
             }
         }
