@@ -123,6 +123,11 @@
                 // NSVisualEffectBlendingModeBehindWindow = 0
                 visualEffectView.setValue(0, forKey: "blendingMode")
             }
+            if visualEffectView.responds(to: NSSelectorFromString("style")) {
+                // 3> NSGlassEffectView.Style.regular.rawValue
+                // $R1: Int = 0
+                visualEffectView.setValue(0, forKey: "style")
+            }
 
             let addSubviewSelector = sel_registerName("addSubview:")
             _ = contentView.perform(addSubviewSelector, with: visualEffectView)
