@@ -101,17 +101,28 @@
                 return
             }
 
-            // Create NSVisualEffectView
-            guard let visualEffectViewClass = NSClassFromString("NSVisualEffectView") as? NSObject.Type else {
-                return
+            let effectViewClass: NSObject.Type
+
+            if let glassEffectViewClass = NSClassFromString("NSGlassEffectView") as? NSObject.Type {
+                effectViewClass = glassEffectViewClass
+            } else {
+                // Create NSVisualEffectView
+                guard let visualEffectViewClass = NSClassFromString("NSVisualEffectView") as? NSObject.Type else {
+                    return
+                }
+                effectViewClass = visualEffectViewClass
             }
 
-            let visualEffectView = visualEffectViewClass.init()
+            let visualEffectView = effectViewClass.init()
 
-            // NSVisualEffectMaterialSidebar = 7
-            visualEffectView.setValue(7, forKey: "material")
-            // NSVisualEffectBlendingModeBehindWindow = 0
-            visualEffectView.setValue(0, forKey: "blendingMode")
+            if visualEffectView.responds(to: NSSelectorFromString("material")) {
+                // NSVisualEffectMaterialSidebar = 7
+                visualEffectView.setValue(7, forKey: "material")
+            }
+            if visualEffectView.responds(to: NSSelectorFromString("blendingMode")) {
+                // NSVisualEffectBlendingModeBehindWindow = 0
+                visualEffectView.setValue(0, forKey: "blendingMode")
+            }
 
             let addSubviewSelector = sel_registerName("addSubview:")
             _ = contentView.perform(addSubviewSelector, with: visualEffectView)
