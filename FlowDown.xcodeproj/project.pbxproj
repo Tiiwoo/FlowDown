@@ -111,6 +111,16 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
+/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+		509665F12EF24F5F007E9A71 /* Exceptions for "FlowDown" folder in "Copy Bundle Resources" phase from "FlowDown" target */ = {
+			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
+			buildPhase = 503498BB2D23053D004672BD /* Resources */;
+			membershipExceptions = (
+				Extension/UIBezierPath.swift,
+			);
+		};
+/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -124,6 +134,7 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */,
+				509665F12EF24F5F007E9A71 /* Exceptions for "FlowDown" folder in "Copy Bundle Resources" phase from "FlowDown" target */,
 			);
 			path = FlowDown;
 			sourceTree = "<group>";

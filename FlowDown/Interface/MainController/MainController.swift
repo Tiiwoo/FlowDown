@@ -189,10 +189,20 @@ class MainController: UIViewController {
     }
 
     func updateShadowPath() {
-        contentShadowView.layer.shadowPath = UIBezierPath(
-            roundedRect: view.convert(contentView.frame, to: contentShadowView),
-            cornerRadius: contentView.layer.cornerRadius,
-        ).cgPath
+        switch contentView.layer.cornerCurve {
+        case .continuous:
+            contentShadowView.layer.shadowPath = UIBezierPath.continuousRoundedRect(
+                view.convert(contentView.frame, to: contentShadowView),
+                cornerRadius: contentView.layer.cornerRadius,
+            ).cgPath
+        case .circular:
+            fallthrough
+        default:
+            contentShadowView.layer.shadowPath = UIBezierPath(
+                roundedRect: view.convert(contentView.frame, to: contentShadowView),
+                cornerRadius: contentView.layer.cornerRadius,
+            ).cgPath
+        }
     }
 
     var firstTouchLocation: CGPoint?

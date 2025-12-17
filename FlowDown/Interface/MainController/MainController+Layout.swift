@@ -13,7 +13,12 @@ extension MainController {
         contentShadowView.layer.shadowOffset = .zero
         contentShadowView.layer.shadowRadius = 8
         #if targetEnvironment(macCatalyst)
-            contentShadowView.layer.shadowOpacity = 0.025
+            if #available(macOS 26, macCatalyst 26, *) {
+                contentShadowView.layer.shadowColor = UIColor.black.cgColor
+                contentShadowView.layer.shadowOpacity = 0.05
+                contentShadowView.layer.shadowRadius = 8
+                contentShadowView.layer.shadowOffset = .zero
+            }
         #else
             contentShadowView.layer.shadowOpacity = 0.1
         #endif
@@ -40,6 +45,7 @@ extension MainController {
                 make.width.equalTo(sidebarWidth)
             }
             contentView.layer.cornerRadius = 0
+            contentView.layer.cornerCurve = .continuous
             contentView.snp.remakeConstraints { make in
                 make.edges.equalToSuperview()
             }
@@ -52,10 +58,11 @@ extension MainController {
                 make.left.bottom.top.equalTo(view.safeAreaLayoutGuide).inset(16)
                 make.width.equalTo(sidebarWidth)
             }
-            contentView.layer.cornerRadius = 8
+            contentView.layer.cornerRadius = 14
+            contentView.layer.cornerCurve = .continuous
             contentView.snp.remakeConstraints { make in
                 make.left.equalTo(sidebarLayoutView.snp.right).offset(16)
-                make.top.bottom.right.equalToSuperview().inset(16)
+                make.top.bottom.right.equalToSuperview().inset(8)
             }
             chatView.setupTitleLayout(64)
             createVisibleShadow()
