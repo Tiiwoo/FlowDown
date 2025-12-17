@@ -34,13 +34,21 @@
 	<true/>
 	<key>com.apple.security.hardened-process.platform-restrictions</key>
 	<true/>
+	<key>com.apple.security.hardened-process.checked-allocations</key>
+	<true/>
+	<key>com.apple.security.hardened-process.checked-allocations.enable-pure-data</key>
+	<true/>
+	<key>com.apple.security.hardened-process.checked-allocations.no-tagged-receive</key>
+	<true/>
+	<key>com.apple.security.hardened-process.checked-allocations.soft-mode</key>
+	<true/>
+	<key>com.apple.security.hardened-process.hardened-heap</key>
+	<true/>
 	<key>com.apple.security.network.client</key>
 	<true/>
 	<key>com.apple.security.personal-information.calendars</key>
 	<true/>
 	<key>com.apple.security.personal-information.photos-library</key>
-	<true/>
-	<key>com.apple.developer.translation-app</key>
 	<true/>
 	<key>com.apple.security.personal-information.location</key>
 	<true/>
@@ -49,6 +57,8 @@
 	<key>com.apple.developer.kernel.extended-virtual-addressing</key>
 	<true/>
 	<key>com.apple.developer.kernel.increased-memory-limit</key>
+	<true/>
+	<key>com.apple.developer.translation-app</key>
 	<true/>
 </dict>
 </plist>
