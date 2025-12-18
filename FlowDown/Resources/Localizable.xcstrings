@@ -3683,6 +3683,52 @@
         }
       }
     },
+    "Are you sure you want to delete all evaluation sessions?" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Möchten Sie wirklich alle Bewertungssitzungen löschen?"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete all evaluation sessions?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Seguro que quieres eliminar todas las sesiones de evaluación?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir supprimer toutes les sessions d'évaluation ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべての評価セッションを削除してもよろしいですか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 평가 세션을 삭제하시겠습니까?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "确定要删除所有评估会话吗？"
+          }
+        }
+      }
+    },
     "Are you sure you want to delete all stored memories? This action cannot be undone." : {
       "localizations" : {
         "de" : {
@@ -7917,10 +7963,11 @@
       }
     },
     "Completed. Passed: %lld, Failed: %lld" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Completed. Passed: %1$lld, Failed: %2$lld"
           }
         }
@@ -11974,6 +12021,52 @@
         }
       }
     },
+    "Delete All Evaluation Sessions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle Bewertungssitzungen löschen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete All Evaluation Sessions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar todas las sesiones de evaluación"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer toutes les sessions d'évaluation"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべての評価セッションを削除"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "모든 평가 세션 삭제"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除所有评估会话"
+          }
+        }
+      }
+    },
     "Delete all stored memories permanently." : {
       "localizations" : {
         "de" : {
@@ -15887,7 +15980,14 @@
       }
     },
     "Evaluating" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evaluating"
+          }
+        }
+      }
     },
     "Evaluation Assistant" : {
       "localizations" : {
@@ -15936,7 +16036,14 @@
       }
     },
     "Evaluation History" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Evaluation History"
+          }
+        }
+      }
     },
     "Evaluation Model" : {
       "localizations" : {
@@ -17503,7 +17610,14 @@
       }
     },
     "Fail" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fail"
+          }
+        }
+      }
     },
     "Failed to add event: %@" : {
       "localizations" : {
@@ -18656,7 +18770,14 @@
       }
     },
     "Failed to Start Session" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Failed to Start Session"
+          }
+        }
+      }
     },
     "Failed to update memory: %@" : {
       "localizations" : {
@@ -23079,7 +23200,15 @@
       }
     },
     "Initializing..." : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Initializing..."
+          }
+        }
+      }
     },
     "Input" : {
       "localizations" : {
@@ -23128,7 +23257,14 @@
       }
     },
     "Input Content" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Input Content"
+          }
+        }
+      }
     },
     "Insert New Line" : {
       "localizations" : {
@@ -28058,7 +28194,14 @@
       }
     },
     "Model Output" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Model Output"
+          }
+        }
+      }
     },
     "Model Selector" : {
       "localizations" : {
@@ -31420,7 +31563,14 @@
       }
     },
     "Pass" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pass"
+          }
+        }
+      }
     },
     "Past Day" : {
       "localizations" : {
@@ -33864,7 +34014,14 @@
       }
     },
     "Progress has been saved. You can resume this session later." : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Progress has been saved. You can resume this session later."
+          }
+        }
+      }
     },
     "Prompt" : {
       "localizations" : {
@@ -35523,7 +35680,15 @@
       }
     },
     "Results" : {
-
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Results"
+          }
+        }
+      }
     },
     "Retrieving Location" : {
       "localizations" : {
@@ -36400,10 +36565,11 @@
       }
     },
     "Running... %lld/%lld (Passed: %lld)" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
+            "state" : "translated",
             "value" : "Running... %1$lld/%2$lld (Passed: %3$lld)"
           }
         }
@@ -36824,6 +36990,7 @@
       }
     },
     "Search cases..." : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -38020,7 +38187,14 @@
       }
     },
     "Session Stopped" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Session Stopped"
+          }
+        }
+      }
     },
     "Set" : {
       "localizations" : {
@@ -51001,7 +51175,14 @@
       }
     },
     "Verifiers" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifiers"
+          }
+        }
+      }
     },
     "Verify Configuration" : {
       "localizations" : {

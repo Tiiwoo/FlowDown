@@ -34,20 +34,20 @@ class EvaluationSession: Codable, @unchecked Sendable {
 }
 
 extension EvaluationSession {
-    func resume() {
+    @objc func resume() {
         runningTask = Task {
             await startEvaluation()
         }
     }
 
-    func stop() {
+    @objc func stop() {
         runningTask?.cancel()
         // Run save in a detached task or synchronous if possible, but manager likely async or safe
         // We can just trigger a save. Since we are cancelling, the session state (results)
         // will be preserved as they are updated in real-time.
         // We might want to mark any 'processing' items as 'notDetermined' so they are picked up next time?
         // Or just leave them, startEvaluation handles it.
-        try? EvaluationSessionManager.shared.save(self)
+        _ = try? EvaluationSessionManager.shared.save(self)
     }
 
     private func startEvaluation() async {
@@ -104,7 +104,7 @@ extension EvaluationSession {
             logger.info("Evaluation session \(id) stopped")
         }
 
-        try? EvaluationSessionManager.shared.save(self)
+        _ = try? EvaluationSessionManager.shared.save(self)
 
         DispatchQueue.main.async {
             NotificationCenter.default.post(name: .evaluationSessionDidUpdate, object: self)

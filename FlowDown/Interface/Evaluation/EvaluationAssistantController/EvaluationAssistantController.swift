@@ -89,8 +89,8 @@ class EvaluationAssistantController: StackScrollController {
         let session = EvaluationSession(options: options)
         do {
             _ = try EvaluationSessionManager.shared.save(session)
-            let progressController = EvaluationInProgressController(session: session)
-            navigationController?.pushViewController(progressController, animated: true)
+            let statusController = EvaluationStatusController(session: session)
+            navigationController?.pushViewController(statusController, animated: true)
         } catch {
             let alert = AlertViewController(
                 title: String(localized: "Failed to Start Session"),
@@ -263,7 +263,7 @@ private extension EvaluationAssistantController {
                 suiteView.actionBlock = { [weak self] enabled in
                     guard let self else { return }
                     setSuiteExcluded(suite.id, excluded: !enabled)
-                    refreshUI(delay: 0.5)
+                    refreshUI(delay: 2)
                 }
                 suiteView.configure(icon: .init(systemName: "folder"))
                 suiteView.configure(title: String("\(String(localized: suite.title)) \(suite.cases.count)"))

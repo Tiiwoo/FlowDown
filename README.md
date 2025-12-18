@@ -35,8 +35,10 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback
   - **File Attachments**: Add files and documents to your conversations.
   - **Web Search**: Grant the AI access to real-time information from the web.
   - **Reusable Templates**: Save and quickly reuse your favorite prompts.
-  - **Shortcuts Integration**: Deep integration with system Shortcuts for automating your workflows.
-- **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
+- **System Integration**:
+  - **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
+  - **Default Translation App**: Set FlowDown as your default translation app for seamless translation workflows.
+  - **Shortcuts**: Deep integration with system Shortcuts for automating your workflows.
 - **Open Source**: FlowDown is fully open source under the AGPL-3.0 license. We invite you to inspect the code and verify our commitment to privacy and quality.
 
 ## Special Notes

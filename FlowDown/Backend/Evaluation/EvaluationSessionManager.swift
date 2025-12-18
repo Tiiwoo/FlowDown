@@ -48,6 +48,26 @@ final class EvaluationSessionManager {
         }
     }
 
+    func deleteAll() throws {
+        let directory = try sessionsDirectoryURL()
+        guard FileManager.default.fileExists(atPath: directory.path) else {
+            return
+        }
+
+        let urls = try FileManager.default.contentsOfDirectory(
+            at: directory,
+            includingPropertiesForKeys: nil,
+            options: [.skipsHiddenFiles],
+        )
+        .filter { $0.pathExtension == "plist" }
+
+        for url in urls {
+            try FileManager.default.removeItem(at: url)
+        }
+
+        logger.info("deleted all evaluation sessions (\(urls.count, privacy: .public))")
+    }
+
     func listSessions() throws -> [EvaluationSession] {
         let directory = try sessionsDirectoryURL()
         guard FileManager.default.fileExists(atPath: directory.path) else {

@@ -1,0 +1,72 @@
+//
+//  EvaluationSuiteHeaderView.swift
+//  FlowDown
+//
+//  Created by qaq on 18/12/2025.
+//
+
+import GlyphixTextFx
+import SnapKit
+import UIKit
+
+final class EvaluationSuiteHeaderView: UICollectionReusableView {
+    private let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .regular))
+    private let titleLabel = UILabel()
+    private let progressLabel: GlyphixTextLabel = .init().with {
+        $0.font = UIFont.preferredFont(forTextStyle: .body)
+        $0.textColor = .accent
+        $0.textAlignment = .trailing
+        $0.isBlurEffectEnabled = false
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.clipsToBounds = true
+    }
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupUI()
+    }
+
+    @available(*, unavailable)
+    required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func setupUI() {
+        backgroundColor = .clear
+
+        addSubview(blurView)
+        blurView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        titleLabel.font = .preferredFont(forTextStyle: .headline)
+        titleLabel.textColor = .label
+        titleLabel.numberOfLines = 1
+
+        blurView.contentView.addSubview(titleLabel)
+        blurView.contentView.addSubview(progressLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.bottom.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().inset(16)
+            make.trailing.lessThanOrEqualTo(progressLabel.snp.leading).offset(-12)
+        }
+
+        progressLabel.snp.makeConstraints { make in
+            make.centerY.equalTo(titleLabel)
+            make.trailing.equalToSuperview().inset(16)
+        }
+    }
+
+    func configure(title: String, total: Int, completed: Int, passed: Int) {
+        titleLabel.text = title
+
+        let progressPercent = total > 0 ? Int((Double(completed) / Double(total) * 100).rounded()) : 0
+        let scorePercent = total > 0 ? Int((Double(passed) / Double(total) * 100).rounded()) : 0
+
+        if total > 0, completed == total {
+            progressLabel.text = "\(scorePercent)%"
+        } else {
+            progressLabel.text = "\(progressPercent)%"
+        }
+    }
+}
