@@ -23,6 +23,8 @@ final class EvaluationStatusController: UIViewController {
 
     private var outcomeFilter: EvaluationManifest.Suite.Case.Result.Outcome?
 
+    private var interactivePopGesturePreviousEnabled: Bool?
+
     private enum OutcomeFilterOption: CaseIterable {
         case all
         case passed
@@ -77,6 +79,17 @@ final class EvaluationStatusController: UIViewController {
         return item
     }()
 
+    private lazy var backBarItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(
+            image: UIImage(systemName: "chevron.left"),
+            style: .plain,
+            target: self,
+            action: #selector(backTapped),
+        )
+        item.accessibilityLabel = String(localized: "Back")
+        return item
+    }()
+
     private lazy var filterBarItem: UIBarButtonItem = {
         let deferredMenu = UIDeferredMenuElement.uncached { [weak self] completion in
             guard let self else {
@@ -122,16 +135,71 @@ final class EvaluationStatusController: UIViewController {
         session.resume()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateInteractivePopGestureState()
+    }
+
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
     func setupNavigation() {
+        navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backBarItem
         navigationItem.rightBarButtonItems = [
             shareBarItem,
             filterBarItem,
         ]
         updateFilterIcon()
+    }
+
+    private func updateInteractivePopGestureState() {
+        guard let gesture = navigationController?.interactivePopGestureRecognizer else { return }
+
+        if interactivePopGesturePreviousEnabled == nil {
+            interactivePopGesturePreviousEnabled = gesture.isEnabled
+        }
+
+        gesture.isEnabled = !session.isRunning
+    }
+
+    private func restoreInteractivePopGestureStateIfNeeded() {
+        guard let previous = interactivePopGesturePreviousEnabled else { return }
+        guard let gesture = navigationController?.interactivePopGestureRecognizer else { return }
+        gesture.isEnabled = previous
+    }
+
+    private func exitScreen() {
+        if let navigationController, navigationController.viewControllers.first != self {
+            navigationController.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
+    }
+
+    private func presentExitWhileRunningAlert() {
+        let alert = AlertViewController(
+            title: String(localized: "Exit Evaluation"),
+            message: String(localized: "Exiting now will interrupt the running evaluation."),
+        ) { [weak self] context in
+            context.allowSimpleDispose()
+            context.addAction(title: String(localized: "Cancel")) {
+                context.dispose()
+            }
+            context.addAction(title: String(localized: "Exit"), attribute: .accent) {
+                context.dispose { self?.exitScreen() }
+            }
+        }
+        present(alert, animated: true)
+    }
+
+    @objc private func backTapped() {
+        if session.isRunning {
+            presentExitWhileRunningAlert()
+            return
+        }
+        exitScreen()
     }
 
     private func createFilterMenuItems() -> [UIMenuElement] {
@@ -162,8 +230,10 @@ final class EvaluationStatusController: UIViewController {
     @objc private func shareTapped() {
         _ = try? EvaluationSessionManager.shared.save(session)
 
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .xml
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+
         guard let data = try? encoder.encode(session) else { return }
 
         let modelName = ModelManager.shared
@@ -175,13 +245,15 @@ final class EvaluationStatusController: UIViewController {
         let exporter = DisposableExporter(
             data: data,
             name: exportName,
-            pathExtension: "fdem",
+            pathExtension: "fder",
         )
         exporter.run(anchor: view, mode: .file)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
+        restoreInteractivePopGestureStateIfNeeded()
 
         guard isMovingFromParent || isBeingDismissed else { return }
         session.stopAndDispose(save: true)
@@ -206,15 +278,15 @@ final class EvaluationStatusController: UIViewController {
             }
         }
 
-        let passedText = String(localized: "Passed")
-        let allText = String(localized: "All")
-        title = "\(passed)/\(total) \(passedText)/\(allText)"
+        let resultTitle = String(localized: "Evaluation Result")
+        title = "\(resultTitle) - \(passed)/\(total)"
     }
 
     @objc func sessionDidUpdate() {
         if Thread.isMainThread {
             statusView.applySessionUpdate(animated: false)
             updateTitle()
+            updateInteractivePopGestureState()
         } else {
             DispatchQueue.main.async {
                 self.sessionDidUpdate()

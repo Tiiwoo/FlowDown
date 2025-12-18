@@ -10,6 +10,7 @@ import ConfigurableKit
 import Logger
 import SnapKit
 import UIKit
+import UniformTypeIdentifiers
 
 class EvaluationHistoryController: UIViewController {
     private enum Section: Hashable {
@@ -17,6 +18,8 @@ class EvaluationHistoryController: UIViewController {
     }
 
     private var sessions: [EvaluationSession] = []
+
+    private var documentPickerImportHandler: (([URL]) -> Void)?
 
     private lazy var tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .plain)
@@ -46,7 +49,10 @@ class EvaluationHistoryController: UIViewController {
         title = String(localized: "Evaluation History")
         view.backgroundColor = .systemBackground
 
-        navigationItem.rightBarButtonItem = deleteAllBarButtonItem
+        navigationItem.rightBarButtonItems = [
+            deleteAllBarButtonItem,
+            importBarButtonItem,
+        ]
 
         setupView()
         loadData(animated: false)
@@ -67,6 +73,20 @@ class EvaluationHistoryController: UIViewController {
         item.tintColor = .systemRed
         return item
     }()
+
+    private lazy var importBarButtonItem: UIBarButtonItem = {
+        let item = UIBarButtonItem(
+            title: String(localized: "Import"),
+            style: .plain,
+            target: self,
+            action: #selector(importTapped),
+        )
+        return item
+    }()
+
+    @objc private func importTapped() {
+        presentSessionImportPicker(from: self)
+    }
 
     @objc private func deleteAllTapped() {
         let alert = AlertViewController(
@@ -175,6 +195,107 @@ extension EvaluationHistoryController: UITableViewDelegate {
 }
 
 private extension EvaluationHistoryController {
+    func presentSessionImportPicker(from controller: UIViewController) {
+        // Keep this type strictly conforming to `public.data`.
+        let fderType = UTType(exportedAs: "wiki.qaq.fder", conformingTo: .data)
+        let picker = UIDocumentPickerViewController(
+            forOpeningContentTypes: [fderType],
+            asCopy: true,
+        )
+        picker.allowsMultipleSelection = true
+        picker.delegate = self
+        documentPickerImportHandler = { [weak self] urls in
+            guard let self else {
+                self?.documentPickerImportHandler = nil
+                return
+            }
+            documentPickerImportHandler = nil
+            performSessionImport(urls: urls)
+        }
+        controller.present(picker, animated: true)
+    }
+
+    func performSessionImport(urls: [URL]) {
+        guard !urls.isEmpty else { return }
+
+        Indicator.progress(
+            title: "Importing",
+            controller: self,
+        ) { completionHandler in
+            var imported: [EvaluationSession] = []
+            var failure: [Error] = []
+
+            for url in urls {
+                do {
+                    let scoped = url.startAccessingSecurityScopedResource()
+                    defer { if scoped { url.stopAccessingSecurityScopedResource() } }
+
+                    let data = try Data(contentsOf: url)
+
+                    let jsonDecoder: JSONDecoder = {
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+                        return decoder
+                    }()
+
+                    if let sessions = try? jsonDecoder.decode([EvaluationSession].self, from: data) {
+                        for session in sessions {
+                            _ = try EvaluationSessionManager.shared.save(session)
+                            imported.append(session)
+                        }
+                        continue
+                    }
+                    if let session = try? jsonDecoder.decode(EvaluationSession.self, from: data) {
+                        _ = try EvaluationSessionManager.shared.save(session)
+                        imported.append(session)
+                        continue
+                    }
+
+                    let plistDecoder = PropertyListDecoder()
+                    if let sessions = try? plistDecoder.decode([EvaluationSession].self, from: data) {
+                        for session in sessions {
+                            _ = try EvaluationSessionManager.shared.save(session)
+                            imported.append(session)
+                        }
+                    } else {
+                        let session = try plistDecoder.decode(EvaluationSession.self, from: data)
+                        _ = try EvaluationSessionManager.shared.save(session)
+                        imported.append(session)
+                    }
+                } catch {
+                    failure.append(error)
+                }
+            }
+
+            if imported.isEmpty, let first = failure.first {
+                throw first
+            }
+
+            await completionHandler {
+                self.loadData(animated: true)
+
+                if let firstError = failure.first {
+                    let alert = AlertViewController(
+                        title: String(localized: "Import Failed"),
+                        message: firstError.localizedDescription,
+                    ) { context in
+                        context.allowSimpleDispose()
+                        context.addAction(title: "OK", attribute: .accent) {
+                            context.dispose()
+                        }
+                    }
+                    self.present(alert, animated: true)
+                } else {
+                    Indicator.present(
+                        title: "Completed",
+                        preset: .done,
+                        referencingView: self.view,
+                    )
+                }
+            }
+        }
+    }
+
     final class HistoryCell: UITableViewCell {
         static let reuseIdentifier = "EvaluationHistoryCell"
 
@@ -223,7 +344,19 @@ private extension EvaluationHistoryController {
             self.session = session
             pageView.configure(icon: .init(systemName: "chart.bar.xaxis"))
             pageView.configure(title: modelTitle)
-            pageView.configure(description: session.createdAt.formatted(date: .abbreviated, time: .shortened))
+
+            let cases = session.allCases
+            let total = cases.count
+            let succeeded = cases.count(where: { $0.results.last?.outcome == .pass })
+            let failed = cases.count(where: { $0.results.last?.outcome == .fail })
+            let key: String.LocalizationValue = "\(succeeded) succeeded, \(failed) failed, \(total) tests"
+            pageView.configure(description: String(localized: key))
         }
+    }
+}
+
+extension EvaluationHistoryController: UIDocumentPickerDelegate {
+    func documentPicker(_: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        documentPickerImportHandler?(urls)
     }
 }

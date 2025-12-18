@@ -12,16 +12,21 @@ import XCTest
 class EvaluationSessionTests: XCTestCase {
     var session: EvaluationSession!
 
-    private func decodeVerifier(from propertyList: Any) throws -> EvaluationManifest.Suite.Case.Verifier {
-        let data = try PropertyListSerialization.data(fromPropertyList: propertyList, format: .xml, options: 0)
-        return try PropertyListDecoder().decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
+    private func decodeVerifier(_ json: String) throws -> EvaluationManifest.Suite.Case.Verifier {
+        let data = json.data(using: .utf8)!
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
     }
 
     private func roundTrip(_ verifier: EvaluationManifest.Suite.Case.Verifier) throws -> EvaluationManifest.Suite.Case.Verifier {
-        let encoder = PropertyListEncoder()
-        encoder.outputFormat = .xml
+        let encoder = JSONEncoder()
+        encoder.dateEncodingStrategy = .iso8601
+        encoder.outputFormatting = [.sortedKeys]
         let data = try encoder.encode(verifier)
-        return try PropertyListDecoder().decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        return try decoder.decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
     }
 
     override func setUp() {
@@ -98,20 +103,6 @@ class EvaluationSessionTests: XCTestCase {
         XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
     }
 
-    func testDecodeLegacyVerifierTypePatternFormat() throws {
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "match", "pattern": "Hello World"]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "matchCaseInsensitive", "pattern": "Hello World"]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "matchRegularExpression", "pattern": #"Order ID: \d+"#]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "contains", "pattern": "brown"]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "containsCaseInsensitive", "pattern": "brown"]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["type": "open"]))
-    }
-
-    func testDecodeLegacyVerifierKeyedShorthandFormat() throws {
-        XCTAssertThrowsError(try decodeVerifier(from: ["match": "Hello World"]))
-        XCTAssertThrowsError(try decodeVerifier(from: ["containsCaseInsensitive": "BROWN"]))
-    }
-
     func testVerifierEncodeDecodeRoundTrip_AllCases() throws {
         let all: [EvaluationManifest.Suite.Case.Verifier] = [
             .open,
@@ -126,6 +117,85 @@ class EvaluationSessionTests: XCTestCase {
         for verifier in all {
             XCTAssertEqual(try roundTrip(verifier), verifier)
         }
+    }
+
+    func testVerifierDecode_CurrentFormat_AllCases_ObjectPayloads() throws {
+        let cases: [(String, EvaluationManifest.Suite.Case.Verifier)] = [
+            (#"{"open":{}}"#, .open),
+            (#"{"match":{"pattern":"Hello"}}"#, .match(pattern: "Hello")),
+            (#"{"matchCaseInsensitive":{"pattern":"Hello"}}"#, .matchCaseInsensitive(pattern: "Hello")),
+            (#"{"matchRegularExpression":{"pattern":"\\d+"}}"#, .matchRegularExpression(pattern: #"\d+"#)),
+            (#"{"contains":{"pattern":"brown"}}"#, .contains(pattern: "brown")),
+            (#"{"containsCaseInsensitive":{"pattern":"BROWN"}}"#, .containsCaseInsensitive(pattern: "BROWN")),
+            (#"{"tool":{"parameter":"a","value":1}}"#, .tool(parameter: "a", value: 1)),
+        ]
+
+        for (json, expected) in cases {
+            XCTAssertEqual(try decodeVerifier(json), expected)
+        }
+    }
+
+    func testVerifierDecode_CurrentFormat_AllPatternCases_StringPayloads() throws {
+        let cases: [(String, EvaluationManifest.Suite.Case.Verifier)] = [
+            (#"{"match":"Hello"}"#, .match(pattern: "Hello")),
+            (#"{"matchCaseInsensitive":"Hello"}"#, .matchCaseInsensitive(pattern: "Hello")),
+            (#"{"matchRegularExpression":"\\d+"}"#, .matchRegularExpression(pattern: #"\d+"#)),
+            (#"{"contains":"brown"}"#, .contains(pattern: "brown")),
+            (#"{"containsCaseInsensitive":"BROWN"}"#, .containsCaseInsensitive(pattern: "BROWN")),
+        ]
+
+        for (json, expected) in cases {
+            XCTAssertEqual(try decodeVerifier(json), expected)
+        }
+    }
+
+    func testVerifierDecode_CurrentFormat_ToolInlineFieldsVariant() throws {
+        // Decoder supports an older variant where `tool` is present but parameter/value are inlined.
+        let json = #"{"tool":{},"parameter":"a","value":1}"#
+        XCTAssertEqual(try decodeVerifier(json), .tool(parameter: "a", value: 1))
+    }
+
+    func testVerifierDecode_LegacyPatternOnly_DefaultsToMatch() throws {
+        XCTAssertEqual(try decodeVerifier(#"{"pattern":"Hello World"}"#), .match(pattern: "Hello World"))
+    }
+
+    func testVerifierDecode_LegacyTypeAndPattern() throws {
+        XCTAssertEqual(try decodeVerifier(#"{"type":"contains","pattern":"brown"}"#), .contains(pattern: "brown"))
+    }
+
+    func testVerifierDecode_LegacyType_AllCases() throws {
+        let cases: [(String, EvaluationManifest.Suite.Case.Verifier)] = [
+            (#"{"type":"open"}"#, .open),
+            (#"{"type":"match","pattern":"Hello"}"#, .match(pattern: "Hello")),
+            (#"{"type":"matchCaseInsensitive","pattern":"Hello"}"#, .matchCaseInsensitive(pattern: "Hello")),
+            (#"{"type":"matchRegularExpression","pattern":"\\d+"}"#, .matchRegularExpression(pattern: #"\d+"#)),
+            (#"{"type":"contains","pattern":"brown"}"#, .contains(pattern: "brown")),
+            (#"{"type":"containsCaseInsensitive","pattern":"BROWN"}"#, .containsCaseInsensitive(pattern: "BROWN")),
+            (#"{"type":"tool","parameter":"a","value":1}"#, .tool(parameter: "a", value: 1)),
+        ]
+
+        for (json, expected) in cases {
+            XCTAssertEqual(try decodeVerifier(json), expected)
+        }
+    }
+
+    func testVerifierDecode_LegacyPatternFlags_InferCaseInsensitiveAndRegex() throws {
+        XCTAssertEqual(
+            try decodeVerifier(#"{"pattern":"Hello","caseInsensitive":true}"#),
+            .matchCaseInsensitive(pattern: "Hello"),
+        )
+        XCTAssertEqual(
+            try decodeVerifier(#"{"pattern":"\\d+","regex":true}"#),
+            .matchRegularExpression(pattern: #"\d+"#),
+        )
+    }
+
+    func testVerifierDecode_LegacyToolInlineFields() throws {
+        XCTAssertEqual(try decodeVerifier(#"{"type":"tool","parameter":"a","value":1}"#), .tool(parameter: "a", value: 1))
+    }
+
+    func testVerifierDecode_LegacyStringOpen() throws {
+        XCTAssertEqual(try decodeVerifier(#""open""#), .open)
     }
 
     func testExcludedSuitesAreNotIncludedInSessionManifests() {

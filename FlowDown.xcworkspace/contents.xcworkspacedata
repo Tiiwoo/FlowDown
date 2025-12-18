@@ -22,4 +22,7 @@
    <FileRef
       location = "group:Frameworks/FlowDownModelExchange">
    </FileRef>
+   <FileRef
+      location = "group:FlowDownUnitTests.xctestplan">
+   </FileRef>
 </Workspace>

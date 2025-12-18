@@ -1,0 +1,34 @@
+{
+  "configurations" : [
+    {
+      "id" : "499B1E1B-16ED-48ED-8D8D-7A1E9E21A185",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : {
+      "targets" : [
+        {
+          "containerPath" : "container:FlowDown.xcodeproj",
+          "identifier" : "503498BC2D23053D004672BD",
+          "name" : "FlowDown"
+        }
+      ]
+    },
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:FlowDown.xcodeproj",
+        "identifier" : "50D757B92EC10A4400AEC087",
+        "name" : "FlowDownUnitTests"
+      }
+    }
+  ],
+  "version" : 1
+}

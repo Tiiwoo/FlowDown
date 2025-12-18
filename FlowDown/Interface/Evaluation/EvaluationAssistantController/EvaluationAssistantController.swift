@@ -39,19 +39,23 @@ class EvaluationAssistantController: StackScrollController {
         super.viewDidLoad()
 
         let moreMenu = UIMenu(children: [
-            UIAction(
-                title: String(localized: "Import"),
-                image: UIImage(systemName: "square.and.arrow.down"),
-            ) { [weak self] _ in
-                guard let self else { return }
-                presentDatasetImportPicker(from: self)
-            },
-            UIAction(
-                title: String(localized: "History"),
-                image: UIImage(systemName: "clock.arrow.circlepath"),
-            ) { [weak self] _ in
-                self?.historyTapped()
-            },
+            UIMenu(options: [.displayInline], children: [
+                UIAction(
+                    title: String(localized: "Import Test Manifest"),
+                    image: UIImage(systemName: "square.and.arrow.down"),
+                ) { [weak self] _ in
+                    guard let self else { return }
+                    presentDatasetImportPicker(from: self)
+                },
+            ]),
+            UIMenu(options: [.displayInline], children: [
+                UIAction(
+                    title: String(localized: "Evaluation History"),
+                    image: UIImage(systemName: "clock.arrow.circlepath"),
+                ) { [weak self] _ in
+                    self?.historyTapped()
+                },
+            ]),
         ])
 
         let startButton = UIBarButtonItem(
@@ -317,30 +321,31 @@ private extension EvaluationAssistantController {
     }
 
     func presentDatasetImportPicker(from controller: UIViewController) {
-        let fdemType = UTType(filenameExtension: "fdem") ?? UTType("wiki.qaq.fdem") ?? .data
+        // Keep this type strictly conforming to `public.data`.
+        let fdemType = UTType(exportedAs: "wiki.qaq.fdem", conformingTo: .data)
         let picker = UIDocumentPickerViewController(
-            forOpeningContentTypes: [fdemType, .propertyList],
+            forOpeningContentTypes: [fdemType],
             asCopy: true,
         )
         picker.allowsMultipleSelection = true
         picker.delegate = self
-        documentPickerImportHandler = { [weak self, weak controller] urls in
-            guard let self, let controller else {
+        documentPickerImportHandler = { [weak self] urls in
+            guard let self else {
                 self?.documentPickerImportHandler = nil
                 return
             }
             documentPickerImportHandler = nil
-            performDatasetImport(urls: urls, controller: controller)
+            performDatasetImport(urls: urls)
         }
         controller.present(picker, animated: true)
     }
 
-    func performDatasetImport(urls: [URL], controller: UIViewController) {
+    func performDatasetImport(urls: [URL]) {
         guard !urls.isEmpty else { return }
 
         Indicator.progress(
             title: "Importing Dataset",
-            controller: controller,
+            controller: self,
         ) { completionHandler in
             var imported: [EvaluationManifest] = []
             var failure: [Error] = []
@@ -351,13 +356,21 @@ private extension EvaluationAssistantController {
                     defer { if scoped { url.stopAccessingSecurityScopedResource() } }
 
                     let data = try Data(contentsOf: url)
-                    let decoder = PropertyListDecoder()
 
-                    if let list = try? decoder.decode([EvaluationManifest].self, from: data) {
+                    // Prefer JSON.
+                    let jsonDecoder: JSONDecoder = {
+                        let decoder = JSONDecoder()
+                        decoder.dateDecodingStrategy = .iso8601
+                        return decoder
+                    }()
+
+                    if let list = try? jsonDecoder.decode([EvaluationManifest].self, from: data) {
                         imported.append(contentsOf: list)
-                    } else {
-                        let one = try decoder.decode(EvaluationManifest.self, from: data)
+                        continue
+                    }
+                    if let one = try? jsonDecoder.decode(EvaluationManifest.self, from: data) {
                         imported.append(one)
+                        continue
                     }
                 } catch {
                     failure.append(error)
@@ -384,12 +397,12 @@ private extension EvaluationAssistantController {
                             context.dispose()
                         }
                     }
-                    controller.present(alert, animated: true)
+                    self.present(alert, animated: true)
                 } else {
                     Indicator.present(
                         title: "Imported \(imported.count) manifest(s).",
                         preset: .done,
-                        referencingView: controller.view,
+                        referencingView: self.view,
                     )
                 }
             }

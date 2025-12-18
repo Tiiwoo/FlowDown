@@ -73,6 +73,10 @@ private extension EvaluationSession {
 }
 
 extension EvaluationSession {
+    var isRunning: Bool {
+        runningTask != nil
+    }
+
     var allCases: [EvaluationManifest.Suite.Case] {
         var cases: [EvaluationManifest.Suite.Case] = []
         for manifest in manifests {
@@ -108,13 +112,16 @@ extension EvaluationSession {
 
 extension EvaluationSession {
     @objc func resume() {
-        runningTask = Task {
+        guard runningTask == nil else { return }
+        runningTask = Task { [weak self] in
+            guard let self else { return }
             await startEvaluation()
         }
     }
 
     @objc func stop() {
         runningTask?.cancel()
+        runningTask = nil
         cancelPendingSave()
         // Run save in a detached task or synchronous if possible, but manager likely async or safe
         // We can just trigger a save. Since we are cancelling, the session state (results)
@@ -188,9 +195,11 @@ extension EvaluationSession {
             logger.info("Evaluation session \(id) stopped")
         }
 
+        cancelPendingSave()
         _ = try? EvaluationSessionManager.shared.save(self)
 
-        DispatchQueue.main.async {
+        await MainActor.run {
+            self.runningTask = nil
             NotificationCenter.default.post(name: .evaluationSessionDidUpdate, object: self)
         }
     }
