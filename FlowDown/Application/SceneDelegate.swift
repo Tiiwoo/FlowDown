@@ -98,12 +98,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         try? FileManager.default.startDownloadingUbiquitousItem(at: url)
         do {
             let data = try Data(contentsOf: url)
-            let decoder = PropertyListDecoder()
-            let template = try decoder.decode(ChatTemplate.self, from: data)
             Task { @MainActor in
-                ChatTemplateManager.shared.addTemplate(template)
+                do {
+                    let template = try ChatTemplateManager.shared.importTemplate(from: data)
+                    mainController.queueBootMessage(text: "Successfully imported \(template.name)")
+                } catch {
+                    Logger.app.errorFile("failed to import template from URL: \(url), error: \(error)")
+                    mainController.queueBootMessage(
+                        text: "Failed to import template: \(error.localizedDescription)",
+                    )
+                }
             }
-            mainController.queueBootMessage(text: "Successfully imported \(template.name)")
         } catch {
             Logger.app.errorFile("failed to import template from URL: \(url), error: \(error)")
             mainController.queueBootMessage(
@@ -118,21 +123,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         try? FileManager.default.startDownloadingUbiquitousItem(at: url)
         do {
             let data = try Data(contentsOf: url)
-            let decoder = PropertyListDecoder()
-            let server = try decoder.decode(ModelContextServer.self, from: data)
             Task { @MainActor in
-                MCPService.shared.insert(server)
+                do {
+                    let server = try MCPService.shared.importServer(from: data)
+                    let serverName = if let serverUrl = URL(string: server.endpoint), let host = serverUrl.host {
+                        host
+                    } else if !server.name.isEmpty {
+                        server.name
+                    } else {
+                        String(localized: "MCP Server")
+                    }
+                    mainController.queueBootMessage(
+                        text: "Successfully imported MCP server \(serverName)",
+                    )
+                } catch {
+                    Logger.app.errorFile("failed to import MCP server from URL: \(url), error: \(error)")
+                    mainController.queueBootMessage(
+                        text: "Failed to import MCP server: \(error.localizedDescription)",
+                    )
+                }
             }
-            let serverName = if let serverUrl = URL(string: server.endpoint), let host = serverUrl.host {
-                host
-            } else if !server.name.isEmpty {
-                server.name
-            } else {
-                String(localized: "MCP Server")
-            }
-            mainController.queueBootMessage(
-                text: "Successfully imported MCP server \(serverName)",
-            )
         } catch {
             Logger.app.errorFile("failed to import MCP server from URL: \(url), error: \(error)")
             mainController.queueBootMessage(

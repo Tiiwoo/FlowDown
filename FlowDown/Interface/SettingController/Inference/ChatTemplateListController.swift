@@ -242,11 +242,7 @@ extension ChatTemplateListController: UIDocumentPickerDelegate {
                     _ = url.startAccessingSecurityScopedResource()
                     defer { url.stopAccessingSecurityScopedResource() }
                     let data = try Data(contentsOf: url)
-                    let decoder = PropertyListDecoder()
-                    let template = try decoder.decode(ChatTemplate.self, from: data)
-                    await MainActor.run {
-                        ChatTemplateManager.shared.addTemplate(template)
-                    }
+                    _ = try ChatTemplateManager.shared.importTemplate(from: data)
                     success += 1
                 } catch {
                     failure.append(error)
@@ -292,8 +288,7 @@ extension ChatTemplateListController: UITableViewDragDelegate, UITableViewDropDe
         let itemProvider = NSItemProvider()
 
         do {
-            let encoder = PropertyListEncoder()
-            let data = try encoder.encode(template)
+            let data = try ChatTemplateManager.shared.exportTemplateData(template)
             itemProvider.registerDataRepresentation(
                 forTypeIdentifier: fdTemplateTypeIdentifier,
                 visibility: .all,
@@ -366,10 +361,12 @@ extension ChatTemplateListController: UITableViewDragDelegate, UITableViewDropDe
                         guard let data, error == nil else { return }
 
                         do {
-                            let decoder = PropertyListDecoder()
-                            let template = try decoder.decode(ChatTemplate.self, from: data)
                             Task { @MainActor in
-                                ChatTemplateManager.shared.addTemplate(template)
+                                do {
+                                    _ = try ChatTemplateManager.shared.importTemplate(from: data)
+                                } catch {
+                                    Logger.app.errorFile("failed to import dropped template: \(error)")
+                                }
                             }
                         } catch {
                             Logger.app.errorFile("failed to decode dropped template: \(error)")

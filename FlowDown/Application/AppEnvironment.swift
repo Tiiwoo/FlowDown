@@ -17,6 +17,10 @@ nonisolated enum AppEnvironment {
 
     private static var containerStack: [Container] = []
 
+    nonisolated static var isBootstrapped: Bool {
+        !containerStack.isEmpty
+    }
+
     nonisolated static var current: Container {
         guard let container = containerStack.last else {
             fatalError("Call AppEnvironment.bootstrap(_) before accessing dependencies.")

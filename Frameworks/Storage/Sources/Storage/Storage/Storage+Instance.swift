@@ -16,6 +16,12 @@ public extension Storage {
         return new
     }
 
+    #if DEBUG
+        static func resetForTesting() {
+            instance = nil
+        }
+    #endif
+
     static func setSyncEngine(_ syncEngine: SyncEngine) {
         instance?.syncEngine = syncEngine
     }

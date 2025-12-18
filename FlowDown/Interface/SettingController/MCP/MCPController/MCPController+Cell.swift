@@ -140,9 +140,14 @@ extension SettingController.SettingContent.MCPController {
                 .appendingPathExtension("fdmcp")
             try? FileManager.default.createDirectory(at: tempFileDir, withIntermediateDirectories: true)
             FileManager.default.createFile(atPath: tempFile.path, contents: nil)
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            try? encoder.encode(server).write(to: tempFile, options: .atomic)
+
+            do {
+                let data = try MCPService.shared.exportServerData(server)
+                try data.write(to: tempFile, options: .atomic)
+            } catch {
+                Logger.app.errorFile("failed to export MCP server: \(error)")
+                return
+            }
 
             DisposableExporter(deletableItem: tempFile, title: "Export MCP Server").run(anchor: self)
         }

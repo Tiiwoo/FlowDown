@@ -41,6 +41,29 @@ class ChatTemplateManager {
         reloadFromStorage()
     }
 
+    @discardableResult
+    func importTemplate(from data: Data) throws -> ChatTemplate {
+        let decoder = PropertyListDecoder()
+        var template = try decoder.decode(ChatTemplate.self, from: data)
+
+        // Always treat imports as a new object.
+        // This prevents collisions with existing/soft-deleted records that can make imports appear to succeed but persist nothing.
+        template.id = UUID()
+
+        addTemplate(template)
+        return template
+    }
+
+    func exportTemplateData(_ template: ChatTemplate) throws -> Data {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        let data = try encoder.encode(template)
+
+        // Validate round-trip decodability.
+        _ = try PropertyListDecoder().decode(ChatTemplate.self, from: data)
+        return data
+    }
+
     func template(for itemIdentifier: ChatTemplate.ID) -> ChatTemplate? {
         assert(Thread.isMainThread)
         return templates[itemIdentifier]

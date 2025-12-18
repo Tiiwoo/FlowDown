@@ -241,9 +241,7 @@ extension SettingController.SettingContent.MCPController: UITableViewDragDelegat
         let itemProvider = NSItemProvider()
 
         do {
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            let data = try encoder.encode(server)
+            let data = try MCPService.shared.exportServerData(server)
             itemProvider.registerDataRepresentation(
                 forTypeIdentifier: utType,
                 visibility: .all,
@@ -315,10 +313,12 @@ extension SettingController.SettingContent.MCPController: UITableViewDragDelegat
                 itemProvider.loadDataRepresentation(forTypeIdentifier: utType) { data, error in
                     guard let data, error == nil else { return }
                     do {
-                        let decoder = PropertyListDecoder()
-                        let server = try decoder.decode(ModelContextServer.self, from: data)
                         Task { @MainActor in
-                            MCPService.shared.insert(server)
+                            do {
+                                _ = try MCPService.shared.importServer(from: data)
+                            } catch {
+                                Logger.app.errorFile("failed to import dropped MCP server: \(error)")
+                            }
                         }
                     } catch {
                         Logger.app.errorFile("failed to decode dropped template: \(error)")
@@ -349,9 +349,7 @@ extension SettingController.SettingContent.MCPController {
         FileManager.default.createFile(atPath: tempFile.path, contents: nil)
 
         do {
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            let data = try encoder.encode(server)
+            let data = try MCPService.shared.exportServerData(server)
             try data.write(to: tempFile, options: .atomic)
 
             DisposableExporter(deletableItem: tempFile, title: "Export MCP Server").run(anchor: view)

@@ -83,6 +83,55 @@ class MCPService: NSObject {
         updateFromDatabase()
     }
 
+    @MainActor
+    @discardableResult
+    func importServer(from data: Data) throws -> ModelContextServer {
+        let server = try ModelContextServer.decodeCompatible(from: data)
+
+        // Basic validation: endpoint is required.
+        if server.endpoint.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            throw NSError(
+                domain: "MCPImport",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Invalid MCP server configuration: missing endpoint."],
+            )
+        }
+
+        // Always treat imports as a new local object.
+        server.update(\.deviceId, to: Storage.deviceId)
+        server.update(\.objectId, to: UUID().uuidString)
+        server.update(\.removed, to: false)
+
+        let now = Date.now
+        server.update(\.creation, to: now)
+        server.update(\.modified, to: now)
+
+        // Reset volatile connection state.
+        server.update(\.lastConnected, to: nil)
+        server.update(\.connectionStatus, to: .disconnected)
+
+        insert(server)
+        return server
+    }
+
+    func exportServerData(_ server: ModelContextServer) throws -> Data {
+        if server.endpoint.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            throw NSError(
+                domain: "MCPExport",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: "Invalid MCP server configuration: missing endpoint."],
+            )
+        }
+
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        let data = try encoder.encode(server)
+
+        // Validate round-trip decodability (including legacy format support).
+        _ = try ModelContextServer.decodeCompatible(from: data)
+        return data
+    }
+
     func ensureOrReconnect(_ serverID: ModelContextServer.ID) {
         if let connection = connections[serverID], connection.client != nil { return }
         guard let server = sdb.modelContextServerWith(serverID) else { return }

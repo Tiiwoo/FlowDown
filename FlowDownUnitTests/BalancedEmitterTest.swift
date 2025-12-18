@@ -19,19 +19,22 @@ private actor ChunkRecorder {
     }
 }
 
-@Test("BalancedEmitter batches using size decided at add time")
-func balancedEmitter_batchesUsingAddTimeBatchSize() async throws {
-    let recorder = ChunkRecorder()
-    let emitter = BalancedEmitter(duration: 0.001, frequency: 2) { chunk in
-        Task {
-            await recorder.append(chunk)
+@Suite
+class BalancedEmitterTestSuite {
+    @Test("BalancedEmitter batches using size decided at add time")
+    func balancedEmitter_batchesUsingAddTimeBatchSize() async throws {
+        let recorder = ChunkRecorder()
+        let emitter = BalancedEmitter(duration: 0.001, frequency: 2) { chunk in
+            Task {
+                await recorder.append(chunk)
+            }
         }
+
+        await emitter.add("ABCDE")
+        await emitter.wait()
+
+        let emitted = try await recorder.waitForCount(2)
+        #expect(emitted == ["ABC", "DE"])
+        #expect(emitted.joined() == "ABCDE")
     }
-
-    await emitter.add("ABCDE")
-    await emitter.wait()
-
-    let emitted = try await recorder.waitForCount(2)
-    #expect(emitted == ["ABC", "DE"])
-    #expect(emitted.joined() == "ABCDE")
 }

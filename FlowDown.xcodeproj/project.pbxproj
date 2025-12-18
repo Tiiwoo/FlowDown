@@ -29,6 +29,10 @@
 		5097D63F2EF3E35C00850D3E /* Storage in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5097D63D2EF3E35C00850D3E /* Storage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5097D6422EF3E36000850D3E /* ChatClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5097D6412EF3E36000850D3E /* ChatClientKit */; };
 		5097D6432EF3E36000850D3E /* ChatClientKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5097D6412EF3E36000850D3E /* ChatClientKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		50AE757E2EF436FC00D2C845 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 50AE757D2EF436FC00D2C845 /* Collections */; };
+		50AE75802EF436FC00D2C845 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 50AE757F2EF436FC00D2C845 /* OrderedCollections */; };
+		50AE75822EF4370A00D2C845 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 50AE75812EF4370A00D2C845 /* OrderedCollections */; };
+		50AE75842EF4370E00D2C845 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 50AE75832EF4370E00D2C845 /* Collections */; };
 		50B492942D4F609E00F4D2B3 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 50B492932D4F609E00F4D2B3 /* ZIPFoundation */; };
 		50B4CDAC2D4794F90028EB33 /* Digger in Frameworks */ = {isa = PBXBuildFile; productRef = 50B4CDAB2D4794F90028EB33 /* Digger */; };
 		50B514782D23157A0092284C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50B514772D23157A0092284C /* SnapKit */; };
@@ -183,6 +187,7 @@
 				50B4CDAC2D4794F90028EB33 /* Digger in Frameworks */,
 				50C9035B2D428DAD00E6E3A8 /* Storage in Frameworks */,
 				50F6E0002F00A0B500123456 /* FlowDownModelExchange in Frameworks */,
+				50AE757E2EF436FC00D2C845 /* Collections in Frameworks */,
 				505FC6192D4945E500F4CB17 /* SPIndicator in Frameworks */,
 				505742472E1B8B8100A26090 /* DpkgVersion in Frameworks */,
 				506373A12EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout in Frameworks */,
@@ -202,6 +207,7 @@
 				502272D22EB3DE3200AF9D28 /* UIEffectKit in Frameworks */,
 				50DDB1712DDF16F200351E46 /* ListViewKit in Frameworks */,
 				5081A0142D6DBBBA0079ECBE /* RunestoneEditor in Frameworks */,
+				50AE75802EF436FC00D2C845 /* OrderedCollections in Frameworks */,
 				50B514782D23157A0092284C /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +218,8 @@
 			files = (
 				5097D63E2EF3E35C00850D3E /* Storage in Frameworks */,
 				5097D6422EF3E36000850D3E /* ChatClientKit in Frameworks */,
+				50AE75842EF4370E00D2C845 /* Collections in Frameworks */,
+				50AE75822EF4370A00D2C845 /* OrderedCollections in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +329,8 @@
 				502272D12EB3DE3200AF9D28 /* UIEffectKit */,
 				506373A02EC0D6E200C8A9FB /* AlignedCollectionViewFlowLayout */,
 				506373A52EC0DC7900C8A9FB /* ColorfulX */,
+				50AE757D2EF436FC00D2C845 /* Collections */,
+				50AE757F2EF436FC00D2C845 /* OrderedCollections */,
 			);
 			productName = FlowDown;
 			productReference = 503498BD2D23053D004672BD /* FlowDown.app */;
@@ -347,6 +357,8 @@
 			packageProductDependencies = (
 				5097D63D2EF3E35C00850D3E /* Storage */,
 				5097D6412EF3E36000850D3E /* ChatClientKit */,
+				50AE75812EF4370A00D2C845 /* OrderedCollections */,
+				50AE75832EF4370E00D2C845 /* Collections */,
 			);
 			productName = FlowDownUnitTests;
 			productReference = 50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */;
@@ -411,6 +423,7 @@
 				502272D02EB3DE3200AF9D28 /* XCRemoteSwiftPackageReference "UIEffectKit" */,
 				5063739F2EC0D6E200C8A9FB /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
 				506373A42EC0DC7900C8A9FB /* XCRemoteSwiftPackageReference "ColorfulX" */,
+				50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
@@ -1040,6 +1053,14 @@
 				minimumVersion = 3.4.6;
 			};
 		};
+		50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.3.0;
+			};
+		};
 		50B492922D4F602C00F4D2B3 /* XCRemoteSwiftPackageReference "ZIPFoundation" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/weichsel/ZIPFoundation";
@@ -1190,6 +1211,26 @@
 		5097D6412EF3E36000850D3E /* ChatClientKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ChatClientKit;
+		};
+		50AE757D2EF436FC00D2C845 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		50AE757F2EF436FC00D2C845 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+		50AE75812EF4370A00D2C845 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+		50AE75832EF4370E00D2C845 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 50AE757C2EF436FC00D2C845 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
 		};
 		50B492932D4F609E00F4D2B3 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;

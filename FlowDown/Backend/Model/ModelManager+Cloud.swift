@@ -202,10 +202,18 @@ extension ModelManager {
         let decoder = PropertyListDecoder()
         let data = try Data(contentsOf: url)
         let model = try decoder.decode(CloudModel.self, from: data)
+
+        // Imported model configurations must be treated as a new local object.
+        // Otherwise, an exported file can collide with an existing (or soft-deleted) row and
+        // end up being ignored by diffing logic, showing a "success" toast with no visible data.
         model.update(\.deviceId, to: Storage.deviceId)
-        if model.objectId.isEmpty {
-            model.update(\.objectId, to: UUID().uuidString)
-        }
+        model.update(\.objectId, to: UUID().uuidString)
+        model.update(\.removed, to: false)
+
+        let now = Date.now
+        model.update(\.creation, to: now)
+        model.update(\.modified, to: now)
+
         insertCloudModel(model)
         return model
     }

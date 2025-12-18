@@ -118,6 +118,8 @@ extension TranslationProviderView {
             translationError = nil
         }
 
+        await service.setCollectedErrors(nil)
+
         let stream = try await service.streamingChat(body: request)
 
         for try await chunk in stream {
@@ -142,6 +144,37 @@ extension TranslationProviderView {
             default:
                 break
             }
+        }
+
+        let trimmedPlain = translationPlainResult
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        var normalizedPlain = trimmedPlain
+        for terminator in ChatClientConstants.additionalTerminatingTokens {
+            while normalizedPlain.hasSuffix(terminator) {
+                normalizedPlain.removeLast(terminator.count)
+            }
+        }
+        normalizedPlain = normalizedPlain.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        if normalizedPlain.isEmpty,
+           translationReasoning.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+           translationSegmentedResult.isEmpty
+        {
+            if let error = service.collectedErrors?.trimmingCharacters(in: .whitespacesAndNewlines),
+               !error.isEmpty
+            {
+                throw NSError(
+                    domain: "Translation",
+                    code: -1,
+                    userInfo: [NSLocalizedDescriptionKey: error],
+                )
+            }
+
+            throw NSError(
+                domain: "Translation",
+                code: -1,
+                userInfo: [NSLocalizedDescriptionKey: String(localized: "Failed to generate text.")],
+            )
         }
     }
 

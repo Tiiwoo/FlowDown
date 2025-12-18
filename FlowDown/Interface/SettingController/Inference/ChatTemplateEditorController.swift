@@ -285,9 +285,7 @@ class ChatTemplateEditorController: StackScrollController, UITextViewDelegate {
 
         let exportOption = ConfigurableActionView { @MainActor [weak self] controller in
             guard let self else { return }
-            let encoder = PropertyListEncoder()
-            encoder.outputFormat = .xml
-            guard let data = try? encoder.encode(template) else { return }
+            guard let data = try? ChatTemplateManager.shared.exportTemplateData(template) else { return }
             let fileName = "Export-\(template.name.sanitizedFileName)"
             DisposableExporter(
                 data: data,
