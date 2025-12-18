@@ -21,6 +21,7 @@ class DeleteButton: UIView {
 
         addSubview(imageView)
         imageView.tintColor = UIColor(named: "Background")
+        imageView.contentMode = .scaleAspectFit
         let configuration = UIImage.SymbolConfiguration(weight: .heavy)
         imageView.image = UIImage(systemName: "xmark", withConfiguration: configuration)
 

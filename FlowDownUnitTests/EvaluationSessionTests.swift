@@ -12,6 +12,18 @@ import XCTest
 class EvaluationSessionTests: XCTestCase {
     var session: EvaluationSession!
 
+    private func decodeVerifier(from propertyList: Any) throws -> EvaluationManifest.Suite.Case.Verifier {
+        let data = try PropertyListSerialization.data(fromPropertyList: propertyList, format: .xml, options: 0)
+        return try PropertyListDecoder().decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
+    }
+
+    private func roundTrip(_ verifier: EvaluationManifest.Suite.Case.Verifier) throws -> EvaluationManifest.Suite.Case.Verifier {
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        let data = try encoder.encode(verifier)
+        return try PropertyListDecoder().decode(EvaluationManifest.Suite.Case.Verifier.self, from: data)
+    }
+
     override func setUp() {
         super.setUp()
         // Provide dummy options if needed.
@@ -44,9 +56,25 @@ class EvaluationSessionTests: XCTestCase {
         XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
     }
 
+    func testVerifyContainsCaseInsensitive() {
+        let response = ChatResponse(reasoning: "", text: "The quick brown fox", images: [], tools: [])
+        let verifiers: [EvaluationManifest.Suite.Case.Verifier] = [.containsCaseInsensitive(pattern: "BROWN")]
+
+        let outcome = session.verify(response: response, verifiers: verifiers)
+        XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
+    }
+
     func testVerifyRegex() {
         let response = ChatResponse(reasoning: "", text: "Order ID: 12345", images: [], tools: [])
         let verifiers: [EvaluationManifest.Suite.Case.Verifier] = [.matchRegularExpression(pattern: #"Order ID: \d+"#)]
+
+        let outcome = session.verify(response: response, verifiers: verifiers)
+        XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
+    }
+
+    func testVerifyMatchCaseInsensitive() {
+        let response = ChatResponse(reasoning: "", text: "Hello World", images: [], tools: [])
+        let verifiers: [EvaluationManifest.Suite.Case.Verifier] = [.matchCaseInsensitive(pattern: "hello world")]
 
         let outcome = session.verify(response: response, verifiers: verifiers)
         XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
@@ -68,6 +96,36 @@ class EvaluationSessionTests: XCTestCase {
 
         let outcome = session.verify(response: response, verifiers: verifiers)
         XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
+    }
+
+    func testDecodeLegacyVerifierTypePatternFormat() throws {
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "match", "pattern": "Hello World"]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "matchCaseInsensitive", "pattern": "Hello World"]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "matchRegularExpression", "pattern": #"Order ID: \d+"#]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "contains", "pattern": "brown"]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "containsCaseInsensitive", "pattern": "brown"]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["type": "open"]))
+    }
+
+    func testDecodeLegacyVerifierKeyedShorthandFormat() throws {
+        XCTAssertThrowsError(try decodeVerifier(from: ["match": "Hello World"]))
+        XCTAssertThrowsError(try decodeVerifier(from: ["containsCaseInsensitive": "BROWN"]))
+    }
+
+    func testVerifierEncodeDecodeRoundTrip_AllCases() throws {
+        let all: [EvaluationManifest.Suite.Case.Verifier] = [
+            .open,
+            .match(pattern: "Hello"),
+            .matchCaseInsensitive(pattern: "Hello"),
+            .matchRegularExpression(pattern: #"Order ID: \d+"#),
+            .contains(pattern: "brown"),
+            .containsCaseInsensitive(pattern: "BROWN"),
+            .tool(parameter: "a", value: 1),
+        ]
+
+        for verifier in all {
+            XCTAssertEqual(try roundTrip(verifier), verifier)
+        }
     }
 
     func testExcludedSuitesAreNotIncludedInSessionManifests() {

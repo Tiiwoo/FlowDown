@@ -31,7 +31,10 @@ extension EvaluationStatusCollectionView {
             ) as? EvaluationSuiteHeaderView else {
                 return nil
             }
-            if let suite = suite(forSectionIndex: indexPath.section) {
+            let sectionIdentifiers = dataSource.snapshot().sectionIdentifiers
+            if sectionIdentifiers.indices.contains(indexPath.section),
+               let suite = suite(for: sectionIdentifiers[indexPath.section])
+            {
                 let completed = suite.cases.count(where: { caseItem in
                     guard let outcome = caseItem.results.last?.outcome else { return false }
                     return outcome != .notDetermined && outcome != .processing

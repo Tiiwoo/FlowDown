@@ -1243,6 +1243,52 @@
         }
       }
     },
+    "Actions" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktionen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actions"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acciones"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actions"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동작"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "操作"
+          }
+        }
+      }
+    },
     "Activities" : {
       "comment" : "Emoji Category",
       "localizations" : {
@@ -1976,6 +2022,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "协议"
+          }
+        }
+      }
+    },
+    "All" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Todo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tout"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "すべて"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "전체"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部"
           }
         }
       }
@@ -4191,16 +4283,16 @@
     },
     "Assistant Reply" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Assistant Reply"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Antwort des Assistenten"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Assistant Reply"
           }
         },
         "es" : {
@@ -5704,6 +5796,98 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "校准大小"
+          }
+        }
+      }
+    },
+    "Calling Tool..." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool wird aufgerufen..."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calling Tool..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llamando a la herramienta..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appel de l’outil..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ツールを呼び出しています..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도구 호출 중..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在调用工具..."
+          }
+        }
+      }
+    },
+    "Calling: %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufruf: %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Calling: %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Llamando: %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Appel : %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "呼び出し: %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "호출: %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在调用：%@"
           }
         }
       }
@@ -8330,6 +8514,52 @@
         }
       }
     },
+    "Conclusion" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fazit"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conclusion"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conclusión"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Conclusion"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "結論"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "결론"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "结论"
+          }
+        }
+      }
+    },
     "Concurrency Limit" : {
       "localizations" : {
         "de" : {
@@ -9296,6 +9526,52 @@
         }
       }
     },
+    "Contains (Case Insensitive): '%@'" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enthält (ohne Beachtung der Groß-/Kleinschreibung): '%@'"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contains (Case Insensitive): '%@'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contiene (sin distinguir mayúsculas/minúsculas): '%@'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contient (sans casse) : '%@'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含む（大文字小文字を区別しない）: '%@'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포함(대소문자 무시): '%@'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含（不区分大小写）：'%@'"
+          }
+        }
+      }
+    },
     "Contains (case-insensitive): %@" : {
       "localizations" : {
         "de" : {
@@ -9338,6 +9614,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "包含（不区分大小写）：%@"
+          }
+        }
+      }
+    },
+    "Contains: '%@'" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enthält: '%@'"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contains: '%@'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contiene: '%@'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Contient : '%@'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "含む: '%@'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "포함: '%@'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "包含：'%@'"
           }
         }
       }
@@ -9417,13 +9739,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "コンテンツ"
+            "value" : "内容"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "콘텐츠"
+            "value" : "내용"
           }
         },
         "zh-Hans" : {
@@ -16245,6 +16567,7 @@
       }
     },
     "Evaluation Result" : {
+      "extractionState" : "stale",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -24528,6 +24851,52 @@
         }
       }
     },
+    "Judgement" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bewertung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Judgement"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Juicio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jugement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "判定"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "판정"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "判定"
+          }
+        }
+      }
+    },
     "Judging" : {
       "localizations" : {
         "de" : {
@@ -26462,6 +26831,52 @@
         }
       }
     },
+    "Match (Case Insensitive): '%@'" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übereinstimmung (ohne Beachtung der Groß-/Kleinschreibung): '%@'"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match (Case Insensitive): '%@'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coincide (sin distinguir mayúsculas/minúsculas): '%@'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correspondance (sans casse) : '%@'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一致（大文字小文字を区別しない）: '%@'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일치(대소문자 무시): '%@'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匹配（不区分大小写）：'%@'"
+          }
+        }
+      }
+    },
     "Match (case-insensitive): %@" : {
       "localizations" : {
         "de" : {
@@ -26550,6 +26965,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "匹配（正则）：%@"
+          }
+        }
+      }
+    },
+    "Match: '%@'" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übereinstimmung: '%@'"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Match: '%@'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coincide: '%@'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Correspondance : '%@'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "一致: '%@'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "일치: '%@'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "匹配：'%@'"
           }
         }
       }
@@ -29869,6 +30330,52 @@
         }
       }
     },
+    "No content." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Inhalt."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No content."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sin contenido."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun contenu."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "内容がありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "내용이 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有内容。"
+          }
+        }
+      }
+    },
     "No conversations found." : {
       "localizations" : {
         "de" : {
@@ -30513,6 +31020,52 @@
         }
       }
     },
+    "No output available." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keine Ausgabe verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No output available."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay salida disponible."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucune sortie disponible."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "出力はありません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "출력이 없습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有可用输出。"
+          }
+        }
+      }
+    },
     "No response from model." : {
       "localizations" : {
         "de" : {
@@ -30647,6 +31200,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "无可用更新"
+          }
+        }
+      }
+    },
+    "No verifier configured." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kein Prüfer konfiguriert."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No verifier configured."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No hay verificador configurado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aucun vérificateur configuré."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検証器が構成されていません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "검증기가 구성되지 않았습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未配置验证器。"
           }
         }
       }
@@ -31062,6 +31661,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打开"
+          }
+        }
+      }
+    },
+    "Open (Human Eval)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Offen (manuelle Bewertung)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open (Human Eval)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abierto (evaluación humana)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvert (évaluation humaine)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未判定（人手評価）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "열림(사람 평가)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开放（人工评估）"
           }
         }
       }
@@ -35073,16 +35718,16 @@
     },
     "Reasoning" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Reasoning"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Begründung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reasoning"
           }
         },
         "es" : {
@@ -35757,6 +36402,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "不论是否启用图片压缩，图片的 EXIF 信息都会被删除。这将删除包括拍摄日期、位置等信息。"
+          }
+        }
+      }
+    },
+    "Regex: '%@'" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regex: '%@'"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regex: '%@'"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regex: '%@'"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Regex : '%@'"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正規表現: '%@'"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "정규식: '%@'"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正则：'%@'"
           }
         }
       }
@@ -43035,16 +43726,16 @@
     },
     "System Instruction" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "System Instruction"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Systemanweisung"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System Instruction"
           }
         },
         "es" : {
@@ -47728,16 +48419,16 @@
     },
     "Tool Definition" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tool Definition"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Werkzeugdefinition"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool Definition"
           }
         },
         "es" : {
@@ -48004,16 +48695,16 @@
     },
     "Tool Output" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tool Output"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Werkzeugausgabe"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool Output"
           }
         },
         "es" : {
@@ -48044,6 +48735,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "工具输出"
+          }
+        }
+      }
+    },
+    "Tool Param: %@ == %@" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool-Parameter: %@ == %@"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tool Param: %@ == %@"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Parámetro de herramienta: %@ == %@"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Paramètre d’outil : %@ == %@"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ツールパラメータ: %@ == %@"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도구 매개변수: %@ == %@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "工具参数：%@ == %@"
           }
         }
       }
@@ -51685,16 +52422,16 @@
     },
     "User Request" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "User Request"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzeranfrage"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "User Request"
           }
         },
         "es" : {
@@ -52093,6 +52830,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "仅显示验证的模型"
+          }
+        }
+      }
+    },
+    "Verifier" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Prüfer"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verifier"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Verificador"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vérificateur"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "検証器"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "검증기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "验证器"
           }
         }
       }
@@ -55083,6 +55866,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你是一个转写助理。请准确地转写提供的音频文件，并清晰标记标点。"
+          }
+        }
+      }
+    },
+    "You can also use the Actions menu to re-run or delete." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sie können auch das Aktionen-Menü verwenden, um erneut auszuführen oder zu löschen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You can also use the Actions menu to re-run or delete."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "También puedes usar el menú Acciones para volver a ejecutar o eliminar."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vous pouvez aussi utiliser le menu Actions pour relancer ou supprimer."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「操作」メニューから再実行または削除することもできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "동작 메뉴에서 다시 실행하거나 삭제할 수도 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你也可以使用“操作”菜单重新运行或删除。"
           }
         }
       }

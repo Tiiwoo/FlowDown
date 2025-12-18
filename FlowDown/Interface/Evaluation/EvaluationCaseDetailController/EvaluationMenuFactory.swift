@@ -13,6 +13,8 @@ enum EvaluationMenuFactory {
         caseItem: EvaluationManifest.Suite.Case,
         onUpdate: @escaping () -> Void = {},
     ) -> UIMenu {
+        let currentOutcome = caseItem.results.last?.outcome ?? .notDetermined
+
         let markSuccess = UIAction(
             title: String(localized: "Mark as Success"),
             image: UIImage(systemName: "checkmark.circle"),
@@ -20,7 +22,9 @@ enum EvaluationMenuFactory {
         ) { _ in
             Task {
                 await updateOutcome(session: session, caseItem: caseItem, outcome: .pass)
-                onUpdate()
+                await MainActor.run {
+                    onUpdate()
+                }
             }
         }
 
@@ -31,7 +35,9 @@ enum EvaluationMenuFactory {
         ) { _ in
             Task {
                 await updateOutcome(session: session, caseItem: caseItem, outcome: .fail)
-                onUpdate()
+                await MainActor.run {
+                    onUpdate()
+                }
             }
         }
 
@@ -42,7 +48,9 @@ enum EvaluationMenuFactory {
         ) { _ in
             Task {
                 await reRunCase(session: session, caseItem: caseItem)
-                onUpdate()
+                await MainActor.run {
+                    onUpdate()
+                }
             }
         }
 
@@ -53,11 +61,22 @@ enum EvaluationMenuFactory {
         ) { _ in
             Task {
                 await deleteCase(session: session, caseItem: caseItem)
-                onUpdate()
+                await MainActor.run {
+                    onUpdate()
+                }
             }
         }
 
-        return UIMenu(title: "", children: [markSuccess, markFailure, reRun, delete])
+        let markActions: [UIAction] = switch currentOutcome {
+        case .pass:
+            [markFailure]
+        case .fail:
+            [markSuccess]
+        case .notDetermined, .processing, .awaitingJudging:
+            [markSuccess, markFailure]
+        }
+
+        return UIMenu(title: "", children: markActions + [reRun, delete])
     }
 
     private static func updateOutcome(
