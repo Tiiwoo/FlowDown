@@ -31,6 +31,45 @@ class EvaluationSession: Codable, @unchecked Sendable {
     }
 
     private var runningTask: Task<Void, Never>?
+
+    private let persistenceQueue = DispatchQueue(label: "FlowDown.EvaluationSession.persistence")
+    private var pendingSaveWorkItem: DispatchWorkItem?
+    private var lastSaveTime: Date = .distantPast
+    private let saveDebounceInterval: TimeInterval = 0.75
+}
+
+private extension EvaluationSession {
+    func scheduleSave() {
+        persistenceQueue.async { [weak self] in
+            guard let self else { return }
+
+            let now = Date()
+            if now.timeIntervalSince(lastSaveTime) >= saveDebounceInterval {
+                lastSaveTime = now
+                pendingSaveWorkItem?.cancel()
+                pendingSaveWorkItem = nil
+                _ = try? EvaluationSessionManager.shared.save(self)
+                return
+            }
+
+            pendingSaveWorkItem?.cancel()
+            let item = DispatchWorkItem { [weak self] in
+                guard let self else { return }
+                lastSaveTime = Date()
+                _ = try? EvaluationSessionManager.shared.save(self)
+            }
+            pendingSaveWorkItem = item
+            persistenceQueue.asyncAfter(deadline: .now() + saveDebounceInterval, execute: item)
+        }
+    }
+
+    func cancelPendingSave() {
+        persistenceQueue.async { [weak self] in
+            guard let self else { return }
+            pendingSaveWorkItem?.cancel()
+            pendingSaveWorkItem = nil
+        }
+    }
 }
 
 extension EvaluationSession {
@@ -60,6 +99,7 @@ extension EvaluationSession {
     func stopAndDispose(save: Bool = true) {
         runningTask?.cancel()
         runningTask = nil
+        cancelPendingSave()
         if save {
             _ = try? EvaluationSessionManager.shared.save(self)
         }
@@ -75,6 +115,7 @@ extension EvaluationSession {
 
     @objc func stop() {
         runningTask?.cancel()
+        cancelPendingSave()
         // Run save in a detached task or synchronous if possible, but manager likely async or safe
         // We can just trigger a save. Since we are cancelling, the session state (results)
         // will be preserved as they are updated in real-time.
@@ -112,20 +153,30 @@ extension EvaluationSession {
             }
         }
 
+        scheduleSave()
+
+        // NOTE: `AsyncStream` is intended for a single consumer.
+        // The previous implementation iterated the same stream from multiple tasks,
+        // which can lead to duplicated work (same case evaluated multiple times).
+        // Use a bounded task-group pattern to enforce `maxConcurrentRequests` safely.
         await withTaskGroup(of: Void.self) { group in
-            let casesChannel = AsyncStream<EvaluationManifest.Suite.Case> { continuation in
-                for caseItem in casesToRun {
-                    continuation.yield(caseItem)
+            var iterator = casesToRun.makeIterator()
+            let workerCount = max(1, min(self.maxConcurrentRequests, casesToRun.count))
+
+            for _ in 0 ..< workerCount {
+                guard let caseItem = iterator.next() else { break }
+                group.addTask {
+                    if Task.isCancelled { return }
+                    await self.evaluate(caseItem)
                 }
-                continuation.finish()
             }
 
-            for _ in 0 ..< self.maxConcurrentRequests {
+            while let _ = await group.next() {
+                if Task.isCancelled { return }
+                guard let nextCase = iterator.next() else { continue }
                 group.addTask {
-                    for await caseItem in casesChannel {
-                        if Task.isCancelled { return }
-                        await self.evaluate(caseItem)
-                    }
+                    if Task.isCancelled { return }
+                    await self.evaluate(nextCase)
                 }
             }
         }
@@ -179,6 +230,7 @@ extension EvaluationSession {
     private func updateResult(for caseItem: EvaluationManifest.Suite.Case, outcome: EvaluationManifest.Suite.Case.Result.Outcome) async {
         guard let result = caseItem.results.last else { return }
         result.outcome = outcome
+        scheduleSave()
     }
 
     private func performSingleShot(_ caseItem: EvaluationManifest.Suite.Case) async -> EvaluationManifest.Suite.Case.Result.Outcome {
@@ -242,6 +294,7 @@ extension EvaluationSession {
                     output.append(.init(type: .toolRequest, textRepresentation: toolMsg.args, toolRepresentation: toolRep))
                 }
                 result.output = output
+                scheduleSave()
             }
 
             return verify(response: response, verifiers: caseItem.verifier)

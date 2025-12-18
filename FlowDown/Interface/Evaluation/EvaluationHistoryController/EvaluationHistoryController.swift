@@ -19,7 +19,7 @@ class EvaluationHistoryController: UIViewController {
     private var sessions: [EvaluationSession] = []
 
     private lazy var tableView: UITableView = {
-        let tv = UITableView(frame: .zero, style: .insetGrouped)
+        let tv = UITableView(frame: .zero, style: .plain)
         tv.backgroundColor = .clear
         tv.separatorStyle = .singleLine
         tv.separatorInset = .zero
@@ -49,7 +49,12 @@ class EvaluationHistoryController: UIViewController {
         navigationItem.rightBarButtonItem = deleteAllBarButtonItem
 
         setupView()
-        loadData()
+        loadData(animated: false)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        loadData(animated: false)
     }
 
     private lazy var deleteAllBarButtonItem: UIBarButtonItem = {
@@ -65,13 +70,13 @@ class EvaluationHistoryController: UIViewController {
 
     @objc private func deleteAllTapped() {
         let alert = AlertViewController(
-            title: String(localized: "Delete All Evaluation Sessions"),
-            message: String(localized: "Are you sure you want to delete all evaluation sessions?"),
+            title: "Delete All Evaluation Sessions",
+            message: "Are you sure you want to delete all evaluation sessions?",
         ) { [weak self] context in
-            context.addAction(title: String(localized: "Cancel")) {
+            context.addAction(title: "Cancel") {
                 context.dispose()
             }
-            context.addAction(title: String(localized: "Erase All"), attribute: .accent) {
+            context.addAction(title: "Erase All", attribute: .accent) {
                 context.dispose {
                     guard let self else { return }
                     do {
@@ -89,7 +94,7 @@ class EvaluationHistoryController: UIViewController {
                             message: error.localizedDescription,
                         ) { context in
                             context.allowSimpleDispose()
-                            context.addAction(title: String(localized: "OK"), attribute: .accent) {
+                            context.addAction(title: "OK", attribute: .accent) {
                                 context.dispose()
                             }
                         }
@@ -108,19 +113,23 @@ class EvaluationHistoryController: UIViewController {
         }
     }
 
-    private func loadData() {
+    private func loadData(animated: Bool) {
         do {
             sessions = try EvaluationSessionManager.shared.listSessions()
-            applySnapshot(animated: false)
+            applySnapshot(animated: animated, reloadItems: true)
         } catch {
             Logger.app.errorFile("failed to load sessions: \(error)")
         }
     }
 
-    private func applySnapshot(animated: Bool) {
+    private func applySnapshot(animated: Bool, reloadItems: Bool = false) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, UUID>()
         snapshot.appendSections([.main])
-        snapshot.appendItems(sessions.map(\.id), toSection: .main)
+        let ids = sessions.map(\.id)
+        snapshot.appendItems(ids, toSection: .main)
+        if reloadItems {
+            snapshot.reloadItems(ids)
+        }
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
 

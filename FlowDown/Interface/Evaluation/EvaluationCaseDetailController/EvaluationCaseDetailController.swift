@@ -167,34 +167,67 @@ extension EvaluationCaseDetailController: UITableViewDataSource, UITableViewDele
         }
     }
 
+    func tableView(
+        _: UITableView,
+        contextMenuConfigurationForRowAt _: IndexPath,
+        point _: CGPoint,
+    ) -> UIContextMenuConfiguration? {
+        UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { [weak self] _ in
+            guard let self else { return nil }
+            return EvaluationMenuFactory.makeMenu(
+                session: session,
+                caseItem: caseItem,
+                onUpdate: { [weak self] in
+                    self?.navigationController?.popViewController(animated: true)
+                },
+            )
+        }
+    }
+
     private func configureContentCell(_ cell: EvaluationContentCell, with content: EvaluationManifest.Suite.Case.Content) {
-        var typeText = ""
-        var bodyText = ""
-        var secondaryText = ""
-        var typeIcon: String?
+        let typeText: String.LocalizationValue
+        let bodyText: String
+        let secondaryText: String
+        let typeIcon: String?
 
         switch content.type {
         case .instruct:
             typeText = "System Instruction"
             typeIcon = "gearshape.2"
             bodyText = content.textRepresentation ?? ""
+            secondaryText = ""
         case .request:
             typeText = "User Request"
             typeIcon = "person.fill.viewframe"
             bodyText = content.textRepresentation ?? ""
+            secondaryText = ""
         case .reply:
             typeText = "Assistant Reply"
             typeIcon = "sparkles"
             bodyText = content.textRepresentation ?? ""
+            secondaryText = ""
         case .reasoning:
             typeText = "Reasoning" // CoT
             typeIcon = "brain.head.profile"
             bodyText = content.textRepresentation ?? ""
+            secondaryText = ""
         case .toolDefinition:
             typeText = "Tool Definition"
             typeIcon = "hammer.fill"
             bodyText = content.toolRepresentation?.name ?? "Unknown"
-            secondaryText = content.toolRepresentation?.description ?? ""
+            var secondaryParts: [String] = []
+            let descriptionText = content.toolRepresentation?.description ?? ""
+            if !descriptionText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                secondaryParts.append(descriptionText)
+            }
+            if let params = content.toolRepresentation?.parameters {
+                if let pretty = prettyPrintedJSON(from: params) {
+                    secondaryParts.append(["Parameters", pretty].joined(separator: "\n\n"))
+                } else if !params.isEmpty {
+                    secondaryParts.append(["Parameters", String(describing: params)].joined(separator: "\n\n"))
+                }
+            }
+            secondaryText = secondaryParts.joined(separator: "\n\n")
         case .toolRequest:
             typeText = "Tool Call"
             typeIcon = "phone.arrow.up.right"
@@ -203,10 +236,31 @@ extension EvaluationCaseDetailController: UITableViewDataSource, UITableViewDele
             } else {
                 bodyText = "Calling Tool..."
             }
+            var secondaryParts: [String] = []
+            if let params = content.toolRepresentation?.parameters {
+                if let pretty = prettyPrintedJSON(from: params) {
+                    secondaryParts.append(["Parameters", pretty].joined(separator: "\n\n"))
+                } else if !params.isEmpty {
+                    secondaryParts.append(["Parameters", String(describing: params)].joined(separator: "\n\n"))
+                }
+            } else if let rawArgs = content.textRepresentation, !rawArgs.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                let argsText = prettyPrintedJSON(from: rawArgs) ?? rawArgs
+                secondaryParts.append(["Parameters", argsText].joined(separator: "\n\n"))
+            }
+            secondaryText = secondaryParts.joined(separator: "\n\n")
         case .toolResponse:
             typeText = "Tool Output"
             typeIcon = "phone.arrow.down.left"
             bodyText = content.textRepresentation ?? ""
+            var secondaryParts: [String] = []
+            if let params = content.toolRepresentation?.parameters {
+                if let pretty = prettyPrintedJSON(from: params) {
+                    secondaryParts.append(["Parameters", pretty].joined(separator: "\n\n"))
+                } else if !params.isEmpty {
+                    secondaryParts.append(["Parameters", String(describing: params)].joined(separator: "\n\n"))
+                }
+            }
+            secondaryText = secondaryParts.joined(separator: "\n\n")
         }
 
         // Header Configuration
@@ -219,10 +273,10 @@ extension EvaluationCaseDetailController: UITableViewDataSource, UITableViewDele
                 .foregroundColor: UIColor.secondaryLabel,
             ]
             let attributedString = NSMutableAttributedString(attachment: attachment)
-            attributedString.append(NSAttributedString(string: "  " + typeText, attributes: attrParams))
+            attributedString.append(NSAttributedString(string: "  " + String(localized: typeText), attributes: attrParams))
             cell.headerLabel.attributedText = attributedString
         } else {
-            cell.headerLabel.text = typeText
+            cell.headerLabel.text = String(localized: typeText)
         }
 
         // Body Configuration
@@ -230,6 +284,29 @@ extension EvaluationCaseDetailController: UITableViewDataSource, UITableViewDele
         if !secondaryText.isEmpty {
             cell.bodyLabel.text = (cell.bodyLabel.text ?? "") + "\n\n" + secondaryText
         }
+    }
+
+    private func prettyPrintedJSON(from jsonString: String) -> String? {
+        guard let data = jsonString.data(using: .utf8) else { return nil }
+        guard let object = try? JSONSerialization.jsonObject(with: data) else {
+            return nil
+        }
+        guard JSONSerialization.isValidJSONObject(object) else {
+            return nil
+        }
+        guard let pretty = try? JSONSerialization.data(withJSONObject: object, options: [.prettyPrinted, .sortedKeys]) else {
+            return nil
+        }
+        return String(decoding: pretty, as: UTF8.self)
+    }
+
+    private func prettyPrintedJSON(from parameters: [String: AnyCodingValue]) -> String? {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = [.prettyPrinted, .sortedKeys]
+        guard let data = try? encoder.encode(parameters) else {
+            return nil
+        }
+        return String(decoding: data, as: UTF8.self)
     }
 }
 

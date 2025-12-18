@@ -36,15 +36,16 @@ final class EvaluationSuiteHeaderView: UICollectionReusableView {
 
         addSubview(blurView)
         blurView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+            make.left.right.equalToSuperview().inset(-100)
         }
 
         titleLabel.font = .preferredFont(forTextStyle: .headline)
         titleLabel.textColor = .label
         titleLabel.numberOfLines = 1
 
-        blurView.contentView.addSubview(titleLabel)
-        blurView.contentView.addSubview(progressLabel)
+        addSubview(titleLabel)
+        addSubview(progressLabel)
         titleLabel.snp.makeConstraints { make in
             make.top.bottom.equalToSuperview().inset(8)
             make.leading.equalToSuperview().inset(16)
@@ -64,11 +65,11 @@ final class EvaluationSuiteHeaderView: UICollectionReusableView {
 
         if total > 0, completed == total {
             if awaitingJudging > 0 {
-                progressLabel.text = "Waiting for evaluation"
+                progressLabel.text = String(localized: "Waiting for evaluation")
             } else if failed > 0 {
-                progressLabel.text = "Completed \(failed) errors"
+                progressLabel.text = String(localized: "Completed with \(failed) errors")
             } else {
-                progressLabel.text = "Completed"
+                progressLabel.text = String(localized: "Completed")
             }
         } else {
             progressLabel.text = "\(progressPercent)%"

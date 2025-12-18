@@ -26,10 +26,9 @@ class EvaluationStatusCell: UICollectionViewCell {
     }
 
     private func setupUI() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .gray.withAlphaComponent(0.25)
         contentView.layer.cornerRadius = 16
         contentView.layer.cornerCurve = .continuous
-        contentView.addShadow(ofColor: .black.withAlphaComponent(0.1), radius: 4, offset: .zero, opacity: 0.5)
 
         contentView.addSubview(statusIcon)
         contentView.addSubview(titleLabel)
@@ -69,7 +68,7 @@ class EvaluationStatusCell: UICollectionViewCell {
 
         let targetColor: UIColor
         let iconName: String
-        let statusText: String
+        let statusText: String.LocalizationValue
 
         switch result {
         case .pass:
@@ -99,6 +98,6 @@ class EvaluationStatusCell: UICollectionViewCell {
         if statusIcon.image != UIImage(systemName: iconName) {
             statusIcon.image = UIImage(systemName: iconName)
         }
-        statusLabel.text = statusText
+        statusLabel.text = String(localized: statusText)
     }
 }
