@@ -51,7 +51,7 @@ extension SettingController.SettingContent.ModelController: UITableViewDelegate 
             return nil
         }
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            return .init(children: self.createModelMenuElements(for: itemIdentifier))
+            .init(children: self.createModelMenuElements(for: itemIdentifier))
         }
     }
 }

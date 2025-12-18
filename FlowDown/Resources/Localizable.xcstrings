@@ -4235,6 +4235,52 @@
         }
       }
     },
+    "Audio models can listen to sounds in attachments." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audiomodelle können Töne in Anhängen hören."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio models can listen to sounds in attachments."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los modelos de audio pueden escuchar sonidos en los archivos adjuntos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les modèles audio peuvent écouter les sons dans les pièces jointes."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オーディオモデルは添付ファイル内の音声を聞くことができます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오디오 모델은 첨부 파일의 소리를 들을 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音频模型可以听取附件中的声音。"
+          }
+        }
+      }
+    },
     "Audio Processing" : {
       "localizations" : {
         "de" : {
@@ -27387,16 +27433,16 @@
     },
     "Networking (Advanced)" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Networking (Advanced)"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Netzwerk (Erweitert)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Networking (Advanced)"
           }
         },
         "es" : {
@@ -38202,6 +38248,98 @@
         }
       }
     },
+    "Specially trained models can use roles to distinguish the priority and importance of instructions. Some models require this feature." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speziell trainierte Modelle können Rollen verwenden, um die Priorität und Wichtigkeit von Anweisungen zu unterscheiden. Einige Modelle erfordern diese Funktion."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specially trained models can use roles to distinguish the priority and importance of instructions. Some models require this feature."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los modelos especialmente entrenados pueden usar roles para distinguir la prioridad e importancia de las instrucciones. Algunos modelos requieren esta función."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les modèles spécialement entraînés peuvent utiliser des rôles pour distinguer la priorité et l'importance des instructions. Certains modèles nécessitent cette fonctionnalité."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特別に訓練されたモデルは、ロールを使用して指示の優先度と重要度を区別できます。一部のモデルではこの機能が必要です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "특별히 훈련된 모델은 역할을 사용하여 지시의 우선순위와 중요도를 구분할 수 있습니다. 일부 모델은 이 기능이 필요합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经过特殊训练的模型可以使用角色来区别指令的优先级和重要程度。部分模型要求使用此功能。"
+          }
+        }
+      }
+    },
+    "Specially trained models can use tools to read and write accurate information and automatically perform multi-turn processing." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speziell trainierte Modelle können Werkzeuge verwenden, um genaue Informationen zu lesen und zu schreiben und automatisch mehrstufige Verarbeitung durchzuführen."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Specially trained models can use tools to read and write accurate information and automatically perform multi-turn processing."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Los modelos especialmente entrenados pueden usar herramientas para leer y escribir información precisa y realizar automáticamente procesamiento de múltiples turnos."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Les modèles spécialement entraînés peuvent utiliser des outils pour lire et écrire des informations précises et effectuer automatiquement un traitement multi-tours."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特別に訓練されたモデルは、ツールを使用して正確な情報を読み書きし、自動的にマルチターン処理を実行できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "특별히 훈련된 모델은 도구를 사용하여 정확한 정보를 읽고 쓰며 자동으로 다중 턴 처리를 수행할 수 있습니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "经过特殊训练的模型可以使用工具来读写准确的信息，并自动进行多轮处理。"
+          }
+        }
+      }
+    },
     "Speech Recognition" : {
       "localizations" : {
         "de" : {
@@ -43079,98 +43217,6 @@
         }
       }
     },
-    "This model can process audio attachments." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Modell kann Audioanhänge verarbeiten."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This model can process audio attachments."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este modelo puede procesar adjuntos de audio."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ce modèle peut traiter des pièces jointes audio."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "このモデルは音声添付を処理できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 모델은 오디오 첨부를 처리할 수 있습니다."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此模型可以处理音频附件。"
-          }
-        }
-      }
-    },
-    "This model can use client provided tools." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Modell kann clientseitig bereitgestellte Tools nutzen."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This model can use client provided tools."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este modelo puede usar herramientas proporcionadas por el cliente."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ce modèle peut utiliser des outils fournis par le client."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "このモデルはクライアント提供ツールを使用できます。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 모델은 클라이언트가 제공한 도구를 사용할 수 있습니다."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "这个模型可以使用客户端提供的工具。"
-          }
-        }
-      }
-    },
     "This model does not support tool call or no model is selected." : {
       "localizations" : {
         "de" : {
@@ -43259,52 +43305,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "此模型似乎过大，可能无法在此设备上加载。"
-          }
-        }
-      }
-    },
-    "This model requires developer role when dealing with prompt." : {
-      "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Dieses Modell erfordert die Entwicklerrolle beim Umgang mit dem Prompt."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "This model requires developer role when dealing with prompt."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Este modelo requiere rol de desarrollador para gestionar la instrucción."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ce modèle requiert un rôle développeur pour manipuler l’invite."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "このモデルはプロンプト処理に開発者ロールが必要です。"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "이 모델은 프롬프트 처리 시 developer 역할이 필요합니다."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "此模型在推理时需要使用开发者角色，而非传统的系统角色。"
           }
         }
       }
@@ -49245,48 +49245,48 @@
         }
       }
     },
-    "Visual model can be used for image recognition." : {
+    "Visual models can extract information from images." : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visuelles Modell kann für Bilderkennung genutzt werden."
+            "value" : "Visuelle Modelle können Informationen aus Bildern extrahieren."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Visual model can be used for image recognition."
+            "value" : "Visual models can extract information from images."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Un modelo visual se puede usar para reconocimiento de imágenes."
+            "value" : "Los modelos visuales pueden extraer información de las imágenes."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Le modèle visuel peut être utilisé pour la reconnaissance d’images."
+            "value" : "Les modèles visuels peuvent extraire des informations des images."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ビジュアルモデルは画像認識に使用できます。"
+            "value" : "ビジュアルモデルは画像から情報を抽出できます。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "비주얼 모델은 이미지 인식에 사용할 수 있습니다."
+            "value" : "비주얼 모델은 이미지에서 정보를 추출할 수 있습니다."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "视觉模型可被用于识别图像信息"
+            "value" : "视觉模型可以从图片中提取信息。"
           }
         }
       }

@@ -141,10 +141,16 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
   - `FlowDownTranslationProvider/Localizable.xcstrings`: Translation provider UI strings
   - `FlowDownTranslationProvider/InfoPlist.xcstrings`: Translation provider Info.plist localization strings
 - We ship multiple locales (en base plus de, es, fr, ja, ko, zh-Hans); keep all locales populated when adding or updating strings—do not leave only English/Chinese
+- **IMPORTANT**: When adding new strings, you MUST provide translations for ALL supported languages (de, es, fr, ja, ko, zh-Hans) in `NEW_STRINGS`. Never add strings with only partial translations.
+- **IMPORTANT**: When adding new strings, you MUST provide translations for ALL supported languages (de, es, fr, ja, ko, zh-Hans) in `NEW_STRINGS`. Never add strings with only partial translations.
 - Use the provided scripts to manage translations:
-  - `python3 Resources/DevKit/scripts/update_missing_i18n.py FlowDown/Resources/Localizable.xcstrings` to scaffold new keys (extend `NEW_STRINGS` as required)
+  - `python3 Resources/DevKit/scripts/update_missing_i18n.py FlowDown/Resources/Localizable.xcstrings` to scaffold new keys (extend `NEW_STRINGS` dict in the script as required)
   - `python3 Resources/DevKit/scripts/translate_missing.py FlowDown/Resources/Localizable.xcstrings` to apply curated zh-Hans translations
-  - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDown/Resources/Localizable.xcstrings` to surface untranslated entries
-  - `python3 Resources/DevKit/scripts/check_translations.py FlowDown/Resources/Localizable.xcstrings` to remove stale keys and verify completeness
+  - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDown/Resources/Localizable.xcstrings` to surface untranslated entries (missing or empty) across ALL languages
+  - `python3 Resources/DevKit/scripts/check_translations.py FlowDown/Resources/Localizable.xcstrings` to remove stale keys and verify completeness across all locales
+- Script usage notes:
+  - `update_missing_i18n.py`: Add translations for ALL languages to `NEW_STRINGS` dict before running; the script merges them into xcstrings. Format: `{"Key": {"de": "...", "es": "...", "fr": "...", "ja": "...", "ko": "...", "zh-Hans": "..."}}`
+  - `check_untranslated.py`: Reports strings missing translations in ANY supported language (not just zh-Hans)
+  - `check_translations.py`: Use this to find strings missing translations in any locale (missing, empty, or non-translated state)
 - Localization files such as `Localizable.xcstrings` exceed 10k lines; update the supporting Python scripts to regenerate changes instead of editing the JSON directly.
 - Follow existing localization patterns and maintain consistency with the codebase. Avoid manual edits to `.xcstrings`; let scripts manage JSON structure.

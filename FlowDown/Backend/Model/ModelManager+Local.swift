@@ -50,10 +50,10 @@ extension ModelCapabilities {
 
     var description: String.LocalizationValue {
         switch self {
-        case .visual: "Visual model can be used for image recognition."
-        case .tool: "This model can use client provided tools."
-        case .developerRole: "This model requires developer role when dealing with prompt."
-        case .auditory: "This model can process audio attachments."
+        case .visual: "Visual models can extract information from images."
+        case .tool: "Specially trained models can use tools to read and write accurate information and automatically perform multi-turn processing."
+        case .developerRole: "Specially trained models can use roles to distinguish the priority and importance of instructions. Some models require this feature."
+        case .auditory: "Audio models can listen to sounds in attachments."
         }
     }
 }

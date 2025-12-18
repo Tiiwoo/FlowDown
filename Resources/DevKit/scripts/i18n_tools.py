@@ -59,14 +59,16 @@ def should_translate(entry: Dict[str, Any]) -> bool:
     return entry.get("shouldTranslate", True) is not False
 
 
-def merge_new_strings(strings: Dict[str, Any], new_strings: Dict[str, Dict[str, str]]) -> None:
+def merge_new_strings(strings: Dict[str, Any], new_strings: Dict[str, Dict[str, str]]) -> int:
     """
     Ensure explicitly provided translations exist, including English anchors.
     The structure mirrors NEW_STRINGS used by the legacy scripts:
     {
         "Key": {"es": "Valor", "zh-Hans": "示例"}
     }
+    Returns the number of translations applied.
     """
+    applied = 0
     for key, translations in new_strings.items():
         entry = strings.setdefault(key, {})
         if entry.get("shouldTranslate") is False:
@@ -84,12 +86,16 @@ def merge_new_strings(strings: Dict[str, Any], new_strings: Dict[str, Dict[str, 
         )
 
         for language, value in translations.items():
+            existing = locs.get(language, {}).get("stringUnit", {}).get("value", "")
+            if existing != value:
+                applied += 1
             locs[language] = {
                 "stringUnit": {
                     "state": "translated",
                     "value": value,
                 }
             }
+    return applied
 
 
 def collect_languages(strings: Dict[str, Any]) -> set[str]:
@@ -115,12 +121,12 @@ def update_missing_translations(
     new_strings = new_strings or {}
     strings = data["strings"]
 
-    merge_new_strings(strings, new_strings)
+    merged_count = merge_new_strings(strings, new_strings)
 
     counts = {
         "added_en": 0,
         "fixed_en_state": 0,
-        "applied_translations": 0,
+        "applied_translations": merged_count,
     }
 
     for key, value in strings.items():
@@ -206,28 +212,34 @@ def apply_translation_map(
 
 def find_untranslated(
     data: Dict[str, Any],
-    base_lang: str = "en",
-    target_lang: str = "zh-Hans",
+    target_langs: Iterable[str] | None = None,
     exceptions: Iterable[str] | None = None,
-) -> List[Dict[str, str]]:
-    """Return entries where base and target values match (likely untranslated)."""
+) -> List[Dict[str, Any]]:
+    """Return entries where target languages are missing or have empty values."""
+    target_langs = set(target_langs or DEFAULT_KEEP_LANGUAGES)
     exceptions = set(exceptions or [])
     strings = data["strings"]
-    untranslated: List[Dict[str, str]] = []
+    untranslated: List[Dict[str, Any]] = []
 
     for key, value in strings.items():
         if not should_translate(value):
             continue
-
-        locs = value.get("localizations", {})
-        if base_lang not in locs or target_lang not in locs:
+        if key in exceptions:
             continue
 
-        base_value = locs[base_lang].get("stringUnit", {}).get("value", "")
-        target_value = locs[target_lang].get("stringUnit", {}).get("value", "")
+        locs = value.get("localizations", {})
+        missing_langs: List[str] = []
 
-        if base_value and target_value and base_value == target_value and key not in exceptions:
-            untranslated.append({"key": key, "value": base_value})
+        for lang in target_langs:
+            target_unit = locs.get(lang, {}).get("stringUnit", {})
+            target_value = target_unit.get("value", "").strip()
+
+            # Report if target is missing or empty
+            if not target_value:
+                missing_langs.append(lang)
+
+        if missing_langs:
+            untranslated.append({"key": key, "missing": sorted(missing_langs)})
 
     return untranslated
 
