@@ -26,7 +26,7 @@ class EvaluationStatusCell: UICollectionViewCell {
     }
 
     private func setupUI() {
-        contentView.backgroundColor = .gray.withAlphaComponent(0.25)
+        contentView.backgroundColor = .gray.withAlphaComponent(0.1)
         contentView.layer.cornerRadius = 16
         contentView.layer.cornerCurve = .continuous
 

@@ -32,11 +32,28 @@ extension SettingController.SettingContent {
         static func makeNewChatMenuElement(
             for modelIdentifier: ModelManager.ModelIdentifier,
             controller: UIViewController?,
-        ) -> UIAction {
+        ) -> [UIAction] {
             let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
             let isDefaultModel = modelIdentifier == defaultModel
-            return UIAction(
-                title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
+
+            let newChat = UIAction(
+                title: String(localized: "New Chat"),
+                image: UIImage(systemName: "plus.bubble"),
+            ) { [weak controller] _ in
+                if !isDefaultModel {
+                    ModelManager.ModelIdentifier.defaultModelForConversation = modelIdentifier
+                }
+                let conversation = ConversationManager.shared.createNewConversation()
+                ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
+                controller?.navigationController?.dismiss(animated: true)
+            }
+
+            if isDefaultModel {
+                return [newChat]
+            }
+
+            let newChatUseOnce = UIAction(
+                title: String(localized: "New Chat (Use Once)"),
                 image: UIImage(systemName: "plus.bubble"),
             ) { [weak controller] _ in
                 let conversation = ConversationManager.shared.createNewConversation { conv in
@@ -45,6 +62,8 @@ extension SettingController.SettingContent {
                 ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
                 controller?.navigationController?.dismiss(animated: true)
             }
+
+            return [newChat, newChatUseOnce]
         }
 
         static func makeActionMenuElements(
@@ -52,8 +71,8 @@ extension SettingController.SettingContent {
             controller: UIViewController?,
             actionType: ModelActionType,
         ) -> [UIMenuElement] {
-            let newChatAction = makeNewChatMenuElement(for: modelIdentifier, controller: controller)
-            let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
+            let newChatActions = makeNewChatMenuElement(for: modelIdentifier, controller: controller)
+            let newChatSection = UIMenu(title: "", options: [.displayInline], children: newChatActions)
 
             switch actionType {
             case let .local(verify, evaluate, openHuggingFace, export, delete):
