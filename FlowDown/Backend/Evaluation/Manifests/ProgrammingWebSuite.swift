@@ -24,7 +24,7 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "JS Arrow Function",
                     content: [
-                        .init(type: .request, textRepresentation: "Write an arrow function 'add' in JS that adds two numbers."),
+                        .init(type: .request, textRepresentation: "Write an arrow function 'add' in JS that adds two numbers, 'a' and 'b'."),
                     ],
                     verifier: [.contains(pattern: "const add = (a, b) =>")],
                 ),
@@ -59,16 +59,17 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "JS Map",
                     content: [
-                        .init(type: .request, textRepresentation: "Use map to double values in array 'arr' in JS."),
+                        .init(type: .request, textRepresentation: "Use map to double values in array 'arr' in JS. Use 'n' as the argument."),
                     ],
                     verifier: [.contains(pattern: "arr.map")],
                 ),
                 .init(
                     title: "JS Filter Even",
                     content: [
-                        .init(type: .request, textRepresentation: "Filter even numbers from array 'arr' in JS."),
+                        .init(type: .request, textRepresentation: "Filter even numbers from array 'arr' in JS. Use 'n' as the argument name and use strict equality."),
                     ],
-                    verifier: [.contains(pattern: "arr.filter(n => n % 2 === 0)")],
+                    // 放松对 n 括号的检查，同时检查严格相等
+                    verifier: [.contains(pattern: "arr.filter"), .contains(pattern: "n % 2 === 0")],
                 ),
                 .init(
                     title: "JS Reduce Sum",
@@ -80,14 +81,14 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "JS Destructuring",
                     content: [
-                        .init(type: .request, textRepresentation: "Destructure 'name' property from object 'user' in JS."),
+                        .init(type: .request, textRepresentation: "Destructure 'name' property from object 'user' in JS using const."),
                     ],
                     verifier: [.contains(pattern: "const { name } = user")],
                 ),
                 .init(
                     title: "JS Spread Arrays",
                     content: [
-                        .init(type: .request, textRepresentation: "Use spread operator to combine two arrays in JS."),
+                        .init(type: .request, textRepresentation: "Use spread operator to combine two arrays 'arr1' and 'arr2' in JS inside a new array."),
                     ],
                     verifier: [.contains(pattern: "[...arr1, ...arr2]")],
                 ),
@@ -136,7 +137,7 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "React useState",
                     content: [
-                        .init(type: .request, textRepresentation: "Use useState hook for a counter in React."),
+                        .init(type: .request, textRepresentation: "Use useState hook for a counter in React. Use 'count' and 'setCount' initialized to 0."),
                     ],
                     verifier: [.contains(pattern: "const [count, setCount] = useState(0)")],
                 ),
@@ -150,7 +151,7 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "TS Generic Identity",
                     content: [
-                        .init(type: .request, textRepresentation: "Create a generic function 'identity' in TS."),
+                        .init(type: .request, textRepresentation: "Create a generic function 'identity' in TS that takes 'arg' of type 'T'."),
                     ],
                     verifier: [.contains(pattern: "function identity<T>(arg: T): T")],
                 ),

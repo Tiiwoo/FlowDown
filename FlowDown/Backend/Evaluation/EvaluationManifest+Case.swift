@@ -8,7 +8,7 @@
 import Foundation
 
 extension EvaluationManifest.Suite {
-    class Case: Codable, Identifiable {
+    class Case: Codable, Identifiable, Equatable {
         var id: UUID = .init()
 
         var title: String
@@ -39,6 +39,14 @@ extension EvaluationManifest.Suite {
                     "Failed to do so decrease your model rank and leads to failed tests.",
                 ].joined(separator: " "),
             ), at: 0)
+        }
+
+        static func == (lhs: EvaluationManifest.Suite.Case, rhs: EvaluationManifest.Suite.Case) -> Bool {
+            lhs.id == rhs.id
+                && lhs.title == rhs.title
+                && lhs.content == rhs.content
+                && lhs.verifier == rhs.verifier
+                && lhs.results == rhs.results
         }
     }
 }

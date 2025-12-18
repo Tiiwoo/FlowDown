@@ -27,7 +27,7 @@ final class EvaluationStatusController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = String(localized: "Evaluating")
+        updateTitle()
         view.backgroundColor = .systemBackground
 
         setupNavigation()
@@ -43,52 +43,50 @@ final class EvaluationStatusController: UIViewController {
         session.resume()
     }
 
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     func setupNavigation() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "ellipsis.circle"),
-            menu: makeMenu(),
-        )
-        navigationItem.rightBarButtonItem?.accessibilityLabel = "More"
-
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
-            image: UIImage(systemName: "stop.circle"),
+            image: UIImage(systemName: "square.and.arrow.up"),
             style: .plain,
             target: self,
-            action: #selector(stopTapped),
+            action: #selector(shareTapped),
         )
-        navigationItem.leftBarButtonItem?.tintColor = .systemRed
+        navigationItem.rightBarButtonItem?.accessibilityLabel = String(localized: "Share")
     }
 
-    @MainActor
-    func menuElements() -> [UIMenuElement] {
-        // Intentionally left blank.
-        // Leave the menu implementation to the caller/owner.
-        []
+    @objc private func shareTapped() {
+        _ = try? EvaluationSessionManager.shared.save(session)
+
+        let encoder = PropertyListEncoder()
+        encoder.outputFormat = .xml
+        guard let data = try? encoder.encode(session) else { return }
+
+        let exporter = DisposableExporter(
+            data: data,
+            name: "evaluation-session-\(session.id.uuidString)",
+            pathExtension: "plist",
+        )
+        exporter.run(anchor: view, mode: .file)
     }
 
-    private func makeMenu() -> UIMenu {
-        UIMenu(children: menuElements())
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        guard isMovingFromParent || isBeingDismissed else { return }
+        session.stopAndDispose(save: true)
     }
 
-    @objc func stopTapped() {
-        session.stop()
-        statusView.setStopped()
-        let alert = AlertViewController(
-            title: String(localized: "Session Stopped"),
-            message: String(localized: "Progress has been saved. You can resume this session later."),
-        ) { context in
-            context.addAction(title: "OK", attribute: .accent) {
-                context.dispose { [weak self] in
-                    self?.dismiss(animated: true)
-                }
-            }
-        }
-        present(alert, animated: true)
+    private func updateTitle() {
+        title = session.isCompleted ? String(localized: "Evaluation Result") : String(localized: "Running Evaluation")
     }
 
     @objc func sessionDidUpdate() {
         if Thread.isMainThread {
             statusView.applySessionUpdate(animated: true)
+            updateTitle()
         } else {
             DispatchQueue.main.async {
                 self.sessionDidUpdate()

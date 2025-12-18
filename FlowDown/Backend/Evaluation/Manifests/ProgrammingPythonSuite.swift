@@ -19,7 +19,7 @@ extension EvaluationManifest.Suite {
                     content: [
                         .init(type: .request, textRepresentation: "Print 'Hello World' in Python."),
                     ],
-                    verifier: [.contains(pattern: "print(\"Hello World\")")],
+                    verifier: [.contains(pattern: "print("), .contains(pattern: "Hello World")],
                 ),
                 .init(
                     title: "Python Greet Function",
@@ -31,16 +31,17 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "Python List Comprehension",
                     content: [
-                        .init(type: .request, textRepresentation: "Create a list comprehension in Python to square numbers 0-9."),
+                        .init(type: .request, textRepresentation: "Create a list comprehension in Python to square numbers 0-9. Use 'x' as iterator and use range(10)."),
                     ],
-                    verifier: [.contains(pattern: "[x**2 for x in range(10)]")],
+                    // 拆分以防止 spaces (x**2 vs x ** 2) 造成误判
+                    verifier: [.contains(pattern: "x**2"), .contains(pattern: "for x in range(10)")],
                 ),
                 .init(
                     title: "Python Dictionary",
                     content: [
-                        .init(type: .request, textRepresentation: "Create a dictionary with keys 'a', 'b' and values 1, 2 in Python."),
+                        .init(type: .request, textRepresentation: "Create a dictionary with keys 'a', 'b' and values 1, 2 in Python. Use single quotes."),
                     ],
-                    verifier: [.contains(pattern: "{'a': 1, 'b': 2}")],
+                    verifier: [.contains(pattern: "'a': 1"), .contains(pattern: "'b': 2")],
                 ),
                 .init(
                     title: "Python Import JSON",
@@ -73,14 +74,14 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "Python Lambda",
                     content: [
-                        .init(type: .request, textRepresentation: "Create a lambda function in Python that adds 1 to x."),
+                        .init(type: .request, textRepresentation: "Create a lambda function in Python that adds 1 to argument 'x'."),
                     ],
-                    verifier: [.contains(pattern: "lambda x: x + 1")],
+                    verifier: [.contains(pattern: "lambda x:"), .contains(pattern: "x + 1")],
                 ),
                 .init(
                     title: "Python With Open",
                     content: [
-                        .init(type: .request, textRepresentation: "Open 'test.txt' for writing using 'with' statement in Python."),
+                        .init(type: .request, textRepresentation: "Open 'test.txt' for writing using 'with' statement in Python. Use double quotes for the filename."),
                     ],
                     verifier: [.contains(pattern: "with open(\"test.txt\", \"w\")")],
                 ),
@@ -131,7 +132,7 @@ extension EvaluationManifest.Suite {
                     content: [
                         .init(type: .request, textRepresentation: "Define a dataclass 'Point' with x and y as int in Python."),
                     ],
-                    verifier: [.contains(pattern: "@dataclass"), .contains(pattern: "class Point:")],
+                    verifier: [.contains(pattern: "dataclass"), .contains(pattern: "class Point:")],
                 ),
                 .init(
                     title: "Python Type Hints",
@@ -143,7 +144,7 @@ extension EvaluationManifest.Suite {
                 .init(
                     title: "Python Enumerate",
                     content: [
-                        .init(type: .request, textRepresentation: "Iterate over a list with index using enumerate in Python."),
+                        .init(type: .request, textRepresentation: "Iterate over a list with index using enumerate in Python. Use 'i' for index and 'item' for value."),
                     ],
                     verifier: [.contains(pattern: "for i, item in enumerate")],
                 ),

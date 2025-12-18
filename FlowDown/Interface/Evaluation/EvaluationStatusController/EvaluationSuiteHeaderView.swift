@@ -57,14 +57,19 @@ final class EvaluationSuiteHeaderView: UICollectionReusableView {
         }
     }
 
-    func configure(title: String, total: Int, completed: Int, passed: Int) {
+    func configure(title: String, total: Int, completed: Int, passed _: Int, failed: Int, awaitingJudging: Int) {
         titleLabel.text = title
 
         let progressPercent = total > 0 ? Int((Double(completed) / Double(total) * 100).rounded()) : 0
-        let scorePercent = total > 0 ? Int((Double(passed) / Double(total) * 100).rounded()) : 0
 
         if total > 0, completed == total {
-            progressLabel.text = "\(scorePercent)%"
+            if awaitingJudging > 0 {
+                progressLabel.text = "Waiting for evaluation"
+            } else if failed > 0 {
+                progressLabel.text = "Completed \(failed) errors"
+            } else {
+                progressLabel.text = "Completed"
+            }
         } else {
             progressLabel.text = "\(progressPercent)%"
         }

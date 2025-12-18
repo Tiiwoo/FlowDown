@@ -32,14 +32,20 @@ extension EvaluationStatusCollectionView {
                 return nil
             }
             if let suite = suite(forSectionIndex: indexPath.section) {
+                let completed = suite.cases.count(where: { caseItem in
+                    guard let outcome = caseItem.results.last?.outcome else { return false }
+                    return outcome != .notDetermined && outcome != .processing
+                })
+                let passed = suite.cases.count(where: { $0.results.last?.outcome == .pass })
+                let failed = suite.cases.count(where: { $0.results.last?.outcome == .fail })
+                let awaitingJudging = suite.cases.count(where: { $0.results.last?.outcome == .awaitingJudging })
                 view.configure(
                     title: String(localized: suite.title),
                     total: suite.cases.count,
-                    completed: suite.cases.count(where: { caseItem in
-                        guard let outcome = caseItem.results.last?.outcome else { return false }
-                        return outcome != .notDetermined && outcome != .processing
-                    }),
-                    passed: suite.cases.count(where: { $0.results.last?.outcome == .pass }),
+                    completed: completed,
+                    passed: passed,
+                    failed: failed,
+                    awaitingJudging: awaitingJudging,
                 )
             }
             return view

@@ -8,7 +8,7 @@
 import Foundation
 
 extension EvaluationManifest.Suite.Case {
-    class Result: Codable {
+    class Result: Codable, Equatable {
         var output: [EvaluationManifest.Suite.Case.Content]
         var outcome: Outcome
 
@@ -19,11 +19,16 @@ extension EvaluationManifest.Suite.Case {
             self.output = output
             self.outcome = outcome
         }
+
+        static func == (lhs: EvaluationManifest.Suite.Case.Result, rhs: EvaluationManifest.Suite.Case.Result) -> Bool {
+            lhs.outcome == rhs.outcome
+                && lhs.output == rhs.output
+        }
     }
 }
 
 extension EvaluationManifest.Suite.Case.Result {
-    enum Outcome: String, Codable {
+    enum Outcome: String, Codable, Equatable {
         case notDetermined
         case processing
         case awaitingJudging

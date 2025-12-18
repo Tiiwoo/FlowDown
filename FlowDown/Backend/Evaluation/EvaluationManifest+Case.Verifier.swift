@@ -9,7 +9,7 @@ import ChatClientKit
 import Foundation
 
 extension EvaluationManifest.Suite.Case {
-    enum Verifier: Codable {
+    enum Verifier: Codable, Equatable {
         // does not judge the result programmatically
         case open
 

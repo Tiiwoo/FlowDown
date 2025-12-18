@@ -19,7 +19,7 @@ extension EvaluationManifest.Suite.Case {
         case toolResponse
     }
 
-    class Content: Codable {
+    class Content: Codable, Equatable {
         let type: ContentType
         let textRepresentation: String?
         let toolRepresentation: ToolRepresentation?
@@ -39,9 +39,17 @@ extension EvaluationManifest.Suite.Case {
             self.imageRepresentation = imageRepresentation
             self.audioRepresentation = audioRepresentation
         }
+
+        static func == (lhs: EvaluationManifest.Suite.Case.Content, rhs: EvaluationManifest.Suite.Case.Content) -> Bool {
+            lhs.type == rhs.type
+                && lhs.textRepresentation == rhs.textRepresentation
+                && lhs.toolRepresentation == rhs.toolRepresentation
+                && lhs.imageRepresentation == rhs.imageRepresentation
+                && lhs.audioRepresentation == rhs.audioRepresentation
+        }
     }
 
-    class ToolRepresentation: Codable {
+    class ToolRepresentation: Codable, Equatable {
         let name: String
         let description: String
         let parameters: [String: AnyCodingValue]
@@ -50,6 +58,12 @@ extension EvaluationManifest.Suite.Case {
             self.name = name
             self.description = description
             self.parameters = parameters
+        }
+
+        static func == (lhs: EvaluationManifest.Suite.Case.ToolRepresentation, rhs: EvaluationManifest.Suite.Case.ToolRepresentation) -> Bool {
+            lhs.name == rhs.name
+                && lhs.description == rhs.description
+                && lhs.parameters == rhs.parameters
         }
     }
 }

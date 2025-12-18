@@ -34,6 +34,39 @@ class EvaluationSession: Codable, @unchecked Sendable {
 }
 
 extension EvaluationSession {
+    var allCases: [EvaluationManifest.Suite.Case] {
+        var cases: [EvaluationManifest.Suite.Case] = []
+        for manifest in manifests {
+            for suite in manifest.suites {
+                cases.append(contentsOf: suite.cases)
+            }
+        }
+        return cases
+    }
+
+    var isCompleted: Bool {
+        let cases = allCases
+        guard !cases.isEmpty else { return true }
+        return cases.allSatisfy { caseItem in
+            let outcome = caseItem.results.last?.outcome ?? .notDetermined
+            return outcome != .notDetermined && outcome != .processing
+        }
+    }
+
+    var hasRunningWork: Bool {
+        allCases.contains(where: { $0.results.last?.outcome == .processing })
+    }
+
+    func stopAndDispose(save: Bool = true) {
+        runningTask?.cancel()
+        runningTask = nil
+        if save {
+            _ = try? EvaluationSessionManager.shared.save(self)
+        }
+    }
+}
+
+extension EvaluationSession {
     @objc func resume() {
         runningTask = Task {
             await startEvaluation()

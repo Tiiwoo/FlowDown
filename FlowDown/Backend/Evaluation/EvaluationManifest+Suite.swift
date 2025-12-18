@@ -8,7 +8,7 @@
 import Foundation
 
 extension EvaluationManifest {
-    class Suite: Codable, Identifiable {
+    class Suite: Codable, Identifiable, Equatable {
         var id: UUID = .init()
 
         var title: String.LocalizationValue
@@ -21,6 +21,13 @@ extension EvaluationManifest {
             self.title = title
             self.description = description
             self.cases = cases
+        }
+
+        static func == (lhs: EvaluationManifest.Suite, rhs: EvaluationManifest.Suite) -> Bool {
+            lhs.id == rhs.id
+                && lhs.title == rhs.title
+                && lhs.description == rhs.description
+                && lhs.cases == rhs.cases
         }
     }
 }

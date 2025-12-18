@@ -38,6 +38,23 @@ final class EvaluationStatusCollectionView: UIView {
 
     lazy var dataSource: UICollectionViewDiffableDataSource<Section, Item> = createDataSource()
 
+    private struct CaseDiffState: Equatable {
+        let title: String
+        let outcome: EvaluationManifest.Suite.Case.Result.Outcome
+    }
+
+    private struct SuiteHeaderDiffState: Equatable {
+        let title: String
+        let total: Int
+        let completed: Int
+        let passed: Int
+        let failed: Int
+        let awaitingJudging: Int
+    }
+
+    private var lastCaseStates: [UUID: CaseDiffState] = [:]
+    private var lastSuiteHeaderStates: [UUID: SuiteHeaderDiffState] = [:]
+
     override var intrinsicContentSize: CGSize { .zero }
 
     init(session: EvaluationSession) {
@@ -75,18 +92,68 @@ final class EvaluationStatusCollectionView: UIView {
 
     func applySnapshot(animated: Bool) {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
+
+        var newCaseStates: [UUID: CaseDiffState] = [:]
+        var newSuiteHeaderStates: [UUID: SuiteHeaderDiffState] = [:]
+
+        var changedItems: [Item] = []
+        var changedSections: [Section] = []
+
         for manifest in session.manifests {
             for suite in manifest.suites {
                 let section: Section = .suite(suite.id)
                 snapshot.appendSections([section])
-                let items = suite.cases.map { Item(suiteID: suite.id, caseID: $0.id) }
+
+                let title = String(localized: suite.title)
+                let total = suite.cases.count
+                let completed = suite.cases.count(where: { caseItem in
+                    guard let outcome = caseItem.results.last?.outcome else { return false }
+                    return outcome != .notDetermined && outcome != .processing
+                })
+                let passed = suite.cases.count(where: { $0.results.last?.outcome == .pass })
+                let failed = suite.cases.count(where: { $0.results.last?.outcome == .fail })
+                let awaitingJudging = suite.cases.count(where: { $0.results.last?.outcome == .awaitingJudging })
+
+                let suiteHeaderState = SuiteHeaderDiffState(
+                    title: title,
+                    total: total,
+                    completed: completed,
+                    passed: passed,
+                    failed: failed,
+                    awaitingJudging: awaitingJudging,
+                )
+                newSuiteHeaderStates[suite.id] = suiteHeaderState
+                if let oldSuiteHeaderState = lastSuiteHeaderStates[suite.id], oldSuiteHeaderState != suiteHeaderState {
+                    changedSections.append(section)
+                }
+
+                let items = suite.cases.map { caseItem in
+                    let outcome = caseItem.results.last?.outcome ?? .notDetermined
+                    let state = CaseDiffState(title: caseItem.title, outcome: outcome)
+                    newCaseStates[caseItem.id] = state
+
+                    let item = Item(suiteID: suite.id, caseID: caseItem.id)
+                    if let oldState = lastCaseStates[caseItem.id], oldState != state {
+                        changedItems.append(item)
+                    }
+                    return item
+                }
                 snapshot.appendItems(items, toSection: section)
             }
         }
 
-        snapshot.reloadSections(snapshot.sectionIdentifiers)
+        if !changedSections.isEmpty {
+            snapshot.reloadSections(changedSections)
+        }
+
+        if !changedItems.isEmpty {
+            snapshot.reconfigureItems(changedItems)
+        }
 
         dataSource.apply(snapshot, animatingDifferences: animated)
+
+        lastCaseStates = newCaseStates
+        lastSuiteHeaderStates = newSuiteHeaderStates
     }
 
     func suite(forSectionIndex sectionIndex: Int) -> EvaluationManifest.Suite? {
