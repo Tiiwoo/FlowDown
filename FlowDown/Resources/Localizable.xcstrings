@@ -7916,6 +7916,16 @@
         }
       }
     },
+    "Completed. Passed: %lld, Failed: %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Completed. Passed: %1$lld, Failed: %2$lld"
+          }
+        }
+      }
+    },
     "Completions Format" : {
       "localizations" : {
         "de" : {
@@ -15876,6 +15886,9 @@
         }
       }
     },
+    "Evaluating" : {
+
+    },
     "Evaluation Assistant" : {
       "localizations" : {
         "de" : {
@@ -15921,6 +15934,9 @@
           }
         }
       }
+    },
+    "Evaluation History" : {
+
     },
     "Evaluation Model" : {
       "localizations" : {
@@ -17486,6 +17502,9 @@
         }
       }
     },
+    "Fail" : {
+
+    },
     "Failed to add event: %@" : {
       "localizations" : {
         "de" : {
@@ -18635,6 +18654,9 @@
           }
         }
       }
+    },
+    "Failed to Start Session" : {
+
     },
     "Failed to update memory: %@" : {
       "localizations" : {
@@ -23056,6 +23078,9 @@
         }
       }
     },
+    "Initializing..." : {
+
+    },
     "Input" : {
       "localizations" : {
         "de" : {
@@ -23101,6 +23126,9 @@
           }
         }
       }
+    },
+    "Input Content" : {
+
     },
     "Insert New Line" : {
       "localizations" : {
@@ -28029,6 +28057,9 @@
         }
       }
     },
+    "Model Output" : {
+
+    },
     "Model Selector" : {
       "localizations" : {
         "de" : {
@@ -31387,6 +31418,9 @@
           }
         }
       }
+    },
+    "Pass" : {
+
     },
     "Past Day" : {
       "localizations" : {
@@ -35485,6 +35519,9 @@
         }
       }
     },
+    "Results" : {
+
+    },
     "Retrieving Location" : {
       "localizations" : {
         "de" : {
@@ -36355,6 +36392,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "运行设置"
+          }
+        }
+      }
+    },
+    "Running... %lld/%lld (Passed: %lld)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Running... %1$lld/%2$lld (Passed: %3$lld)"
           }
         }
       }
@@ -50946,6 +50993,9 @@
           }
         }
       }
+    },
+    "Verifiers" : {
+
     },
     "Verify Configuration" : {
       "localizations" : {

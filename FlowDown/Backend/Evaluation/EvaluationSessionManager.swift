@@ -23,6 +23,7 @@ final class EvaluationSessionManager {
 
     // MARK: - Public API
 
+    @discardableResult
     func save(_ session: EvaluationSession) throws -> URL {
         let directory = try sessionsDirectoryURL()
 

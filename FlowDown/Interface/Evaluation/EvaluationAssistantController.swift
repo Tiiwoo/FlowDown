@@ -85,11 +85,25 @@ class EvaluationAssistantController: StackScrollController {
     }
 
     @objc private func startTapped() {
-        // left for caller
+        let session = EvaluationSession(options: options)
+        do {
+            _ = try EvaluationSessionManager.shared.save(session)
+            let progressController = EvaluationInProgressController(session: session)
+            navigationController?.pushViewController(progressController, animated: true)
+        } catch {
+            let alert = AlertViewController(
+                title: String(localized: "Failed to Start Session"),
+                message: error.localizedDescription,
+            ) { context in
+                context.allowSimpleDispose()
+            }
+            present(alert, animated: true)
+        }
     }
 
     @objc private func historyTapped() {
-        // left for caller
+        let historyController = EvaluationHistoryController()
+        navigationController?.pushViewController(historyController)
     }
 }
 

@@ -5,6 +5,8 @@
 //  Created by qaq on 18/12/2025.
 //
 
+import Foundation
+
 extension EvaluationManifest {
     class Suite: Codable, Identifiable {
         var id: UUID = .init()
