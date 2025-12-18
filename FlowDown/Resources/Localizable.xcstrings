@@ -27500,7 +27500,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Nouveau chat"
+            "value" : "Nouvelle discussion"
           }
         },
         "ja" : {
@@ -27519,6 +27519,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "新建对话"
+          }
+        }
+      }
+    },
+    "New Chat (Use Once)" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neuer Chat (Einmalig)"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Chat (Use Once)"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nuevo chat (Usar una vez)"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nouvelle discussion (Usage unique)"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新規チャット（一度だけ使用）"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새 채팅 (한 번만 사용)"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "新建对话（仅使用一次）"
           }
         }
       }

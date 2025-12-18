@@ -16,6 +16,22 @@ extension CloudModelEditorController {
     }
 
     func makeActionMenuElements() -> [UIMenuElement] {
+        let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
+        let isDefaultModel = identifier == defaultModel
+        let newChatAction = UIAction(
+            title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
+            image: UIImage(systemName: "plus.bubble"),
+        ) { [weak self] _ in
+            guard let self else { return }
+            let modelId = identifier
+            let conversation = ConversationManager.shared.createNewConversation { conv in
+                conv.update(\.modelId, to: modelId)
+            }
+            ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
+            navigationController?.dismiss(animated: true)
+        }
+        let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
+
         let verifyAction = UIAction(
             title: String(localized: "Verify Model"),
             image: UIImage(systemName: "testtube.2"),
@@ -61,7 +77,12 @@ extension CloudModelEditorController {
         let exportSection = UIMenu(title: "", options: [.displayInline], children: [exportAction, duplicateAction])
         let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
 
-        return [verifySection, exportSection, deleteSection]
+        return [
+            newChatSection,
+            verifySection,
+            exportSection,
+            deleteSection,
+        ]
     }
 
     @MainActor

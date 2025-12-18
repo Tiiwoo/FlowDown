@@ -210,6 +210,21 @@ extension SettingController.SettingContent.ModelController {
                 ModelManager.shared.removeCloudModel(identifier: itemIdentifier.identifier)
             }
         })
+
+        let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
+        let isDefaultModel = itemIdentifier.identifier == defaultModel
+        actions.append(UIAction(
+            title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
+            image: UIImage(systemName: "plus.bubble"),
+        ) { [weak self] _ in
+            let modelId = itemIdentifier.identifier
+            let conversation = ConversationManager.shared.createNewConversation { conv in
+                conv.update(\.modelId, to: modelId)
+            }
+            ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
+            self?.navigationController?.dismiss(animated: true)
+        })
+
         return actions
     }
 
