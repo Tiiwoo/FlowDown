@@ -69,9 +69,8 @@ class ConfigurableToggleActionView: ConfigurableView {
     var switchView: UISwitch { contentView as! UISwitch }
     var boolValue: Bool = false {
         didSet {
-            if switchView.isOn != boolValue {
-                switchView.isOn = boolValue
-            }
+            guard switchView.isOn != boolValue else { return }
+            switchView.setOn(boolValue, animated: false)
         }
     }
 
@@ -88,7 +87,9 @@ class ConfigurableToggleActionView: ConfigurableView {
     }
 
     @objc open func valueChanged() {
-        boolValue = switchView.isOn
+        let newValue = switchView.isOn
+        guard boolValue != newValue else { return }
+        boolValue = newValue
         actionBlock(boolValue)
     }
 }

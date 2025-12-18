@@ -33863,6 +33863,9 @@
         }
       }
     },
+    "Progress has been saved. You can resume this session later." : {
+
+    },
     "Prompt" : {
       "localizations" : {
         "de" : {
@@ -38015,6 +38018,9 @@
           }
         }
       }
+    },
+    "Session Stopped" : {
+
     },
     "Set" : {
       "localizations" : {

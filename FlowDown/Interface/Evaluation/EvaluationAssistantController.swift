@@ -73,7 +73,8 @@ class EvaluationAssistantController: StackScrollController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        refreshUI()
+        // refreshUI()
+        refreshEx()
     }
 
     override func setupContentViews() {
@@ -118,7 +119,16 @@ private extension EvaluationAssistantController {
         return String(localized: key)
     }
 
-    func refreshUI() {
+    func refreshUI(delay: TimeInterval = 0) {
+        NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(refreshEx),
+            object: nil,
+        )
+        perform(#selector(refreshEx), with: nil, afterDelay: delay)
+    }
+
+    @objc func refreshEx() {
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         setupContentViews()
         applySeparatorConstraints()
@@ -253,7 +263,7 @@ private extension EvaluationAssistantController {
                 suiteView.actionBlock = { [weak self] enabled in
                     guard let self else { return }
                     setSuiteExcluded(suite.id, excluded: !enabled)
-                    refreshUI()
+                    refreshUI(delay: 0.5)
                 }
                 suiteView.configure(icon: .init(systemName: "folder"))
                 suiteView.configure(title: String("\(String(localized: suite.title)) \(suite.cases.count)"))

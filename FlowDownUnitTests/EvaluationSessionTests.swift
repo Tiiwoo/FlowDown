@@ -6,9 +6,8 @@
 //
 
 @testable import ChatClientKit
-import XCTest
-
 @testable import FlowDown
+import XCTest
 
 class EvaluationSessionTests: XCTestCase {
     var session: EvaluationSession!
@@ -69,5 +68,27 @@ class EvaluationSessionTests: XCTestCase {
 
         let outcome = session.verify(response: response, verifiers: verifiers)
         XCTAssertEqual(outcome, EvaluationManifest.Suite.Case.Result.Outcome.pass)
+    }
+
+    func testExcludedSuitesAreNotIncludedInSessionManifests() {
+        let caseA = EvaluationManifest.Suite.Case(title: "A", content: [], verifier: [])
+        let caseB = EvaluationManifest.Suite.Case(title: "B", content: [], verifier: [])
+
+        let suite1 = EvaluationManifest.Suite(title: "Suite 1", description: "", cases: [caseA])
+        let suite2 = EvaluationManifest.Suite(title: "Suite 2", description: "", cases: [caseB])
+
+        let manifest = EvaluationManifest(title: "Manifest", description: "", suites: [suite1, suite2])
+        let options = EvaluationOptions(
+            modelIdentifier: "test-model",
+            manifesets: [manifest],
+            excludedSuites: [suite2.id],
+            excludedCases: [],
+            options: .init(maxConcurrentRequests: 1, shots: 1),
+        )
+
+        let newSession = EvaluationSession(options: options)
+        XCTAssertEqual(newSession.manifests.count, 1)
+        XCTAssertEqual(newSession.manifests.first?.suites.count, 1)
+        XCTAssertEqual(newSession.manifests.first?.suites.first?.id, suite1.id)
     }
 }

@@ -29,6 +29,7 @@ extension EvaluationManifest.Suite {
     func suiteExcludingCases(_ list: [Case.ID]) -> EvaluationManifest.Suite? {
         let excludeList: Set<Case.ID> = .init(list)
         let suite = EvaluationManifest.Suite(
+            id: id,
             title: title,
             description: description,
             cases: cases.filter { !excludeList.contains($0.id) },

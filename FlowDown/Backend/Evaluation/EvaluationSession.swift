@@ -198,8 +198,9 @@ extension EvaluationSession {
                     output.append(.init(type: .reply, textRepresentation: response.text))
                 }
                 for toolMsg in response.tools {
-                    var toolRep: EvaluationManifest.Suite.Case.ToolRepresentation? = if let data = toolMsg.args.data(using: .utf8),
-                                                                                        let params = try? JSONDecoder().decode([String: AnyCodingValue].self, from: data)
+                    let toolRep: EvaluationManifest.Suite.Case.ToolRepresentation? = if
+                        let data = toolMsg.args.data(using: .utf8),
+                        let params = try? JSONDecoder().decode([String: AnyCodingValue].self, from: data)
                     {
                         .init(name: toolMsg.name, description: "", parameters: params)
                     } else {

@@ -6,6 +6,7 @@
 //
 
 import AlertController
+import GlyphixTextFx
 import SnapKit
 import UIKit
 
@@ -252,9 +253,9 @@ extension EvaluationInProgressController: UICollectionViewDataSource, UICollecti
 }
 
 class EvaluationCardCell: UICollectionViewCell {
-    private let titleLabel = UILabel()
+    private let titleLabel: GlyphixTextLabel = .init()
+    private let statusLabel: GlyphixTextLabel = .init()
     private let statusIcon = UIImageView()
-    private let statusLabel = UILabel()
     private let activityIndicator = UIActivityIndicatorView(style: .medium)
 
     override init(frame: CGRect) {
@@ -268,42 +269,37 @@ class EvaluationCardCell: UICollectionViewCell {
     }
 
     private func setupUI() {
-        contentView.backgroundColor = .secondarySystemGroupedBackground
-        contentView.layer.cornerRadius = 16
-        contentView.layer.cornerCurve = .continuous
-        contentView.layer.masksToBounds = true
+        // "Don't want cell to have color" - clear background
+        contentView.backgroundColor = .clear
 
-        // Shadow for depth
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.05
-        layer.shadowOffset = CGSize(width: 0, height: 2)
-        layer.shadowRadius = 4
-        layer.masksToBounds = false
-
-        contentView.addSubview(titleLabel)
-        titleLabel.font = .systemFont(ofSize: 16, weight: .semibold)
-        titleLabel.numberOfLines = 2
-        titleLabel.snp.makeConstraints { make in
-            make.top.leading.trailing.equalToSuperview().inset(12)
-        }
-
-        contentView.addSubview(statusIcon)
+        // Background Icon (Big, Faded, Rotated, Last Layer)
         statusIcon.contentMode = .scaleAspectFit
+        statusIcon.alpha = 0.15 // "Fade a bit"
+        statusIcon.transform = CGAffineTransform(rotationAngle: .pi / 12) // ~15 degrees
+        contentView.addSubview(statusIcon)
         statusIcon.snp.makeConstraints { make in
-            make.bottom.trailing.equalToSuperview().inset(12)
-            make.size.equalTo(24)
+            make.edges.equalToSuperview().inset(-20) // Make it big
         }
 
+        // Title Label (Bold Body)
+        titleLabel.font = .preferredFont(forTextStyle: .body).withTraits(.traitBold)
+        titleLabel.textColor = .label
+        titleLabel.numberOfLines = 2
+        contentView.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview().inset(16)
+        }
+
+        // Status Label (Body)
+        statusLabel.font = .preferredFont(forTextStyle: .body)
         contentView.addSubview(statusLabel)
-        statusLabel.font = .systemFont(ofSize: 12, weight: .medium)
         statusLabel.snp.makeConstraints { make in
-            make.bottom.leading.equalToSuperview().inset(12)
-            make.trailing.equalTo(statusIcon.snp.leading).offset(-8)
+            make.bottom.leading.trailing.equalToSuperview().inset(16)
         }
 
         contentView.addSubview(activityIndicator)
         activityIndicator.snp.makeConstraints { make in
-            make.center.equalTo(statusIcon)
+            make.bottom.trailing.equalToSuperview().inset(16)
         }
     }
 
@@ -312,39 +308,57 @@ class EvaluationCardCell: UICollectionViewCell {
 
         let result = item.results.last?.outcome ?? .notDetermined
         activityIndicator.stopAnimating()
-        statusIcon.isHidden = false
+
+        // Determine properties
+        let targetColor: UIColor
+        let iconName: String
+        let statusText: String
 
         switch result {
         case .pass:
-            statusIcon.image = UIImage(systemName: "checkmark.circle.fill")
-            statusIcon.tintColor = .systemGreen
-            statusLabel.text = "Passed"
-            statusLabel.textColor = .systemGreen
-            contentView.backgroundColor = UIColor.systemGreen.withAlphaComponent(0.1)
+            targetColor = .systemGreen
+            iconName = "checkmark.seal.fill"
+            statusText = "Passed"
         case .fail:
-            statusIcon.image = UIImage(systemName: "xmark.circle.fill")
-            statusIcon.tintColor = .systemRed
-            statusLabel.text = "Failed"
-            statusLabel.textColor = .systemRed
-            contentView.backgroundColor = UIColor.systemRed.withAlphaComponent(0.1)
+            targetColor = .systemRed
+            iconName = "xmark.seal.fill"
+            statusText = "Failed"
         case .processing:
-            statusIcon.isHidden = true
+            targetColor = .systemBlue
+            iconName = "gearshape.fill"
+            statusText = "Running"
             activityIndicator.startAnimating()
-            statusLabel.text = "Running"
-            statusLabel.textColor = .systemBlue
-            contentView.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.1)
         case .awaitingJudging:
-            statusIcon.image = UIImage(systemName: "eye.fill")
-            statusIcon.tintColor = .systemOrange
-            statusLabel.text = "Judging"
-            statusLabel.textColor = .systemOrange
-            contentView.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.1)
+            targetColor = .systemOrange
+            iconName = "eye.fill"
+            statusText = "Judging"
         case .notDetermined:
-            statusIcon.image = UIImage(systemName: "circle.dotted")
-            statusIcon.tintColor = .tertiaryLabel
-            statusLabel.text = "Pending"
-            statusLabel.textColor = .tertiaryLabel
-            contentView.backgroundColor = .secondarySystemGroupedBackground
+            targetColor = .tertiaryLabel
+            iconName = "circle.dotted"
+            statusText = "Pending"
         }
+
+        // Animate changes
+        UIView.animate(withDuration: 0.3) {
+            self.statusIcon.tintColor = targetColor
+            self.statusLabel.textColor = targetColor
+
+            // Only update if changed to avoid jumpiness during simple refreshes
+            if self.statusIcon.image != UIImage(systemName: iconName) {
+                self.statusIcon.image = UIImage(systemName: iconName)
+            }
+            // Update text (GlyphixTextLabel might handle its own transition or we set it here)
+            // Assuming we just set it.
+        }
+        statusLabel.text = statusText
+    }
+}
+
+private extension UIFont {
+    func withTraits(_ traits: UIFontDescriptor.SymbolicTraits) -> UIFont {
+        guard let descriptor = fontDescriptor.withSymbolicTraits(traits) else {
+            return self
+        }
+        return UIFont(descriptor: descriptor, size: 0)
     }
 }

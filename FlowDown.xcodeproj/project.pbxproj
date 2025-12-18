@@ -25,6 +25,10 @@
 		506837FA2EED63FB00EBF35F /* Storage in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 50C9035A2D428DAD00E6E3A8 /* Storage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		5078496A2D285B5900B1F430 /* MarkdownView in Frameworks */ = {isa = PBXBuildFile; productRef = 507849692D285B5900B1F430 /* MarkdownView */; };
 		5081A0142D6DBBBA0079ECBE /* RunestoneEditor in Frameworks */ = {isa = PBXBuildFile; productRef = 5081A0132D6DBBBA0079ECBE /* RunestoneEditor */; };
+		5097D63E2EF3E35C00850D3E /* Storage in Frameworks */ = {isa = PBXBuildFile; productRef = 5097D63D2EF3E35C00850D3E /* Storage */; };
+		5097D63F2EF3E35C00850D3E /* Storage in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5097D63D2EF3E35C00850D3E /* Storage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		5097D6422EF3E36000850D3E /* ChatClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5097D6412EF3E36000850D3E /* ChatClientKit */; };
+		5097D6432EF3E36000850D3E /* ChatClientKit in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 5097D6412EF3E36000850D3E /* ChatClientKit */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		50B492942D4F609E00F4D2B3 /* ZIPFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = 50B492932D4F609E00F4D2B3 /* ZIPFoundation */; };
 		50B4CDAC2D4794F90028EB33 /* Digger in Frameworks */ = {isa = PBXBuildFile; productRef = 50B4CDAB2D4794F90028EB33 /* Digger */; };
 		50B514782D23157A0092284C /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 50B514772D23157A0092284C /* SnapKit */; };
@@ -77,6 +81,18 @@
 			files = (
 				506837FA2EED63FB00EBF35F /* Storage in Embed Frameworks */,
 				506837F42EED62CB00EBF35F /* ChatClientKit in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5097D6402EF3E35C00850D3E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5097D6432EF3E36000850D3E /* ChatClientKit in Embed Frameworks */,
+				5097D63F2EF3E35C00850D3E /* Storage in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -194,6 +210,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5097D63E2EF3E35C00850D3E /* Storage in Frameworks */,
+				5097D6422EF3E36000850D3E /* ChatClientKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +333,7 @@
 				50D757B62EC10A4400AEC087 /* Sources */,
 				50D757B72EC10A4400AEC087 /* Frameworks */,
 				50D757B82EC10A4400AEC087 /* Resources */,
+				5097D6402EF3E35C00850D3E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -326,6 +345,8 @@
 			);
 			name = FlowDownUnitTests;
 			packageProductDependencies = (
+				5097D63D2EF3E35C00850D3E /* Storage */,
+				5097D6412EF3E36000850D3E /* ChatClientKit */,
 			);
 			productName = FlowDownUnitTests;
 			productReference = 50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */;
@@ -1157,6 +1178,14 @@
 		5081A0132D6DBBBA0079ECBE /* RunestoneEditor */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RunestoneEditor;
+		};
+		5097D63D2EF3E35C00850D3E /* Storage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Storage;
+		};
+		5097D6412EF3E36000850D3E /* ChatClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ChatClientKit;
 		};
 		50B492932D4F609E00F4D2B3 /* ZIPFoundation */ = {
 			isa = XCSwiftPackageProductDependency;
