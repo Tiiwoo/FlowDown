@@ -95,73 +95,16 @@ class LocalModelEditorController: StackScrollController {
     }
 
     private func makeActionMenuElements() -> [UIMenuElement] {
-        let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
-        let isDefaultModel = identifier == defaultModel
-        let newChatAction = UIAction(
-            title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
-            image: UIImage(systemName: "plus.bubble"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            let modelId = identifier
-            let conversation = ConversationManager.shared.createNewConversation { conv in
-                conv.update(\.modelId, to: modelId)
-            }
-            ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
-            navigationController?.dismiss(animated: true)
-        }
-        let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
-
-        let verifyAction = UIAction(
-            title: String(localized: "Verify Model"),
-            image: UIImage(systemName: "testtube.2"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                await self.runVerification()
-            }
-        }
-
-        let openHuggingFaceAction = UIAction(
-            title: String(localized: "Open in Hugging Face"),
-            image: UIImage(systemName: "safari"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.openHuggingFace()
-            }
-        }
-
-        let exportAction = UIAction(
-            title: String(localized: "Export Model"),
-            image: UIImage(systemName: "square.and.arrow.up"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                await self.exportCurrentModel()
-            }
-        }
-
-        let deleteAction = UIAction(
-            title: String(localized: "Delete Model"),
-            image: UIImage(systemName: "trash"),
-            attributes: [.destructive],
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.deleteTapped()
-            }
-        }
-
-        let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
-        let utilitySection = UIMenu(title: "", options: [.displayInline], children: [openHuggingFaceAction, exportAction])
-        let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
-
-        return [
-            newChatSection,
-            verifySection,
-            utilitySection,
-            deleteSection,
-        ]
+        SettingController.SettingContent.ModelController.makeActionMenuElements(
+            for: identifier,
+            controller: self,
+            actionType: .local(
+                verify: { [weak self] in await self?.runVerification() },
+                openHuggingFace: { [weak self] in self?.openHuggingFace() },
+                export: { [weak self] in await self?.exportCurrentModel() },
+                delete: { [weak self] in self?.deleteTapped() },
+            ),
+        )
     }
 
     @MainActor

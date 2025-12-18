@@ -16,73 +16,16 @@ extension CloudModelEditorController {
     }
 
     func makeActionMenuElements() -> [UIMenuElement] {
-        let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
-        let isDefaultModel = identifier == defaultModel
-        let newChatAction = UIAction(
-            title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
-            image: UIImage(systemName: "plus.bubble"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            let modelId = identifier
-            let conversation = ConversationManager.shared.createNewConversation { conv in
-                conv.update(\.modelId, to: modelId)
-            }
-            ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
-            navigationController?.dismiss(animated: true)
-        }
-        let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
-
-        let verifyAction = UIAction(
-            title: String(localized: "Verify Model"),
-            image: UIImage(systemName: "testtube.2"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                await self.runVerification()
-            }
-        }
-
-        let exportAction = UIAction(
-            title: String(localized: "Export Model"),
-            image: UIImage(systemName: "square.and.arrow.up"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.exportCurrentModel()
-            }
-        }
-
-        let duplicateAction = UIAction(
-            title: String(localized: "Duplicate"),
-            image: UIImage(systemName: "doc.on.doc"),
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.duplicateCurrentModel()
-            }
-        }
-
-        let deleteAction = UIAction(
-            title: String(localized: "Delete Model"),
-            image: UIImage(systemName: "trash"),
-            attributes: [.destructive],
-        ) { [weak self] _ in
-            guard let self else { return }
-            Task { @MainActor in
-                self.deleteModel()
-            }
-        }
-
-        let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
-        let exportSection = UIMenu(title: "", options: [.displayInline], children: [exportAction, duplicateAction])
-        let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
-
-        return [
-            newChatSection,
-            verifySection,
-            exportSection,
-            deleteSection,
-        ]
+        SettingController.SettingContent.ModelController.makeActionMenuElements(
+            for: identifier,
+            controller: self,
+            actionType: .cloud(
+                verify: { [weak self] in await self?.runVerification() },
+                export: { [weak self] in self?.exportCurrentModel() },
+                duplicate: { [weak self] in self?.duplicateCurrentModel() },
+                delete: { [weak self] in self?.deleteModel() },
+            ),
+        )
     }
 
     @MainActor

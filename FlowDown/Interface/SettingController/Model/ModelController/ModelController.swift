@@ -12,6 +12,122 @@ import UIKit
 
 extension SettingController.SettingContent {
     class ModelController: UIViewController {
+        enum ModelActionType {
+            case local(
+                verify: @MainActor () async -> Void,
+                openHuggingFace: @MainActor () -> Void,
+                export: @MainActor () async -> Void,
+                delete: @MainActor () -> Void,
+            )
+            case cloud(
+                verify: @MainActor () async -> Void,
+                export: @MainActor () -> Void,
+                duplicate: @MainActor () -> Void,
+                delete: @MainActor () -> Void,
+            )
+        }
+
+        static func makeNewChatMenuElement(
+            for modelIdentifier: ModelManager.ModelIdentifier,
+            controller: UIViewController?,
+        ) -> UIAction {
+            let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
+            let isDefaultModel = modelIdentifier == defaultModel
+            return UIAction(
+                title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
+                image: UIImage(systemName: "plus.bubble"),
+            ) { [weak controller] _ in
+                let conversation = ConversationManager.shared.createNewConversation { conv in
+                    conv.update(\.modelId, to: modelIdentifier)
+                }
+                ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
+                controller?.navigationController?.dismiss(animated: true)
+            }
+        }
+
+        static func makeActionMenuElements(
+            for modelIdentifier: ModelManager.ModelIdentifier,
+            controller: UIViewController?,
+            actionType: ModelActionType,
+        ) -> [UIMenuElement] {
+            let newChatAction = makeNewChatMenuElement(for: modelIdentifier, controller: controller)
+            let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
+
+            switch actionType {
+            case let .local(verify, openHuggingFace, export, delete):
+                let verifyAction = UIAction(
+                    title: String(localized: "Verify Model"),
+                    image: UIImage(systemName: "testtube.2"),
+                ) { _ in
+                    Task { @MainActor in await verify() }
+                }
+
+                let openHuggingFaceAction = UIAction(
+                    title: String(localized: "Open in Hugging Face"),
+                    image: UIImage(systemName: "safari"),
+                ) { _ in
+                    Task { @MainActor in openHuggingFace() }
+                }
+
+                let exportAction = UIAction(
+                    title: String(localized: "Export Model"),
+                    image: UIImage(systemName: "square.and.arrow.up"),
+                ) { _ in
+                    Task { @MainActor in await export() }
+                }
+
+                let deleteAction = UIAction(
+                    title: String(localized: "Delete Model"),
+                    image: UIImage(systemName: "trash"),
+                    attributes: [.destructive],
+                ) { _ in
+                    Task { @MainActor in delete() }
+                }
+
+                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
+                let utilitySection = UIMenu(title: "", options: [.displayInline], children: [openHuggingFaceAction, exportAction])
+                let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
+
+                return [newChatSection, verifySection, utilitySection, deleteSection]
+
+            case let .cloud(verify, export, duplicate, delete):
+                let verifyAction = UIAction(
+                    title: String(localized: "Verify Model"),
+                    image: UIImage(systemName: "testtube.2"),
+                ) { _ in
+                    Task { @MainActor in await verify() }
+                }
+
+                let exportAction = UIAction(
+                    title: String(localized: "Export Model"),
+                    image: UIImage(systemName: "square.and.arrow.up"),
+                ) { _ in
+                    Task { @MainActor in export() }
+                }
+
+                let duplicateAction = UIAction(
+                    title: String(localized: "Duplicate"),
+                    image: UIImage(systemName: "doc.on.doc"),
+                ) { _ in
+                    Task { @MainActor in duplicate() }
+                }
+
+                let deleteAction = UIAction(
+                    title: String(localized: "Delete Model"),
+                    image: UIImage(systemName: "trash"),
+                    attributes: [.destructive],
+                ) { _ in
+                    Task { @MainActor in delete() }
+                }
+
+                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
+                let exportSection = UIMenu(title: "", options: [.displayInline], children: [exportAction, duplicateAction])
+                let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
+
+                return [newChatSection, verifySection, exportSection, deleteSection]
+            }
+        }
+
         let tableView: UITableView
         let dataSource: DataSource
 

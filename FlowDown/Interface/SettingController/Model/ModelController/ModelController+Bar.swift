@@ -165,67 +165,113 @@ extension SettingController.SettingContent.ModelController {
     // Shared menu elements for a specific model row. Extracted so context menus
     // and any toolbar / accessory menus can reuse the same actions.
     func createModelMenuElements(for itemIdentifier: ModelViewModel) -> [UIMenuElement] {
-        var actions: [UIMenuElement] = []
-
         switch itemIdentifier.type {
         case .local:
-            break
+            Self.makeActionMenuElements(
+                for: itemIdentifier.identifier,
+                controller: self,
+                actionType: .local(
+                    verify: { [weak self] in
+                        guard let self,
+                              let model = ModelManager.shared.localModel(identifier: itemIdentifier.identifier)
+                        else { return }
+                        Indicator.progress(
+                            title: "Verifying Model",
+                            controller: self,
+                        ) { completionHandler in
+                            let result = await withCheckedContinuation { continuation in
+                                ModelManager.shared.testLocalModel(model) { result in
+                                    continuation.resume(returning: result)
+                                }
+                            }
+                            try result.get()
+                            await completionHandler {
+                                Indicator.present(
+                                    title: "Model Verified",
+                                    referencingView: self.view,
+                                )
+                            }
+                        }
+                    },
+                    openHuggingFace: {
+                        guard let model = ModelManager.shared.localModel(identifier: itemIdentifier.identifier),
+                              let url = URL(string: "https://huggingface.co/\(model.scopeIdentifier)")
+                        else { return }
+                        UIApplication.shared.open(url)
+                    },
+                    export: { [weak self] in
+                        guard let self,
+                              let model = ModelManager.shared.localModel(identifier: itemIdentifier.identifier)
+                        else { return }
+                        Indicator.progress(
+                            title: "Exporting Model",
+                            controller: self,
+                        ) { completionHandler in
+                            let (url, _) = await withCheckedContinuation { continuation in
+                                ModelManager.shared.pack(model: model) { url, error in
+                                    continuation.resume(returning: (url, error))
+                                }
+                            }
+                            guard let url else { throw NSError() }
+                            await completionHandler {
+                                DisposableExporter(deletableItem: url, title: "Export Model")
+                                    .run(anchor: self.navigationController?.view ?? self.view)
+                            }
+                        }
+                    },
+                    delete: {
+                        ModelManager.shared.removeLocalModel(identifier: itemIdentifier.identifier)
+                    },
+                ),
+            )
         case .cloud:
-            actions.append(UIAction(
-                title: String(localized: "Export Model"),
-                image: UIImage(systemName: "square.and.arrow.up"),
-            ) { [weak self] _ in
-                self?.exportModel(itemIdentifier)
-            })
-            actions.append(UIAction(
-                title: String(localized: "Duplicate"),
-                image: UIImage(systemName: "doc.on.doc"),
-            ) { _ in
-                switch itemIdentifier.type {
-                case .local:
-                    preconditionFailure()
-                case .cloud:
-                    let newIdentifier = UUID().uuidString
-                    ModelManager.shared.editCloudModel(identifier: itemIdentifier.identifier) {
-                        $0.update(\.objectId, to: newIdentifier)
-                        $0.update(\.model_identifier, to: "")
-                        $0.update(\.creation, to: $0.modified)
-                    }
-                    guard let model = ModelManager.shared.cloudModel(identifier: newIdentifier) else {
-                        return
-                    }
-                    ModelManager.shared.insertCloudModel(model)
-                }
-            })
+            Self.makeActionMenuElements(
+                for: itemIdentifier.identifier,
+                controller: self,
+                actionType: .cloud(
+                    verify: { [weak self] in
+                        guard let self,
+                              let model = ModelManager.shared.cloudModel(identifier: itemIdentifier.identifier)
+                        else { return }
+                        Indicator.progress(
+                            title: "Verifying Model",
+                            controller: self,
+                        ) { completionHandler in
+                            let result = await withCheckedContinuation { continuation in
+                                ModelManager.shared.testCloudModel(model) { result in
+                                    continuation.resume(returning: result)
+                                }
+                            }
+                            try result.get()
+                            await completionHandler {
+                                Indicator.present(
+                                    title: "Model Verified",
+                                    referencingView: self.view,
+                                )
+                            }
+                        }
+                    },
+                    export: { [weak self] in
+                        self?.exportModel(itemIdentifier)
+                    },
+                    duplicate: {
+                        let newIdentifier = UUID().uuidString
+                        ModelManager.shared.editCloudModel(identifier: itemIdentifier.identifier) {
+                            $0.update(\.objectId, to: newIdentifier)
+                            $0.update(\.model_identifier, to: "")
+                            $0.update(\.creation, to: $0.modified)
+                        }
+                        guard let model = ModelManager.shared.cloudModel(identifier: newIdentifier) else {
+                            return
+                        }
+                        ModelManager.shared.insertCloudModel(model)
+                    },
+                    delete: {
+                        ModelManager.shared.removeCloudModel(identifier: itemIdentifier.identifier)
+                    },
+                ),
+            )
         }
-        actions.append(UIAction(
-            title: String(localized: "Delete"),
-            image: UIImage(systemName: "trash"),
-            attributes: .destructive,
-        ) { _ in
-            switch itemIdentifier.type {
-            case .local:
-                ModelManager.shared.removeLocalModel(identifier: itemIdentifier.identifier)
-            case .cloud:
-                ModelManager.shared.removeCloudModel(identifier: itemIdentifier.identifier)
-            }
-        })
-
-        let defaultModel = ModelManager.ModelIdentifier.defaultModelForConversation
-        let isDefaultModel = itemIdentifier.identifier == defaultModel
-        actions.append(UIAction(
-            title: isDefaultModel ? String(localized: "New Chat") : String(localized: "New Chat (Use Once)"),
-            image: UIImage(systemName: "plus.bubble"),
-        ) { [weak self] _ in
-            let modelId = itemIdentifier.identifier
-            let conversation = ConversationManager.shared.createNewConversation { conv in
-                conv.update(\.modelId, to: modelId)
-            }
-            ChatSelection.shared.select(conversation.id, options: [.collapseSidebar, .focusEditor])
-            self?.navigationController?.dismiss(animated: true)
-        })
-
-        return actions
     }
 
     func createModelMenu(for itemIdentifier: ModelViewModel) -> UIMenu {
