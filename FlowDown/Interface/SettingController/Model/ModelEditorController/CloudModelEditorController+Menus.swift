@@ -21,6 +21,7 @@ extension CloudModelEditorController {
             controller: self,
             actionType: .cloud(
                 verify: { [weak self] in await self?.runVerification() },
+                evaluate: { [weak self] in EvaluationController.begin(controller: self, model: self?.identifier) },
                 export: { [weak self] in self?.exportCurrentModel() },
                 duplicate: { [weak self] in self?.duplicateCurrentModel() },
                 delete: { [weak self] in self?.deleteModel() },

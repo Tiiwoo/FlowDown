@@ -134,6 +134,19 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - `AlertViewController` and `ConfigurableKit` APIs expect `String.LocalizationValue`; pass localization values directly for consistency
 - Other UI entry points should continue using `String(localized: ...)` for user-facing strings
 - Source all user-visible strings from localization files instead of hardcoded literals
+
+### Dynamic values (avoid missed translations)
+
+When a localized string includes runtime values (counts, sizes, etc.), do NOT build the key as a `String` via interpolation.
+
+- Bad (produces a runtime `String` key like "3 chances" and will NOT match entries like "%lld chances"):
+  - `String(localized: "\(value) chances")`
+- Good (ensures a `String.LocalizationValue` is produced, so it matches the formatted key in `.xcstrings`):
+  - `let key: String.LocalizationValue = "\(value) chances"`
+  - `String(localized: key)`
+
+Prefer `String.LocalizationValue`/`LocalizedStringResource` formatting over `String(format:)` in app code. Use `String(format:)` only when needed for compatibility.
+
 - Main app localization files:
   - `FlowDown/Resources/Localizable.xcstrings`: Main app UI strings
   - `FlowDown/Resources/InfoPlist.xcstrings`: Info.plist localization strings

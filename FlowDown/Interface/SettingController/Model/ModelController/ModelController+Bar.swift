@@ -193,6 +193,9 @@ extension SettingController.SettingContent.ModelController {
                             }
                         }
                     },
+                    evaluate: { [weak self] in
+                        EvaluationController.begin(controller: self, model: itemIdentifier.identifier)
+                    },
                     openHuggingFace: {
                         guard let model = ModelManager.shared.localModel(identifier: itemIdentifier.identifier),
                               let url = URL(string: "https://huggingface.co/\(model.scopeIdentifier)")
@@ -250,6 +253,9 @@ extension SettingController.SettingContent.ModelController {
                                 )
                             }
                         }
+                    },
+                    evaluate: { [weak self] in
+                        EvaluationController.begin(controller: self, model: itemIdentifier.identifier)
                     },
                     export: { [weak self] in
                         self?.exportModel(itemIdentifier)

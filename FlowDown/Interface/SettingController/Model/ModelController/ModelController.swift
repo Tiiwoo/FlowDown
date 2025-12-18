@@ -15,12 +15,14 @@ extension SettingController.SettingContent {
         enum ModelActionType {
             case local(
                 verify: @MainActor () async -> Void,
+                evaluate: @MainActor () async -> Void,
                 openHuggingFace: @MainActor () -> Void,
                 export: @MainActor () async -> Void,
                 delete: @MainActor () -> Void,
             )
             case cloud(
                 verify: @MainActor () async -> Void,
+                evaluate: @MainActor () async -> Void,
                 export: @MainActor () -> Void,
                 duplicate: @MainActor () -> Void,
                 delete: @MainActor () -> Void,
@@ -54,12 +56,19 @@ extension SettingController.SettingContent {
             let newChatSection = UIMenu(title: "", options: [.displayInline], children: [newChatAction])
 
             switch actionType {
-            case let .local(verify, openHuggingFace, export, delete):
+            case let .local(verify, evaluate, openHuggingFace, export, delete):
                 let verifyAction = UIAction(
                     title: String(localized: "Verify Model"),
                     image: UIImage(systemName: "testtube.2"),
                 ) { _ in
                     Task { @MainActor in await verify() }
+                }
+
+                let evaluateAction = UIAction(
+                    title: String(localized: "Evaluate"),
+                    image: UIImage(systemName: "chart.bar.xaxis.ascending"),
+                ) { _ in
+                    Task { @MainActor in await evaluate() }
                 }
 
                 let openHuggingFaceAction = UIAction(
@@ -84,20 +93,25 @@ extension SettingController.SettingContent {
                     Task { @MainActor in delete() }
                 }
 
-                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
+                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction, evaluateAction])
                 let utilitySection = UIMenu(title: "", options: [.displayInline], children: [openHuggingFaceAction, exportAction])
                 let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
 
                 return [newChatSection, verifySection, utilitySection, deleteSection]
 
-            case let .cloud(verify, export, duplicate, delete):
+            case let .cloud(verify, evaluate, export, duplicate, delete):
                 let verifyAction = UIAction(
                     title: String(localized: "Verify Model"),
                     image: UIImage(systemName: "testtube.2"),
                 ) { _ in
                     Task { @MainActor in await verify() }
                 }
-
+                let evaluateAction = UIAction(
+                    title: String(localized: "Evaluate"),
+                    image: UIImage(systemName: "chart.bar.xaxis.ascending"),
+                ) { _ in
+                    Task { @MainActor in await evaluate() }
+                }
                 let exportAction = UIAction(
                     title: String(localized: "Export Model"),
                     image: UIImage(systemName: "square.and.arrow.up"),
@@ -120,7 +134,7 @@ extension SettingController.SettingContent {
                     Task { @MainActor in delete() }
                 }
 
-                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction])
+                let verifySection = UIMenu(title: "", options: [.displayInline], children: [verifyAction, evaluateAction])
                 let exportSection = UIMenu(title: "", options: [.displayInline], children: [exportAction, duplicateAction])
                 let deleteSection = UIMenu(title: "", options: [.displayInline], children: [deleteAction])
 

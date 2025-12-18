@@ -14,7 +14,7 @@ import Foundation
 /// - `assign` 方法：无条件赋值，不比较旧值。
 ///
 /// ⚠️ 注意：
-/// - 仅当 `KeyPath` 是 `ReferenceWritableKeyPath`（可写引用）时才允许修改；
+/// - 仅当 `KeyPath` 是 `ReferenceWritableKeyPath`（可写引用）时才允许修改
 /// - 对只读 KeyPath 调用 `update` / `assign` 时会触发断言失败（不会崩溃，但在 Debug 模式下提示）。
 public protocol Updatable: AnyObject {
     /// 当值类型支持 `Equatable` 时，仅在值发生变化时更新。

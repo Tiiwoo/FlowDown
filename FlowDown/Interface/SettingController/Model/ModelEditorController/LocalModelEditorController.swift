@@ -100,6 +100,7 @@ class LocalModelEditorController: StackScrollController {
             controller: self,
             actionType: .local(
                 verify: { [weak self] in await self?.runVerification() },
+                evaluate: { [weak self] in EvaluationController.begin(controller: self, model: self?.identifier) },
                 openHuggingFace: { [weak self] in self?.openHuggingFace() },
                 export: { [weak self] in await self?.exportCurrentModel() },
                 delete: { [weak self] in self?.deleteTapped() },
