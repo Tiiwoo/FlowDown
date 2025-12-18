@@ -136,7 +136,7 @@ private extension CloudModelEditorController {
 
     func renderNetworkingSection(_ model: CloudModel?) {
         stackView.addArrangedSubviewWithMargin(
-            ConfigurableSectionHeaderView().with(header: "Networking (Optional)"),
+            ConfigurableSectionHeaderView().with(header: "Networking (Advanced)"),
         ) { $0.bottom /= 2 }
         addSeparator()
 

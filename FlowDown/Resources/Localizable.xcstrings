@@ -4737,7 +4737,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "请求体字段"
+            "value" : "请求体"
           }
         }
       }
@@ -7228,16 +7228,16 @@
     },
     "Cloud Models" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cloud Models"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cloud-Modelle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cloud Models"
           }
         },
         "es" : {
@@ -23887,16 +23887,16 @@
     },
     "Local Models" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Local Models"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokale Modelle"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Local Models"
           }
         },
         "es" : {
@@ -27385,48 +27385,48 @@
         }
       }
     },
-    "Networking (Optional)" : {
+    "Networking (Advanced)" : {
       "localizations" : {
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Netzwerk (optional)"
-          }
-        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Networking (Optional)"
+            "value" : "Networking (Advanced)"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Netzwerk (Erweitert)"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Red (opcional)"
+            "value" : "Red (Avanzado)"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Réseau (facultatif)"
+            "value" : "Réseau (Avancé)"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ネットワーキング（任意）"
+            "value" : "ネットワーク（詳細）"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "네트워킹(선택 사항)"
+            "value" : "네트워크 (고급)"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "网络（可选）"
+            "value" : "网络（高级）"
           }
         }
       }

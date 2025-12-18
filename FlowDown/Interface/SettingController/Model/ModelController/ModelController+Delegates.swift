@@ -50,52 +50,8 @@ extension SettingController.SettingContent.ModelController: UITableViewDelegate 
         guard let itemIdentifier = dataSource.itemIdentifier(for: indexPath) else {
             return nil
         }
-        var actions: [UIMenuElement] = []
-
-        switch itemIdentifier.type {
-        case .local: break
-        case .cloud:
-            actions.append(UIAction(
-                title: String(localized: "Export Model"),
-                image: UIImage(systemName: "square.and.arrow.up"),
-            ) { _ in
-                self.exportModel(itemIdentifier)
-            })
-            actions.append(UIAction(
-                title: String(localized: "Duplicate"),
-                image: UIImage(systemName: "doc.on.doc"),
-            ) { _ in
-                switch itemIdentifier.type {
-                case .local:
-                    preconditionFailure()
-                case .cloud:
-                    let newIdentifier = UUID().uuidString
-                    ModelManager.shared.editCloudModel(identifier: itemIdentifier.identifier) {
-                        $0.update(\.objectId, to: newIdentifier)
-                        $0.update(\.model_identifier, to: "")
-                        $0.update(\.creation, to: $0.modified)
-                    }
-                    guard let model = ModelManager.shared.cloudModel(identifier: newIdentifier) else {
-                        return
-                    }
-                    ModelManager.shared.insertCloudModel(model)
-                }
-            })
-        }
-        actions.append(UIAction(
-            title: String(localized: "Delete"),
-            image: UIImage(systemName: "trash"),
-            attributes: .destructive,
-        ) { _ in
-            switch itemIdentifier.type {
-            case .local:
-                ModelManager.shared.removeLocalModel(identifier: itemIdentifier.identifier)
-            case .cloud:
-                ModelManager.shared.removeCloudModel(identifier: itemIdentifier.identifier)
-            }
-        })
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            .init(children: actions)
+            return .init(children: self.createModelMenuElements(for: itemIdentifier))
         }
     }
 }

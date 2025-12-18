@@ -161,4 +161,59 @@ extension SettingController.SettingContent.ModelController {
             },
         ]
     }
+
+    // Shared menu elements for a specific model row. Extracted so context menus
+    // and any toolbar / accessory menus can reuse the same actions.
+    func createModelMenuElements(for itemIdentifier: ModelViewModel) -> [UIMenuElement] {
+        var actions: [UIMenuElement] = []
+
+        switch itemIdentifier.type {
+        case .local:
+            break
+        case .cloud:
+            actions.append(UIAction(
+                title: String(localized: "Export Model"),
+                image: UIImage(systemName: "square.and.arrow.up"),
+            ) { [weak self] _ in
+                self?.exportModel(itemIdentifier)
+            })
+            actions.append(UIAction(
+                title: String(localized: "Duplicate"),
+                image: UIImage(systemName: "doc.on.doc"),
+            ) { _ in
+                switch itemIdentifier.type {
+                case .local:
+                    preconditionFailure()
+                case .cloud:
+                    let newIdentifier = UUID().uuidString
+                    ModelManager.shared.editCloudModel(identifier: itemIdentifier.identifier) {
+                        $0.update(\.objectId, to: newIdentifier)
+                        $0.update(\.model_identifier, to: "")
+                        $0.update(\.creation, to: $0.modified)
+                    }
+                    guard let model = ModelManager.shared.cloudModel(identifier: newIdentifier) else {
+                        return
+                    }
+                    ModelManager.shared.insertCloudModel(model)
+                }
+            })
+        }
+        actions.append(UIAction(
+            title: String(localized: "Delete"),
+            image: UIImage(systemName: "trash"),
+            attributes: .destructive,
+        ) { _ in
+            switch itemIdentifier.type {
+            case .local:
+                ModelManager.shared.removeLocalModel(identifier: itemIdentifier.identifier)
+            case .cloud:
+                ModelManager.shared.removeCloudModel(identifier: itemIdentifier.identifier)
+            }
+        })
+        return actions
+    }
+
+    func createModelMenu(for itemIdentifier: ModelViewModel) -> UIMenu {
+        UIMenu(children: createModelMenuElements(for: itemIdentifier))
+    }
 }
