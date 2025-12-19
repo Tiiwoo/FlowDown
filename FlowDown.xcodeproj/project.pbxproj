@@ -467,7 +467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin/\n\nSWIFTFORMAT_LIST=\"$SRCROOT/.swift-format-list\"\n\nawk '{sub(/#.*/,\"\"); gsub(/^[ \\t]+|[ \\t]+$/,\"\"); if (length) print}' \"$SWIFTFORMAT_LIST\" | \\\nwhile IFS= read -r dir; do\n    echo \"[+] formatting at $dir\"\n    swiftformat \"$dir\" --swiftversion 6.2\ndone\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin/\n\nSWIFTFORMAT_LIST=\"$SRCROOT/.swift-format-list\"\n\nawk '{sub(/#.*/,\"\"); gsub(/^[ \\t]+|[ \\t]+$/,\"\"); if (length) print}' \"$SWIFTFORMAT_LIST\" | \\\nwhile IFS= read -r dir; do\n    echo \"[+] formatting at $dir\"\n    swiftformat \"$dir\" --swiftversion 6.2 || true\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
