@@ -17,6 +17,9 @@
       location = "group:Frameworks/ChatClientKit">
    </FileRef>
    <FileRef
+      location = "group:Frameworks/mlx-swift-lm">
+   </FileRef>
+   <FileRef
       location = "group:Frameworks/RunestoneEditor">
    </FileRef>
    <FileRef

@@ -30,8 +30,12 @@ function with_retry {
 }
 
 if [[ -n $(git status --porcelain) ]]; then
-    echo "[!] git is not clean"
-    exit 1
+    if [[ "${ALLOW_DIRTY:-0}" == "1" ]]; then
+        echo "[*] git is not clean; continuing because ALLOW_DIRTY=1"
+    else
+        echo "[!] git is not clean"
+        exit 1
+    fi
 fi
 
 echo "[*] cleaning framework dir..."

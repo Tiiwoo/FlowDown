@@ -360,16 +360,12 @@ extension ChatTemplateListController: UITableViewDragDelegate, UITableViewDropDe
                     itemProvider.loadDataRepresentation(forTypeIdentifier: fdTemplateTypeIdentifier) { data, error in
                         guard let data, error == nil else { return }
 
-                        do {
-                            Task { @MainActor in
-                                do {
-                                    _ = try ChatTemplateManager.shared.importTemplate(from: data)
-                                } catch {
-                                    Logger.app.errorFile("failed to import dropped template: \(error)")
-                                }
+                        Task { @MainActor in
+                            do {
+                                _ = try ChatTemplateManager.shared.importTemplate(from: data)
+                            } catch {
+                                Logger.app.errorFile("failed to import dropped template: \(error)")
                             }
-                        } catch {
-                            Logger.app.errorFile("failed to decode dropped template: \(error)")
                         }
                     }
                     coordinator.drop(item.dragItem, toRowAt: destinationIndexPath)

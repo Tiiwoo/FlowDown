@@ -312,16 +312,13 @@ extension SettingController.SettingContent.MCPController: UITableViewDragDelegat
             if itemProvider.hasItemConformingToTypeIdentifier(utType) {
                 itemProvider.loadDataRepresentation(forTypeIdentifier: utType) { data, error in
                     guard let data, error == nil else { return }
-                    do {
-                        Task { @MainActor in
-                            do {
-                                _ = try MCPService.shared.importServer(from: data)
-                            } catch {
-                                Logger.app.errorFile("failed to import dropped MCP server: \(error)")
-                            }
+
+                    Task { @MainActor in
+                        do {
+                            _ = try MCPService.shared.importServer(from: data)
+                        } catch {
+                            Logger.app.errorFile("failed to import dropped MCP server: \(error)")
                         }
-                    } catch {
-                        Logger.app.errorFile("failed to decode dropped template: \(error)")
                     }
                 }
             }
