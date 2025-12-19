@@ -132,16 +132,6 @@
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
-/* Begin PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-		509665F12EF24F5F007E9A71 /* Exceptions for "FlowDown" folder in "Copy Bundle Resources" phase from "FlowDown" target */ = {
-			isa = PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet;
-			buildPhase = 503498BB2D23053D004672BD /* Resources */;
-			membershipExceptions = (
-				Extension/UIBezierPath.swift,
-			);
-		};
-/* End PBXFileSystemSynchronizedGroupBuildPhaseMembershipExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -155,7 +145,6 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */,
-				509665F12EF24F5F007E9A71 /* Exceptions for "FlowDown" folder in "Copy Bundle Resources" phase from "FlowDown" target */,
 			);
 			path = FlowDown;
 			sourceTree = "<group>";
@@ -478,7 +467,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/zsh;
-			shellScript = "PATH=$PATH:/opt/homebrew/bin/\n\nSWIFTFORMAT_LIST=\"$SRCROOT/.swift-format-list\"\n\nif [ -f \"$SWIFTFORMAT_LIST\" ]; then\n  mapfile -t SWIFTFORMAT_DIRS < <(awk '{sub(/#.*/,\"\"); gsub(/^[ \\\t]+|[ \\\t]+$/,\"\"); if (length) print}' \"$SWIFTFORMAT_LIST\")\n  if [ \"${#SWIFTFORMAT_DIRS[@]}\" -gt 0 ]; then\n    swiftformat \"${SWIFTFORMAT_DIRS[@]}\" --swiftversion 6.2 || true\n  fi\nelse\n  swiftformat . --swiftversion 6.2 || true\nfi\n\nnpx prettier --write . || true\n";
+			shellScript = "PATH=$PATH:/opt/homebrew/bin/\n\nSWIFTFORMAT_LIST=\"$SRCROOT/.swift-format-list\"\n\nawk '{sub(/#.*/,\"\"); gsub(/^[ \\t]+|[ \\t]+$/,\"\"); if (length) print}' \"$SWIFTFORMAT_LIST\" | \\\nwhile IFS= read -r dir; do\n    echo \"[+] formatting at $dir\"\n    swiftformat \"$dir\" --swiftversion 6.2\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

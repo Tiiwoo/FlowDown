@@ -21,8 +21,10 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Select Xcode 26.0
-        run: sudo xcode-select -s /Applications/Xcode_26.0.app/Contents/Developer
+      - name: Select Newest Xcode
+        run: |
+          chmod +x Resources/DevKit/scripts/select_newest_xcode.sh
+          ./Resources/DevKit/scripts/select_newest_xcode.sh
 
       - name: Install Dependencies
         run: brew install xcbeautify

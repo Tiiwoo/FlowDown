@@ -34,7 +34,9 @@ jobs:
           submodules: recursive
 
       - name: Select Newest Xcode
-        run: bash Resources/DevKit/scripts/select_newest_xcode.sh
+        run: |
+          chmod +x Resources/DevKit/scripts/select_newest_xcode.sh
+          ./Resources/DevKit/scripts/select_newest_xcode.sh
 
       - name: Resolve Packages
         run: |
