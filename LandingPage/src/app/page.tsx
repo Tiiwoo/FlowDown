@@ -19,10 +19,6 @@ export default function LandingPage() {
       <TeamSection />
       <Footer />
 
-      {/* Decorative pigeon at bottom right */}
-      <div className="fixed bottom-6 right-6 w-[100px] h-[100px] opacity-30 pointer-events-none">
-        <span className="text-[80px]">🕊️</span>
-      </div>
     </div>
   );
 }
