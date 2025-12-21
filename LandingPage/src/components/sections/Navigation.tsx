@@ -32,20 +32,21 @@ export default function Navigation() {
               Documentation
             </Link>
             <Link
-              href="https://github.com/aspect-apps/FlowDown"
+              href="https://github.com/Lakr233/FlowDown"
               target="_blank"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
               Get Source Code
             </Link>
             <Link
-              href="#models"
+              href="/docs/en/documents/models/cloud_models_setup"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
               Add Models
             </Link>
             <Link
-              href="#download"
+              href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
+              target="_blank"
               className="btn-primary text-white text-sm font-medium px-5 py-2.5 rounded-lg shadow-sm hover:opacity-90 transition-opacity"
             >
               Download
@@ -92,7 +93,7 @@ export default function Navigation() {
                 Documentation
               </Link>
               <Link
-                href="https://github.com/aspect-apps/FlowDown"
+                href="https://github.com/Lakr233/FlowDown"
                 target="_blank"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}
@@ -100,14 +101,15 @@ export default function Navigation() {
                 Get Source Code
               </Link>
               <Link
-                href="#models"
+                href="/docs/en/documents/models/cloud_models_setup"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}
               >
                 Add Models
               </Link>
               <Link
-                href="#download"
+                href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
+                target="_blank"
                 className="btn-primary text-white text-lg font-medium px-5 py-3 rounded-xl shadow-sm hover:opacity-90 transition-opacity w-full max-w-[200px] mx-auto"
                 onClick={() => setIsOpen(false)}
               >
