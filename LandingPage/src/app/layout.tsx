@@ -2,9 +2,9 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FlowDown - Privacy-First AI Chat for iOS & macOS",
+  title: "FlowDown - AI That Works Even Without Us",
   description:
-    "A beautiful, privacy-focused AI client for iOS and macOS. Chat with multiple AI models, run local inference with MLX, and keep your data secure.",
+    "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",
   keywords: [
     "AI",
     "Chat",
@@ -16,20 +16,24 @@ export const metadata: Metadata = {
     "OpenAI",
     "Claude",
     "Local AI",
+    "FlowDown",
+    "Agent",
+    "Swift",
+    "Apple Silicon",
   ],
   authors: [{ name: "FlowDown Team" }],
   openGraph: {
-    title: "FlowDown - Privacy-First AI Chat",
+    title: "FlowDown - AI That Works Even Without Us",
     description:
-      "Beautiful AI client for iOS & macOS with local inference support",
+      "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "FlowDown - Privacy-First AI Chat",
+    title: "FlowDown - AI That Works Even Without Us",
     description:
-      "Beautiful AI client for iOS & macOS with local inference support",
+      "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",
   },
   robots: {
     index: true,
@@ -40,10 +44,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f8fafc" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
-  ],
+  themeColor: "#f6f6f6",
 };
 
 export default function RootLayout({
@@ -57,4 +58,3 @@ export default function RootLayout({
     </html>
   );
 }
-
