@@ -138,8 +138,7 @@ Local deployment protects privacy and reduces cloud dependence. Adjust context l
 
 ## Custom Jinja Template
 
-<details>
-<summary>Click to view custom Jinja template</summary>
+ 
 
 ```jinja
 {{ bos_token }}

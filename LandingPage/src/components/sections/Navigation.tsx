@@ -26,7 +26,7 @@ export default function Navigation() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <Link
-              href="/docs"
+              href="/docs/en"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
               Documentation
@@ -85,7 +85,7 @@ export default function Navigation() {
           >
             <div className="flex flex-col gap-6 text-center">
               <Link
-                href="/docs"
+                href="/docs/en"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}
               >

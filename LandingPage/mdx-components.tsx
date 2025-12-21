@@ -10,7 +10,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     // Headings with proper styling - matching Landing Page design
     h1: ({ children, ...props }) => (
       <h1
-        className="text-3xl font-bold text-[#242424] mt-8 mb-4 first:mt-0"
+        className="font-['Instrument_Serif'] text-4xl text-[#242424] tracking-[-0.5px] mt-8 mb-4 first:mt-0 [&_a]:no-underline"
         {...props}
       >
         {children}
@@ -18,7 +18,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h2: ({ children, ...props }) => (
       <h2
-        className="text-2xl font-semibold text-[#242424] mt-10 mb-4 pb-2 border-b border-[#e6e6e6]"
+        className="text-2xl font-semibold text-[#242424] mt-10 mb-4 pb-2 border-b border-[#e6e6e6] [&_a]:no-underline"
         {...props}
       >
         {children}
@@ -26,14 +26,14 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ),
     h3: ({ children, ...props }) => (
       <h3
-        className="text-xl font-semibold text-[#242424] mt-8 mb-3"
+        className="text-xl font-semibold text-[#242424] mt-8 mb-3 [&_a]:no-underline"
         {...props}
       >
         {children}
       </h3>
     ),
     h4: ({ children, ...props }) => (
-      <h4 className="text-lg font-medium text-[#242424] mt-6 mb-2" {...props}>
+      <h4 className="text-lg font-medium text-[#242424] mt-6 mb-2 [&_a]:no-underline" {...props}>
         {children}
       </h4>
     ),
@@ -45,7 +45,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </p>
     ),
 
-    // Links - using landing page link color
+    // Links - using landing page link color, no underline
     a: ({ children, ...props }) => {
       const href = (props as { href?: string }).href;
       const isExternal = href?.startsWith("http");
@@ -55,7 +55,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#242424] font-medium underline underline-offset-2 hover:opacity-70 transition-opacity"
+            className="text-[#242424] font-medium hover:opacity-70 transition-opacity"
             {...props}
           >
             {children}
@@ -65,7 +65,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       return (
         <Link
           href={href || "#"}
-          className="text-[#242424] font-medium underline underline-offset-2 hover:opacity-70 transition-opacity"
+          className="text-[#242424] font-medium hover:opacity-70 transition-opacity"
           {...props}
         >
           {children}

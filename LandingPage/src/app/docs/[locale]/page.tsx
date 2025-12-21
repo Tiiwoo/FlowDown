@@ -36,7 +36,7 @@ export default async function DocsHomePage({
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-[#242424] mb-3">
+      <h1 className="font-['Instrument_Serif'] text-4xl text-[#242424] tracking-[-0.5px] mb-3">
         {isZh ? "FlowDown 文档" : "FlowDown Documentation"}
       </h1>
       <p className="text-lg text-[#828282] mb-10">
