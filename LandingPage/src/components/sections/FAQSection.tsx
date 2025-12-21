@@ -26,7 +26,7 @@ function FAQItem({
       >
         <span>{question}</span>
         <svg
-          className={`w-6 h-6 flex-shrink-0 transition-transform duration-300 ease-out ${
+          className={`w-[14px] h-[14px] flex-shrink-0 transition-transform duration-300 ease-out ${
             isOpen ? "rotate-180" : "rotate-0"
           }`}
           fill="none"

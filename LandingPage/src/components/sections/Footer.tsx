@@ -33,108 +33,112 @@ export default function Footer() {
 
       <div className="max-w-[1280px] mx-auto px-6 py-12 relative">
         <FadeIn>
-          <div className="flex justify-between">
-            {/* Left side - Logo & info */}
-            <div className="flex flex-col gap-2">
-              <p className="text-lg text-[#242424]">FlowDown.ai</p>
-              <p className="text-sm font-medium text-[#aeaeae]">
-                © 2025 FlowDown Team. All rights reserved.
-              </p>
-            {/* Decorative pigeon */}
-            <img
-              src="/gugugu.png"
-              alt="Decorative pigeon"
-              className="w-[80px] h-[60px] object-cover rounded-[30px] opacity-50 mix-blend-hard-light mt-3 transition-all duration-300 hover:opacity-100 hover:mix-blend-normal"
-            />
-          </div>
+          <div className="flex flex-col md:flex-row md:justify-between gap-12">
+            {/* Left side - Logo & info & Pigeon */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <p className="text-lg text-[#242424]">FlowDown.ai</p>
+                <p className="text-sm font-medium text-[#aeaeae] mt-2">
+                  © 2025 FlowDown Team. All rights reserved.
+                </p>
+              </div>
+              <img
+                src="/gugugu.png"
+                alt="Decorative pigeon"
+                className="w-[80px] h-[60px] object-cover rounded-[30px] opacity-50 mix-blend-hard-light mt-4 transition-all duration-300 hover:opacity-100 hover:mix-blend-normal"
+              />
+            </div>
 
-          {/* Center-left - Download links */}
-          <div className="flex flex-col gap-4">
-            <p className="text-sm font-medium text-[#242424]">Download</p>
-            <div className="flex flex-col gap-4 text-sm font-medium text-[#454545]">
-              <Link
-                href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
-                target="_blank"
-                className="hover:text-[#242424] transition-colors"
-              >
-                iOS App Store
-              </Link>
-              <Link
-                href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
-                target="_blank"
-                className="hover:text-[#242424] transition-colors"
-              >
-                macOS App Store
-              </Link>
-              <Link
-                href="https://github.com/Lakr233/FlowDown"
-                target="_blank"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Get Source Code
-              </Link>
+            {/* Right side - Links */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8">
+              {/* Download links */}
+              <div className="flex flex-col gap-4">
+                <p className="text-sm font-medium text-[#242424]">Download</p>
+                <div className="flex flex-col gap-3 text-sm font-medium text-[#454545]">
+                  <Link
+                    href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
+                    target="_blank"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    iOS App Store
+                  </Link>
+                  <Link
+                    href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
+                    target="_blank"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    macOS App Store
+                  </Link>
+                  <Link
+                    href="https://github.com/Lakr233/FlowDown"
+                    target="_blank"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Get Source Code
+                  </Link>
+                </div>
+              </div>
+
+              {/* Doc links */}
+              <div className="flex flex-col gap-4">
+                <p className="text-sm font-medium text-[#242424]">Doc</p>
+                <div className="flex flex-col gap-3 text-sm font-medium text-[#454545]">
+                  <Link
+                    href="/docs/en/documents/models/inference_configuration"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Get Local Models
+                  </Link>
+                  <Link
+                    href="/docs/en/documents/models/cloud_models_setup"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Get Cloud Models
+                  </Link>
+                  <Link
+                    href="/docs/en/documents/quickstart/basic_usage"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Basic Usage
+                  </Link>
+                  <Link
+                    href="/docs/en/documents/troubleshooting/faq"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    FAQ
+                  </Link>
+                </div>
+              </div>
+
+              {/* Other links */}
+              <div className="flex flex-col gap-4">
+                <p className="text-sm font-medium text-[#242424]">Others</p>
+                <div className="flex flex-col gap-3 text-sm font-medium text-[#454545]">
+                  <Link
+                    href="/docs/en/documents/pricing_timeline"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Price
+                  </Link>
+                  <Link
+                    href="/docs/en/documents/legal/privacy"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Privacy
+                  </Link>
+                  <Link
+                    href="/docs/en/documents/legal/software_license"
+                    className="hover:text-[#242424] transition-colors"
+                  >
+                    Terms of Service
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Center - Doc links */}
-          <div className="flex flex-col gap-4">
-            <p className="text-sm font-medium text-[#242424]">Doc</p>
-            <div className="flex flex-col gap-4 text-sm font-medium text-[#454545]">
-              <Link
-                href="/docs/en/documents/models/inference_configuration"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Get Local Models
-              </Link>
-              <Link
-                href="/docs/en/documents/models/cloud_models_setup"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Get Cloud Models
-              </Link>
-              <Link
-                href="/docs/en/documents/quickstart/basic_usage"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Basic Usage
-              </Link>
-              <Link
-                href="/docs/en/documents/troubleshooting/faq"
-                className="hover:text-[#242424] transition-colors"
-              >
-                FAQ
-              </Link>
-            </div>
-          </div>
-
-          {/* Right - Other links */}
-          <div className="flex flex-col gap-4">
-            <p className="text-sm font-medium text-[#242424]">Others</p>
-            <div className="flex flex-col gap-4 text-sm font-medium text-[#454545]">
-              <Link
-                href="/docs/en/documents/pricing_timeline"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Price
-              </Link>
-              <Link
-                href="/docs/en/documents/legal/privacy"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Privacy
-              </Link>
-              <Link
-                href="/docs/en/documents/legal/software_license"
-                className="hover:text-[#242424] transition-colors"
-              >
-                Terms of Service
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Social icons */}
-        <div className="flex gap-2 mt-[120px] mix-blend-plus-darker">
+          {/* Social icons */}
+          <div className="flex gap-2 mt-12 md:mt-[80px] mix-blend-plus-darker">
           {/* GitHub */}
           <Link
             href="https://github.com/Lakr233/FlowDown"

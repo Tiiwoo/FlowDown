@@ -41,16 +41,16 @@ function Testimonial({
 
 export default function TestimonialsSection() {
   return (
-    <section className="px-6 mt-[120px] max-w-[1280px] mx-auto">
+    <section className="px-6 mt-[80px] md:mt-[120px] max-w-[1280px] mx-auto">
       <FadeIn>
-        <h2 className="font-['Instrument_Serif'] text-[42px] text-[#242424] tracking-[-0.84px] mb-10">
+        <h2 className="font-['Instrument_Serif'] text-[32px] md:text-[42px] text-[#242424] tracking-[-0.84px] mb-6 md:mb-10">
           LOVE FROM OUR USERS
         </h2>
       </FadeIn>
 
-      <div className="flex justify-between gap-12">
+      <div className="flex flex-col md:flex-row md:justify-between gap-8 md:gap-12">
         {/* Left column */}
-        <StaggerContainer className="flex flex-col gap-8 flex-1">
+        <StaggerContainer className="flex flex-col gap-6 md:gap-8 flex-1">
           <StaggerItem>
             <Testimonial
               text="The performance of FlowDown is amazing! I was truly impressed by the rendering performance, even during the beta testing stage - it's significantly better than the native official ChatGPT app. I also hold a similar attitude with the developer (or project leader), toward the concept of native app & privacy. As someone who has been using this app since literally day one, I can really see the effort the team has put into it. The project leader is active in the Discord group, constantly working to fix bugs and add new features.
@@ -70,7 +70,7 @@ That said, there are still a few frustrating issues. I have to admit that the pr
         </StaggerContainer>
 
         {/* Right column */}
-        <StaggerContainer className="flex flex-col gap-8 flex-1" delay={0.2}>
+        <StaggerContainer className="flex flex-col gap-6 md:gap-8 flex-1" delay={0.2}>
           <StaggerItem>
             <Testimonial
               text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."

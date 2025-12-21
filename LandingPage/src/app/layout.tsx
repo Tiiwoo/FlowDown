@@ -37,18 +37,32 @@ export const metadata: Metadata = {
     "Apple Silicon",
   ],
   authors: [{ name: "FlowDown Team" }],
+  icons: {
+    icon: "/favicon.png",
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "FlowDown - AI That Works Even Without Us",
     description:
       "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",
     type: "website",
     locale: "en_US",
+    images: [
+      {
+        url: "/og-Image.png",
+        width: 1200,
+        height: 630,
+        alt: "FlowDown - AI That Works Even Without Us",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "FlowDown - AI That Works Even Without Us",
     description:
       "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",
+    images: ["/og-Image.png"],
   },
   robots: {
     index: true,
