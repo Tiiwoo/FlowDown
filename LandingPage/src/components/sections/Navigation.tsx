@@ -32,7 +32,7 @@ export default function Navigation() {
               Documentation
             </Link>
             <Link
-              href="https://github.com/aspect-apps/FlowDown"
+              href="https://github.com/Lakr233/FlowDown"
               target="_blank"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
@@ -92,7 +92,7 @@ export default function Navigation() {
                 Documentation
               </Link>
               <Link
-                href="https://github.com/aspect-apps/FlowDown"
+                href="https://github.com/Lakr233/FlowDown"
                 target="_blank"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}

@@ -59,7 +59,7 @@ export default function Footer() {
                 macOS App Store
               </Link>
               <Link
-                href="https://github.com/aspect-apps/FlowDown"
+                href="https://github.com/Lakr233/FlowDown"
                 target="_blank"
                 className="hover:text-[#242424] transition-colors"
               >
@@ -108,7 +108,7 @@ export default function Footer() {
         <div className="flex gap-2 mt-[120px] mix-blend-plus-darker">
           {/* GitHub */}
           <Link
-            href="https://github.com/aspect-apps/FlowDown"
+            href="https://github.com/Lakr233/FlowDown"
             target="_blank"
             className="w-10 h-10 flex items-center justify-center rounded text-[#8e8e8e] hover:bg-gray-100 hover:text-black transition-colors"
           >
