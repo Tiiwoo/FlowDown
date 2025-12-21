@@ -221,7 +221,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-[100px] px-6 max-w-[1280px] mx-auto">
+      <section className="pt-[180px] px-6 max-w-[1280px] mx-auto">
         <div className="max-w-[720px]">
           {/* Headline */}
           <h1 className="font-['Instrument_Serif'] text-[48px] text-[#242424] tracking-[-0.96px] leading-tight mb-4">
@@ -255,15 +255,15 @@ export default function LandingPage() {
         <img
           src="/hero-image.png"
           alt="FlowDown App Screenshot"
-          className="w-full rounded-2xl shadow-lg"
+          className="w-full h-[869px] object-cover rounded-sm"
         />
 
         {/* Read the User Guide button */}
         <Link
           href="#guide"
-          className="inline-flex bg-[#242424] text-white text-lg font-medium px-6 py-4 rounded-full shadow-sm hover:bg-[#1a1a1a] transition-colors mt-8"
+          className="inline-flex items-center text-lg font-medium text-[#242424] hover:opacity-70 transition-opacity mt-8"
         >
-          Read the User Guide
+          Read the User Guide →
         </Link>
       </section>
 
