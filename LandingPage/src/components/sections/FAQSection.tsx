@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
 
 // FAQ item component
 function FAQItem({
@@ -63,144 +64,157 @@ export default function FAQSection() {
 
   return (
     <section className="px-6 mt-[120px] max-w-[1280px] mx-auto" id="faq">
-      <h2 className="font-['Instrument_Serif'] text-[42px] text-[#242424] tracking-[-0.84px] mb-10">
-        Frequently Asked Questions
-      </h2>
+      <FadeIn>
+        <h2 className="font-['Instrument_Serif'] text-[42px] text-[#242424] tracking-[-0.84px] mb-10">
+          Frequently Asked Questions
+        </h2>
+      </FadeIn>
 
-      <div className="flex flex-col gap-10">
-        <FAQItem
-          question="Which AI models does FlowDown support?"
-          isOpen={openFAQ === 0}
-          onClick={() => setOpenFAQ(openFAQ === 0 ? -1 : 0)}
-          answer={
-            <div className="space-y-4">
-              <p>
-                FlowDown supports all models compatible with OpenAI API format, including:
-              </p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li><strong>Built-in free models:</strong> Ready to use without configuration</li>
-                <li><strong>Major service providers:</strong> OpenAI, Claude (via OpenRouter), Alibaba Cloud, ByteDance, etc.</li>
-                <li><strong>Local models:</strong> Support for Ollama and MLX local deployment</li>
-                <li><strong>Custom interfaces:</strong> Any service compatible with OpenAI API</li>
-              </ul>
-              <Link
-                href="https://flowdown.ai/en-US"
-                target="_blank"
-                className="text-base font-medium text-black inline-block mt-3"
-              >
-                LEARN MORE →
-              </Link>
-              <img src="/q-and-a-1.png" alt="AI Models Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
-            </div>
-          }
-        />
+      <StaggerContainer className="flex flex-col gap-10">
+        <StaggerItem>
+          <FAQItem
+            question="Which AI models does FlowDown support?"
+            isOpen={openFAQ === 0}
+            onClick={() => setOpenFAQ(openFAQ === 0 ? -1 : 0)}
+            answer={
+              <div className="space-y-4">
+                {/* ... content ... */}
+                <p>
+                  FlowDown supports all models compatible with OpenAI API format, including:
+                </p>
+                <ul className="list-disc ml-6 space-y-1">
+                  <li><strong>Built-in free models:</strong> Ready to use without configuration</li>
+                  <li><strong>Major service providers:</strong> OpenAI, Claude (via OpenRouter), Alibaba Cloud, ByteDance, etc.</li>
+                  <li><strong>Local models:</strong> Support for Ollama and MLX local deployment</li>
+                  <li><strong>Custom interfaces:</strong> Any service compatible with OpenAI API</li>
+                </ul>
+                <Link
+                  href="https://flowdown.ai/en-US"
+                  target="_blank"
+                  className="text-base font-medium text-black inline-block mt-3"
+                >
+                  LEARN MORE →
+                </Link>
+                <img src="/q-and-a-1.png" alt="AI Models Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+              </div>
+            }
+          />
+        </StaggerItem>
 
-        <FAQItem
-          question="Which platforms does FlowDown support?"
-          isOpen={openFAQ === 1}
-          onClick={() => setOpenFAQ(openFAQ === 1 ? -1 : 1)}
-          answer={
-            <div className="space-y-4">
-              <p>
-                FlowDown provides native app support across all platforms:
-              </p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li><strong>macOS:</strong> Full-featured desktop application</li>
-                <li><strong>iOS:</strong> Mobile app optimized for iPhone</li>
-                <li><strong>iPadOS:</strong> Tablet app adapted for iPad</li>
-              </ul>
-              <p>
-                All versions are native applications, not web-based, ensuring
-                optimal performance and user experience
-              </p>
-              <Link
-                href="https://flowdown.ai/en-US"
-                target="_blank"
-                className="text-base font-medium text-black inline-block mt-3"
-              >
-                LEARN MORE →
-              </Link>
-              <img src="/q-and-a-2.png" alt="Platform Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
-            </div>
-          }
-        />
+        <StaggerItem>
+          <FAQItem
+            question="Which platforms does FlowDown support?"
+            isOpen={openFAQ === 1}
+            onClick={() => setOpenFAQ(openFAQ === 1 ? -1 : 1)}
+            answer={
+              <div className="space-y-4">
+                <p>
+                  FlowDown provides native app support across all platforms:
+                </p>
+                <ul className="list-disc ml-6 space-y-1">
+                  <li><strong>macOS:</strong> Full-featured desktop application</li>
+                  <li><strong>iOS:</strong> Mobile app optimized for iPhone</li>
+                  <li><strong>iPadOS:</strong> Tablet app adapted for iPad</li>
+                </ul>
+                <p>
+                  All versions are native applications, not web-based, ensuring
+                  optimal performance and user experience
+                </p>
+                <Link
+                  href="https://flowdown.ai/en-US"
+                  target="_blank"
+                  className="text-base font-medium text-black inline-block mt-3"
+                >
+                  LEARN MORE →
+                </Link>
+                <img src="/q-and-a-2.png" alt="Platform Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+              </div>
+            }
+          />
+        </StaggerItem>
 
-        <FAQItem
-          question="How to use FlowDown's tool calling features?"
-          isOpen={openFAQ === 2}
-          onClick={() => setOpenFAQ(openFAQ === 2 ? -1 : 2)}
-          answer={
-            <div className="space-y-4">
-              <p>
-                FlowDown supports powerful Tool Call functionality:
-              </p>
-              <ul className="list-disc ml-6 space-y-1">
-                <li><strong>Web search:</strong> Real-time access to latest information</li>
-                <li><strong>Document processing:</strong> Analyze and process various file types</li>
-              </ul>
-              <p>
-                We recommend using models like Gemini Flash for the best tool calling experience
-              </p>
-              <Link
-                href="https://flowdown.ai/en-US"
-                target="_blank"
-                className="text-base font-medium text-black inline-block mt-3"
-              >
-                LEARN MORE →
-              </Link>
-              <img src="/q-and-a-3.png" alt="Tool Calling Features" className="w-full h-[200px] object-cover rounded-lg mt-3" />
-            </div>
-          }
-        />
+        <StaggerItem>
+          <FAQItem
+            question="How to use FlowDown's tool calling features?"
+            isOpen={openFAQ === 2}
+            onClick={() => setOpenFAQ(openFAQ === 2 ? -1 : 2)}
+            answer={
+              <div className="space-y-4">
+                <p>
+                  FlowDown supports powerful Tool Call functionality:
+                </p>
+                <ul className="list-disc ml-6 space-y-1">
+                  <li><strong>Web search:</strong> Real-time access to latest information</li>
+                  <li><strong>Document processing:</strong> Analyze and process various file types</li>
+                </ul>
+                <p>
+                  We recommend using models like Gemini Flash for the best tool calling experience
+                </p>
+                <Link
+                  href="https://flowdown.ai/en-US"
+                  target="_blank"
+                  className="text-base font-medium text-black inline-block mt-3"
+                >
+                  LEARN MORE →
+                </Link>
+                <img src="/q-and-a-3.png" alt="Tool Calling Features" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+              </div>
+            }
+          />
+        </StaggerItem>
 
-        <FAQItem
-          question="How is data security and privacy ensured?"
-          isOpen={openFAQ === 3}
-          onClick={() => setOpenFAQ(openFAQ === 3 ? -1 : 3)}
-          answer={
-            <div className="space-y-4">
-              <ul className="list-disc ml-6 space-y-1">
-                <li><strong>Local storage:</strong> All conversation data is stored on your device</li>
-                <li><strong>No data collection:</strong> FlowDown does not collect or store your conversation content</li>
-                <li><strong>Direct connection:</strong> Communicates directly with AI service providers without intermediaries</li>
-                <li><strong>Open source transparency:</strong> Code is open source to ensure transparency</li>
-              </ul>
-              <Link
-                href="https://flowdown.ai/en-US"
-                target="_blank"
-                className="text-base font-medium text-black inline-block mt-3"
-              >
-                LEARN MORE →
-              </Link>
-              <img src="/q-and-a-4.png" alt="Data Security" className="w-full h-[200px] object-cover rounded-lg mt-3" />
-            </div>
-          }
-        />
+        <StaggerItem>
+          <FAQItem
+            question="How is data security and privacy ensured?"
+            isOpen={openFAQ === 3}
+            onClick={() => setOpenFAQ(openFAQ === 3 ? -1 : 3)}
+            answer={
+              <div className="space-y-4">
+                <ul className="list-disc ml-6 space-y-1">
+                  <li><strong>Local storage:</strong> All conversation data is stored on your device</li>
+                  <li><strong>No data collection:</strong> FlowDown does not collect or store your conversation content</li>
+                  <li><strong>Direct connection:</strong> Communicates directly with AI service providers without intermediaries</li>
+                  <li><strong>Open source transparency:</strong> Code is open source to ensure transparency</li>
+                </ul>
+                <Link
+                  href="https://flowdown.ai/en-US"
+                  target="_blank"
+                  className="text-base font-medium text-black inline-block mt-3"
+                >
+                  LEARN MORE →
+                </Link>
+                <img src="/q-and-a-4.png" alt="Data Security" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+              </div>
+            }
+          />
+        </StaggerItem>
 
-        <FAQItem
-          question="How to obtain and configure models?"
-          isOpen={openFAQ === 4}
-          onClick={() => setOpenFAQ(openFAQ === 4 ? -1 : 4)}
-          answer={
-            <div className="space-y-4">
-              <ul className="list-disc ml-6 space-y-1">
-                <li><strong>Zero configuration:</strong> Built-in free models, ready to use after download</li>
-                <li><strong>Custom configuration:</strong> Support for adding your own API keys</li>
-                <li><strong>Import/Export:</strong> Support for importing and exporting model configurations</li>
-                <li><strong>Technical support:</strong> Provides detailed configuration guides and community support</li>
-              </ul>
-              <Link
-                href="https://flowdown.ai/en-US"
-                target="_blank"
-                className="text-base font-medium text-black inline-block mt-3"
-              >
-                LEARN MORE →
-              </Link>
-              <img src="/q-and-a-5.png" alt="Model Configuration" className="w-full h-[200px] object-cover rounded-lg mt-3" />
-            </div>
-          }
-        />
-      </div>
+        <StaggerItem>
+          <FAQItem
+            question="How to obtain and configure models?"
+            isOpen={openFAQ === 4}
+            onClick={() => setOpenFAQ(openFAQ === 4 ? -1 : 4)}
+            answer={
+              <div className="space-y-4">
+                <ul className="list-disc ml-6 space-y-1">
+                  <li><strong>Zero configuration:</strong> Built-in free models, ready to use after download</li>
+                  <li><strong>Custom configuration:</strong> Support for adding your own API keys</li>
+                  <li><strong>Import/Export:</strong> Support for importing and exporting model configurations</li>
+                  <li><strong>Technical support:</strong> Provides detailed configuration guides and community support</li>
+                </ul>
+                <Link
+                  href="https://flowdown.ai/en-US"
+                  target="_blank"
+                  className="text-base font-medium text-black inline-block mt-3"
+                >
+                  LEARN MORE →
+                </Link>
+                <img src="/q-and-a-5.png" alt="Model Configuration" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+              </div>
+            }
+          />
+        </StaggerItem>
+      </StaggerContainer>
     </section>
   );
 }

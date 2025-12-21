@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { FadeIn } from "@/components/animations";
 
 export default function Footer() {
   return (
@@ -16,13 +17,14 @@ export default function Footer() {
       <div className="border-t border-[#dddddd]" />
 
       <div className="max-w-[1280px] mx-auto px-6 py-12 relative">
-        <div className="flex justify-between">
-          {/* Left side - Logo & info */}
-          <div className="flex flex-col gap-2">
-            <p className="text-lg text-[#242424]">FlowDown.ai</p>
-            <p className="text-sm font-medium text-[#aeaeae]">
-              © 2025 FlowDown Team. All rights reserved.
-            </p>
+        <FadeIn>
+          <div className="flex justify-between">
+            {/* Left side - Logo & info */}
+            <div className="flex flex-col gap-2">
+              <p className="text-lg text-[#242424]">FlowDown.ai</p>
+              <p className="text-sm font-medium text-[#aeaeae]">
+                © 2025 FlowDown Team. All rights reserved.
+              </p>
             {/* Decorative pigeon */}
             <div className="w-[80px] h-[60px] bg-gradient-to-br from-blue-400 to-purple-500 rounded-[30px] opacity-50 mt-3" />
           </div>
@@ -133,6 +135,7 @@ export default function Footer() {
             </svg>
           </Link>
         </div>
+        </FadeIn>
       </div>
     </footer>
   );

@@ -1,3 +1,5 @@
+import { FadeIn, StaggerContainer, StaggerItem } from "@/components/animations";
+
 // Star rating component
 function StarRating() {
   return (
@@ -40,45 +42,57 @@ function Testimonial({
 export default function TestimonialsSection() {
   return (
     <section className="px-6 mt-[120px] max-w-[1280px] mx-auto">
-      <h2 className="font-['Instrument_Serif'] text-[42px] text-[#242424] tracking-[-0.84px] mb-10">
-        LOVE FROM OUR USERS
-      </h2>
+      <FadeIn>
+        <h2 className="font-['Instrument_Serif'] text-[42px] text-[#242424] tracking-[-0.84px] mb-10">
+          LOVE FROM OUR USERS
+        </h2>
+      </FadeIn>
 
       <div className="flex justify-between gap-12">
         {/* Left column */}
-        <div className="flex flex-col gap-8">
-          <Testimonial
-            text="The performance of FlowDown is amazing! I was truly impressed by the rendering performance, even during the beta testing stage - it's significantly better than the native official ChatGPT app. I also hold a similar attitude with the developer (or project leader), toward the concept of native app & privacy. As someone who has been using this app since literally day one, I can really see the effort the team has put into it. The project leader is active in the Discord group, constantly working to fix bugs and add new features.
+        <StaggerContainer className="flex flex-col gap-8 flex-1">
+          <StaggerItem>
+            <Testimonial
+              text="The performance of FlowDown is amazing! I was truly impressed by the rendering performance, even during the beta testing stage - it's significantly better than the native official ChatGPT app. I also hold a similar attitude with the developer (or project leader), toward the concept of native app & privacy. As someone who has been using this app since literally day one, I can really see the effort the team has put into it. The project leader is active in the Discord group, constantly working to fix bugs and add new features.
 
 That said, there are still a few frustrating issues. I have to admit that the process to add a model from external service provider is way too complicated. I understand this is partly due to Apple's restrictions, but I really hope a more streamlined solution can be found. Also, the macOS app is not 'that' native. While the performance is solid, the user interface doesn't fully align with the desktop experience-especially the right-click menu and the settings page, which feel out of place."
-            author="ChrisLloy"
-            source="App Store"
-          />
-          <Testimonial
-            text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-            author="Vcg-Soup"
-            source="X.com"
-          />
-        </div>
+              author="ChrisLloy"
+              source="App Store"
+            />
+          </StaggerItem>
+          <StaggerItem>
+            <Testimonial
+              text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
+              author="Vcg-Soup"
+              source="X.com"
+            />
+          </StaggerItem>
+        </StaggerContainer>
 
         {/* Right column */}
-        <div className="flex flex-col gap-8">
-          <Testimonial
-            text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-            author="Vcg-Soup"
-            source="App Store"
-          />
-          <Testimonial
-            text="好耶 ❤️ ❤️❤️"
-            author="Vcg-Soup"
-            source="App Store"
-          />
-          <Testimonial
-            text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-            author="Vcg-Soup"
-            source="App Store"
-          />
-        </div>
+        <StaggerContainer className="flex flex-col gap-8 flex-1" delay={0.2}>
+          <StaggerItem>
+            <Testimonial
+              text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
+              author="Vcg-Soup"
+              source="App Store"
+            />
+          </StaggerItem>
+          <StaggerItem>
+            <Testimonial
+              text="好耶 ❤️ ❤️❤️"
+              author="Vcg-Soup"
+              source="App Store"
+            />
+          </StaggerItem>
+          <StaggerItem>
+            <Testimonial
+              text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
+              author="Vcg-Soup"
+              source="App Store"
+            />
+          </StaggerItem>
+        </StaggerContainer>
       </div>
     </section>
   );
