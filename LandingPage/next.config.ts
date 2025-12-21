@@ -1,8 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Enable static exports for Vercel optimization
-  // output: 'export', // Uncomment for static export if needed
+  // Enable MDX pages
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 
   // Image optimization
   images: {
@@ -13,7 +13,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  // Disable turbopack for MDX compatibility
+  // MDX plugins are processed via next-mdx-remote in page components
 };
 
 export default nextConfig;
-
