@@ -26,13 +26,14 @@ export default function HeroSection() {
           <FadeIn delay={0.3}>
             <div className="flex flex-col gap-2">
               <Link
-                href="#download"
+                href="https://apps.apple.com/us/app/flowdown-open-fast-ai/id6740553198"
+                target="_blank"
                 className="inline-flex bg-[#242424] text-white text-lg font-medium px-6 py-4 rounded-full shadow-sm hover:bg-[#1a1a1a] transition-colors w-fit"
               >
                 Download from App Store
               </Link>
               <p className="text-xs text-[#828282]">
-                Available on macOS 13.0+ / Supports Apple Silicon & Intel
+                Available on iOS 17+ / macOS 14+ / Supports Apple Silicon & Intel
               </p>
             </div>
           </FadeIn>
@@ -52,7 +53,7 @@ export default function HeroSection() {
         {/* Read the User Guide button */}
         <FadeIn delay={0.6}>
           <Link
-            href="#guide"
+            href="/docs/en/documents/welcome"
             className="inline-flex items-center text-lg font-medium text-[#242424] hover:opacity-70 transition-opacity mt-8"
           >
             Read the User Guide →

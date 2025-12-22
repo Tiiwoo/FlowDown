@@ -44,13 +44,21 @@ function RotatingText() {
 }
 
 // Glass icon component for feature cards
-function GlassIcon({ iconSrc }: { iconSrc: string }) {
+function GlassIcon({ iconSrc, accentColor }: { iconSrc: string, accentColor?: string }) {
   return (
-    <div className="relative">
-      {/* Shadow ellipse */}
-      <div className="absolute w-[40px] h-[42px] left-[30px] top-[50px] bg-[#e0e0e0] rounded-full blur-sm" />
+    <div className="relative group-hover:scale-110 transition-transform duration-500 ease-out">
+      {/* Shadow ellipse - default gray */}
+      <div 
+        className="absolute w-[40px] h-[42px] left-[30px] top-[50px] bg-[#e0e0e0] rounded-full blur-sm transition-all duration-500 ease-out group-hover:opacity-0" 
+      />
+      {/* Shadow ellipse - colored hover state */}
+      <div 
+        className="absolute w-[60px] h-[60px] left-[20px] top-[40px] rounded-full blur-xl opacity-0 transition-all duration-500 ease-out group-hover:opacity-60"
+        style={{ backgroundColor: accentColor || '#e0e0e0' }}
+      />
+      
       {/* Glass container */}
-      <div className="relative w-[100px] h-[100px] rounded-full border-2 border-white glass-icon flex items-center justify-center">
+      <div className="relative w-[100px] h-[100px] rounded-full border-2 border-white glass-icon flex items-center justify-center bg-white/10 backdrop-blur-md transition-all duration-500">
         <img src={iconSrc} alt="" className="w-[80px] h-[80px]" />
       </div>
     </div>
@@ -63,21 +71,28 @@ function FeatureCard({
   title,
   description,
   className = "",
+  accentColor = "#242424", // Default accent color
 }: {
   iconSrc: string;
   title: string;
   description: React.ReactNode;
   className?: string;
+  accentColor?: string;
 }) {
   return (
-    <div className={`border border-[rgba(221,221,221,0.42)] rounded-[36px] feature-card-bg overflow-hidden h-full ${className}`}>
+    <div 
+      className={`border border-[rgba(221,221,221,0.42)] rounded-[36px] feature-card-bg overflow-hidden h-full ${className} group transition-all duration-500 bg-white`}
+      style={{
+        '--accent-color': accentColor,
+      } as React.CSSProperties}
+    >
       <div className="p-6 flex flex-col items-center justify-between h-[340px]">
-        <GlassIcon iconSrc={iconSrc} />
+        <GlassIcon iconSrc={iconSrc} accentColor={accentColor} />
         <div className="w-full flex flex-col gap-2">
           <h3 className="text-lg font-semibold text-[#242424]">{title}</h3>
-          <p className="text-sm text-[#828282] leading-relaxed">
+          <div className="text-sm text-[#828282] leading-relaxed [&>strong]:font-semibold [&>strong]:text-gray-900 group-hover:[&>strong]:text-[var(--accent-color)] [&>strong]:transition-colors [&>strong]:duration-300">
             {description}
-          </p>
+          </div>
         </div>
       </div>
     </div>
@@ -99,6 +114,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/private-first.svg"
             title="Privacy First"
+            accentColor="#3b82f6" // Blue
             description={
               <>
                 Your conversations and API keys never leave your device.{" "}
@@ -114,6 +130,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/native-performance.svg"
             title="Native Performance"
+            accentColor="#f97316" // Orange
             description={
               <>
                 Built with <strong>Swift</strong>, FlowDown is lightweight and
@@ -127,6 +144,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/universal-compatibility.svg"
             title="Universal Compatibility"
+            accentColor="#8b5cf6" // Violet
             description={
               <>
                 Connect to any{" "}
@@ -143,12 +161,11 @@ export default function FeaturesSection() {
       {/* Powerful Workflows Card */}
       <FadeIn delay={0.2} className="w-full">
         <div className="mt-8 bg-white rounded-[36px] border border-[rgba(221,221,221,0.42)] overflow-hidden h-[580px] relative">
-          {/* Blurred background */}
+          {/* Background image */}
           <div
-            className="absolute inset-0 bg-gradient-to-br from-sky-200/40 via-blue-100/30 to-teal-100/40 blur-sm"
+            className="absolute inset-0 bg-cover bg-center blur-[8px]"
             style={{
-              backgroundImage:
-                "linear-gradient(135deg, rgba(125,211,252,0.3) 0%, rgba(186,230,253,0.2) 50%, rgba(153,246,228,0.3) 100%)",
+              backgroundImage: "url('/powerful-workflow/powerful-workflow-bg.png')",
             }}
           />
 
@@ -180,6 +197,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/rich-user-experience.svg"
             title="Rich User Experience"
+            accentColor="#eab308" // Yellow
             description={
               <>
                 Enjoy <strong>full Markdown rendering</strong>, syntax
@@ -193,6 +211,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/icloud-sync.svg"
             title="iCloud Sync"
+            accentColor="#0ea5e9" // Sky Blue
             description="Seamlessly syncs your conversations, settings, and custom models across all your Apple devices."
           />
         </StaggerItem>
@@ -200,6 +219,7 @@ export default function FeaturesSection() {
           <FeatureCard
             iconSrc="/why-choose-flowdown/open-source-compatibility.svg"
             title="Open Source Compatibility"
+            accentColor="#22c55e" // Green
             description="FlowDown is fully open source under the AGPL-3.0 license. We invite you to inspect the code and verify our commitment to privacy and quality."
           />
         </StaggerItem>
