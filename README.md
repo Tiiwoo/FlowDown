@@ -15,20 +15,29 @@ FlowDown is a native AI chat client for Apple platforms, designed for speed, pri
 
 **About Pricing Update**
 
-We are planning to make FlowDown free next year. As more developers join the project and core features mature, maintenance needs decrease, making it possible to provide the app at a lower cost (covering only essential expenses like domain, hosting, documentation site, and developer membership fees). Before transitioning to free, FlowDown will gradually reduce prices in phases. All conversations and chat features will remain free; subscription fees will only apply to new personalization options.
+FlowDown is scheduled to become free next year. With growing community support and feature maturity, maintenance costs have decreased, allowing us to operate more efficiently. Before this transition, prices will be reduced in phases. All core chat features will remain free, with subscription fees applying only to future personalization options.
 
-You can also join the public beta on [TestFlight](https://testflight.apple.com/join/StpMeybv) to try out new features.
+**Keep In Touch**
 
-To get you started, FlowDown includes complimentary access to a selection of models. For more power and control, you can easily connect to your own self-hosted services or any OpenAI-compatible provider. Learn more in our [documentation](https://apps.qaq.wiki/docs/flowdown/).
+Join the public beta on [TestFlight](https://testflight.apple.com/join/StpMeybv) to try new features.
 
-Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback and get help.
+To get started, FlowDown includes complimentary access to select models. For more control, you can connect to self-hosted services or OpenAI-compatible providers. Learn more in our [documentation](https://apps.qaq.wiki/docs/flowdown/).
+
+Join our community on [Discord](https://discord.gg/UHKMRyJcgc) for feedback and support.
 
 ## Features
 
-- **Privacy First**: Your conversations and API keys never leave your device. All data is stored locally or synced via your private iCloud. We collect nothing.
-- **Native Performance**: Built with Swift, FlowDown is lightweight and incredibly fast. No web wrappers, just a seamless, native experience on iOS and macOS.
-- **Universal Compatibility**: Connect to any OpenAI-compatible API, including self-hosted models, giving you complete freedom and control.
-- **Rich User Experience**: Enjoy full Markdown rendering, syntax highlighting, and a buttery-smooth interface that makes interacting with AI a pleasure.
+- **Privacy First**:
+  - **Nothing Collected**: FlowDown developers do not collect, store, or transmit any of your personal information or usage data. No telemetry, no crash reports.
+  - **Zero Data Retention**: All content and configurations you create remain entirely on your device or your private iCloud.
+  - **Verifiable Source**: The source code is open and available for audit. You can verify exactly what the app is doing.
+- **Native Performance**: 
+  - **Built From Scratch**: Built entirely with Swift and UIKit. We open-sourced our text rendering components for everyone.
+  - **Rich User Experience**: Enjoy full Markdown rendering, syntax highlighting, and a buttery-smooth interface that makes interacting with AI a pleasure.
+  - **Optimized for Apple Platforms**: Leverages Metal and MLX for efficient on-device inference and smooth UI performance.
+- **Universal Compatibility**:
+  - **OpenAI-Compatible APIs**: Connect to any service that supports the OpenAI chat completion API standard.
+  - **Self-Hosted Models**: Easily connect to local inference servers like Ollama, LM Studio, or LocalAI.
 - **Powerful Workflows**:
   - **Vision Support**: Interact with vision-capable models.
   - **Audio Support**: Send audio messages to compatible models using attachments.
@@ -39,7 +48,9 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) to share feedback
   - **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
   - **Default Translation App**: Set FlowDown as your default translation app for seamless translation workflows.
   - **Shortcuts**: Deep integration with system Shortcuts for automating your workflows.
-- **Open Source**: FlowDown is fully open source under the AGPL-3.0 license. We invite you to inspect the code and verify our commitment to privacy and quality.
+  - **Model Exchange Protocol**: Share and import model configurations easily using the `.fdmodel` file format.
+
+> **Note**: FlowDown is a Zero Data Retention (ZDR) app. While the app collects no data, our website uses anonymous analytics and Cloudflare security protection to maintain service quality.
 
 ## Special Notes
 
