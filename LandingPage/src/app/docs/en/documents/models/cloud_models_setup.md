@@ -34,7 +34,8 @@ Open the **Cloud Model** menu any time to refresh the pollinations.ai list or ad
 - **Body fields**: add provider-specific keys (reasoning budgets, `top_p` / `top_k`, modalities, etc.) via **Body Fields**, ensuring valid JSON.
 - **Backups**: model definitions sync with iCloud and workspace exports. Before major edits, run **Settings → Data Control → Export Workspace**.
 
-## Advanced: Custom / Enterprise Setup {#advanced-custom-enterprise-setup}
+<a id="advanced-custom-enterprise-setup"></a>
+## Advanced: Custom / Enterprise Setup
 
 For private deployments or bespoke gateways. Connect only trusted endpoints—misconfigurations can leak data or incur costs.
 
