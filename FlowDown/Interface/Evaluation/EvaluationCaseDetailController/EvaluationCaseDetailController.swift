@@ -372,7 +372,7 @@ private final class EvaluationCaseDetailTextCardView: UIView {
         bodyText: String,
     ) {
         super.init(frame: .zero)
-        backgroundColor = .secondarySystemGroupedBackground
+        backgroundColor = .gray.withAlphaComponent(0.1)
         layer.cornerRadius = 10
         layer.cornerCurve = .continuous
         clipsToBounds = true
@@ -440,7 +440,7 @@ private final class EvaluationCaseDetailButtonRowView: UIView {
     ) {
         super.init(frame: .zero)
 
-        backgroundColor = .secondarySystemGroupedBackground
+        backgroundColor = .gray.withAlphaComponent(0.1)
         layer.cornerRadius = 10
         layer.cornerCurve = .continuous
         clipsToBounds = true
