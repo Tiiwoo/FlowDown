@@ -151,7 +151,7 @@ export default function Footer() {
           </Link>
           {/* Email */}
           <Link
-            href="mailto:contact@flowdown.ai"
+            href="mailto:flowdown-support@qaq.wiki"
             className="w-10 h-10 flex items-center justify-center rounded text-[#8e8e8e] hover:bg-gray-100 hover:text-black transition-colors"
           >
             <svg
