@@ -5,28 +5,23 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { useMDXComponents } from "../../../../../../mdx-components";
+import { useMDXComponents } from "../../../../../mdx-components";
 
 interface PageProps {
   params: Promise<{
-    locale: string;
     slug: string[];
   }>;
 }
 
 export async function generateStaticParams() {
-  const paths = getAllDocPaths();
-  return paths.map(({ locale, slug }) => ({
-    locale,
-    slug,
-  }));
+  return getAllDocPaths();
 }
 
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { locale, slug } = await params;
-  const doc = getDocBySlug(locale, slug);
+  const { slug } = await params;
+  const doc = getDocBySlug(slug);
 
   if (!doc) {
     return {
@@ -34,40 +29,32 @@ export async function generateMetadata({
     };
   }
 
-  const fullPath = `/docs/${locale}/documents/${slug.join("/")}`;
-  const alternateLocale = locale === "en" ? "zh" : "en";
-  const alternatePath = `/docs/${alternateLocale}/documents/${slug.join("/")}`;
+  const fullPath = `/docs/documents/${slug.join("/")}`;
 
   return {
     title: doc.title,
     description: doc.description,
     alternates: {
       canonical: fullPath,
-      languages: {
-        [locale]: fullPath,
-        [alternateLocale]: alternatePath,
-      },
     },
     openGraph: {
       title: `${doc.title} | FlowDown Docs`,
       description: doc.description,
       type: "article",
-      locale: locale === "zh" ? "zh_CN" : "en_US",
+      locale: "en_US",
     },
   };
 }
 
 export default async function DocPage({ params }: PageProps) {
-  const { locale, slug } = await params;
-  const doc = getDocBySlug(locale, slug);
+  const { slug } = await params;
+  const doc = getDocBySlug(slug);
 
   if (!doc) {
     notFound();
   }
 
-  // Fix image paths and remove VitePress-specific frontmatter display
   const processedContent = fixImagePaths(doc.content);
-
   const components = useMDXComponents({});
 
   return (
@@ -88,4 +75,3 @@ export default async function DocPage({ params }: PageProps) {
     </div>
   );
 }
-

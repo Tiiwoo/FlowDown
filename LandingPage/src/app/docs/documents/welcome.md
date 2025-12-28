@@ -48,7 +48,6 @@ FlowDown offers two tracks: the continually updated **FlowDown** App Store relea
 | Pollinations auto model parsing | ✅                       | ❌                     |
 | Visual reasoning & attachments  | ✅                       | ⚠️ (legacy)            |
 | MCP + advanced tools            | ✅                       | ❌                     |
-| Localization (EN/zh)            | ✅                       | ⚠️ (partial)           |
 | Open source                     | ✅                       | ✅                     |
 
 ## Join the Community

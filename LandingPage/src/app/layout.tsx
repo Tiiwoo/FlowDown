@@ -17,6 +17,7 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://flowdown.ai"),
   title: "FlowDown - AI That Works Even Without Us",
   description:
     "You can OWN a blazing fast and smooth Agent app. Switch between your AI services or use local models on your device.",

@@ -84,25 +84,25 @@ export default function Footer() {
                 <p className="text-sm font-medium text-[#242424]">Doc</p>
                 <div className="flex flex-col gap-3 text-sm font-medium text-[#454545]">
                   <Link
-                    href="/docs/en/documents/models/inference_configuration"
+                    href="/docs/documents/models/inference_configuration"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Get Local Models
                   </Link>
                   <Link
-                    href="/docs/en/documents/models/cloud_models_setup"
+                    href="/docs/documents/models/cloud_models_setup"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Get Cloud Models
                   </Link>
                   <Link
-                    href="/docs/en/documents/quickstart/basic_usage"
+                    href="/docs/documents/quickstart/basic_usage"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Basic Usage
                   </Link>
                   <Link
-                    href="/docs/en/documents/troubleshooting/faq"
+                    href="/docs/documents/troubleshooting/faq"
                     className="hover:text-[#242424] transition-colors"
                   >
                     FAQ
@@ -115,19 +115,19 @@ export default function Footer() {
                 <p className="text-sm font-medium text-[#242424]">Others</p>
                 <div className="flex flex-col gap-3 text-sm font-medium text-[#454545]">
                   <Link
-                    href="/docs/en/documents/pricing_timeline"
+                    href="/docs/documents/pricing_timeline"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Price
                   </Link>
                   <Link
-                    href="/docs/en/documents/legal/privacy"
+                    href="/docs/documents/legal/privacy"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Privacy
                   </Link>
                   <Link
-                    href="/docs/en/documents/legal/software_license"
+                    href="/docs/documents/legal/software_license"
                     className="hover:text-[#242424] transition-colors"
                   >
                     Terms of Service
@@ -174,4 +174,3 @@ export default function Footer() {
     </footer>
   );
 }
-

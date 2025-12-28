@@ -27,9 +27,7 @@ function Testimonial({
     <div className="flex gap-4">
       <div className="w-0.5 h-12 bg-[#1c1c1c] flex-shrink-0" />
       <div className="flex flex-col gap-2">
-        <p className="text-xs leading-5 text-[#1c1c1c] max-w-[480px]">
-          {text}
-        </p>
+        <p className="text-xs leading-5 text-[#1c1c1c] max-w-[480px]">{text}</p>
         <StarRating />
         <p className="text-xs text-[#1c1c1c]">
           {author} <span className="text-[#b3b3b3]">from {source}</span>
@@ -63,32 +61,35 @@ That said, there are still a few frustrating issues. I have to admit that the pr
           <StaggerItem>
             <Testimonial
               text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-              author="Vcg-Soup"
-              source="X.com"
+              author="Veg-Soup"
+              source="App Store"
             />
           </StaggerItem>
         </StaggerContainer>
 
         {/* Right column */}
-        <StaggerContainer className="flex flex-col gap-6 md:gap-8 flex-1" delay={0.2}>
+        <StaggerContainer
+          className="flex flex-col gap-6 md:gap-8 flex-1"
+          delay={0.2}
+        >
           <StaggerItem>
             <Testimonial
-              text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-              author="Vcg-Soup"
+              text="Super easy to use It's really cool that the shortcut command can directly get the content of the reply, and you can do a lot of things. And it supports custom API, and basically can access all models, which is simply invincible."
+              author="ねこにゃう"
+              source="App Store (Translated)"
+            />
+          </StaggerItem>
+          <StaggerItem>
+            <Testimonial
+              text="The best app on the market for using LLMs with multiple inference providers."
+              author="wowlocal"
               source="App Store"
             />
           </StaggerItem>
           <StaggerItem>
             <Testimonial
-              text="好耶 ❤️ ❤️❤️"
-              author="Vcg-Soup"
-              source="App Store"
-            />
-          </StaggerItem>
-          <StaggerItem>
-            <Testimonial
-              text="FlowDown really is the most fluent LLM client I've ever used. The smoothness of the app experience cannot be matched by any other app. Developer's support response is remarkably fast compared to others on Discord. Overall, I do think it has great potential for more additional features in future updates. Truly having a great time with it."
-              author="Vcg-Soup"
+              text="I am seeking for such app support mobile platform + web search + multiple providers + ChatGPT liked UI/UX (Concise + Native) for such a long time. Saw it on Twitter and bought it immediately. That’s exactly what I eager for. I am now being able to use it to alternate all kinds of Chat Apps on my iPhone since it provides all great features. Thanks"
+              author="Danielzmeow"
               source="App Store"
             />
           </StaggerItem>
@@ -97,4 +98,3 @@ That said, there are still a few frustrating issues. I have to admit that the pr
     </section>
   );
 }
-

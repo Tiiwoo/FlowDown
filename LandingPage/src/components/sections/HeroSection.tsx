@@ -53,7 +53,7 @@ export default function HeroSection() {
         {/* Read the User Guide button */}
         <FadeIn delay={0.6}>
           <Link
-            href="/docs/en/documents/welcome"
+            href="/docs/documents/welcome"
             className="inline-flex items-center text-lg font-medium text-[#242424] hover:opacity-70 transition-opacity mt-8"
           >
             Read the User Guide →
@@ -63,4 +63,3 @@ export default function HeroSection() {
     </>
   );
 }
-

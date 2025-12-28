@@ -26,7 +26,7 @@ export default function Navigation() {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-8">
             <Link
-              href="/docs/en"
+              href="/docs"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
               Documentation
@@ -39,7 +39,7 @@ export default function Navigation() {
               Get Source Code
             </Link>
             <Link
-              href="/docs/en/documents/models/cloud_models_setup"
+              href="/docs/documents/models/cloud_models_setup"
               className="text-base font-medium text-[#242424] hover:opacity-70 transition-opacity"
             >
               Add Models
@@ -86,7 +86,7 @@ export default function Navigation() {
           >
             <div className="flex flex-col gap-6 text-center">
               <Link
-                href="/docs/en"
+                href="/docs"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}
               >
@@ -101,7 +101,7 @@ export default function Navigation() {
                 Get Source Code
               </Link>
               <Link
-                href="/docs/en/documents/models/cloud_models_setup"
+                href="/docs/documents/models/cloud_models_setup"
                 className="text-xl font-medium text-[#242424]"
                 onClick={() => setIsOpen(false)}
               >

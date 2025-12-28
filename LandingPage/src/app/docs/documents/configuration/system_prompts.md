@@ -141,7 +141,7 @@ The following table lists the template variables used in the system prompt and t
 
 | Template Variable        | Description            | Example Value                                                            |
 | ------------------------ | ---------------------- | ------------------------------------------------------------------------ |
-| Template.applicationName | Application Name       | "浮望" or "FlowDown". If unavailable, it falls back to "unknown AI app". |
+| Template.applicationName | Application Name       | "FlowDown". If unavailable, it falls back to "unknown AI app". |
 | Template.currentDateTime | Current Date and Time  | "November 16, 2023 Thursday 4:30:45 PM China Standard Time"              |
 | Template.systemLanguage  | System Language Locale | "zh_CN", "en_US", "ja_JP"                                                |
 | Template.appLanguage     | App Interface Locale   | "zh-Hans", "en", "ja"                                                    |
