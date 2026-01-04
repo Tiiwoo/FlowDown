@@ -124,7 +124,7 @@ public final actor SyncEngine: Sendable {
     }
 
     public nonisolated static func resetCachedState() {
-        stateSerialization = nil
+        stateSerializationData = nil
     }
 
     public enum Mode {
@@ -138,17 +138,15 @@ public final actor SyncEngine: Sendable {
     private static let SyncEngineStateKey: String = "FlowDownSyncEngineState"
     package static let CKRecordSentQueueIdSeparator: String = "##"
 
-    /// The sync engine being used to sync.
-    /// This is lazily initialized. You can re-initialize the sync engine by setting `_syncEngine` to nil then calling `self.syncEngine`.
-    private var syncEngine: any SyncEngineProtocol {
-        if _syncEngine == nil {
-            initializeSyncEngine()
+    public nonisolated static var isCloudSyncSupported: Bool {
+        if #available(iOS 17, macCatalyst 17, *) {
+            return true
         }
-        return _syncEngine!
+        return false
     }
 
-    private let createSyncEngine: (SyncEngine) -> any SyncEngineProtocol
-    private var _syncEngine: (any SyncEngineProtocol)?
+    private let createSyncEngine: (@Sendable (SyncEngine) -> AnyObject)?
+    private var _syncEngine: AnyObject?
 
     private let storage: Storage
     package let container: any CloudContainer
@@ -191,69 +189,96 @@ public final actor SyncEngine: Sendable {
     /// 当前是否正在同步中, 在 MainActor 中更新。可安全的在UI线程中访问
     public private(set) static var isSynchronizing = false
 
-    private static var stateSerialization: CKSyncEngine.State.Serialization? {
+    private static var stateSerializationData: Data? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: SyncEngine.SyncEngineStateKey) else { return nil }
-            do {
-                let state = try JSONDecoder().decode(CKSyncEngine.State.Serialization.self, from: data)
-                return state
-            } catch {
-                Logger.syncEngine.fault("Failed to decode CKSyncEngine state: \(error)")
-                return nil
-            }
+            UserDefaults.standard.data(forKey: SyncEngine.SyncEngineStateKey)
         }
-
         set {
-            guard let newValue else {
+            if let newValue {
+                UserDefaults.standard.set(newValue, forKey: SyncEngine.SyncEngineStateKey)
+            } else {
                 UserDefaults.standard.removeObject(forKey: SyncEngine.SyncEngineStateKey)
-                UserDefaults.standard.synchronize()
-                return
             }
+            UserDefaults.standard.synchronize()
+        }
+    }
 
-            do {
-                let data = try JSONEncoder().encode(newValue)
-                UserDefaults.standard.set(data, forKey: SyncEngine.SyncEngineStateKey)
-                UserDefaults.standard.synchronize()
-            } catch {
-                Logger.syncEngine.fault("Failed to encode CKSyncEngine state: \(error)")
-            }
+    @available(iOS 17, macCatalyst 17, *)
+    private static func decodeStateSerialization() -> CKSyncEngine.State.Serialization? {
+        guard let data = stateSerializationData else { return nil }
+        do {
+            return try JSONDecoder().decode(CKSyncEngine.State.Serialization.self, from: data)
+        } catch {
+            Logger.syncEngine.fault("Failed to decode CKSyncEngine state: \(error)")
+            return nil
         }
     }
 
     public init(storage: Storage, containerIdentifier: String, mode: Mode, automaticallySync: Bool = true) {
-        guard case .live = mode else {
-            let container = MockCloudContainer.createContainer(identifier: containerIdentifier)
-            let privateDatabase = container.privateCloudDatabase
-            self.init(storage: storage, container: container, automaticallySync: automaticallySync) { syncEngine in
-                let mockSyncEngine = MockSyncEngine(database: privateDatabase, parentSyncEngine: syncEngine, state: MockSyncEngineState(), delegate: syncEngine)
-                mockSyncEngine.automaticallySync = syncEngine.automaticallySync
-                return mockSyncEngine
-            }
-            return
+        let ckContainer = CKContainer(identifier: containerIdentifier)
+        let resolvedContainer: any CloudContainer = if SyncEngine.isCloudSyncSupported, case .mock = mode {
+            MockCloudContainer.createContainer(identifier: containerIdentifier)
+        } else {
+            ckContainer
         }
 
-        let container = CKContainer(identifier: containerIdentifier)
-        self.init(
-            storage: storage,
-            container: container,
-            automaticallySync: automaticallySync,
-        ) { syncEngine in
-            var configuration = CKSyncEngine.Configuration(
-                database: container.privateCloudDatabase,
-                stateSerialization: SyncEngine.stateSerialization,
-                delegate: syncEngine,
-            )
-            configuration.automaticallySync = syncEngine.isAutomaticallySyncEnabled
-            let ckSyncEngine = CKSyncEngine(configuration)
-            return ckSyncEngine
+        self.storage = storage
+        container = resolvedContainer
+        self.automaticallySync = automaticallySync
+
+        if SyncEngine.isCloudSyncSupported {
+            if #available(iOS 17, macCatalyst 17, *) {
+                if case .mock = mode {
+                    let mockContainer = resolvedContainer as! MockCloudContainer
+                    let privateDatabase = mockContainer.privateCloudDatabase
+                    createSyncEngine = { syncEngine in
+                        let mockSyncEngine = MockSyncEngine(database: privateDatabase, parentSyncEngine: syncEngine, state: MockSyncEngineState(), delegate: syncEngine)
+                        mockSyncEngine.automaticallySync = syncEngine.automaticallySync
+                        return mockSyncEngine
+                    }
+                } else {
+                    createSyncEngine = { syncEngine in
+                        let stateSerialization = SyncEngine.decodeStateSerialization()
+                        var configuration = CKSyncEngine.Configuration(
+                            database: ckContainer.privateCloudDatabase,
+                            stateSerialization: stateSerialization,
+                            delegate: syncEngine,
+                        )
+                        configuration.automaticallySync = syncEngine.isAutomaticallySyncEnabled
+                        return CKSyncEngine(configuration)
+                    }
+                }
+            } else {
+                createSyncEngine = nil
+            }
+        } else {
+            createSyncEngine = nil
+        }
+
+        if !FileManager.default.fileExists(atPath: SyncEngine.temporaryAssetStorage.path()) {
+            try? FileManager.default.createDirectory(at: SyncEngine.temporaryAssetStorage, withIntermediateDirectories: true)
+        }
+
+        storage.uploadQueueEnqueueHandler = { [weak self] _ in
+            guard let self else { return }
+            Task {
+                await self.onUploadQueueEnqueue()
+            }
+        }
+
+        Task {
+            await createCustomZoneIfNeeded()
         }
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     package init(storage: Storage, container: any CloudContainer, automaticallySync: Bool, createSyncEngine: @escaping (SyncEngine) -> any SyncEngineProtocol) {
         self.storage = storage
         self.container = container
         self.automaticallySync = automaticallySync
-        self.createSyncEngine = createSyncEngine
+        self.createSyncEngine = { syncEngine in
+            createSyncEngine(syncEngine)
+        }
 
         if !FileManager.default.fileExists(atPath: SyncEngine.temporaryAssetStorage.path()) {
             try? FileManager.default.createDirectory(at: SyncEngine.temporaryAssetStorage, withIntermediateDirectories: true)
@@ -281,7 +306,11 @@ public extension SyncEngine {
             return
         }
 
-        await syncEngine.cancelOperations()
+        if #available(iOS 17, macCatalyst 17, *),
+           let syncEngine = _syncEngine as? (any SyncEngineProtocol)
+        {
+            await syncEngine.cancelOperations()
+        }
         _syncEngine = nil
         sendingChangesCount = 0
         fetchingChangesCount = 0
@@ -309,6 +338,11 @@ public extension SyncEngine {
 
     /// 拉取变化 !不要在代理回调里面调用!
     func fetchChanges() async throws {
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip fetchChanges because cloud sync is not supported")
+            return
+        }
+
         guard SyncEngine.isSyncEnabled else {
             Logger.syncEngine.infoFile("Skip fetchChanges because sync is disabled")
             return
@@ -318,34 +352,43 @@ public extension SyncEngine {
 //        let accountStatus = try await container.accountStatus()
 //        guard accountStatus == .available else { return }
 
-        var needDelay = false
-        if _syncEngine == nil {
-            initializeSyncEngine()
-            needDelay = true
+        if #available(iOS 17, macCatalyst 17, *) {
+            var needDelay = false
+            let syncEngine = try await syncEngineOrThrow(initializingIfNeeded: true, needDelay: &needDelay)
+            Logger.syncEngine.infoFile("FetchChanges")
+            if needDelay {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+            try await syncEngine.performingFetchChanges()
+            return
         }
-        Logger.syncEngine.infoFile("FetchChanges")
-        if needDelay {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-        }
-        try await syncEngine.performingFetchChanges()
+
+        throw NSError(domain: "Storage.SyncEngine", code: 3)
     }
 
     /// 发送变化 !不要在代理回调里面调用!
     func sendChanges() async throws {
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip sendChanges because cloud sync is not supported")
+            return
+        }
+
         guard SyncEngine.isSyncEnabled else {
             Logger.syncEngine.infoFile("Skip sendChanges because sync is disabled")
             return
         }
-        var needDelay = false
-        if _syncEngine == nil {
-            initializeSyncEngine()
-            needDelay = true
+        if #available(iOS 17, macCatalyst 17, *) {
+            var needDelay = false
+            let syncEngine = try await syncEngineOrThrow(initializingIfNeeded: true, needDelay: &needDelay)
+            Logger.syncEngine.infoFile("SendChanges")
+            if needDelay {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+            try await syncEngine.performingSendChanges()
+            return
         }
-        Logger.syncEngine.infoFile("SendChanges")
-        if needDelay {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
-        }
-        try await syncEngine.performingSendChanges()
+
+        throw NSError(domain: "Storage.SyncEngine", code: 3)
     }
 
     /// 删除本地数据
@@ -356,8 +399,10 @@ public extension SyncEngine {
 
         // 如果我们要删除所有内容，也需要清除我们的同步引擎状态。
         // 为了做到这一点，也需要重新初始化同步引擎。
-        SyncEngine.stateSerialization = nil
-        initializeSyncEngine()
+        SyncEngine.stateSerializationData = nil
+        if SyncEngine.isCloudSyncSupported, #available(iOS 17, macCatalyst 17, *) {
+            initializeSyncEngine()
+        }
 
         await MainActor.run {
             NotificationCenter.default.post(
@@ -369,45 +414,104 @@ public extension SyncEngine {
 
     /// 删除云端数据
     func deleteServerData() async throws {
-        var needDelay = false
-        if _syncEngine == nil {
-            initializeSyncEngine()
-            needDelay = true
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip deleteServerData because cloud sync is not supported")
+            return
         }
 
-        Logger.syncEngine.infoFile("Deleting server data")
-        if needDelay {
-            try await Task.sleep(nanoseconds: 1_000_000_000)
+        if #available(iOS 17, macCatalyst 17, *) {
+            var needDelay = false
+            let syncEngine = try await syncEngineOrThrow(initializingIfNeeded: true, needDelay: &needDelay)
+
+            Logger.syncEngine.infoFile("Deleting server data")
+            if needDelay {
+                try await Task.sleep(nanoseconds: 1_000_000_000)
+            }
+
+            syncEngine.state.add(pendingDatabaseChanges: [.deleteZone(SyncEngine.zoneID)])
+            try await syncEngine.performingSendChanges()
+            return
         }
-        syncEngine.state.add(pendingDatabaseChanges: [.deleteZone(SyncEngine.zoneID)])
-        try await syncEngine.performingSendChanges()
+
+        throw NSError(domain: "Storage.SyncEngine", code: 3)
     }
 
     /// 强制重新从云端获取
     func reloadDataForcefully() async throws {
-        Logger.syncEngine.infoFile("Reload data force fully")
-        if let _syncEngine {
-            await _syncEngine.cancelOperations()
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip reloadDataForcefully because cloud sync is not supported")
+            return
         }
-        SyncEngine.stateSerialization = nil
-        initializeSyncEngine()
-        // 确保首次开启或重置后自定义 Zone 已创建，避免后续发送报 zoneNotFound
-        await createCustomZoneIfNeeded(true)
-        try await Task.sleep(nanoseconds: 1_000_000_000)
-        try await syncEngine.performingFetchChanges()
+
+        Logger.syncEngine.infoFile("Reload data force fully")
+
+        if #available(iOS 17, macCatalyst 17, *),
+           let syncEngine = _syncEngine as? (any SyncEngineProtocol)
+        {
+            await syncEngine.cancelOperations()
+        }
+
+        SyncEngine.stateSerializationData = nil
+
+        if #available(iOS 17, macCatalyst 17, *) {
+            var needDelay = false
+            let syncEngine = try await syncEngineOrThrow(initializingIfNeeded: true, needDelay: &needDelay)
+
+            // 确保首次开启或重置后自定义 Zone 已创建，避免后续发送报 zoneNotFound
+            await createCustomZoneIfNeeded(true)
+            try await Task.sleep(nanoseconds: 1_000_000_000)
+            try await syncEngine.performingFetchChanges()
+            return
+        }
+
+        throw NSError(domain: "Storage.SyncEngine", code: 3)
     }
 }
 
 private extension SyncEngine {
+    @available(iOS 17, macCatalyst 17, *)
+    func syncEngineOrThrow(initializingIfNeeded: Bool, needDelay: inout Bool) async throws -> any SyncEngineProtocol {
+        guard SyncEngine.isCloudSyncSupported else {
+            throw NSError(domain: "Storage.SyncEngine", code: 1)
+        }
+
+        if _syncEngine == nil, initializingIfNeeded {
+            initializeSyncEngine()
+            needDelay = true
+        }
+
+        guard let syncEngine = _syncEngine as? (any SyncEngineProtocol) else {
+            throw NSError(domain: "Storage.SyncEngine", code: 2)
+        }
+
+        return syncEngine
+    }
+
+    @available(iOS 17, macCatalyst 17, *)
     func initializeSyncEngine() {
+        guard SyncEngine.isCloudSyncSupported else {
+            _syncEngine = nil
+            return
+        }
+
+        guard let createSyncEngine else {
+            _syncEngine = nil
+            return
+        }
+
         let syncEngine = createSyncEngine(self)
         _syncEngine = syncEngine
-        Logger.syncEngine.infoFile("Initialized sync engine: \(syncEngine.description)")
+        Logger.syncEngine.infoFile("Initialized sync engine: \(syncEngine)")
     }
 
     /// 创建CKRecordZone
     /// - Parameter immediateSendChanges: 是否立即发送变化，仅在 automaticallySync = false 有效
     func createCustomZoneIfNeeded(_ immediateSendChanges: Bool = false) async {
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip createCustomZoneIfNeeded because cloud sync is not supported")
+            return
+        }
+
         guard SyncEngine.isSyncEnabled else {
             Logger.syncEngine.infoFile("Skip createCustomZoneIfNeeded because sync is disabled")
             return
@@ -420,9 +524,15 @@ private extension SyncEngine {
             } else {
                 Logger.syncEngine.infoFile("Creating custom zone \(SyncEngine.zoneID)")
                 let zone = CKRecordZone(zoneID: SyncEngine.zoneID)
-                syncEngine.state.add(pendingDatabaseChanges: [.saveZone(zone)])
-                if !isAutomaticallySyncEnabled, immediateSendChanges {
-                    try await syncEngine.performingSendChanges()
+
+                if #available(iOS 17, macCatalyst 17, *) {
+                    var needDelay = false
+                    if let syncEngine = try? await syncEngineOrThrow(initializingIfNeeded: false, needDelay: &needDelay) {
+                        syncEngine.state.add(pendingDatabaseChanges: [.saveZone(zone)])
+                        if !isAutomaticallySyncEnabled, immediateSendChanges {
+                            try await syncEngine.performingSendChanges()
+                        }
+                    }
                 }
             }
         } catch {
@@ -441,14 +551,22 @@ private extension SyncEngine {
 
             try Task.checkCancellation()
 
-            try await scheduleUploadIfNeeded()
+            if #available(iOS 17, macCatalyst 17, *) {
+                try await scheduleUploadIfNeeded()
+            }
         }
     }
 
     /// 调度上传队列
     /// - Parameter immediateSendChanges: 是否立即发送变化，仅在 automaticallySync = false 有效
+    @available(iOS 17, macCatalyst 17, *)
     func scheduleUploadIfNeeded(_ immediateSendChanges: Bool = false) async throws {
         try Task.checkCancellation()
+
+        guard SyncEngine.isCloudSyncSupported else {
+            Logger.syncEngine.infoFile("Skip scheduleUploadIfNeeded because cloud sync is not supported")
+            return
+        }
 
         guard SyncEngine.isSyncEnabled else {
             Logger.syncEngine.infoFile("Skip scheduleUploadIfNeeded because sync is disabled")
@@ -502,10 +620,13 @@ private extension SyncEngine {
         }
 
         if !pendingRecordZoneChanges.isEmpty {
-            syncEngine.state.add(pendingRecordZoneChanges: pendingRecordZoneChanges)
+            var needDelay = false
+            if let syncEngine = try? await syncEngineOrThrow(initializingIfNeeded: false, needDelay: &needDelay) {
+                syncEngine.state.add(pendingRecordZoneChanges: pendingRecordZoneChanges)
 
-            if !isAutomaticallySyncEnabled, immediateSendChanges {
-                try await syncEngine.performingSendChanges()
+                if !isAutomaticallySyncEnabled, immediateSendChanges {
+                    try await syncEngine.performingSendChanges()
+                }
             }
         }
     }
@@ -594,6 +715,7 @@ private extension SyncEngine {
 
     /// 注意: ⚠️ 代理回调中，不能调用 syncEngine 的 cancelOperations performingSendChanges performingFetchChanges
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleAccountChange(
         changeType: CKSyncEngine.Event.AccountChange.ChangeType,
         syncEngine _: any SyncEngineProtocol,
@@ -632,13 +754,15 @@ private extension SyncEngine {
         }
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleStateUpdate(
         stateSerialization: CKSyncEngine.State.Serialization,
         syncEngine _: any SyncEngineProtocol,
     ) async {
-        SyncEngine.stateSerialization = stateSerialization
+        SyncEngine.stateSerializationData = try? JSONEncoder().encode(stateSerialization)
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleFetchedDatabaseChanges(
         modifications: [CKRecordZone.ID],
         deletions: [(zoneID: CKRecordZone.ID, reason: CKDatabase.DatabaseChange.Deletion.Reason)],
@@ -663,6 +787,7 @@ private extension SyncEngine {
         }
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleFetchedRecordZoneChanges(
         modifications: [CKRecord] = [],
         deletions: [(recordID: CKRecord.ID, recordType: CKRecord.RecordType)] = [],
@@ -823,6 +948,7 @@ private extension SyncEngine {
         }
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleSentDatabaseChanges(
         savedRecordZones: [CKRecordZone] = [],
         failedRecordZoneSaves: [(zone: CKRecordZone, error: CKError)] = [],
@@ -873,6 +999,7 @@ private extension SyncEngine {
         }
     }
 
+    @available(iOS 17, macCatalyst 17, *)
     func handleSentRecordZoneChanges(
         savedRecords: [CKRecord] = [],
         failedRecordSaves: [(record: CKRecord, error: CKError)] = [],
@@ -997,8 +1124,10 @@ private extension SyncEngine {
             try? storage.pendingUploadDequeueDeleted(by: deletedQueueObjectIds)
         }
 
-        syncEngine.state.remove(pendingRecordZoneChanges: removePendingRecordZoneChanges)
-        syncEngine.state.add(pendingDatabaseChanges: newPendingDatabaseChanges)
+        if SyncEngine.isCloudSyncSupported {
+            syncEngine.state.remove(pendingRecordZoneChanges: removePendingRecordZoneChanges)
+            syncEngine.state.add(pendingDatabaseChanges: newPendingDatabaseChanges)
+        }
     }
 }
 
@@ -1070,6 +1199,7 @@ private extension UploadQueue {
 
 // MARK: - CKSyncEngineDelegate
 
+@available(iOS 17, macCatalyst 17, *)
 extension SyncEngine: CKSyncEngineDelegate {
     public func handleEvent(_ event: CKSyncEngine.Event, syncEngine: CKSyncEngine) async {
         guard let event = SyncEngine.Event(event) else {
@@ -1092,8 +1222,9 @@ extension SyncEngine: CKSyncEngineDelegate {
 
 // MARK: - SyncEngineDelegate
 
+@available(iOS 17, macCatalyst 17, *)
 extension SyncEngine: SyncEngineDelegate {
-    package func handleEvent(_ event: SyncEngine.Event, syncEngine _: any SyncEngineProtocol) async {
+    package func handleEvent(_ event: SyncEngine.Event, syncEngine: any SyncEngineProtocol) async {
         Logger.syncEngine.infoFile("Handling event \(event)")
 
         switch event {
