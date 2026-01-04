@@ -9,84 +9,6 @@ import CloudKit
 import Foundation
 import OrderedCollections
 
-public final class ConversationNotificationInfo: Sendable {
-    public let modifications: [Conversation.ID]
-    public let deletions: [Conversation.ID]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [Conversation.ID], deletions: [Conversation.ID]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
-public final class CloudModelNotificationInfo: Sendable {
-    public let modifications: [CloudModel.ID]
-    public let deletions: [CloudModel.ID]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [CloudModel.ID], deletions: [CloudModel.ID]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
-public final class ModelContextServerNotificationInfo: Sendable {
-    public let modifications: [ModelContextServer.ID]
-    public let deletions: [ModelContextServer.ID]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [ModelContextServer.ID], deletions: [ModelContextServer.ID]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
-public final class MemoryNotificationInfo: Sendable {
-    public let modifications: [Memory.ID]
-    public let deletions: [Memory.ID]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [Memory.ID], deletions: [Memory.ID]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
-public final class MessageNotificationInfo: Sendable {
-    public let modifications: [Conversation.ID: [Message.ID]]
-    public let deletions: [Conversation.ID: [Message.ID]]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [Conversation.ID: [Message.ID]], deletions: [Conversation.ID: [Message.ID]]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
-public final class ChatTemplateNotificationInfo: Sendable {
-    public let modifications: [ChatTemplateRecord.ID]
-    public let deletions: [ChatTemplateRecord.ID]
-    public var isEmpty: Bool {
-        modifications.isEmpty && deletions.isEmpty
-    }
-
-    public init(modifications: [ChatTemplateRecord.ID], deletions: [ChatTemplateRecord.ID]) {
-        self.modifications = modifications
-        self.deletions = deletions
-    }
-}
-
 public final actor SyncEngine: Sendable {
     /// 会话列表变化通知, 在 MainActor 中发布。可安全的在UI线程中访问
     public static let ConversationChanged: Notification.Name = .init("wiki.qaq.flowdown.SyncEngine.ConversationChanged")
@@ -226,30 +148,26 @@ public final actor SyncEngine: Sendable {
         container = resolvedContainer
         self.automaticallySync = automaticallySync
 
-        if SyncEngine.isCloudSyncSupported {
-            if #available(iOS 17, macCatalyst 17, *) {
-                if case .mock = mode {
-                    let mockContainer = resolvedContainer as! MockCloudContainer
-                    let privateDatabase = mockContainer.privateCloudDatabase
-                    createSyncEngine = { syncEngine in
-                        let mockSyncEngine = MockSyncEngine(database: privateDatabase, parentSyncEngine: syncEngine, state: MockSyncEngineState(), delegate: syncEngine)
-                        mockSyncEngine.automaticallySync = syncEngine.automaticallySync
-                        return mockSyncEngine
-                    }
-                } else {
-                    createSyncEngine = { syncEngine in
-                        let stateSerialization = SyncEngine.decodeStateSerialization()
-                        var configuration = CKSyncEngine.Configuration(
-                            database: ckContainer.privateCloudDatabase,
-                            stateSerialization: stateSerialization,
-                            delegate: syncEngine,
-                        )
-                        configuration.automaticallySync = syncEngine.isAutomaticallySyncEnabled
-                        return CKSyncEngine(configuration)
-                    }
+        if SyncEngine.isCloudSyncSupported, #available(iOS 17, macCatalyst 17, *) {
+            if case .mock = mode {
+                let mockContainer = resolvedContainer as! MockCloudContainer
+                let privateDatabase = mockContainer.privateCloudDatabase
+                createSyncEngine = { syncEngine in
+                    let mockSyncEngine = MockSyncEngine(database: privateDatabase, parentSyncEngine: syncEngine, state: MockSyncEngineState(), delegate: syncEngine)
+                    mockSyncEngine.automaticallySync = syncEngine.automaticallySync
+                    return mockSyncEngine
                 }
             } else {
-                createSyncEngine = nil
+                createSyncEngine = { syncEngine in
+                    let stateSerialization = SyncEngine.decodeStateSerialization()
+                    var configuration = CKSyncEngine.Configuration(
+                        database: ckContainer.privateCloudDatabase,
+                        stateSerialization: stateSerialization,
+                        delegate: syncEngine,
+                    )
+                    configuration.automaticallySync = syncEngine.isAutomaticallySyncEnabled
+                    return CKSyncEngine(configuration)
+                }
             }
         } else {
             createSyncEngine = nil
@@ -311,6 +229,7 @@ public extension SyncEngine {
         {
             await syncEngine.cancelOperations()
         }
+
         _syncEngine = nil
         sendingChangesCount = 0
         fetchingChangesCount = 0
