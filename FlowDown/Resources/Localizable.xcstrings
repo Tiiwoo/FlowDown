@@ -10032,6 +10032,52 @@
         }
       }
     },
+    "Continue if not finished" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortfahren, wenn nicht abgeschlossen"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continue if not finished"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuar si no ha terminado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Continuer si non terminé"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未完了の場合に続ける"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "완료되지 않은 경우 계속하기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "如果未完成则继续"
+          }
+        }
+      }
+    },
     "Control chain-of-thought budgets for complex problem solving." : {
       "localizations" : {
         "de" : {
@@ -21999,16 +22045,16 @@
     },
     "iCloud sync is not available on this iOS version." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "iCloud sync is not available on this iOS version."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die iCloud-Synchronisierung ist auf dieser iOS-Version nicht verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "iCloud sync is not available on this iOS version."
           }
         },
         "es" : {
@@ -31619,16 +31665,16 @@
     },
     "Not available on this iOS version." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Not available on this iOS version."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auf dieser iOS-Version nicht verfügbar."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not available on this iOS version."
           }
         },
         "es" : {
@@ -38661,16 +38707,16 @@
     },
     "Seamlessly sync conversations across iPhone, iPad, and Mac (requires iOS 17+)." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Seamlessly sync conversations across iPhone, iPad, and Mac (requires iOS 17+)."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Synchronisiere Unterhaltungen nahtlos zwischen iPhone, iPad und Mac (erfordert iOS 17+)."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Seamlessly sync conversations across iPhone, iPad, and Mac (requires iOS 17+)."
           }
         },
         "es" : {

@@ -6,6 +6,7 @@
 //
 
 import AlertController
+import ChatClientKit
 import CloudKit
 import Combine
 import ConfigurableKit
@@ -42,6 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AlertControllerConfiguration.accentColor = .accent
         AlertControllerConfiguration.backgroundColor = .background
         AlertControllerConfiguration.separatorColor = SeparatorView.color
+
+        DefaultMessageSanitizerConfiguration.placeholderText = String(
+            localized: "Continue if not finished",
+        )
 
         templateMenuCancellable = ChatTemplateManager.shared.$templates
             .sink { _ in
