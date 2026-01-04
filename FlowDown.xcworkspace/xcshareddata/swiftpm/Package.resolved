@@ -239,8 +239,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/huggingface/swift-jinja.git",
       "state" : {
-        "revision" : "06a511d5adab5a812852ff972e65702a24b8ce30",
-        "version" : "2.2.0"
+        "revision" : "ba2364165002abe8f4f3992d74a7b547c635638e",
+        "version" : "2.2.1"
       }
     },
     {
@@ -347,8 +347,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/CoreOffice/XMLCoder",
       "state" : {
-        "revision" : "b1e944cbd0ef33787b13f639a5418d55b3bed501",
-        "version" : "0.17.1"
+        "revision" : "5e1ada828d2618ecb79c974e03f79c8f4df90b71",
+        "version" : "0.18.0"
       }
     },
     {
