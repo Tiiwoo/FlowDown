@@ -85,11 +85,22 @@ final class ColorfulShadowView: UIView {
         gradientView.layer.mask = maskLayer
 
         applyCurrentMode()
+
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(updateContents),
+            name: UIApplication.didBecomeActiveNotification,
+            object: nil,
+        )
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError()
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func layoutSubviews() {
@@ -109,6 +120,12 @@ final class ColorfulShadowView: UIView {
 }
 
 private extension ColorfulShadowView {
+    @objc func updateContents() {
+        setNeedsLayout()
+        layoutIfNeeded()
+        applyCurrentMode()
+    }
+
     func regenerateMask() {
         guard bounds.width > 0, bounds.height > 0 else { return }
         guard geometry.innerRect.width > 0, geometry.innerRect.height > 0 else { return }
