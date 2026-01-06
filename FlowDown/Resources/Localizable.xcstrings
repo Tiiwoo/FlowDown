@@ -4540,7 +4540,7 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "音声"
+            "value" : "オーディオ"
           }
         },
         "ko" : {
@@ -4645,6 +4645,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "音频片段"
+          }
+        }
+      }
+    },
+    "Audio Feedback" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio-Feedback"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio Feedback"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retroalimentación de audio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Retour audio"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "オーディオフィードバック"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오디오 피드백"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "音频反馈"
           }
         }
       }
@@ -6946,6 +6992,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "检查更新中"
+          }
+        }
+      }
+    },
+    "Choose an audio file to use for the custom sound effect." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an audio file to use for the custom sound effect."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wählen Sie eine Audiodatei für den benutzerdefinierten Soundeffekt aus."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elige un archivo de audio para usarlo como efecto de sonido personalizado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choisissez un fichier audio pour l’effet sonore personnalisé."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタム効果音に使用する音声ファイルを選択します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 지정 효과음에 사용할 오디오 파일을 선택합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "选择一个音频文件用作自定义音效。"
           }
         }
       }
@@ -11780,6 +11872,52 @@
         }
       }
     },
+    "Custom Audio" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Audio"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefiniertes Audio"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio personalizado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio personnalisé"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタムオーディオ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 지정 오디오"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义音频"
+          }
+        }
+      }
+    },
     "Custom display name for this MCP server." : {
       "localizations" : {
         "de" : {
@@ -11868,6 +12006,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "为此模型自定义显示名称。"
+          }
+        }
+      }
+    },
+    "Custom Sound Effect Updated" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Sound Effect Updated"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefinierter Soundeffekt aktualisiert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Efecto de sonido personalizado actualizado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effet sonore personnalisé mis à jour"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタム効果音を更新しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 지정 효과음 업데이트됨"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "自定义音效已更新"
           }
         }
       }
@@ -31865,7 +32049,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apagado"
+            "value" : "Desactivado"
           }
         },
         "fr" : {
@@ -31883,7 +32067,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "끔"
+            "value" : "끄기"
           }
         },
         "zh-Hans" : {
@@ -33920,6 +34104,52 @@
         }
       }
     },
+    "Play audio feedback during inference output. This helps determine if a task is complete when running in the background." : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Audio-Feedback während der Inferenzausgabe abspielen. Dies hilft festzustellen, ob eine Aufgabe im Hintergrund abgeschlossen ist."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Play audio feedback during inference output. This helps determine if a task is complete when running in the background."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reproduce retroalimentación de audio durante la salida de inferencia. Esto ayuda a determinar si una tarea está completa cuando se ejecuta en segundo plano."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Jouer un retour audio pendant la sortie d'inférence. Cela aide à déterminer si une tâche est terminée lors de l'exécution en arrière-plan."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推論出力中にオーディオフィードバックを再生します。これにより、バックグラウンドで実行中にタスクが完了したかどうかを判断できます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추론 출력 중 오디오 피드백을 재생합니다. 이는 백그라운드에서 실행 중일 때 작업이 완료되었는지 확인하는 데 도움이 됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在推理输出时播放音频反馈。这有助于在后台运行时确定任务是否完成。"
+          }
+        }
+      }
+    },
     "Please add more details and expand on the following content to provide additional information and context." : {
       "localizations" : {
         "de" : {
@@ -35849,6 +36079,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "快速回复 %@"
+          }
+        }
+      }
+    },
+    "Random Dial Tone" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zufälliger Wählton"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Random Dial Tone"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tono de marcación aleatorio"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tonalité aléatoire"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ランダムダイヤルトーン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "무작위 다이얼 톤"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "随机拨号音"
           }
         }
       }
@@ -51959,6 +52235,52 @@
         }
       }
     },
+    "Updating Custom Sound Effect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating Custom Sound Effect"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefinierter Soundeffekt wird aktualisiert"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Actualizando efecto de sonido personalizado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mise à jour de l’effet sonore personnalisé"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタム効果音を更新中"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 지정 효과음 업데이트 중"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在更新自定义音效"
+          }
+        }
+      }
+    },
     "URL Access" : {
       "localizations" : {
         "de" : {
@@ -52093,6 +52415,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "使用对话模型"
+          }
+        }
+      }
+    },
+    "Use Custom Sound Effect" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Custom Sound Effect"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Benutzerdefinierten Soundeffekt verwenden"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usar efecto de sonido personalizado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utiliser un effet sonore personnalisé"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カスタム効果音を使用"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "사용자 지정 효과음 사용"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用自定义音效"
           }
         }
       }

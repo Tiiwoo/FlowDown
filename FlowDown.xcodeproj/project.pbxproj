@@ -146,6 +146,9 @@
 			exceptions = (
 				509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */,
 			);
+			explicitFolders = (
+				Resources/DialTune,
+			);
 			path = FlowDown;
 			sourceTree = "<group>";
 		};
@@ -623,7 +626,6 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

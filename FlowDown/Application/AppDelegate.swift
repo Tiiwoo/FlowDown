@@ -33,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UISwitch.appearance().onTintColor = .accent
         UIUserInterfaceStyle.subscribeToConfigurableItem()
 
+        StreamAudioEffectSetting.subscribeToConfigurableItem()
+        _ = SoundEffectPlayer.shared
+
         MLX.GPU.subscribeToConfigurableItem()
         EditorBehavior.subscribeToConfigurableItem()
         MarkdownTheme.subscribeToConfigurableItem()

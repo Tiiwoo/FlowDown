@@ -71,6 +71,7 @@ actor BalancedEmitter {
                 let emitText = String(buffer.prefix(len))
                 buffer.removeFirst(emitText.count)
                 onEmit(emitText)
+                await MainActor.run { SoundEffectPlayer.shared.play() }
                 if buffer.isEmpty { break }
                 try? await Task.sleep(for: .milliseconds(Int(stepDelay)))
             }

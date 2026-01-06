@@ -55,10 +55,7 @@ final class ColorfulShadowView: UIView {
         didSet { applyCurrentMode() }
     }
 
-    func refreshAfterReturningToForeground() {
-        assert(Thread.isMainThread)
-        applyCurrentMode()
-    }
+    private var timer: Timer?
 
     init() {
         director = SpeckleAnimationRoundedRectangleDirector(
@@ -86,12 +83,16 @@ final class ColorfulShadowView: UIView {
 
         applyCurrentMode()
 
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(updateContents),
-            name: UIApplication.didBecomeActiveNotification,
-            object: nil,
-        )
+        #if targetEnvironment(macCatalyst)
+            // there looks like some black magic on app nap that
+            // wont dismiss our colorful effect when text stream ended in background
+            // we force update to try to fix this
+            let timer = Timer(timeInterval: 3, repeats: true) { [weak self] _ in
+                self?.updateContents()
+            }
+            RunLoop.main.add(timer, forMode: .common)
+            self.timer = timer
+        #endif
     }
 
     @available(*, unavailable)
@@ -100,7 +101,8 @@ final class ColorfulShadowView: UIView {
     }
 
     deinit {
-        NotificationCenter.default.removeObserver(self)
+        timer?.invalidate()
+        timer = nil
     }
 
     override func layoutSubviews() {

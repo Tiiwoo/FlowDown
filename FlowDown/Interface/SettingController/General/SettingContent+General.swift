@@ -11,9 +11,12 @@ import Digger
 import MarkdownView
 import Storage
 import UIKit
+import UniformTypeIdentifiers
 
 extension SettingController.SettingContent {
     class GeneralController: StackScrollController {
+        private var documentPickerImportHandler: (([URL]) -> Void)?
+
         init() {
             super.init(nibName: nil, bundle: nil)
             title = String(localized: "General")
@@ -75,6 +78,20 @@ extension SettingController.SettingContent {
             stackView.addArrangedSubviewWithMargin(autoCollapse)
             stackView.addArrangedSubview(SeparatorView())
 
+            stackView.addArrangedSubviewWithMargin(StreamAudioEffectSetting.configurableObject.createView())
+            stackView.addArrangedSubview(SeparatorView())
+
+            let importDialTune = ConfigurableObject(
+                icon: "square.and.arrow.down",
+                title: "Use Custom Sound Effect",
+                explain: "Choose an audio file to use for the custom sound effect.",
+                ephemeralAnnotation: .action { [weak self] controller in
+                    self?.presentCustomDialTunePicker(from: controller)
+                },
+            ).createView()
+            stackView.addArrangedSubviewWithMargin(importDialTune)
+            stackView.addArrangedSubview(SeparatorView())
+
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
                     footer: "The above setting will take effect at conversation page.",
@@ -123,5 +140,62 @@ extension SettingController.SettingContent {
             ) { $0.top /= 2 }
             stackView.addArrangedSubview(SeparatorView())
         }
+
+        private func presentCustomDialTunePicker(from controller: UIViewController) {
+            let picker = UIDocumentPickerViewController(
+                forOpeningContentTypes: [UTType.audio],
+                asCopy: true,
+            )
+            picker.allowsMultipleSelection = false
+            picker.delegate = self
+            documentPickerImportHandler = { [weak self, weak controller] urls in
+                guard let url = urls.first, let controller else {
+                    self?.documentPickerImportHandler = nil
+                    return
+                }
+                self?.documentPickerImportHandler = nil
+                self?.importCustomDialTune(from: url, controller: controller)
+            }
+            controller.present(picker, animated: true)
+        }
+
+        private func importCustomDialTune(from url: URL, controller: UIViewController) {
+            Indicator.progress(
+                title: "Updating Custom Sound Effect",
+                controller: controller,
+            ) { progressCompletion in
+                let securityScoped = url.startAccessingSecurityScopedResource()
+                defer { if securityScoped { url.stopAccessingSecurityScopedResource() } }
+
+                let data = try Data(contentsOf: url)
+                let result = try await AudioTranscoder.transcode(
+                    data: data,
+                    fileExtension: url.pathExtension.nilIfEmpty,
+                    output: .mediumQualityM4A,
+                )
+                let directory = try SoundEffectPlayer.ensureCustomAudioDirectory()
+                let outputURL = directory.appendingPathComponent(SoundEffectPlayer.customAudioFileName)
+                try result.data.write(to: outputURL, options: .atomic)
+
+                await SoundEffectPlayer.shared.reloadCustomAudio()
+                await progressCompletion {
+                    Indicator.present(
+                        title: "Custom Sound Effect Updated",
+                        referencingView: controller.view,
+                    )
+                }
+            }
+        }
+    }
+}
+
+extension SettingController.SettingContent.GeneralController: UIDocumentPickerDelegate {
+    func documentPicker(_: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+        documentPickerImportHandler?(urls)
+        documentPickerImportHandler = nil
+    }
+
+    func documentPickerWasCancelled(_: UIDocumentPickerViewController) {
+        documentPickerImportHandler = nil
     }
 }
