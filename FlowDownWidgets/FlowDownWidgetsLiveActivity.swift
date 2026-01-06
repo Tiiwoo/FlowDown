@@ -75,7 +75,6 @@ struct FlowDownWidgetsLiveActivity: Widget {
 
                 Image(systemName: "bird.fill")
                     .foregroundStyle(finished ? .accent : .white)
-                    .contentTransition(.symbolEffect)
                     .animation(.interactiveSpring, value: context.state)
             } compactTrailing: {
                 let finished = context.state.conversationCount <= 0
@@ -84,7 +83,6 @@ struct FlowDownWidgetsLiveActivity: Widget {
                 if finished {
                     Image(systemName: "checkmark.circle.fill")
                         .foregroundStyle(finished ? .accent : .white)
-                        .contentTransition(.symbolEffect)
                         .animation(.interactiveSpring, value: context.state)
                 } else {
                     HStack(spacing: 2) {
@@ -100,7 +98,6 @@ struct FlowDownWidgetsLiveActivity: Widget {
 
                 Image(systemName: "bird.fill")
                     .foregroundStyle(finished ? .accent : .white)
-                    .contentTransition(.symbolEffect)
                     .animation(.interactiveSpring, value: context.state)
                     .widgetURL(URL(string: "flowdown://live-activity"))
             }
@@ -143,6 +140,7 @@ private extension FlowDownWidgetsAttributes.ContentState {
     }
 }
 
+@available(iOS 17.0, *)
 #Preview("Notification", as: .content, using: FlowDownWidgetsAttributes.preview) {
     FlowDownWidgetsLiveActivity()
 } contentStates: {
