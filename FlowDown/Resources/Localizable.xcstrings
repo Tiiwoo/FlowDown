@@ -6998,16 +6998,16 @@
     },
     "Choose an audio file to use for the custom sound effect." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Choose an audio file to use for the custom sound effect."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wählen Sie eine Audiodatei für den benutzerdefinierten Soundeffekt aus."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Choose an audio file to use for the custom sound effect."
           }
         },
         "es" : {
@@ -11874,16 +11874,16 @@
     },
     "Custom Audio" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom Audio"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzerdefiniertes Audio"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Audio"
           }
         },
         "es" : {
@@ -12012,16 +12012,16 @@
     },
     "Custom Sound Effect Updated" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Custom Sound Effect Updated"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzerdefinierter Soundeffekt aktualisiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Custom Sound Effect Updated"
           }
         },
         "es" : {
@@ -14632,6 +14632,52 @@
         }
       }
     },
+    "Due to system limitations, you must enable audio to use this feature." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due to system limitations, you must enable audio to use this feature."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aufgrund von Systemeinschränkungen musst du Audio aktivieren, um diese Funktion zu verwenden."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Debido a limitaciones del sistema, debes activar el audio para usar esta función."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "En raison des limitations du système, vous devez activer l’audio pour utiliser cette fonctionnalité."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "システムの制限により、この機能を使用するにはオーディオを有効にする必要があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "시스템 제한으로 인해 이 기능을 사용하려면 오디오를 활성화해야 합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "由于系统限制，你必须启用音频才能使用此功能。"
+          }
+        }
+      }
+    },
     "Duplicate" : {
       "localizations" : {
         "de" : {
@@ -15917,6 +15963,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "启用 iCloud 同步以保持多设备数据一致。关闭不会删除现有数据。"
+          }
+        }
+      }
+    },
+    "Enable Live Activity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Live Activity"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Live-Aktivität aktivieren"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activar actividad en vivo"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Activer l’activité en direct"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ライブアクティビティを有効にする"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "라이브 활동 활성화"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "启用实时活动"
           }
         }
       }
@@ -41236,6 +41328,52 @@
         }
       }
     },
+    "Show a Live Activity while streaming in the background." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show a Live Activity while streaming in the background."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zeige eine Live-Aktivität, während du im Hintergrund streamst."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Muestra una actividad en vivo mientras transmites en segundo plano."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher une activité en direct pendant la diffusion en arrière-plan."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "バックグラウンドでストリーミング中にライブアクティビティを表示します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "백그라운드에서 스트리밍하는 동안 라이브 활동을 표시합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在后台流式传输时显示实时活动。"
+          }
+        }
+      }
+    },
     "Show and Send Conversation" : {
       "localizations" : {
         "de" : {
@@ -52237,16 +52375,16 @@
     },
     "Updating Custom Sound Effect" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Updating Custom Sound Effect"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzerdefinierter Soundeffekt wird aktualisiert"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Updating Custom Sound Effect"
           }
         },
         "es" : {
@@ -52421,16 +52559,16 @@
     },
     "Use Custom Sound Effect" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Use Custom Sound Effect"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzerdefinierten Soundeffekt verwenden"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Custom Sound Effect"
           }
         },
         "es" : {

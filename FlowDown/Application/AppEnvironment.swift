@@ -73,6 +73,12 @@ nonisolated extension AppEnvironment.Container {
             let automaticallySync = shouldEnableCloudSync
         #endif
 
+        #if DEBUG
+            let infoDic = Bundle.main.infoDictionary
+            let value = infoDic?["UIApplicationSupportsMultipleScenes"] as? Bool
+            assert(value == false)
+        #endif
+
         let syncEngine = SyncEngine(
             storage: storage,
             containerIdentifier: CloudKitConfig.containerIdentifier,

@@ -53,6 +53,10 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
   - `python3 Resources/DevKit/scripts/check_translations.py FlowDown/Resources/Localizable.xcstrings`
   - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDown/Resources/Localizable.xcstrings`
   - `python3 Resources/DevKit/scripts/update_missing_i18n.py FlowDown/Resources/Localizable.xcstrings` to scaffold missing locales; extend `NEW_STRINGS` in that script when adding new keys.
+  - `python3 Resources/DevKit/scripts/check_translations.py FlowDownTranslationProvider/Localizable.xcstrings`
+  - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDownTranslationProvider/Localizable.xcstrings`
+  - `python3 Resources/DevKit/scripts/check_translations.py FlowDownWidgets/Localizable.xcstrings`
+  - `python3 Resources/DevKit/scripts/check_untranslated.py FlowDownWidgets/Localizable.xcstrings`
 
 ## Shell Script Style
 
@@ -153,6 +157,9 @@ Prefer `String.LocalizationValue`/`LocalizedStringResource` formatting over `Str
 - Translation provider localization files:
   - `FlowDownTranslationProvider/Localizable.xcstrings`: Translation provider UI strings
   - `FlowDownTranslationProvider/InfoPlist.xcstrings`: Translation provider Info.plist localization strings
+- FlowDownWidgets localization files:
+  - `FlowDownWidgets/Localizable.xcstrings`: Widgets UI strings
+  - `FlowDownWidgets/InfoPlist.xcstrings`: Widgets Info.plist localization strings
 - We ship multiple locales (en base plus de, es, fr, ja, ko, zh-Hans); keep all locales populated when adding or updating strings—do not leave only English/Chinese
 - **IMPORTANT**: When adding new strings, you MUST provide translations for ALL supported languages (de, es, fr, ja, ko, zh-Hans) in `NEW_STRINGS`. Never add strings with only partial translations.
 - **IMPORTANT**: When adding new strings, you MUST provide translations for ALL supported languages (de, es, fr, ja, ko, zh-Hans) in `NEW_STRINGS`. Never add strings with only partial translations.

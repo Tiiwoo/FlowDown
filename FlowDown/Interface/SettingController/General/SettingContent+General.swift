@@ -6,6 +6,7 @@
 //
 
 import AlertController
+import Combine
 import ConfigurableKit
 import Digger
 import MarkdownView
@@ -16,6 +17,8 @@ import UniformTypeIdentifiers
 extension SettingController.SettingContent {
     class GeneralController: StackScrollController {
         private var documentPickerImportHandler: (([URL]) -> Void)?
+        private var cancellables: Set<AnyCancellable> = []
+        private var isProgrammaticallyUpdatingLiveActivityToggle = false
 
         init() {
             super.init(nibName: nil, bundle: nil)
@@ -30,6 +33,50 @@ extension SettingController.SettingContent {
         override func viewDidLoad() {
             super.viewDidLoad()
             view.backgroundColor = .background
+
+            #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+                ConfigurableKit.publisher(forKey: LiveActivitySetting.storageKey, type: Bool.self)
+                    .ensureMainThread()
+                    .compactMap(\.self)
+                    .removeDuplicates()
+                    .dropFirst()
+                    .sink { [weak self] enabled in
+                        guard let self else { return }
+                        guard enabled else { return }
+                        guard !isProgrammaticallyUpdatingLiveActivityToggle else { return }
+
+                        if StreamAudioEffectSetting.configuredMode() == .off {
+                            isProgrammaticallyUpdatingLiveActivityToggle = true
+                            LiveActivitySetting.setEnabled(false)
+                            isProgrammaticallyUpdatingLiveActivityToggle = false
+
+                            let alert = AlertViewController(
+                                title: "Error",
+                                message: "Due to system limitations, you must enable audio to use this feature.",
+                            ) { context in
+                                context.allowSimpleDispose()
+                                context.addAction(title: "Dismiss", attribute: .accent) {
+                                    context.dispose()
+                                }
+                            }
+                            present(alert, animated: true)
+                        }
+                    }
+                    .store(in: &cancellables)
+
+                ConfigurableKit.publisher(forKey: StreamAudioEffectSetting.storageKey, type: Int.self)
+                    .ensureMainThread()
+                    .sink { [weak self] rawValue in
+                        guard let self else { return }
+                        let mode = StreamAudioEffectSetting(rawValue: rawValue ?? StreamAudioEffectSetting.off.rawValue) ?? .off
+                        if mode == .off {
+                            isProgrammaticallyUpdatingLiveActivityToggle = true
+                            LiveActivitySetting.setEnabled(false)
+                            isProgrammaticallyUpdatingLiveActivityToggle = false
+                        }
+                    }
+                    .store(in: &cancellables)
+            #endif
         }
 
         let autoCollapse = ConfigurableObject(
@@ -81,7 +128,7 @@ extension SettingController.SettingContent {
             stackView.addArrangedSubviewWithMargin(StreamAudioEffectSetting.configurableObject.createView())
             stackView.addArrangedSubview(SeparatorView())
 
-            let importDialTune = ConfigurableObject(
+            let importCustomAudioFile = ConfigurableObject(
                 icon: "square.and.arrow.down",
                 title: "Use Custom Sound Effect",
                 explain: "Choose an audio file to use for the custom sound effect.",
@@ -89,8 +136,13 @@ extension SettingController.SettingContent {
                     self?.presentCustomDialTunePicker(from: controller)
                 },
             ).createView()
-            stackView.addArrangedSubviewWithMargin(importDialTune)
+            stackView.addArrangedSubviewWithMargin(importCustomAudioFile)
             stackView.addArrangedSubview(SeparatorView())
+
+            #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+                stackView.addArrangedSubviewWithMargin(LiveActivitySetting.configurableObject.createView())
+                stackView.addArrangedSubview(SeparatorView())
+            #endif
 
             stackView.addArrangedSubviewWithMargin(
                 ConfigurableSectionFooterView().with(
@@ -177,7 +229,7 @@ extension SettingController.SettingContent {
                 let outputURL = directory.appendingPathComponent(SoundEffectPlayer.customAudioFileName)
                 try result.data.write(to: outputURL, options: .atomic)
 
-                await SoundEffectPlayer.shared.reloadCustomAudio()
+                SoundEffectPlayer.shared.reloadCustomAudio()
                 await progressCompletion {
                     Indicator.present(
                         title: "Custom Sound Effect Updated",

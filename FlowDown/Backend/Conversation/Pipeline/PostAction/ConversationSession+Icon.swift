@@ -76,11 +76,10 @@ extension ConversationSessionManager.Session {
             guard let model = models.auxiliary else { throw NSError() }
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 256,
                 input: messages,
             )
 
-            let raw = ans.text.isEmpty ? ans.reasoning : ans.text
+            let raw = ans.text
             let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: raw)
 
             if let icon = extractIconFromXML(sanitizedContent) {

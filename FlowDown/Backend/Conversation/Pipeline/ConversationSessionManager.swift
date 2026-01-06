@@ -7,6 +7,7 @@
 
 import ChatClientKit
 import Combine
+import ConfigurableKit
 import Foundation
 import Storage
 
@@ -25,7 +26,10 @@ final class ConversationSessionManager {
     private let logger = Logger(subsystem: "wiki.qaq.flowdown", category: "ConversationSessionManager")
 
     private var executingSessions: Set<Conversation.ID> = []
-    let executingSessionsPublisher = PassthroughSubject<Set<Conversation.ID>, Never>()
+    let executingSessionsPublisher = CurrentValueSubject<Set<Conversation.ID>, Never>([])
+
+    @Published private(set) var streamingSessionTextCount: Int = 0
+    private var cancellables: Set<AnyCancellable> = []
 
     // MARK: - Lifecycle
 
@@ -38,6 +42,24 @@ final class ConversationSessionManager {
             guard let self else { return }
             handleMessageChanged(notification)
         }
+
+        ConfigurableKit.publisher(forKey: LiveActivitySetting.storageKey, type: Bool.self)
+            .ensureMainThread()
+            .sink { [weak self] _ in
+                Task { @MainActor in
+                    self?.refreshLiveActivity()
+                }
+            }
+            .store(in: &cancellables)
+
+        ConfigurableKit.publisher(forKey: StreamAudioEffectSetting.storageKey, type: Int.self)
+            .ensureMainThread()
+            .sink { [weak self] _ in
+                Task { @MainActor in
+                    self?.refreshLiveActivity()
+                }
+            }
+            .store(in: &cancellables)
     }
 
     deinit {
@@ -121,14 +143,52 @@ final class ConversationSessionManager {
     func markSessionExecuting(_ sessionID: Conversation.ID) {
         executingSessions.insert(sessionID)
         executingSessionsPublisher.send(executingSessions)
+
+        Task { @MainActor in
+            refreshLiveActivity()
+        }
     }
 
     func markSessionCompleted(_ sessionID: Conversation.ID) {
         executingSessions.remove(sessionID)
         executingSessionsPublisher.send(executingSessions)
+
+        Task { @MainActor in
+            if executingSessions.isEmpty {
+                streamingSessionTextCount = 0
+            }
+            refreshLiveActivity()
+        }
     }
 
     func isSessionExecuting(_ sessionID: Conversation.ID) -> Bool {
         executingSessions.contains(sessionID)
+    }
+
+    /// Called when any streaming output receives new text.
+    ///
+    /// The caller should compare old/new output lengths and pass the delta here.
+    /// This delta will be accumulated and forwarded to Live Activity updates.
+    @MainActor
+    func countIncomingTokens(_ count: Int) {
+        guard count > 0 else { return }
+        streamingSessionTextCount += count
+        refreshLiveActivity()
+    }
+
+    @MainActor
+    func refreshLiveActivity() {
+        let audioEnabled = StreamAudioEffectSetting.configuredMode() != .off
+        let enabled = LiveActivitySetting.isEnabled() && audioEnabled
+
+        #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+            if #available(iOS 16.2, *) {
+                LiveActivityService.shared.update(
+                    conversationCount: executingSessions.count,
+                    streamingSessionTextCount: streamingSessionTextCount,
+                    enabled: enabled,
+                )
+            }
+        #endif
     }
 }

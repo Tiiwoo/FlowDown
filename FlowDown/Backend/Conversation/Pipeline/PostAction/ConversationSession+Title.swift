@@ -44,6 +44,16 @@ struct ConversationTitle: Sendable, Equatable {
     var title: String
 }
 
+private extension String {
+    func trimmingMarkdownBold() -> String {
+        var result = self
+        if result.hasPrefix("**"), result.hasSuffix("**"), result.count > 4 {
+            result = String(result.dropFirst(2).dropLast(2))
+        }
+        return result
+    }
+}
+
 extension ConversationSessionManager.Session {
     func generateConversationTitle() async -> String? {
         guard let userMessage = messages.last(where: { $0.role == .user })?.document else {
@@ -53,7 +63,7 @@ extension ConversationSessionManager.Session {
             return nil
         }
 
-        let task = "Generate a concise, 3-5 word only title summarizing the chat history, enclosed within the <title> tag. Write in the user's primary language. Do not include any prefix, label, or markdown."
+        let task = "Generate a concise, 3-5 word only title summarizing the chat history, enclosed within the <title> tag. Write in the user's primary language. Do **NOT** include any prefix, label, or markdown syntax."
 
         let conversationData = ConversationXML(
             task: task,
@@ -76,18 +86,19 @@ extension ConversationSessionManager.Session {
             guard let model = models.auxiliary else { throw NSError() }
             let ans = try await ModelManager.shared.infer(
                 with: model,
-                maxCompletionTokens: 256,
                 input: messages,
             )
 
-            let raw = ans.text.isEmpty ? ans.reasoning : ans.text
+            let raw = ans.text
             let sanitizedContent = ModelResponseSanitizer.stripReasoning(from: raw)
 
             if let title = extractTitleFromXML(sanitizedContent) {
                 return title.count > 32 ? String(title.prefix(32)) : title
             }
 
-            var ret = sanitizedContent.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+            var ret = sanitizedContent
+                .trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                .trimmingMarkdownBold()
             if ret.isEmpty { return nil }
             if ret.count > 32 { ret = String(ret.prefix(32)) }
             return ret
@@ -116,6 +127,7 @@ extension ConversationSessionManager.Session {
         {
             let cleanTitle = titleResponse.title
                 .trimmingCharacters(in: .whitespacesAndNewlines)
+                .trimmingMarkdownBold()
             return cleanTitle.isEmpty ? nil : cleanTitle
         }
 
@@ -139,6 +151,7 @@ extension ConversationSessionManager.Session {
 
         let title = String(xmlString[titleRange])
             .trimmingCharacters(in: .whitespacesAndNewlines)
+            .trimmingMarkdownBold()
 
         return title.isEmpty ? nil : title
     }

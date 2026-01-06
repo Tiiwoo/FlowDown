@@ -22,6 +22,7 @@ def default_file_path() -> str:
             os.path.dirname(__file__),
             "..",
             "..",
+            "..",
             "FlowDown",
             "Resources",
             "Localizable.xcstrings",

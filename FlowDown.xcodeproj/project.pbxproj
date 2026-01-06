@@ -13,6 +13,9 @@
 		502272D22EB3DE3200AF9D28 /* UIEffectKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502272D12EB3DE3200AF9D28 /* UIEffectKit */; };
 		502BCBD12D43DB2B00500180 /* ConfigurableKit in Frameworks */ = {isa = PBXBuildFile; productRef = 502BCBD02D43DB2B00500180 /* ConfigurableKit */; };
 		50383CEA2D2E1E0D00426941 /* BetterCodable in Frameworks */ = {isa = PBXBuildFile; productRef = 50383CE92D2E1E0D00426941 /* BetterCodable */; };
+		50433EC12F0D6A8200445939 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50433EC02F0D6A8200445939 /* WidgetKit.framework */; };
+		50433EC32F0D6A8200445939 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50433EC22F0D6A8200445939 /* SwiftUI.framework */; };
+		50433ED12F0D6A8300445939 /* FlowDownWidgetsExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 50433EBF2F0D6A8200445939 /* FlowDownWidgetsExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		5053972E2EED55AF00655FF7 /* ChatClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 5053972D2EED55AF00655FF7 /* ChatClientKit */; };
 		505535BC2D72F38900F54B28 /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 505535BB2D72F38900F54B28 /* AlignedCollectionViewFlowLayout */; };
 		505742472E1B8B8100A26090 /* DpkgVersion in Frameworks */ = {isa = PBXBuildFile; productRef = 505742462E1B8B8100A26090 /* DpkgVersion */; };
@@ -56,6 +59,13 @@
 			remoteGlobalIDString = 5017A3E72EED53FD0023F420;
 			remoteInfo = FlowDownTranslationProvider;
 		};
+		50433ECE2F0D6A8300445939 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 503498B52D23053D004672BD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 50433EBE2F0D6A8200445939;
+			remoteInfo = FlowDownWidgetsExtension;
+		};
 		50D757BE2EC10A4400AEC087 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 503498B52D23053D004672BD /* Project object */;
@@ -75,6 +85,17 @@
 				5017A3EF2EED53FD0023F420 /* FlowDownTranslationProvider.appex in Embed ExtensionKit Extensions */,
 			);
 			name = "Embed ExtensionKit Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50433ED02F0D6A8300445939 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				50433ED12F0D6A8300445939 /* FlowDownWidgetsExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		506837F52EED62CB00EBF35F /* Embed Frameworks */ = {
@@ -106,6 +127,9 @@
 /* Begin PBXFileReference section */
 		5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.extensionkit-extension"; includeInIndex = 0; path = FlowDownTranslationProvider.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		503498BD2D23053D004672BD /* FlowDown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlowDown.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		50433EBF2F0D6A8200445939 /* FlowDownWidgetsExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = FlowDownWidgetsExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		50433EC02F0D6A8200445939 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		50433EC22F0D6A8200445939 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		50D6CB1C2EBDFCB50037488A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.1.sdk/System/iOSSupport/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FlowDownUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -117,6 +141,13 @@
 				Info.plist,
 			);
 			target = 5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */;
+		};
+		50433ED52F0D6A8300445939 /* Exceptions for "FlowDownWidgets" folder in "FlowDownWidgetsExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 50433EBE2F0D6A8200445939 /* FlowDownWidgetsExtension */;
 		};
 		509EB1422EE5411B00553C8A /* Exceptions for "FlowDown" folder in "FlowDown" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -139,6 +170,14 @@
 				5017A3F42EED53FD0023F420 /* Exceptions for "FlowDownTranslationProvider" folder in "FlowDownTranslationProvider" target */,
 			);
 			path = FlowDownTranslationProvider;
+			sourceTree = "<group>";
+		};
+		50433EC42F0D6A8200445939 /* FlowDownWidgets */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				50433ED52F0D6A8300445939 /* Exceptions for "FlowDownWidgets" folder in "FlowDownWidgetsExtension" target */,
+			);
+			path = FlowDownWidgets;
 			sourceTree = "<group>";
 		};
 		509EB03B2EE5411B00553C8A /* FlowDown */ = {
@@ -204,6 +243,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50433EBC2F0D6A8200445939 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				50433EC32F0D6A8200445939 /* SwiftUI.framework in Frameworks */,
+				50433EC12F0D6A8200445939 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50D757B72EC10A4400AEC087 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -222,6 +270,8 @@
 			isa = PBXGroup;
 			children = (
 				50D6CB1C2EBDFCB50037488A /* UIKit.framework */,
+				50433EC02F0D6A8200445939 /* WidgetKit.framework */,
+				50433EC22F0D6A8200445939 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -232,6 +282,7 @@
 				509EB03B2EE5411B00553C8A /* FlowDown */,
 				50D757BB2EC10A4400AEC087 /* FlowDownUnitTests */,
 				5017A3E92EED53FD0023F420 /* FlowDownTranslationProvider */,
+				50433EC42F0D6A8200445939 /* FlowDownWidgets */,
 				503498BE2D23053D004672BD /* Products */,
 				502BCBCF2D43DB2B00500180 /* Frameworks */,
 			);
@@ -243,6 +294,7 @@
 				503498BD2D23053D004672BD /* FlowDown.app */,
 				50D757BA2EC10A4400AEC087 /* FlowDownUnitTests.xctest */,
 				5017A3E82EED53FD0023F420 /* FlowDownTranslationProvider.appex */,
+				50433EBF2F0D6A8200445939 /* FlowDownWidgetsExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -284,11 +336,13 @@
 				503498BB2D23053D004672BD /* Resources */,
 				5017A3F02EED53FD0023F420 /* Embed ExtensionKit Extensions */,
 				506837F52EED62CB00EBF35F /* Embed Frameworks */,
+				50433ED02F0D6A8300445939 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				5017A3EE2EED53FD0023F420 /* PBXTargetDependency */,
+				50433ECF2F0D6A8300445939 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				509EB03B2EE5411B00553C8A /* FlowDown */,
@@ -328,6 +382,28 @@
 			productReference = 503498BD2D23053D004672BD /* FlowDown.app */;
 			productType = "com.apple.product-type.application";
 		};
+		50433EBE2F0D6A8200445939 /* FlowDownWidgetsExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 50433ED42F0D6A8300445939 /* Build configuration list for PBXNativeTarget "FlowDownWidgetsExtension" */;
+			buildPhases = (
+				50433EBB2F0D6A8200445939 /* Sources */,
+				50433EBC2F0D6A8200445939 /* Frameworks */,
+				50433EBD2F0D6A8200445939 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				50433EC42F0D6A8200445939 /* FlowDownWidgets */,
+			);
+			name = FlowDownWidgetsExtension;
+			packageProductDependencies = (
+			);
+			productName = FlowDownWidgetsExtension;
+			productReference = 50433EBF2F0D6A8200445939 /* FlowDownWidgetsExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		50D757B92EC10A4400AEC087 /* FlowDownUnitTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50D757C02EC10A4400AEC087 /* Build configuration list for PBXNativeTarget "FlowDownUnitTests" */;
@@ -363,7 +439,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2610;
+				LastSwiftUpdateCheck = 2620;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
 					5017A3E72EED53FD0023F420 = {
@@ -371,6 +447,9 @@
 					};
 					503498BC2D23053D004672BD = {
 						CreatedOnToolsVersion = 16.2;
+					};
+					50433EBE2F0D6A8200445939 = {
+						CreatedOnToolsVersion = 26.2;
 					};
 					50D757B92EC10A4400AEC087 = {
 						CreatedOnToolsVersion = 26.1;
@@ -423,6 +502,7 @@
 			targets = (
 				503498BC2D23053D004672BD /* FlowDown */,
 				5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */,
+				50433EBE2F0D6A8200445939 /* FlowDownWidgetsExtension */,
 				50D757B92EC10A4400AEC087 /* FlowDownUnitTests */,
 			);
 		};
@@ -437,6 +517,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		503498BB2D23053D004672BD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		50433EBD2F0D6A8200445939 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -489,6 +576,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		50433EBB2F0D6A8200445939 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		50D757B62EC10A4400AEC087 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -504,6 +598,12 @@
 			platformFilter = ios;
 			target = 5017A3E72EED53FD0023F420 /* FlowDownTranslationProvider */;
 			targetProxy = 5017A3ED2EED53FD0023F420 /* PBXContainerItemProxy */;
+		};
+		50433ECF2F0D6A8300445939 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			platformFilter = ios;
+			target = 50433EBE2F0D6A8200445939 /* FlowDownWidgetsExtension */;
+			targetProxy = 50433ECE2F0D6A8300445939 /* PBXContainerItemProxy */;
 		};
 		50D757BF2EC10A4400AEC087 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -861,6 +961,72 @@
 			};
 			name = Release;
 		};
+		50433ED22F0D6A8300445939 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Development.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlowDownWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FlowDownWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow.FlowDownWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		50433ED32F0D6A8300445939 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
+			baseConfigurationReferenceRelativePath = Configuration/Release.xcconfig;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_IDENTITY = "$(inherited)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = FlowDownWidgets/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = FlowDownWidgets;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = wiki.qaq.flow.FlowDownWidgets;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		50D757C12EC10A4400AEC087 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = 509EB03B2EE5411B00553C8A /* FlowDown */;
@@ -940,6 +1106,15 @@
 			buildConfigurations = (
 				503498D12D23053E004672BD /* Debug */,
 				503498D22D23053E004672BD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		50433ED42F0D6A8300445939 /* Build configuration list for PBXNativeTarget "FlowDownWidgetsExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50433ED22F0D6A8300445939 /* Debug */,
+				50433ED32F0D6A8300445939 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

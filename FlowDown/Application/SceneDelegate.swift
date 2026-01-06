@@ -8,6 +8,7 @@
 import Combine
 import ConfigurableKit
 import FlowDownModelExchange
+import MLX
 import Storage
 import UIKit
 
@@ -57,7 +58,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func handleIncomingURL(_ url: URL) {
+    func sceneWillEnterForeground(_: UIScene) {
+        guard !RecoveryMode.isActivated else { return }
+        UIUserInterfaceStyle.reapplyConfiguredStyle()
+        MLX.GPU.onApplicationBecomeActivate()
+        #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+            if #available(iOS 16.2, *) {
+                LiveActivityService.shared.appDidEnterForeground()
+            }
+        #endif
+    }
+
+    func sceneWillResignActive(_: UIScene) {
+        guard !RecoveryMode.isActivated else { return }
+        MLX.GPU.onApplicationResignActivate()
+        #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+            if #available(iOS 16.2, *) {
+                LiveActivityService.shared.appWillEnterBackground()
+            }
+        #endif
+    }
+}
+
+private extension SceneDelegate {
+    func handleIncomingURL(_ url: URL) {
         switch url.scheme {
         case "file":
             switch url.pathExtension {
@@ -76,7 +100,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func importModel(from url: URL) {
+    func importModel(from url: URL) {
         _ = url.startAccessingSecurityScopedResource()
         defer { url.stopAccessingSecurityScopedResource() }
         try? FileManager.default.startDownloadingUbiquitousItem(at: url)
@@ -92,7 +116,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func importTemplate(from url: URL) {
+    func importTemplate(from url: URL) {
         _ = url.startAccessingSecurityScopedResource()
         defer { url.stopAccessingSecurityScopedResource() }
         try? FileManager.default.startDownloadingUbiquitousItem(at: url)
@@ -117,7 +141,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func importMCPServer(from url: URL) {
+    func importMCPServer(from url: URL) {
         _ = url.startAccessingSecurityScopedResource()
         defer { url.stopAccessingSecurityScopedResource() }
         try? FileManager.default.startDownloadingUbiquitousItem(at: url)
@@ -151,7 +175,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func handleFlowDownURL(_ url: URL) {
+    func handleFlowDownURL(_ url: URL) {
         Logger.app.infoFile("handling incoming message: \(url)")
         if let handled = ModelExchangeAPI.resolveInputScheme(url) {
             if handled == false {
@@ -168,7 +192,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
 
-    private func handleNewMessageURL(_ url: URL) {
+    func handleNewMessageURL(_ url: URL) {
         let pathComponents = url.pathComponents
         guard pathComponents.count >= 2 else { return }
         let encodedMessage = pathComponents[1]

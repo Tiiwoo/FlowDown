@@ -34,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIUserInterfaceStyle.subscribeToConfigurableItem()
 
         StreamAudioEffectSetting.subscribeToConfigurableItem()
+        #if canImport(ActivityKit) && os(iOS) && !targetEnvironment(macCatalyst)
+            LiveActivitySetting.subscribeToConfigurableItem()
+        #endif
         _ = SoundEffectPlayer.shared
 
         MLX.GPU.subscribeToConfigurableItem()
@@ -122,17 +125,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 completionHandler(.failed)
             }
         }
-    }
-
-    func applicationDidBecomeActive(_: UIApplication) {
-        guard !RecoveryMode.isActivated else { return }
-        UIUserInterfaceStyle.reapplyConfiguredStyle()
-        MLX.GPU.onApplicationBecomeActivate()
-    }
-
-    func applicationWillResignActive(_: UIApplication) {
-        guard !RecoveryMode.isActivated else { return }
-        MLX.GPU.onApplicationResignActivate()
     }
 }
 

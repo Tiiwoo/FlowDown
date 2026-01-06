@@ -42,9 +42,25 @@ extension ConversationSession {
         for try await resp in stream {
             switch resp {
             case let .reasoning(value):
-                message.update(\.reasoningContent, to: message.reasoningContent + value)
+                let oldCount = message.reasoningContent.count
+                let newValue = message.reasoningContent + value
+                message.update(\.reasoningContent, to: newValue)
+                let delta = newValue.count - oldCount
+                if delta > 0 {
+                    await MainActor.run {
+                        ConversationSessionManager.shared.countIncomingTokens(delta)
+                    }
+                }
             case let .text(value):
-                message.update(\.document, to: message.document + value)
+                let oldCount = message.document.count
+                let newValue = message.document + value
+                message.update(\.document, to: newValue)
+                let delta = newValue.count - oldCount
+                if delta > 0 {
+                    await MainActor.run {
+                        ConversationSessionManager.shared.countIncomingTokens(delta)
+                    }
+                }
             case let .tool(call):
                 pendingToolCalls.append(call)
             case let .image(imageContent):
