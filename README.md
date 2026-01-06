@@ -15,7 +15,7 @@ FlowDown is a native AI chat client for Apple platforms, designed for speed, pri
 
 **About Pricing Update**
 
-FlowDown is scheduled to become free next year. With growing community support and feature maturity, maintenance costs have decreased, allowing us to operate more efficiently. Before this transition, prices will be reduced in phases. All core chat features will remain free, with subscription fees applying only to future personalization options.
+FlowDown is scheduled to become free this year. With growing community support and feature maturity, maintenance costs have decreased, allowing us to operate more efficiently. Before this transition, prices will be reduced in phases. All core chat features will remain free, with subscription fees applying only to future personalization options.
 
 **Keep In Touch**
 
