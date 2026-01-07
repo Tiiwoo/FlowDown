@@ -8,10 +8,12 @@ export const metadata: Metadata = {
     template: "%s | FlowDown Docs",
     default: "FlowDown Documentation",
   },
-  description: "FlowDown documentation - Learn how to use FlowDown, a privacy-first AI workspace for iOS and macOS.",
+  description:
+    "FlowDown documentation - Learn how to use FlowDown, a privacy-first AI workspace for iOS and macOS.",
   openGraph: {
     title: "FlowDown Documentation",
-    description: "FlowDown documentation - Learn how to use FlowDown, a privacy-first AI workspace for iOS and macOS.",
+    description:
+      "FlowDown documentation - Learn how to use FlowDown, a privacy-first AI workspace for iOS and macOS.",
     type: "website",
   },
 };

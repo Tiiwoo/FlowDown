@@ -76,14 +76,20 @@ body {
 
 /* Gradient button */
 .btn-primary {
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%), 
-              linear-gradient(90deg, #242424 0%, #242424 100%);
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.8) 100%),
+    linear-gradient(90deg, #242424 0%, #242424 100%);
 }
 
 /* Feature card gradient */
 .feature-card-bg {
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.2) 100%), 
-              linear-gradient(90deg, #ebebeb 0%, #ebebeb 100%);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.2) 100%
+    ),
+    linear-gradient(90deg, #ebebeb 0%, #ebebeb 100%);
 }
 
 /* Star rating */

@@ -109,7 +109,10 @@ export default function TeamSection() {
       </StaggerContainer>
 
       {/* Team cards row 2 */}
-      <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6" delay={0.2}>
+      <StaggerContainer
+        className="grid grid-cols-1 md:grid-cols-3 gap-6"
+        delay={0.2}
+      >
         <StaggerItem>
           <TeamCard
             quote="Build our beautiful websites."
@@ -144,4 +147,3 @@ export default function TeamSection() {
     </section>
   );
 }
-

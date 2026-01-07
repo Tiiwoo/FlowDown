@@ -43,7 +43,9 @@ function FAQItem({
       </button>
       <div
         className={`grid transition-all duration-300 ease-out ${
-          isOpen ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0 mt-0"
+          isOpen
+            ? "grid-rows-[1fr] opacity-100 mt-4"
+            : "grid-rows-[0fr] opacity-0 mt-0"
         }`}
       >
         <div className="overflow-hidden">
@@ -80,13 +82,26 @@ export default function FAQSection() {
               <div className="space-y-4">
                 {/* ... content ... */}
                 <p>
-                  FlowDown supports all models compatible with OpenAI API format, including:
+                  FlowDown supports all models compatible with OpenAI API
+                  format, including:
                 </p>
                 <ul className="list-disc ml-6 space-y-1">
-                  <li><strong>Built-in free models:</strong> Ready to use without configuration</li>
-                  <li><strong>Major service providers:</strong> OpenAI, Claude (via OpenRouter), Alibaba Cloud, ByteDance, etc.</li>
-                  <li><strong>Local models:</strong> Support for Ollama and MLX local deployment</li>
-                  <li><strong>Custom interfaces:</strong> Any service compatible with OpenAI API</li>
+                  <li>
+                    <strong>Built-in free models:</strong> Ready to use without
+                    configuration
+                  </li>
+                  <li>
+                    <strong>Major service providers:</strong> OpenAI, Claude
+                    (via OpenRouter), Alibaba Cloud, ByteDance, etc.
+                  </li>
+                  <li>
+                    <strong>Local models:</strong> Support for Ollama and MLX
+                    local deployment
+                  </li>
+                  <li>
+                    <strong>Custom interfaces:</strong> Any service compatible
+                    with OpenAI API
+                  </li>
                 </ul>
                 <Link
                   href="https://flowdown.ai/en-US"
@@ -95,7 +110,11 @@ export default function FAQSection() {
                 >
                   LEARN MORE →
                 </Link>
-                <img src="/q-and-a-1.png" alt="AI Models Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+                <img
+                  src="/q-and-a-1.png"
+                  alt="AI Models Support"
+                  className="w-full h-[200px] object-cover rounded-lg mt-3"
+                />
               </div>
             }
           />
@@ -112,9 +131,15 @@ export default function FAQSection() {
                   FlowDown provides native app support across all platforms:
                 </p>
                 <ul className="list-disc ml-6 space-y-1">
-                  <li><strong>macOS:</strong> Full-featured desktop application</li>
-                  <li><strong>iOS:</strong> Mobile app optimized for iPhone</li>
-                  <li><strong>iPadOS:</strong> Tablet app adapted for iPad</li>
+                  <li>
+                    <strong>macOS:</strong> Full-featured desktop application
+                  </li>
+                  <li>
+                    <strong>iOS:</strong> Mobile app optimized for iPhone
+                  </li>
+                  <li>
+                    <strong>iPadOS:</strong> Tablet app adapted for iPad
+                  </li>
                 </ul>
                 <p>
                   All versions are native applications, not web-based, ensuring
@@ -127,7 +152,11 @@ export default function FAQSection() {
                 >
                   LEARN MORE →
                 </Link>
-                <img src="/q-and-a-2.png" alt="Platform Support" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+                <img
+                  src="/q-and-a-2.png"
+                  alt="Platform Support"
+                  className="w-full h-[200px] object-cover rounded-lg mt-3"
+                />
               </div>
             }
           />
@@ -140,15 +169,20 @@ export default function FAQSection() {
             onClick={() => setOpenFAQ(openFAQ === 2 ? -1 : 2)}
             answer={
               <div className="space-y-4">
-                <p>
-                  FlowDown supports powerful Tool Call functionality:
-                </p>
+                <p>FlowDown supports powerful Tool Call functionality:</p>
                 <ul className="list-disc ml-6 space-y-1">
-                  <li><strong>Web search:</strong> Real-time access to latest information</li>
-                  <li><strong>Document processing:</strong> Analyze and process various file types</li>
+                  <li>
+                    <strong>Web search:</strong> Real-time access to latest
+                    information
+                  </li>
+                  <li>
+                    <strong>Document processing:</strong> Analyze and process
+                    various file types
+                  </li>
                 </ul>
                 <p>
-                  We recommend using models like Gemini Flash for the best tool calling experience
+                  We recommend using models like Gemini Flash for the best tool
+                  calling experience
                 </p>
                 <Link
                   href="https://flowdown.ai/en-US"
@@ -157,7 +191,11 @@ export default function FAQSection() {
                 >
                   LEARN MORE →
                 </Link>
-                <img src="/q-and-a-3.png" alt="Tool Calling Features" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+                <img
+                  src="/q-and-a-3.png"
+                  alt="Tool Calling Features"
+                  className="w-full h-[200px] object-cover rounded-lg mt-3"
+                />
               </div>
             }
           />
@@ -171,10 +209,22 @@ export default function FAQSection() {
             answer={
               <div className="space-y-4">
                 <ul className="list-disc ml-6 space-y-1">
-                  <li><strong>Local storage:</strong> All conversation data is stored on your device</li>
-                  <li><strong>No data collection:</strong> FlowDown does not collect or store your conversation content</li>
-                  <li><strong>Direct connection:</strong> Communicates directly with AI service providers without intermediaries</li>
-                  <li><strong>Open source transparency:</strong> Code is open source to ensure transparency</li>
+                  <li>
+                    <strong>Local storage:</strong> All conversation data is
+                    stored on your device
+                  </li>
+                  <li>
+                    <strong>No data collection:</strong> FlowDown does not
+                    collect or store your conversation content
+                  </li>
+                  <li>
+                    <strong>Direct connection:</strong> Communicates directly
+                    with AI service providers without intermediaries
+                  </li>
+                  <li>
+                    <strong>Open source transparency:</strong> Code is open
+                    source to ensure transparency
+                  </li>
                 </ul>
                 <Link
                   href="https://flowdown.ai/en-US"
@@ -183,7 +233,11 @@ export default function FAQSection() {
                 >
                   LEARN MORE →
                 </Link>
-                <img src="/q-and-a-4.png" alt="Data Security" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+                <img
+                  src="/q-and-a-4.png"
+                  alt="Data Security"
+                  className="w-full h-[200px] object-cover rounded-lg mt-3"
+                />
               </div>
             }
           />
@@ -197,10 +251,22 @@ export default function FAQSection() {
             answer={
               <div className="space-y-4">
                 <ul className="list-disc ml-6 space-y-1">
-                  <li><strong>Zero configuration:</strong> Built-in free models, ready to use after download</li>
-                  <li><strong>Custom configuration:</strong> Support for adding your own API keys</li>
-                  <li><strong>Import/Export:</strong> Support for importing and exporting model configurations</li>
-                  <li><strong>Technical support:</strong> Provides detailed configuration guides and community support</li>
+                  <li>
+                    <strong>Zero configuration:</strong> Built-in free models,
+                    ready to use after download
+                  </li>
+                  <li>
+                    <strong>Custom configuration:</strong> Support for adding
+                    your own API keys
+                  </li>
+                  <li>
+                    <strong>Import/Export:</strong> Support for importing and
+                    exporting model configurations
+                  </li>
+                  <li>
+                    <strong>Technical support:</strong> Provides detailed
+                    configuration guides and community support
+                  </li>
                 </ul>
                 <Link
                   href="https://flowdown.ai/en-US"
@@ -209,7 +275,11 @@ export default function FAQSection() {
                 >
                   LEARN MORE →
                 </Link>
-                <img src="/q-and-a-5.png" alt="Model Configuration" className="w-full h-[200px] object-cover rounded-lg mt-3" />
+                <img
+                  src="/q-and-a-5.png"
+                  alt="Model Configuration"
+                  className="w-full h-[200px] object-cover rounded-lg mt-3"
+                />
               </div>
             }
           />
@@ -218,4 +288,3 @@ export default function FAQSection() {
     </section>
   );
 }
-

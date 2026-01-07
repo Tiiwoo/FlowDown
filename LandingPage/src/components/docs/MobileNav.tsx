@@ -103,7 +103,6 @@ export function MobileNav({ items }: MobileNavProps) {
             </div>
           ))}
         </nav>
-
       </div>
     </>
   );

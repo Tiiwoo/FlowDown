@@ -17,8 +17,8 @@ export default function HeroSection() {
           {/* Subheadline */}
           <FadeIn delay={0.2}>
             <p className="text-lg text-[rgba(0,0,0,0.75)] leading-relaxed mb-6">
-              You can OWN a blazing fast and smooth Agent app. Switch between your
-              AI services or use local models on your device.
+              You can OWN a blazing fast and smooth Agent app. Switch between
+              your AI services or use local models on your device.
             </p>
           </FadeIn>
 
@@ -33,7 +33,8 @@ export default function HeroSection() {
                 Download from App Store
               </Link>
               <p className="text-xs text-[#828282]">
-                Available on iOS 17+ / macOS 14+ / Supports Apple Silicon & Intel
+                Available on iOS 17+ / macOS 14+ / Supports Apple Silicon &
+                Intel
               </p>
             </div>
           </FadeIn>

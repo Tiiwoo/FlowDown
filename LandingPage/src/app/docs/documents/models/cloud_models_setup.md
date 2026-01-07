@@ -35,6 +35,7 @@ Open the **Cloud Model** menu any time to refresh the pollinations.ai list or ad
 - **Backups**: model definitions sync with iCloud and workspace exports. Before major edits, run **Settings → Data Control → Export Workspace**.
 
 <a id="advanced-custom-enterprise-setup"></a>
+
 ## Advanced: Custom / Enterprise Setup
 
 For private deployments or bespoke gateways. Connect only trusted endpoints—misconfigurations can leak data or incur costs.
@@ -42,14 +43,14 @@ For private deployments or bespoke gateways. Connect only trusted endpoints—mi
 - **Create**: **Settings → Models → ＋ → Cloud Model → Empty Model**. Edit inline or export `.fdmodel`, tweak externally, then re-import.
 - **Key fields** (unused fields can be empty strings/collections):
 
-  | Key | Purpose |
-  | --- | --- |
-  | `endpoint` | Inference URL such as `/v1/chat/completions` or `/v1/responses`; must match `response_format`. |
-  | `response_format` | `chatCompletions` or `responses`, aligned with the endpoint. |
-  | `model_identifier` | Model name sent to the provider. |
-  | `model_list_endpoint` | List endpoint (defaults to `$INFERENCE_ENDPOINT$/../../models`) for **Select from Server**. |
-  | `token` / `headers` | Auth info; custom headers can override the default `Authorization: Bearer ...`. |
-  | `body_fields` | JSON string merged into the request body—use it for reasoning toggles, budgets, sampling keys, modalities, etc. |
-  | `capabilities` / `context` / `name` / `comment` | Declare capabilities, context window, display name, and notes to drive UI toggles and trimming. |
+  | Key                                             | Purpose                                                                                                         |
+  | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+  | `endpoint`                                      | Inference URL such as `/v1/chat/completions` or `/v1/responses`; must match `response_format`.                  |
+  | `response_format`                               | `chatCompletions` or `responses`, aligned with the endpoint.                                                    |
+  | `model_identifier`                              | Model name sent to the provider.                                                                                |
+  | `model_list_endpoint`                           | List endpoint (defaults to `$INFERENCE_ENDPOINT$/../../models`) for **Select from Server**.                     |
+  | `token` / `headers`                             | Auth info; custom headers can override the default `Authorization: Bearer ...`.                                 |
+  | `body_fields`                                   | JSON string merged into the request body—use it for reasoning toggles, budgets, sampling keys, modalities, etc. |
+  | `capabilities` / `context` / `name` / `comment` | Declare capabilities, context window, display name, and notes to drive UI toggles and trimming.                 |
 
 - **Verify & audit**: after saving, run `⋯ → Verify model`; audit calls in **Settings → Support → Logs**. Remove/disable unused configs to avoid accidental calls.

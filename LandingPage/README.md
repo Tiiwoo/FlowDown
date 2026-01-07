@@ -31,12 +31,12 @@ Open [http://localhost:3000](http://localhost:3000) to view the site.
 
 ### Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server with Turbopack |
-| `pnpm build` | Build for production |
-| `pnpm start` | Start production server |
-| `pnpm lint` | Run ESLint |
+| Command      | Description                             |
+| ------------ | --------------------------------------- |
+| `pnpm dev`   | Start development server with Turbopack |
+| `pnpm build` | Build for production                    |
+| `pnpm start` | Start production server                 |
+| `pnpm lint`  | Run ESLint                              |
 
 ## Project Structure
 
@@ -72,4 +72,3 @@ This project is configured for deployment on [Vercel](https://vercel.com/):
 ## License
 
 Part of the FlowDown project. See the root LICENSE file for details.
-

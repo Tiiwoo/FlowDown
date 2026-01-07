@@ -87,13 +87,11 @@ Starting with 3.10, minor versions now use semantic versioning instead of build 
 ### Fixes & Improvements
 
 - **Editor and Rendering**
-
   - Fixed multiline equation rendering.
   - Fixed pointer device text selection on iPad.
   - Fixed a bug where streaming tasks were not cancelled properly after an error.
 
 - **MCP Server**
-
   - Fixed a critical bug that blocked MCP server connections during edits.
   - Fixed an MCP services bug that dropped required fields while connecting.
 
@@ -106,12 +104,10 @@ Starting with 3.10, minor versions now use semantic versioning instead of build 
 ### Fixes and Improvements
 
 - **MCP Server Connection**
-
   - Fixed a critical issue that could prevent connection when editing MCP servers.
   - Improved MCP connection management.
 
 - **Task Management & Stability**
-
   - Fixed an issue where streaming responses were not cancelled properly after server errors.
   - Resolved several threading issues to improve stability.
 
@@ -124,12 +120,10 @@ Starting with 3.10, minor versions now use semantic versioning instead of build 
 ### New Features
 
 - **Added MCP Server Support**
-
   - Add, manage, and edit MCP servers.
   - Introduced `.fdmcp` files with drag-and-drop and file picker support.
 
 - **Editor and UI Enhancements**
-
   - The editor now auto-focuses after creating a new conversation.
   - MarkdownView supports scrolling while selecting text.
   - ToolHintView layout and response speed optimized.

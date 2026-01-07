@@ -43,12 +43,22 @@ export default function StaggerContainer({
   );
 }
 
-export const StaggerItem = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
+export const StaggerItem = ({
+  children,
+  className = "",
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) => {
   return (
     <motion.div
       variants={{
         hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.5, ease: "easeOut" },
+        },
       }}
       className={className}
     >
@@ -56,4 +66,3 @@ export const StaggerItem = ({ children, className = "" }: { children: React.Reac
     </motion.div>
   );
 };
-

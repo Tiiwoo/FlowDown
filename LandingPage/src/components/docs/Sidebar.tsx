@@ -44,7 +44,6 @@ export function Sidebar({ items }: SidebarProps) {
           </div>
         ))}
       </nav>
-
     </aside>
   );
 }

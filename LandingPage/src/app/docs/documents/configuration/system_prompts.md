@@ -139,11 +139,11 @@ Template variables in the system prompt are dynamically replaced at runtime with
 
 The following table lists the template variables used in the system prompt and their possible replacement values:
 
-| Template Variable        | Description            | Example Value                                                            |
-| ------------------------ | ---------------------- | ------------------------------------------------------------------------ |
+| Template Variable        | Description            | Example Value                                                  |
+| ------------------------ | ---------------------- | -------------------------------------------------------------- |
 | Template.applicationName | Application Name       | "FlowDown". If unavailable, it falls back to "unknown AI app". |
-| Template.currentDateTime | Current Date and Time  | "November 16, 2023 Thursday 4:30:45 PM China Standard Time"              |
-| Template.systemLanguage  | System Language Locale | "zh_CN", "en_US", "ja_JP"                                                |
-| Template.appLanguage     | App Interface Locale   | "zh-Hans", "en", "ja"                                                    |
+| Template.currentDateTime | Current Date and Time  | "November 16, 2023 Thursday 4:30:45 PM China Standard Time"    |
+| Template.systemLanguage  | System Language Locale | "zh_CN", "en_US", "ja_JP"                                      |
+| Template.appLanguage     | App Interface Locale   | "zh-Hans", "en", "ja"                                          |
 
 These variables are dynamically replaced before the system prompt is sent to the model to provide accurate contextual information.

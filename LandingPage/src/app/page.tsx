@@ -18,7 +18,6 @@ export default function LandingPage() {
       <TestimonialsSection />
       <TeamSection />
       <Footer />
-
     </div>
   );
 }

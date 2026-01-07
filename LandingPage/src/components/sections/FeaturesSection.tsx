@@ -44,19 +44,23 @@ function RotatingText() {
 }
 
 // Glass icon component for feature cards
-function GlassIcon({ iconSrc, accentColor }: { iconSrc: string, accentColor?: string }) {
+function GlassIcon({
+  iconSrc,
+  accentColor,
+}: {
+  iconSrc: string;
+  accentColor?: string;
+}) {
   return (
     <div className="relative group-hover:scale-110 transition-transform duration-500 ease-out">
       {/* Shadow ellipse - default gray */}
-      <div 
-        className="absolute w-[40px] h-[42px] left-[30px] top-[50px] bg-[#e0e0e0] rounded-full blur-sm transition-all duration-500 ease-out group-hover:opacity-0" 
-      />
+      <div className="absolute w-[40px] h-[42px] left-[30px] top-[50px] bg-[#e0e0e0] rounded-full blur-sm transition-all duration-500 ease-out group-hover:opacity-0" />
       {/* Shadow ellipse - colored hover state */}
-      <div 
+      <div
         className="absolute w-[60px] h-[60px] left-[20px] top-[40px] rounded-full blur-xl opacity-0 transition-all duration-500 ease-out group-hover:opacity-60"
-        style={{ backgroundColor: accentColor || '#e0e0e0' }}
+        style={{ backgroundColor: accentColor || "#e0e0e0" }}
       />
-      
+
       {/* Glass container */}
       <div className="relative w-[100px] h-[100px] rounded-full border-2 border-white glass-icon flex items-center justify-center bg-white/10 backdrop-blur-md transition-all duration-500">
         <img src={iconSrc} alt="" className="w-[80px] h-[80px]" />
@@ -80,11 +84,13 @@ function FeatureCard({
   accentColor?: string;
 }) {
   return (
-    <div 
+    <div
       className={`border border-[rgba(221,221,221,0.42)] rounded-[36px] feature-card-bg overflow-hidden h-full ${className} group transition-all duration-500 bg-white`}
-      style={{
-        '--accent-color': accentColor,
-      } as React.CSSProperties}
+      style={
+        {
+          "--accent-color": accentColor,
+        } as React.CSSProperties
+      }
     >
       <div className="p-6 flex flex-col items-center justify-between h-[340px]">
         <GlassIcon iconSrc={iconSrc} accentColor={accentColor} />
@@ -165,7 +171,8 @@ export default function FeaturesSection() {
           <div
             className="absolute inset-0 bg-cover bg-center blur-[8px]"
             style={{
-              backgroundImage: "url('/powerful-workflow/powerful-workflow-bg.png')",
+              backgroundImage:
+                "url('/powerful-workflow/powerful-workflow-bg.png')",
             }}
           />
 

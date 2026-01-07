@@ -6,14 +6,14 @@ Tool-capable models can use built-in tools and MCP extensions to enrich context 
 
 ## Built-in tools
 
-| Group | What it does |
-| --- | --- |
-| Calendar | Read availability, suggest times, create/update events. |
-| Web search/scraper | Search or fetch pages and return structured content — see [Web Search](./web_search.md). |
-| Location | Current city/coordinates or reverse geocoding (iOS/iPadOS). |
-| URL metadata | Expand titles, descriptions, and favicons. |
-| Memory | Store, recall, update, or delete long-term memories. |
-| MCP | Connect external MCP servers to extend tools — see [MCP Integration](./mcp_integration.md). |
+| Group              | What it does                                                                                |
+| ------------------ | ------------------------------------------------------------------------------------------- |
+| Calendar           | Read availability, suggest times, create/update events.                                     |
+| Web search/scraper | Search or fetch pages and return structured content — see [Web Search](./web_search.md).    |
+| Location           | Current city/coordinates or reverse geocoding (iOS/iPadOS).                                 |
+| URL metadata       | Expand titles, descriptions, and favicons.                                                  |
+| Memory             | Store, recall, update, or delete long-term memories.                                        |
+| MCP                | Connect external MCP servers to extend tools — see [MCP Integration](./mcp_integration.md). |
 
 ## How to enable
 
@@ -31,5 +31,4 @@ Tool-capable models can use built-in tools and MCP extensions to enrich context 
 - Supports text/Markdown, PDF, common images, audio (auto-transcoded to WAV); import via paperclip, drag-and-drop, or paste.
 - Media returns only when the model declares matching capabilities; very large attachments can slow sync.
 
-For scenarios: calendar flow in [Calendar Workflow](../guides/calendar_workflow.md), attachments in [Attachments](./attachments.md), memory in [Memory Management](../settings/memory_management.md), and shortcuts in [Apple Shortcuts](../guides/apple_shortcuts.md).***
-
+For scenarios: calendar flow in [Calendar Workflow](../guides/calendar_workflow.md), attachments in [Attachments](./attachments.md), memory in [Memory Management](../settings/memory_management.md), and shortcuts in [Apple Shortcuts](../guides/apple_shortcuts.md).\*\*\*

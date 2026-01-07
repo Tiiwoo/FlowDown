@@ -40,4 +40,3 @@ For providers that support chain-of-thought keys in the request body:
 
 - For endpoint, header/body layout, see [Cloud Models Setup](./cloud_models_setup.md#advanced-custom-enterprise-setup).
 - For conversation compression or prompt hygiene, see [System Prompts](../configuration/system_prompts.md) and [Memory Management](../settings/memory_management.md).
-

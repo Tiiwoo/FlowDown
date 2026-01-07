@@ -33,7 +33,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </h3>
     ),
     h4: ({ children, ...props }) => (
-      <h4 className="text-lg font-medium text-[#242424] mt-6 mb-2 [&_a]:no-underline" {...props}>
+      <h4
+        className="text-lg font-medium text-[#242424] mt-6 mb-2 [&_a]:no-underline"
+        {...props}
+      >
         {children}
       </h4>
     ),
@@ -106,8 +109,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </pre>
     ),
     code: ({ children, ...props }) => {
-      const isInline =
-        typeof children === "string" && !children.includes("\n");
+      const isInline = typeof children === "string" && !children.includes("\n");
       if (isInline) {
         return (
           <code
