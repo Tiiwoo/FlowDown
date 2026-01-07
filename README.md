@@ -48,6 +48,7 @@ Join our community on [Discord](https://discord.gg/UHKMRyJcgc) for feedback and 
   - **iCloud Sync**: Seamlessly syncs your conversations, settings, and custom models across all your Apple devices.
   - **Default Translation App**: Set FlowDown as your default translation app for seamless translation workflows.
   - **Shortcuts**: Deep integration with system Shortcuts for automating your workflows.
+  - **Live Activity**: With sound effects enabled (customizable), you can use Live Activity to stream in the background.
   - **Model Exchange Protocol**: Share and import model configurations easily using the `.fdmodel` file format.
 
 > **Note**: FlowDown is a Zero Data Retention (ZDR) app. While the app collects no data, our website uses anonymous analytics and Cloudflare security protection to maintain service quality.
