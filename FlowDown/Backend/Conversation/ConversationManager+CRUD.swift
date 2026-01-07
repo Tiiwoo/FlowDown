@@ -59,7 +59,7 @@ extension ConversationManager {
 
                     Free models included. You can also _configure cloud models_ or _run local models_ on device.
 
-                    💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).
+                    💡 For more information, check out [our wiki](https://flowdown.ai/docs/).
 
                     ---
                     **What to do next?**

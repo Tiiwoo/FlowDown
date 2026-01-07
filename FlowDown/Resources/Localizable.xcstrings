@@ -139,48 +139,48 @@
         }
       }
     },
-    "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**" : {
+    "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://flowdown.ai/docs/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**" : {
       "localizations" : {
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Willkommen bei FlowDown🐦**, einer blitzschnellen und flüssigen Client-App für LLMs, die deine Privatsphäre respektiert.\n\nKostenlose Modelle inklusive. Du kannst außerdem _Cloud-Modelle konfigurieren_ oder _lokale Modelle_ auf dem Gerät ausführen.\n\n💡 Weitere Infos findest du in [unserem Wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**Was als Nächstes?**\n\n1. Wähle oder _füge ein neues Modell hinzu_ und **erstelle eine neue Unterhaltung**.\n2. Später kannst du in den **Einstellungen** dein Erlebnis anpassen.\n3. Bei Fragen: [kontaktiere uns](https://discord.gg/UHKMRyJcgc).\n\n✨ **Viel Spaß mit FlowDown!**"
+            "value" : "**Willkommen bei FlowDown🐦**, einer blitzschnellen und flüssigen Client-App für LLMs, die deine Privatsphäre respektiert.\n\nKostenlose Modelle inklusive. Du kannst außerdem _Cloud-Modelle konfigurieren_ oder _lokale Modelle_ auf dem Gerät ausführen.\n\n💡 Weitere Infos findest du in [unserem Wiki](https://flowdown.ai/docs/).\n\n---\n**Was als Nächstes?**\n\n1. Wähle oder _füge ein neues Modell hinzu_ und **erstelle eine neue Unterhaltung**.\n2. Später kannst du in den **Einstellungen** dein Erlebnis anpassen.\n3. Bei Fragen: [kontaktiere uns](https://discord.gg/UHKMRyJcgc).\n\n✨ **Viel Spaß mit FlowDown!**"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**"
+            "value" : "**Welcome to FlowDown🐦**, a blazing fast and smooth client app for LLMs with respect of your privacy.\n\nFree models included. You can also _configure cloud models_ or _run local models_ on device.\n\n💡 For more information, check out [our wiki](https://flowdown.ai/docs/).\n\n---\n**What to do next?**\n\n1. Select or _add a new model_, and **create a new conversation**.\n2. Later, you can go to **Settings** to customize your experience.\n3. For any issues, feel free to [contact us](https://discord.gg/UHKMRyJcgc).\n\n✨ **Enjoy your FlowDown experience!**"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Bienvenido a FlowDown🐦**, una app de cliente para LLMs rápida y fluida que respeta tu privacidad.\n\nModelos gratuitos incluidos. También puedes _configurar modelos en la nube_ o _ejecutar modelos locales_ en el dispositivo.\n\n💡 Para más información, consulta [nuestra wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**¿Qué hacer a continuación?**\n\n1. Selecciona o _añade un modelo nuevo_ y **crea una conversación nueva**.\n2. Luego puedes ir a **Ajustes** para personalizar tu experiencia.\n3. Si tienes alguna duda, [contáctanos](https://discord.gg/UHKMRyJcgc).\n\n✨ **¡Disfruta la experiencia FlowDown!**"
+            "value" : "**Bienvenido a FlowDown🐦**, una app de cliente para LLMs rápida y fluida que respeta tu privacidad.\n\nModelos gratuitos incluidos. También puedes _configurar modelos en la nube_ o _ejecutar modelos locales_ en el dispositivo.\n\n💡 Para más información, consulta [nuestra wiki](https://flowdown.ai/docs/).\n\n---\n**¿Qué hacer a continuación?**\n\n1. Selecciona o _añade un modelo nuevo_ y **crea una conversación nueva**.\n2. Luego puedes ir a **Ajustes** para personalizar tu experiencia.\n3. Si tienes alguna duda, [contáctanos](https://discord.gg/UHKMRyJcgc).\n\n✨ **¡Disfruta la experiencia FlowDown!**"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**Bienvenue sur FlowDown🐦**, une application cliente ultra-rapide et fluide pour les LLMs, respectueuse de votre vie privée.\n\nDes modèles gratuits sont inclus. Vous pouvez aussi _configurer des modèles cloud_ ou _exécuter des modèles locaux_ sur l’appareil.\n\n💡 Pour en savoir plus, consultez [notre wiki](https://apps.qaq.wiki/docs/flowdown/).\n\n---\n**Que faire ensuite ?**\n\n1. Sélectionnez ou _ajoutez un nouveau modèle_, puis **créez une nouvelle conversation**.\n2. Plus tard, vous pourrez aller dans **Réglages** pour personnaliser votre expérience.\n3. Pour tout problème, [contactez-nous](https://discord.gg/UHKMRyJcgc).\n\n✨ **Profitez de votre expérience FlowDown !**"
+            "value" : "**Bienvenue sur FlowDown🐦**, une application cliente ultra-rapide et fluide pour les LLMs, respectueuse de votre vie privée.\n\nDes modèles gratuits sont inclus. Vous pouvez aussi _configurer des modèles cloud_ ou _exécuter des modèles locaux_ sur l’appareil.\n\n💡 Pour en savoir plus, consultez [notre wiki](https://flowdown.ai/docs/).\n\n---\n**Que faire ensuite ?**\n\n1. Sélectionnez ou _ajoutez un nouveau modèle_, puis **créez une nouvelle conversation**.\n2. Plus tard, vous pourrez aller dans **Réglages** pour personnaliser votre expérience.\n3. Pour tout problème, [contactez-nous](https://discord.gg/UHKMRyJcgc).\n\n✨ **Profitez de votre expérience FlowDown !**"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**FlowDown🐦 へようこそ**。プライバシーを重視した高速で滑らかな LLM クライアントです。\n\n無料モデルを同梱しています。_クラウドモデルを設定_ することも、デバイス上で _ローカルモデルを実行_ することも可能です。\n\n💡 詳細は[ウィキ](https://apps.qaq.wiki/docs/flowdown/)をご覧ください。\n\n---\n**次にやること**\n\n1. _新しいモデルを選ぶ/追加_ して **新しい会話を作成**。\n2. あとで **設定** から体験をカスタマイズ。\n3. 問題があれば[お問い合わせ](https://discord.gg/UHKMRyJcgc)。\n\n✨ **FlowDown をお楽しみください！**"
+            "value" : "**FlowDown🐦 へようこそ**。プライバシーを重視した高速で滑らかな LLM クライアントです。\n\n無料モデルを同梱しています。_クラウドモデルを設定_ することも、デバイス上で _ローカルモデルを実行_ することも可能です。\n\n💡 詳細は[ウィキ](https://flowdown.ai/docs/)をご覧ください。\n\n---\n**次にやること**\n\n1. _新しいモデルを選ぶ/追加_ して **新しい会話を作成**。\n2. あとで **設定** から体験をカスタマイズ。\n3. 問題があれば[お問い合わせ](https://discord.gg/UHKMRyJcgc)。\n\n✨ **FlowDown をお楽しみください！**"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**FlowDown🐦에 오신 것을 환영합니다.** 빠르고 부드러운 LLM 클라이언트로 개인정보를 존중합니다.\n\n무료 모델이 포함되어 있고, _클라우드 모델을 설정_하거나 _로컬 모델을 실행_할 수 있습니다.\n\n💡 더 자세한 정보는 [위키](https://apps.qaq.wiki/docs/flowdown/)를 확인하세요.\n\n---\n**다음에 무엇을 할까요?**\n\n1. 모델을 선택하거나 _새 모델을 추가_하고 **새 대화를 만드세요.**\n2. 나중에 **설정**에서 경험을 맞춤화할 수 있습니다.\n3. 문제가 있으면 언제든지 [문의하기](https://discord.gg/UHKMRyJcgc)로 연락하세요.\n\n✨ **FlowDown을 마음껏 즐겨보세요!**"
+            "value" : "**FlowDown🐦에 오신 것을 환영합니다.** 빠르고 부드러운 LLM 클라이언트로 개인정보를 존중합니다.\n\n무료 모델이 포함되어 있고, _클라우드 모델을 설정_하거나 _로컬 모델을 실행_할 수 있습니다.\n\n💡 더 자세한 정보는 [위키](https://flowdown.ai/docs/)를 확인하세요.\n\n---\n**다음에 무엇을 할까요?**\n\n1. 모델을 선택하거나 _새 모델을 추가_하고 **새 대화를 만드세요.**\n2. 나중에 **설정**에서 경험을 맞춤화할 수 있습니다.\n3. 문제가 있으면 언제든지 [문의하기](https://discord.gg/UHKMRyJcgc)로 연락하세요.\n\n✨ **FlowDown을 마음껏 즐겨보세요!**"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "**欢迎使用 FlowDown 🐦**，一款注重隐私、极速流畅且轻量高效的 LLM 客户端。\n\n应用内置免费模型。当然，你也可以 _配置云端模型_ 或在你的设备上 _运行本地模型_，实现完全隐私。\n\n💡 更多信息，请查阅[用户手册](https://apps.qaq.wiki/docs/flowdown/)。\n\n---\n**接下来可以做些什么？**\n\n1.  _选择或添加新模型_，然后 **开始一个新对话**。\n2.  之后，你可以前往 **设置** 来自定义你的使用体验。\n3.  若有任何疑问反馈或建议，欢迎[联系我们](https://discord.gg/UHKMRyJcgc)。\n\n✨ **祝你使用愉快！**"
+            "value" : "**欢迎使用 FlowDown 🐦**，一款注重隐私、极速流畅且轻量高效的 LLM 客户端。\n\n应用内置免费模型。当然，你也可以 _配置云端模型_ 或在你的设备上 _运行本地模型_，实现完全隐私。\n\n💡 更多信息，请查阅[用户手册](https://flowdown.ai/docs/)。\n\n---\n**接下来可以做些什么？**\n\n1.  _选择或添加新模型_，然后 **开始一个新对话**。\n2.  之后，你可以前往 **设置** 来自定义你的使用体验。\n3.  若有任何疑问反馈或建议，欢迎[联系我们](https://discord.gg/UHKMRyJcgc)。\n\n✨ **祝你使用愉快！**"
           }
         }
       }

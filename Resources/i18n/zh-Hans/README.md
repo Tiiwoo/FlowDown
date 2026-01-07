@@ -21,7 +21,7 @@ FlowDown 计划于今年转为免费应用。随着社区支持的增加和功�
 
 加入 [TestFlight](https://testflight.apple.com/join/StpMeybv) 公开测试体验新功能。
 
-FlowDown 内置了免费模型供您快速上手。如需更多控制权，可连接自托管服务或 OpenAI 兼容提供商。详情请参阅[在线文档](https://apps.qaq.wiki/docs/flowdown/zh/)。
+FlowDown 内置了免费模型供您快速上手。如需更多控制权，可连接自托管服务或 OpenAI 兼容提供商。详情请参阅[在线文档](https://flowdown.ai/docs/)。
 
 欢迎加入 [Discord](https://discord.gg/UHKMRyJcgc) 社区交流反馈。
 

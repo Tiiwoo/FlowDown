@@ -21,7 +21,7 @@ FlowDown is scheduled to become free this year. With growing community support a
 
 Join the public beta on [TestFlight](https://testflight.apple.com/join/StpMeybv) to try new features.
 
-To get started, FlowDown includes complimentary access to select models. For more control, you can connect to self-hosted services or OpenAI-compatible providers. Learn more in our [documentation](https://apps.qaq.wiki/docs/flowdown/).
+To get started, FlowDown includes complimentary access to select models. For more control, you can connect to self-hosted services or OpenAI-compatible providers. Learn more in our [documentation](https://flowdown.ai/docs/).
 
 Join our community on [Discord](https://discord.gg/UHKMRyJcgc) for feedback and support.
 

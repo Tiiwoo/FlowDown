@@ -61,7 +61,7 @@ extension SettingController.SettingContent.SupportController {
                 explain: "We provided a comprehensive documentation to help you understand how to use this app effectively.",
                 ephemeralAnnotation: .openLink(
                     title: "Open...",
-                    url: URL(string: "https://apps.qaq.wiki/docs/flowdown/")!,
+                    url: URL(string: "https://flowdown.ai/docs/")!,
                 ),
             ),
         ],
