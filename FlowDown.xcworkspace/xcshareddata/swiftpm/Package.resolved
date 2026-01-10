@@ -338,8 +338,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ktiays/With",
       "state" : {
-        "revision" : "d8788e5c3733f5b8f12582487f508e6f9617e7ab",
-        "version" : "2.1.0"
+        "revision" : "a45e2f39e82322eb663a256941c06edd520a82e1",
+        "version" : "2.1.1"
       }
     },
     {
