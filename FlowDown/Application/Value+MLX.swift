@@ -63,6 +63,7 @@ extension MLX.GPU {
     }
 
     static func onApplicationResignActivate() {
+        guard isSupported else { return }
         let value: String = ConfigurableKit.value(forKey: storageKey) ?? ""
         let limit = CacheSizeLimit(rawValue: value) ?? .notAllowed
         switch limit {
@@ -80,6 +81,7 @@ extension MLX.GPU {
     }
 
     static func onApplicationBecomeActivate() {
+        guard isSupported else { return }
         let value: String = ConfigurableKit.value(forKey: storageKey) ?? ""
         let limit = CacheSizeLimit(rawValue: value) ?? .notAllowed
         switch limit {
