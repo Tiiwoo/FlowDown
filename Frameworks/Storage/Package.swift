@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Lakr233/MarkdownView", from: "3.4.2"),
-        .package(url: "https://github.com/0x1306a94/wcdb-spm-prebuilt", from: "2.1.14"),
+        .package(url: "https://github.com/Lakr233/wcdb-spm-prebuilt", from: "2.1.15"),
         .package(url: "https://github.com/apple/swift-collections", from: "1.2.0"),
         .package(url: "https://github.com/weichsel/ZIPFoundation", from: "0.9.19"),
         .package(path: "../Logger"),
