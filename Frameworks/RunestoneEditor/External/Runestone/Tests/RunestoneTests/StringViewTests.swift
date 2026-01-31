@@ -41,67 +41,67 @@ final class StringViewTests: XCTestCase {
         XCTAssertNil(stringView.character(at: 0))
     }
 
-    func testGetBytesOfFirstCharacter() {
+    func testGetBytesOfFirstCharacter() throws {
         let str = "Hello world"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: 2)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "H")
     }
 
-    func testGetBytesOfTwoFirstCharacters() {
+    func testGetBytesOfTwoFirstCharacters() throws {
         let str = "Hello world"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: 4)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "He")
     }
 
-    func testGetBytesOfSecondCharacter() {
+    func testGetBytesOfSecondCharacter() throws {
         let str = "Hello world"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 2, length: 2)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "e")
     }
 
-    func testGetBytesOfEntireString() {
+    func testGetBytesOfEntireString() throws {
         let str = "Hello world"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: str.byteCount)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "Hello world")
     }
 
-    func testGetBytesOfEmoji() {
+    func testGetBytesOfEmoji() throws {
         let str = "🥳"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: 4)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "🥳")
     }
 
-    func testGetBytesOfTwoEmojis() {
+    func testGetBytesOfTwoEmojis() throws {
         let str = "🥳🥳"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: 8)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "🥳🥳")
     }
 
-    func testGetBytesOfSecondEmoji() {
+    func testGetBytesOfSecondEmoji() throws {
         let str = "🥳🥳"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 4, length: 4)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "🥳")
     }
 
-    func testGetBytesOfComposedEmoji() {
+    func testGetBytesOfComposedEmoji() throws {
         let str = "👨‍👩‍👧‍👦"
         let stringView = StringView(string: str)
         let byteRange = ByteRange(location: 0, length: 22)
-        let bytes = stringView.bytes(in: byteRange)!
+        let bytes = try XCTUnwrap(stringView.bytes(in: byteRange))
         XCTAssertEqual(string(from: bytes), "👨‍👩‍👧‍👦")
     }
 }

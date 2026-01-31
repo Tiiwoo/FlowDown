@@ -129,7 +129,7 @@ extension ConversationSession {
         return ans
     }
 
-    // OCR
+    /// OCR
     private func executeOpticalCharacterRecognition(on image: UIImage) async throws -> String? {
         try await withCheckedThrowingContinuation { cont in
             let request = VNRecognizeTextRequest { request, error in

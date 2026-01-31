@@ -74,15 +74,12 @@ class EvaluationHistoryController: UIViewController {
         return item
     }()
 
-    private lazy var importBarButtonItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(
-            title: String(localized: "Import"),
-            style: .plain,
-            target: self,
-            action: #selector(importTapped),
-        )
-        return item
-    }()
+    private lazy var importBarButtonItem: UIBarButtonItem = .init(
+        title: String(localized: "Import"),
+        style: .plain,
+        target: self,
+        action: #selector(importTapped),
+    )
 
     @objc private func importTapped() {
         presentSessionImportPicker(from: self)

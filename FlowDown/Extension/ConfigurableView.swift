@@ -9,7 +9,9 @@ import ConfigurableKit
 import UIKit
 
 class ConfigurableInfoView: ConfigurableView {
-    var valueLabel: EasyHitButton { contentView as! EasyHitButton }
+    var valueLabel: EasyHitButton {
+        contentView as! EasyHitButton
+    }
 
     private var onTapBlock: ((ConfigurableInfoView) -> Void) = { _ in }
 
@@ -66,7 +68,10 @@ class ConfigurableInfoView: ConfigurableView {
 }
 
 class ConfigurableToggleActionView: ConfigurableView {
-    var switchView: UISwitch { contentView as! UISwitch }
+    var switchView: UISwitch {
+        contentView as! UISwitch
+    }
+
     var boolValue: Bool = false {
         didSet {
             guard switchView.isOn != boolValue else { return }

@@ -83,8 +83,8 @@ public extension TreeSitterLanguage {
 }
 
 private extension TreeSitterInternalLanguage {
-    // The initializer is kept in an extension in this file to avoid accidentally using it throughout the codebase
-    // instead of using the `internalLanguage` property on TreeSitterLanguage.
+    /// The initializer is kept in an extension in this file to avoid accidentally using it throughout the codebase
+    /// instead of using the `internalLanguage` property on TreeSitterLanguage.
     convenience init(_ language: TreeSitterLanguage) {
         let highlightsQuery = Self.makeInternalQuery(from: language.highlightsQuery, with: language.languagePointer)
         let injectionsQuery = Self.makeInternalQuery(from: language.injectionsQuery, with: language.languagePointer)

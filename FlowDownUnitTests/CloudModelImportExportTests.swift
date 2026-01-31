@@ -166,7 +166,7 @@ struct ImportExportRoundTripSuite {
         #expect(ChatTemplateManager.shared.templates.isEmpty)
 
         var original = ChatTemplate()
-        original.id = UUID(uuidString: "00000000-0000-0000-0000-000000000001")!
+        original.id = try #require(UUID(uuidString: "00000000-0000-0000-0000-000000000001"))
         original.name = "Test Template"
         original.prompt = "You are a helpful assistant."
         original.inheritApplicationPrompt = false

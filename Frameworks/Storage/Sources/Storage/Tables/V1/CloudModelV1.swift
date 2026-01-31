@@ -22,8 +22,8 @@ package final class CloudModelV1: Identifiable, Codable, Equatable, Hashable, Ta
     package var context: ModelContextLength = .short_8k
     package var temperature_preference: ModelTemperaturePreference = .inherit
 
-    // can be used when loading model from our server
-    // present to user on the top of the editor page
+    /// can be used when loading model from our server
+    /// present to user on the top of the editor page
     package var comment: String = ""
 
     package enum CodingKeys: String, CodingTableKey {

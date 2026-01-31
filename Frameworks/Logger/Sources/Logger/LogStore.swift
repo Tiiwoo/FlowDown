@@ -37,7 +37,9 @@ public final class LogStore: @unchecked Sendable {
         logDirectory = dir
     }
 
-    var logFileURL: URL { logDirectory.appendingPathComponent(logFileName) }
+    var logFileURL: URL {
+        logDirectory.appendingPathComponent(logFileName)
+    }
 
     public func append(level: LogLevel, category: String, message: String) {
         let line = formattedLine(level: level, category: category, message: message)

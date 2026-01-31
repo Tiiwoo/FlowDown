@@ -71,8 +71,7 @@ class MTWebScraperTool: ModelTool, @unchecked Sendable {
             )
         }
 
-        let result = try await scrapeWithUserInteraction(url: url)
-        return result
+        return try await scrapeWithUserInteraction(url: url)
     }
 
     @MainActor

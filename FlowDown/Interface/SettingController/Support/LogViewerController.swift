@@ -311,7 +311,9 @@ final class LogViewerController: UIViewController, UITableViewDataSource, UITabl
 
     // MARK: - UITableViewDataSource & Delegate
 
-    func numberOfSections(in _: UITableView) -> Int { 1 }
+    func numberOfSections(in _: UITableView) -> Int {
+        1
+    }
 
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
         displayLines.count

@@ -26,10 +26,14 @@ class HubModelDownloadController: UIViewController {
     let dataSource: DataSource
 
     @BareCodableStorage(key: "ModelDownloadController.anchorToVerifiedAuthorMLX", defaultValue: true)
-    var anchorToVerifiedAuthorMLX { didSet { updateDataSource() } }
+    var anchorToVerifiedAuthorMLX {
+        didSet { updateDataSource() }
+    }
 
     @BareCodableStorage(key: "ModelDownloadController.anchorToTextGenerationModels", defaultValue: true)
-    var anchorToTextGenerationModels { didSet { updateDataSource() } }
+    var anchorToTextGenerationModels {
+        didSet { updateDataSource() }
+    }
 
     init() {
         tableView = .init(frame: .zero, style: .plain)

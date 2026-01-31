@@ -3,9 +3,9 @@
 import XCTest
 
 final class ParsedReplacementStringTests: XCTestCase {
-    func testSinglePlaceholder() {
+    func testSinglePlaceholder() throws {
         let string = "hello world"
-        let regex = try! NSRegularExpression(pattern: "hello (world)", options: [])
+        let regex = try NSRegularExpression(pattern: "hello (world)", options: [])
         let range = NSRange(location: 0, length: string.utf16.count)
         let textCheckingResults = regex.matches(in: string, options: [], range: range)
         let textCheckingResult = textCheckingResults[0]
@@ -14,9 +14,9 @@ final class ParsedReplacementStringTests: XCTestCase {
         XCTAssertEqual(expandedString, "howdy world and friends")
     }
 
-    func testPlacehodlerAtIndex0() {
+    func testPlacehodlerAtIndex0() throws {
         let string = "hello world"
-        let regex = try! NSRegularExpression(pattern: "hello world", options: [])
+        let regex = try NSRegularExpression(pattern: "hello world", options: [])
         let range = NSRange(location: 0, length: string.utf16.count)
         let textCheckingResults = regex.matches(in: string, options: [], range: range)
         let textCheckingResult = textCheckingResults[0]
@@ -25,9 +25,9 @@ final class ParsedReplacementStringTests: XCTestCase {
         XCTAssertEqual(expandedString, "hello hello world world")
     }
 
-    func testPlaceholderThatIsOutOfBounds() {
+    func testPlaceholderThatIsOutOfBounds() throws {
         let string = "hello world"
-        let regex = try! NSRegularExpression(pattern: "hello (world)", options: [])
+        let regex = try NSRegularExpression(pattern: "hello (world)", options: [])
         let range = NSRange(location: 0, length: string.utf16.count)
         let textCheckingResults = regex.matches(in: string, options: [], range: range)
         let textCheckingResult = textCheckingResults[0]

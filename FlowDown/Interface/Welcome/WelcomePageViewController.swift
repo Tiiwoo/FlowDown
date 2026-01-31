@@ -275,12 +275,11 @@ extension WelcomePageViewController {
         let preferredHeight = controller.preferredContentSize.height
 
         #if targetEnvironment(macCatalyst)
-            let holder = AlertBaseController(
+            return AlertBaseController(
                 rootViewController: navigationController,
                 preferredWidth: preferredWidth,
                 preferredHeight: preferredHeight,
             )
-            return holder
         #else
             navigationController.modalTransitionStyle = .coverVertical
             navigationController.modalPresentationStyle = .formSheet

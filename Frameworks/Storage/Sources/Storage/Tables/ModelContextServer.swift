@@ -215,8 +215,7 @@ public extension ModelContextServer {
             return new
         }
 
-        let new = try decoder.decode(ModelContextServer.self, from: data)
-        return new
+        return try decoder.decode(ModelContextServer.self, from: data)
     }
 }
 

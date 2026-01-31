@@ -17,7 +17,9 @@ final class SyncScopePage: StackScrollController {
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) { fatalError() }
+    required init?(coder _: NSCoder) {
+        fatalError()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

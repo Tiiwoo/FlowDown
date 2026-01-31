@@ -29,8 +29,8 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
     public package(set) var capabilities: Set<ModelCapabilities> = []
     public package(set) var context: ModelContextLength = .short_8k
 
-    // this value is deprecated, but should be kept for legacy support
-    // this value can now be configured inside extra body field
+    /// this value is deprecated, but should be kept for legacy support
+    /// this value can now be configured inside extra body field
     package var temperature_preference: ModelTemperaturePreference = .inherit {
         didSet {
             assert(temperature_preference == .inherit)
@@ -39,11 +39,11 @@ public final class CloudModel: Identifiable, Codable, Equatable, Hashable, Table
     }
 
     public package(set) var response_format: CloudModel.ResponseFormat = .default
-    // can be used when loading model from our server
-    // present to user on the top of the editor page
+    /// can be used when loading model from our server
+    /// present to user on the top of the editor page
     public package(set) var comment: String = ""
 
-    // custom display name for the model
+    /// custom display name for the model
     public package(set) var name: String = ""
 
     public enum CodingKeys: String, CodingTableKey {

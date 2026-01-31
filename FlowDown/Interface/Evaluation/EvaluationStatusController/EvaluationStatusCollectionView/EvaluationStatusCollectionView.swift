@@ -72,7 +72,9 @@ final class EvaluationStatusCollectionView: UIView {
     private var isApplyingSnapshot = false
     private var pendingApply: PendingApply?
 
-    override var intrinsicContentSize: CGSize { .zero }
+    override var intrinsicContentSize: CGSize {
+        .zero
+    }
 
     init(session: EvaluationSession) {
         self.session = session

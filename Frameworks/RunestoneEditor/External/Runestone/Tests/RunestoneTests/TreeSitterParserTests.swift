@@ -34,7 +34,7 @@ final class TreeSitterParserTests: XCTestCase {
         oldTree?.apply(inputEdit)
         delegate.string = string
         let newTree = parser.parse(oldTree: oldTree)
-        XCTAssertEqual(newTree!.rootNode.expressionString!, oldTree!.rootNode.expressionString!)
+        XCTAssertEqual(newTree?.rootNode.expressionString, oldTree?.rootNode.expressionString)
     }
 
     func testReplaceLongTextWithSameLongText() {
@@ -72,6 +72,6 @@ final class TreeSitterParserTests: XCTestCase {
         oldTree?.apply(inputEdit)
         delegate.string = string
         let newTree = parser.parse(oldTree: oldTree)
-        XCTAssertEqual(newTree!.rootNode.expressionString!, oldTree!.rootNode.expressionString!)
+        XCTAssertEqual(newTree?.rootNode.expressionString, oldTree?.rootNode.expressionString)
     }
 }

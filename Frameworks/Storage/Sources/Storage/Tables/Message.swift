@@ -113,7 +113,7 @@ extension Message: Updatable {
 }
 
 public extension Message.Role {
-    // role of supplement kind, requires a message to live
+    /// role of supplement kind, requires a message to live
     var isSupplementKind: Bool {
         switch self {
         case .userAttachmentHint:
@@ -241,13 +241,6 @@ public extension Message {
             self.name = name
             self.state = state
             self.message = message
-        }
-
-        public static func == (lhs: ToolStatus, rhs: ToolStatus) -> Bool {
-            lhs.id == rhs.id &&
-                lhs.name == rhs.name &&
-                lhs.state == rhs.state &&
-                lhs.message == rhs.message
         }
     }
 }

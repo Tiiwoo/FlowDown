@@ -51,16 +51,28 @@ class ModelManager: NSObject {
 
     @BareCodableStorage(key: "Model.Default.Conversation", defaultValue: "")
     // swiftformat:disable:next redundantFileprivate
-    fileprivate var defaultModelForConversation: String { didSet { checkDefaultModels() } }
+    fileprivate var defaultModelForConversation: String {
+        didSet { checkDefaultModels() }
+    }
+
     @BareCodableStorage(key: "Model.Default.Auxiliary.UseCurrentChatModel", defaultValue: true)
     // swiftformat:disable:next redundantFileprivate
-    fileprivate var defaultModelForAuxiliaryTaskWillUseCurrentChatModel: Bool { didSet { checkDefaultModels() } }
+    fileprivate var defaultModelForAuxiliaryTaskWillUseCurrentChatModel: Bool {
+        didSet { checkDefaultModels() }
+    }
+
     @BareCodableStorage(key: "Model.Default.Auxiliary", defaultValue: "")
     // swiftformat:disable:next redundantFileprivate
-    fileprivate var defaultModelForAuxiliaryTask: String { didSet { checkDefaultModels() } }
+    fileprivate var defaultModelForAuxiliaryTask: String {
+        didSet { checkDefaultModels() }
+    }
+
     @BareCodableStorage(key: "Model.Default.AuxiliaryVisual", defaultValue: "")
     // swiftformat:disable:next redundantFileprivate
-    fileprivate var defaultModelForAuxiliaryVisualTask: String { didSet { checkDefaultModels() } }
+    fileprivate var defaultModelForAuxiliaryVisualTask: String {
+        didSet { checkDefaultModels() }
+    }
+
     @BareCodableStorage(key: "Model.Default.AuxiliaryVisual.SkipIfPossible", defaultValue: true)
     // swiftformat:disable:next redundantFileprivate
     var defaultModelForAuxiliaryVisualTaskSkipIfPossible: Bool
@@ -356,7 +368,9 @@ extension ModelManager.ModelIdentifier {
     }
 
     /// Returns the stored auxiliary model identifier, ignoring the "use chat model" setting
-    static var storedAuxiliaryTaskModel: Self { ModelManager.shared.defaultModelForAuxiliaryTask }
+    static var storedAuxiliaryTaskModel: Self {
+        ModelManager.shared.defaultModelForAuxiliaryTask
+    }
 
     static var defaultModelForAuxiliaryVisualTask: Self {
         get { ModelManager.shared.defaultModelForAuxiliaryVisualTask }

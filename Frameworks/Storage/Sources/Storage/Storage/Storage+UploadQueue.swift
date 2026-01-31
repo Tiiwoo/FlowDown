@@ -52,7 +52,7 @@ struct FlowDownPayloadHeader {
 
     var compressionAlgorithm: Algorithm
 
-    // 序列化为 Data
+    /// 序列化为 Data
     func encode() -> Data {
         var data = Data(FlowDownPayloadHeader.magic)
         data.append(FlowDownPayloadHeader.version)
@@ -60,7 +60,7 @@ struct FlowDownPayloadHeader {
         return data
     }
 
-    // 从 Data 解析 header
+    /// 从 Data 解析 header
     static func decode(from data: Data) throws -> (header: FlowDownPayloadHeader, payloadOffset: Int) {
         guard data.count >= 10 else {
             throw NSError(domain: "CompressionHeader", code: -1, userInfo: [NSLocalizedDescriptionKey: "Data too short"])
@@ -438,7 +438,8 @@ package extension Storage {
             .where(
                 UploadQueue.Properties.tableName.in(tables)
                     && UploadQueue.Properties.state == UploadQueue.State.pending
-                    && UploadQueue.Properties.failCount < 100)
+                    && UploadQueue.Properties.failCount < 100,
+            )
             .group(by: UploadQueue.Properties.objectId)
             .order(by: UploadQueue.Properties.creation.order(.ascending))
 
@@ -522,12 +523,11 @@ package extension Storage {
         }
 
         func getObject<T: Syncable & SyncQueryable>(_: T.Type, objectId: String, handle: Handle? = nil) -> T? {
-            let object: T? = if let handle {
+            if let handle {
                 try? handle.getObject(fromTable: T.tableName, where: T.SyncQuery.objectId == objectId)
             } else {
                 try? db.getObject(fromTable: T.tableName, where: T.SyncQuery.objectId == objectId)
             }
-            return object
         }
 
         for object in objects {

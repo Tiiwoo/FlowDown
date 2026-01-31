@@ -89,6 +89,11 @@ nonisolated extension AppEnvironment.Container {
     }
 }
 
-// Convenience accessors to keep existing call sites small.
-nonisolated var sdb: Storage { AppEnvironment.current.storage }
-nonisolated var syncEngine: SyncEngine { AppEnvironment.current.syncEngine }
+/// Convenience accessors to keep existing call sites small.
+nonisolated var sdb: Storage {
+    AppEnvironment.current.storage
+}
+
+nonisolated var syncEngine: SyncEngine {
+    AppEnvironment.current.syncEngine
+}

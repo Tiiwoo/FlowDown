@@ -14,7 +14,7 @@ import Storage
 import UIKit
 
 extension ModelManager {
-    // - imageProcessingFailure : "height: 1 must be larger than factor: 28"
+    /// - imageProcessingFailure : "height: 1 must be larger than factor: 28"
     static let testImage: UIImage = .init(
         color: .accent,
         size: .init(width: 64, height: 64),

@@ -75,7 +75,9 @@ public final actor SyncEngine: Sendable {
     // deprecated: use isAutomaticallySyncEnabled computed property
     private let automaticallySync: Bool
 
-    private nonisolated var isAutomaticallySyncEnabled: Bool { !SyncPreferences.isManualSyncEnabled }
+    private nonisolated var isAutomaticallySyncEnabled: Bool {
+        !SyncPreferences.isManualSyncEnabled
+    }
 
     private var debounceEnqueueTask: Task<Void, Error>?
 
@@ -465,7 +467,7 @@ private extension SyncEngine {
         debounceEnqueueTask = Task { [weak self] in
             guard let self else { return }
 
-            /// 调整为3s， 减少推理时频繁更新
+            // 调整为3s， 减少推理时频繁更新
             try await Task.sleep(nanoseconds: 3_000_000_000)
 
             try Task.checkCancellation()
@@ -520,9 +522,9 @@ private extension SyncEngine {
         var pendingRecordZoneChanges: [CKSyncEngine.PendingRecordZoneChange] = []
 
         let deviceId = Storage.deviceId
-        /// CKSyncEngine 需要的是数据对应的ID。
-        /// UploadQueue 中是记录了所有的历史操作
-        /// 所以这里对于recordName 额外处理
+        // CKSyncEngine 需要的是数据对应的ID。
+        // UploadQueue 中是记录了所有的历史操作
+        // 所以这里对于recordName 额外处理
         for object in objects {
             if case .delete = object.changes {
                 pendingRecordZoneChanges.append(.deleteRecord(CKRecord.ID(recordName: object.ckRecordID, zoneID: SyncEngine.zoneID)))
@@ -632,7 +634,7 @@ private extension SyncEngine {
 
     // MARK: - SyncEngine Events
 
-    /// 注意: ⚠️ 代理回调中，不能调用 syncEngine 的 cancelOperations performingSendChanges performingFetchChanges
+    // 注意: ⚠️ 代理回调中，不能调用 syncEngine 的 cancelOperations performingSendChanges performingFetchChanges
 
     @available(iOS 17, macCatalyst 17, *)
     func handleAccountChange(
@@ -701,7 +703,7 @@ private extension SyncEngine {
         }
 
         if resetLocalData {
-            /// 收到其他设备发出的删除操作，当前设备应该同步清除本地所有数据
+            // 收到其他设备发出的删除操作，当前设备应该同步清除本地所有数据
 //            try? await deleteLocalData()
         }
     }
@@ -935,7 +937,7 @@ private extension SyncEngine {
             for savedRecord in savedRecords {
                 guard let (_, tableName) = UploadQueue.parseCKRecordID(savedRecord.recordID.recordName) else { continue }
                 guard let value = savedRecord.sentQueueId, let (localQueueId, objectId, _) = SyncEngine.parseCKRecordSentQueueId(value) else { continue }
-                /// 这里回调成功都是本地发送的结果，不存在远端其他设备的结果，所以无需判断设备ID。
+                // 这里回调成功都是本地发送的结果，不存在远端其他设备的结果，所以无需判断设备ID。
                 savedLocalQueueIds.append((localQueueId, objectId, tableName))
                 metadatas.append(SyncMetadata(record: savedRecord))
                 // 清理临时文件
@@ -1281,12 +1283,12 @@ extension SyncEngine: SyncEngineDelegate {
 
         let deviceId = Storage.deviceId
 
-        /// 对于同一批次保存记录，不能有重复的，所以这里去重处理
-        /// 只用最新的记录
-        /// ✅ Step 1: 按 ckRecordID 分组
+        // 对于同一批次保存记录，不能有重复的，所以这里去重处理
+        // 只用最新的记录
+        // ✅ Step 1: 按 ckRecordID 分组
         let groupedByRecord = Dictionary(grouping: objects, by: { $0.ckRecordID })
 
-        /// ✅ Step 2: 对每组取 id 最大的那一条作为最终对象
+        // ✅ Step 2: 对每组取 id 最大的那一条作为最终对象
         var latestObjects: [UploadQueue] = []
         var staleRecordChanges: [CKSyncEngine.PendingRecordZoneChange] = []
 
@@ -1294,7 +1296,7 @@ extension SyncEngine: SyncEngineDelegate {
             guard let latest = group.max(by: { $0.id < $1.id }) else { continue }
             latestObjects.append(latest)
 
-            /// 旧版本 UploadQueue 的变更应被移除
+            // 旧版本 UploadQueue 的变更应被移除
             let stale = group.filter { $0.id != latest.id }
             for old in stale {
                 let staleChange = CKSyncEngine.PendingRecordZoneChange.saveRecord(
@@ -1308,13 +1310,13 @@ extension SyncEngine: SyncEngineDelegate {
             }
         }
 
-        /// ✅ Step 3: 从 SyncEngine state 移除旧的 PendingChanges
+        // ✅ Step 3: 从 SyncEngine state 移除旧的 PendingChanges
         if !staleRecordChanges.isEmpty {
             Logger.syncEngine.infoFile("Removing \(staleRecordChanges.count) stale old record changes")
             syncEngine.state.remove(pendingRecordZoneChanges: staleRecordChanges)
         }
 
-        /// ✅ Step 4: 用最新对象生成 CKRecord
+        // ✅ Step 4: 用最新对象生成 CKRecord
         for object in latestObjects {
             let recordID = CKRecord.ID(recordName: object.ckRecordID, zoneID: SyncEngine.zoneID)
             if object.changes == .delete {
@@ -1339,7 +1341,7 @@ extension SyncEngine: SyncEngineDelegate {
             }
         }
 
-        /// 更新为 uploading
+        // 更新为 uploading
         try? storage.pendingUploadChangeState(by: objects.map { ($0.id, .uploading) })
 
         let realRecordIDsToDelete = realRecordIDsToDeleteSet.elements
@@ -1348,8 +1350,7 @@ extension SyncEngine: SyncEngineDelegate {
         }
 
         Logger.syncEngine.infoFile("Push batch modifications \(recordsToSave.count) deletions \(realRecordIDsToDelete.count)")
-        let batch = CKSyncEngine.RecordZoneChangeBatch(recordsToSave: recordsToSave, recordIDsToDelete: realRecordIDsToDelete, atomicByZone: true)
-        return batch
+        return CKSyncEngine.RecordZoneChangeBatch(recordsToSave: recordsToSave, recordIDsToDelete: realRecordIDsToDelete, atomicByZone: true)
     }
 
     package func nextFetchChangesOptions(
@@ -1358,7 +1359,6 @@ extension SyncEngine: SyncEngineDelegate {
         syncEngine _: any SyncEngineProtocol,
     ) async -> CKSyncEngine.FetchChangesOptions {
         Logger.syncEngine.infoFile("Next fetch by reason: \(reason)")
-        let options = CKSyncEngine.FetchChangesOptions()
-        return options
+        return CKSyncEngine.FetchChangesOptions()
     }
 }

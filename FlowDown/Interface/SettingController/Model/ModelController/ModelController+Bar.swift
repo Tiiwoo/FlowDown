@@ -162,8 +162,8 @@ extension SettingController.SettingContent.ModelController {
         ]
     }
 
-    // Shared menu elements for a specific model row. Extracted so context menus
-    // and any toolbar / accessory menus can reuse the same actions.
+    /// Shared menu elements for a specific model row. Extracted so context menus
+    /// and any toolbar / accessory menus can reuse the same actions.
     func createModelMenuElements(for itemIdentifier: ModelViewModel) -> [UIMenuElement] {
         switch itemIdentifier.type {
         case .local:

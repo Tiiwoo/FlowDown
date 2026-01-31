@@ -187,10 +187,14 @@ extension SettingController.SettingContent {
         var cancellable: Set<AnyCancellable> = []
 
         @BareCodableStorage(key: "ModelController.showCloudModel", defaultValue: true)
-        var showCloudModels { didSet { updateDataSource() }}
+        var showCloudModels {
+            didSet { updateDataSource() }
+        }
 
         @BareCodableStorage(key: "ModelController.showLocalModel", defaultValue: true)
-        var showLocalModels { didSet { updateDataSource() }}
+        var showLocalModels {
+            didSet { updateDataSource() }
+        }
 
         init() {
             tableView = UITableView(frame: .zero, style: .plain)
@@ -236,13 +240,10 @@ extension SettingController.SettingContent {
             cancellable.removeAll()
         }
 
-        lazy var addItem: UIBarButtonItem = {
-            let item = UIBarButtonItem(
-                image: .init(systemName: "plus"),
-                menu: UIMenu(children: createAddModelMenuItems()),
-            )
-            return item
-        }()
+        lazy var addItem: UIBarButtonItem = .init(
+            image: .init(systemName: "plus"),
+            menu: UIMenu(children: createAddModelMenuItems()),
+        )
 
         lazy var filterBarItem: UIBarButtonItem = {
             let deferredMenu = UIDeferredMenuElement.uncached { [weak self] completion in
@@ -252,14 +253,15 @@ extension SettingController.SettingContent {
                 }
                 completion(createFilterMenuItems())
             }
-            let item = UIBarButtonItem(
+            return UIBarButtonItem(
                 image: .init(systemName: "line.3.horizontal.decrease.circle"),
                 menu: UIMenu(title: String(localized: "Filter Options"), children: [deferredMenu]),
             )
-            return item
         }()
 
-        var searchKey: String { navigationItem.searchController?.searchBar.text ?? "" }
+        var searchKey: String {
+            navigationItem.searchController?.searchBar.text ?? ""
+        }
 
         override func viewDidLoad() {
             super.viewDidLoad()

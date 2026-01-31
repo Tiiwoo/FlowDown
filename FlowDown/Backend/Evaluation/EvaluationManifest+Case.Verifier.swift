@@ -10,7 +10,7 @@ import Foundation
 
 extension EvaluationManifest.Suite.Case {
     enum Verifier: Equatable, Codable {
-        // does not judge the result programmatically
+        /// does not judge the result programmatically
         case open
 
         // match content trimming whitespace and newlines
@@ -22,7 +22,7 @@ extension EvaluationManifest.Suite.Case {
         case contains(pattern: String)
         case containsCaseInsensitive(pattern: String)
 
-        // tool used
+        /// tool used
         case tool(parameter: String, value: AnyCodingValue)
 
         // MARK: - Codable

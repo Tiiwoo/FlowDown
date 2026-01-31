@@ -30,7 +30,9 @@ enum CommonTranslationLanguage: String, CaseIterable, Identifiable {
     case chineseTraditional = "繁體中文"
     case chineseSimplified = "简体中文"
 
-    var id: String { rawValue }
+    var id: String {
+        rawValue
+    }
 
     var description: String {
         rawValue

@@ -40,7 +40,9 @@ extension CloudModel {
         return ""
     }
 
-    var inferenceHost: String { URL(string: endpoint)?.host ?? "" }
+    var inferenceHost: String {
+        URL(string: endpoint)?.host ?? ""
+    }
 
     var auxiliaryIdentifier: String {
         [

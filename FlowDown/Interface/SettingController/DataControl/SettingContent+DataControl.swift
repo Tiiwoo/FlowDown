@@ -350,13 +350,13 @@ extension SettingController.SettingContent {
                         }
                         context.addAction(title: "Reset", attribute: .accent) {
                             context.dispose {
-                                /// 停掉同步,避免同步继续执行会占用db连接，导致后面无法关闭db
+                                // 停掉同步,避免同步继续执行会占用db连接，导致后面无法关闭db
                                 try? await syncEngine.stopSyncIfNeeded()
                                 SyncEngine.resetCachedState()
                                 try? FileManager.default.removeItem(at: FileManager.default.temporaryDirectory)
                                 try? FileManager.default.removeItem(at: ModelManager.shared.localModelDir)
 
-                                /// 在主线程中释放db链接
+                                // 在主线程中释放db链接
                                 sdb.reset()
                                 terminateApplication()
                             }

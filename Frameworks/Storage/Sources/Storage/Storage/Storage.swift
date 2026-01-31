@@ -307,7 +307,7 @@ public extension Storage {
         )
 
         do {
-            /// 内部会按照数据迁移的流程走,确保相关表一定是存在的
+            // 内部会按照数据迁移的流程走,确保相关表一定是存在的
             let exportStorage = try Storage(name: "Export", databaseDir: exportDir)
             var getError: Error?
             try exportStorage.db.run { [self] expdb in
@@ -373,12 +373,12 @@ public extension Storage {
             }
 
             Logger.database.infoFile("Import the database and execute the migration.")
-            /// 内部会按照数据迁移的流程走,确保相关表一定是存在的
+            // 内部会按照数据迁移的流程走,确保相关表一定是存在的
             let tempDB = try Storage(name: "Import", databaseDir: unzipTarget)
-            /// 初始化上传队列
+            // 初始化上传队列
             try tempDB.reinitializeUploadQueue()
 
-            /// 关闭数据库
+            // 关闭数据库
             tempDB.db.close()
 
             Logger.database.infoFile("Database migration has been successfully imported.")

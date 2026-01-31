@@ -128,14 +128,12 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
             )
         }
 
-        let result = try await queryWithUserInteraction(
+        return try await queryWithUserInteraction(
             startDate: startDate,
             endDate: endDate,
             includeAllDayEvents: includeAllDayEvents,
             controller: viewController,
         )
-
-        return result
     }
 
     @MainActor
@@ -232,7 +230,7 @@ class MTQueryCalendarTool: ModelTool, @unchecked Sendable {
         }
     }
 
-    // 将Markdown格式的结果转换为更友好的显示格式
+    /// 将Markdown格式的结果转换为更友好的显示格式
     private func formatResultForDisplay(_ markdownResult: String) -> String {
         var displayLines = [String]()
         let lines = markdownResult.split(separator: "\n")

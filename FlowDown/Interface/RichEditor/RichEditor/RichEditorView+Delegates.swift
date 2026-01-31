@@ -234,11 +234,17 @@ extension RichEditorView {
 }
 
 extension RichEditorView: InputEditor.Delegate {
-    func onInputEditorCaptureButtonTapped() { openCamera() }
+    func onInputEditorCaptureButtonTapped() {
+        openCamera()
+    }
 
-    func onInputEditorPickAttachmentTapped() { openFilePicker() }
+    func onInputEditorPickAttachmentTapped() {
+        openFilePicker()
+    }
 
-    func onInputEditorMicButtonTapped() { presentSpeechRecognition() }
+    func onInputEditorMicButtonTapped() {
+        presentSpeechRecognition()
+    }
 
     func onInputEditorToggleMoreButtonTapped() {
         endEditing(true)
@@ -252,14 +258,18 @@ extension RichEditorView: InputEditor.Delegate {
         }
     }
 
-    func onInputEditorSubmitButtonTapped() { submitValues() }
+    func onInputEditorSubmitButtonTapped() {
+        submitValues()
+    }
 
     func onInputEditorBeginEditing() {
         quickSettingBar.scrollToAfterModelItem()
         controlPanel.close()
     }
 
-    func onInputEditorEndEditing() { publishNewEditorStatus() }
+    func onInputEditorEndEditing() {
+        publishNewEditorStatus()
+    }
 
     func onInputEditorPastingLargeTextAsDocument(content: String) {
         insertTextAttachment(content: content, preferredName: nil)
@@ -482,9 +492,17 @@ extension RichEditorView: QuickSettingBar.Delegate {
 }
 
 extension RichEditorView: ControlPanel.Delegate {
-    func onControlPanelCameraButtonTapped() { openCamera() }
-    func onControlPanelPickPhotoButtonTapped() { openPhotoPicker() }
-    func onControlPanelPickFileButtonTapped() { openFilePicker() }
+    func onControlPanelCameraButtonTapped() {
+        openCamera()
+    }
+
+    func onControlPanelPickPhotoButtonTapped() {
+        openPhotoPicker()
+    }
+
+    func onControlPanelPickFileButtonTapped() {
+        openFilePicker()
+    }
 
     func onControlPanelRequestWebScrubber() {
         let alert = AlertInputViewController(

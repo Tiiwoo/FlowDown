@@ -247,7 +247,8 @@ class MainController: UIViewController {
                     || touch.location(in: window).y < 32
                     || chatView.title.bounds.contains(touch.location(in: chatView))
                     || sidebar.brandingLabel.bounds.contains(
-                        touch.location(in: sidebar.brandingLabel))
+                        touch.location(in: sidebar.brandingLabel),
+                    )
                 {
                     return true
                 }

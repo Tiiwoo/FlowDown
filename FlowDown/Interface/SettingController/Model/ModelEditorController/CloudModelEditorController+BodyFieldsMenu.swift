@@ -33,7 +33,9 @@ extension CloudModelEditorController {
         case thinkingMode = "thinking_mode"
         case thinking
 
-        var title: String.LocalizationValue { "Use \(rawValue) Key" }
+        var title: String.LocalizationValue {
+            "Use \(rawValue) Key"
+        }
 
         func insert(to dic: inout [String: Any]) {
             switch self {
@@ -60,7 +62,9 @@ extension CloudModelEditorController {
             }
         }
 
-        var title: String.LocalizationValue { "Set Budget to \(thinkingBudgetTokens) Tokens" }
+        var title: String.LocalizationValue {
+            "Set Budget to \(thinkingBudgetTokens) Tokens"
+        }
     }
 
     private enum ReasoningEffortPreset: String, CaseIterable {
@@ -71,7 +75,9 @@ extension CloudModelEditorController {
         case minimal
         case none
 
-        var title: String.LocalizationValue { "Set \("reasoning.effort") to \(rawValue)" }
+        var title: String.LocalizationValue {
+            "Set \("reasoning.effort") to \(rawValue)"
+        }
     }
 
     func buildExtraBodyEditorMenu(controller: JsonEditorController) -> UIMenu {

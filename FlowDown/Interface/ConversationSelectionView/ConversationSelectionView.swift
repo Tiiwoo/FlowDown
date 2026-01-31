@@ -11,8 +11,13 @@ import Storage
 import UIKit
 
 private class GroundedTableView: UITableView {
-    @objc var allowsHeaderViewsToFloat: Bool { false }
-    @objc var allowsFooterViewsToFloat: Bool { false }
+    @objc var allowsHeaderViewsToFloat: Bool {
+        false
+    }
+
+    @objc var allowsFooterViewsToFloat: Bool {
+        false
+    }
 }
 
 class ConversationSelectionView: UIView {

@@ -57,7 +57,9 @@ class RichEditorView: EditorSectionView {
         default:
             .gray.withAlphaComponent(0.1)
         }
-    } { didSet { shadowContainer.backgroundColor = handlerColor } }
+    } {
+        didSet { shadowContainer.backgroundColor = handlerColor }
+    }
 
     override func initializeViews() {
         super.initializeViews()
@@ -210,7 +212,7 @@ class RichEditorView: EditorSectionView {
         colorfulShadow.mode = mode
     }
 
-    // used when requesting retry, inherit current option toggles
+    /// used when requesting retry, inherit current option toggles
     func collectObject() -> Object {
         var text = (inputEditor.textView.text ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
         let attachments = attachmentsBar.attachmetns.values

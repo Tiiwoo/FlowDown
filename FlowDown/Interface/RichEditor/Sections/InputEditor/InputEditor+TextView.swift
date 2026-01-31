@@ -58,11 +58,17 @@ extension InputEditor {
             super.paste(sender)
         }
 
-        @objc private func insertNewLine() { insertText("\n") }
+        @objc private func insertNewLine() {
+            insertText("\n")
+        }
 
-        @objc private func returnPressed() { onReturnKeyPressed() }
+        @objc private func returnPressed() {
+            onReturnKeyPressed()
+        }
 
-        @objc private func commandReturnPressed() { onCommandReturnKeyPressed() }
+        @objc private func commandReturnPressed() {
+            onCommandReturnKeyPressed()
+        }
     }
 }
 

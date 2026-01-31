@@ -232,14 +232,13 @@ extension ModelManager {
                 children: ModelManager.temperaturePresets.map { preset -> UIAction in
                     let currentValue = Double(ModelManager.shared.temperature)
                     let isCurrent = abs(currentValue - preset.value) < 0.0001
-                    let action = UIAction(
+                    return UIAction(
                         title: String(localized: preset.title),
                         image: UIImage(systemName: preset.icon),
                         state: isCurrent ? .on : .off,
                     ) { _ in
                         ModelManager.shared.temperature = Float(preset.value)
                     }
-                    return action
                 },
             )
             let quickMenu = UIMenu(

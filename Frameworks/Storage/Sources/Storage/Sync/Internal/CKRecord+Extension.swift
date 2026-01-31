@@ -53,8 +53,7 @@ package extension CKRecord {
         }
 
         if let asset = self[.payloadAsset] as? CKAsset, let fileURL = asset.fileURL {
-            let data = try? Data(contentsOf: fileURL)
-            return data
+            return try? Data(contentsOf: fileURL)
         }
 
         return nil

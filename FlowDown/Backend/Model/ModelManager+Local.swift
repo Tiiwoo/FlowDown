@@ -76,7 +76,9 @@ extension LocalModel {
         return ""
     }
 
-    var inferenceHost: String { "localhost" }
+    var inferenceHost: String {
+        "localhost"
+    }
 
     var auxiliaryIdentifier: String {
         [
@@ -151,7 +153,7 @@ extension ModelManager {
         localModelDir.appendingPathComponent(mid)
     }
 
-    // the name of the model, as id from hub
+    /// the name of the model, as id from hub
     func tempDirForDownloadLocalModel(model_identifier: String) -> URL {
         func hash(identifier mid: String) -> String {
             let data = Data(mid.utf8)
@@ -204,7 +206,7 @@ extension ModelManager {
         localModels.value.contains { $0.id.lowercased() == mid.lowercased() }
     }
 
-    // HuggingFace Identifier, eg: mlx-community/Qwen2-VL-7B-Instruct-4bit
+    /// HuggingFace Identifier, eg: mlx-community/Qwen2-VL-7B-Instruct-4bit
     func localModelExists(repoIdentifier: String) -> Bool {
         localModels.value.contains {
             $0.repoIdentifier.lowercased() == repoIdentifier.lowercased()

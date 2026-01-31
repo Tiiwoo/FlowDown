@@ -181,7 +181,7 @@ extension AppDelegate {
         UpdateManager.shared.performUpdateCheckFromUI()
     }
 
-    // Wire from MainController
+    /// Wire from MainController
     @objc func requestNewChatFromMenu(_: Any?) {
         (mainWindow?.rootViewController as? MainController)?.requestNewChat()
     }
@@ -223,7 +223,7 @@ extension AppDelegate {
         }
     }
 
-    // conversation related
+    /// conversation related
     private func withCurrentConversation(
         _ block: (MainController, Conversation.ID, Conversation) -> Void,
     ) {
@@ -259,7 +259,7 @@ extension AppDelegate {
         }
     }
 
-    // conversation navigation
+    /// conversation navigation
     @objc func selectPreviousConversationFromMenu(_: Any?) {
         withCurrentConversation { mainVC, conversationID, _ in
             let list = ConversationManager.shared.conversations.value.values

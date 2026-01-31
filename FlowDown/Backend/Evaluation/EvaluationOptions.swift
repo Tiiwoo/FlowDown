@@ -8,7 +8,7 @@
 import Foundation
 
 class EvaluationOptions: Codable {
-    // model to be tested later
+    /// model to be tested later
     let modelIdentifier: ModelManager.ModelIdentifier
 
     // what to test, and we store the result and outcome inside each case

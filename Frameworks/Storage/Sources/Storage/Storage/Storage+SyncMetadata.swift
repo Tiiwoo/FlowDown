@@ -47,7 +47,7 @@ package extension Storage {
     }
 
     func findSyncMetadata(zoneName: String, ownerName: String, recordName: String, handle: Handle? = nil) throws -> SyncMetadata? {
-        let object: SyncMetadata? = if let handle {
+        if let handle {
             try handle.getObject(
                 fromTable: SyncMetadata.tableName,
                 where: SyncMetadata.Properties.recordName == recordName
@@ -62,7 +62,5 @@ package extension Storage {
                     && SyncMetadata.Properties.ownerName == ownerName,
             )
         }
-
-        return object
     }
 }

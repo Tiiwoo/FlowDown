@@ -37,9 +37,9 @@ final class LineManager {
         documentLineTree.root.rightMost
     }
 
-    // When rebuilding, and only when rebuilding, the tree we keep track of the longest line.
-    // This helps the text editor to determine the width of the content. The "initial" in the name implies
-    // that the reference does not necessarily point to the longest line as the document is edited.
+    /// When rebuilding, and only when rebuilding, the tree we keep track of the longest line.
+    /// This helps the text editor to determine the width of the content. The "initial" in the name implies
+    /// that the reference does not necessarily point to the longest line as the document is edited.
     private(set) weak var initialLongestLine: DocumentLineNode?
 
     private let documentLineTree: DocumentLineTree

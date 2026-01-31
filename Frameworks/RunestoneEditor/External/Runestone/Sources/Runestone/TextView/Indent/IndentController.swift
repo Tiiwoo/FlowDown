@@ -137,8 +137,8 @@ final class IndentController {
         }
     }
 
-    // Returns the range of an indentation text if the cursor is placed after an indentation.
-    // This can be used when doing a deleteBackward operation to delete an indent level.
+    /// Returns the range of an indentation text if the cursor is placed after an indentation.
+    /// This can be used when doing a deleteBackward operation to delete an indent level.
     func indentRangeInFrontOfLocation(_ location: Int) -> NSRange? {
         guard let line = lineManager.line(containingCharacterAt: location) else {
             return nil

@@ -6,7 +6,7 @@ import Testing
     let keyPair = ModelExchangeKeyPair()
     let encoded = keyPair.encodedPublicKey
     #expect(ModelExchangePublicKey(encoded: encoded) != nil)
-    let restored = ModelExchangePublicKey(encoded: encoded)!
+    let restored = try #require(ModelExchangePublicKey(encoded: encoded))
     #expect(restored.signing == keyPair.publicKey.signing)
     #expect(restored.agreement == keyPair.publicKey.agreement)
 }
@@ -23,14 +23,14 @@ import Testing
         timestamp: Date(timeIntervalSince1970: 1_700_000_000),
     )
 
-    var components = URLComponents(url: request.url, resolvingAgainstBaseURL: false)!
+    var components = try #require(URLComponents(url: request.url, resolvingAgainstBaseURL: false))
     components.queryItems = components.queryItems?.filter { $0.name != "sig" }
-    let path = ModelExchangeAPI.canonicalPath(from: components.url!)
+    let path = try ModelExchangeAPI.canonicalPath(from: #require(components.url))
     let signature = request.headers[ModelExchangeAPI.signatureHeader]
     #expect(signature != nil)
     let pub = keyPair.publicKey.signingKey
     #expect(pub != nil)
-    #expect(ModelExchangeAPI.verify(path: path, signature: signature!, publicKey: pub!))
+    #expect(try ModelExchangeAPI.verify(path: path, signature: #require(signature), publicKey: #require(pub)))
 }
 
 @Test func encryptDecryptRoundTrip() throws {

@@ -45,9 +45,9 @@ final class ConversationSession: Identifiable {
 
     var currentTask: Task<Void, Never>?
 
-    // temporary storage for web search results
-    // it can be discarded after closing the app
-    // becase the [^1] ref will be replaced with the real url like [^1](https://example.com)
+    /// temporary storage for web search results
+    /// it can be discarded after closing the app
+    /// becase the [^1] ref will be replaced with the real url like [^1](https://example.com)
     var linkedContents: [Int: URL] = [:]
 
     deinit {
@@ -128,10 +128,9 @@ final class ConversationSession: Identifiable {
         let messageID = message.objectId
         let mapped = attachments.map { attachment in
             // 跳过插入，由后面的attachmentsUpdate 统一批量插入
-            let newAttachment = sdb.attachmentMake(with: messageID, skipSave: true) {
+            sdb.attachmentMake(with: messageID, skipSave: true) {
                 self.updateAttachment($0, using: attachment)
             }
-            return newAttachment
         }
 
         sdb.attachmentsUpdate(mapped)
@@ -199,7 +198,7 @@ final class ConversationSession: Identifiable {
         attachments[messageID] ?? []
     }
 
-    // 删除这条消息
+    /// 删除这条消息
     func delete(messageIdentifier: Message.ID) {
         cancelCurrentTask { [self] in
             sdb.deleteSupplementMessage(nextTo: messageIdentifier)
@@ -208,7 +207,7 @@ final class ConversationSession: Identifiable {
         }
     }
 
-    // 删除自这条消息以后的全部数据
+    /// 删除自这条消息以后的全部数据
     func deleteCurrentAndAfter(messageIdentifier: Message.ID, completion: @escaping () -> Void = {}) {
         cancelCurrentTask { [self] in
             sdb.deleteAfter(messageIdentifier: messageIdentifier)
@@ -223,7 +222,7 @@ final class ConversationSession: Identifiable {
         }
     }
 
-    // 更新单独的一条消息
+    /// 更新单独的一条消息
     func update(messageIdentifier: Message.ID, content: String) {
         cancelCurrentTask { [self] in
             guard let message = messages.first(where: { $0.objectId == messageIdentifier }) else {

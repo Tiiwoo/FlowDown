@@ -15,7 +15,9 @@ import UIKit
 final class MessageListView: UIView {
     private lazy var listView: ListViewKit.ListView = .init()
 
-    var contentSize: CGSize { listView.contentSize }
+    var contentSize: CGSize {
+        listView.contentSize
+    }
 
     lazy var dataSource: ListViewDiffableDataSource<Entry> = .init(listView: listView)
 

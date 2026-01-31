@@ -9,7 +9,9 @@ enum ShortcutsEntities {
             .init(name: LocalizedStringResource("Conversation"))
         }
 
-        static var defaultQuery: ConversationQuery { .init() }
+        static var defaultQuery: ConversationQuery {
+            .init()
+        }
 
         let id: Conversation.ID
         let title: String
@@ -89,7 +91,9 @@ enum ShortcutsEntities {
             .init(name: LocalizedStringResource("Model"))
         }
 
-        static var defaultQuery: ShortcutsEntities.ModelQuery { .init() }
+        static var defaultQuery: ShortcutsEntities.ModelQuery {
+            .init()
+        }
 
         enum Source: String, Hashable {
             case local
@@ -156,8 +160,7 @@ enum ShortcutsEntities {
         }
 
         func suggestedEntities() async throws -> [ModelEntity] {
-            let available = await loadEntities()
-            return available
+            await loadEntities()
         }
 
         func entities(matching string: String) async throws -> [ModelEntity] {

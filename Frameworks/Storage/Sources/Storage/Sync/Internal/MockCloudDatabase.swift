@@ -57,8 +57,7 @@ package final class MockCloudDatabase: CloudDatabase {
         else { throw ckError(forAccountStatus: accountStatus) }
 
         return storage.withValue { storage in
-            let zones = storage.keys.map { CKRecordZone(zoneID: $0) }
-            return zones
+            storage.keys.map { CKRecordZone(zoneID: $0) }
         }
     }
 

@@ -80,7 +80,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                 domain: "MTLocationTool", code: 500,
                 userInfo: [
                     NSLocalizedDescriptionKey: String(
-                        localized: "Could not find view controller"),
+                        localized: "Could not find view controller",
+                    ),
                 ],
             )
         }
@@ -227,7 +228,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                         String(
                             localized:
                             "Coordinates: \(String(format: "%.6f", latitude)), \(String(format: "%.6f", longitude))",
-                        ))
+                        ),
+                    )
 
                     if let name = placemark.name, !name.isEmpty {
                         addressComponents.append(String(localized: "Name: \(name)"))
@@ -247,12 +249,14 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
 
                     if let administrativeArea = placemark.administrativeArea {
                         addressComponents.append(
-                            String(localized: "State/Province: \(administrativeArea)"))
+                            String(localized: "State/Province: \(administrativeArea)"),
+                        )
                     }
 
                     if let postalCode = placemark.postalCode {
                         addressComponents.append(
-                            String(localized: "Postal Code: \(postalCode)"))
+                            String(localized: "Postal Code: \(postalCode)"),
+                        )
                     }
 
                     if let country = placemark.country {
@@ -261,7 +265,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
 
                     if let isoCountryCode = placemark.isoCountryCode {
                         addressComponents.append(
-                            String(localized: "Country Code: \(isoCountryCode)"))
+                            String(localized: "Country Code: \(isoCountryCode)"),
+                        )
                     }
 
                     if let timeZone = placemark.timeZone?.identifier {
@@ -273,7 +278,8 @@ class MTLocationTool: ModelTool, @unchecked Sendable {
                         Current Location Information:
 
                         \(addressComponents.joined(separator: "\n"))
-                        """)
+                        """,
+                    )
 
                     completion(result, true)
                 }

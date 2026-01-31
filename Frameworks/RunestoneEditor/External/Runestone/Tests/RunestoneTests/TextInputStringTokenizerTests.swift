@@ -7,103 +7,103 @@ final class TextInputStringTokenizerTests: XCTestCase {}
 // MARK: - Movement in Lines
 
 extension TextInputStringTokenizerTests {
-    // This is equivalent to doing Cmd+Right at the very beginning of the document.
-    func testMovingToEndOfFirstLineFragmentFromBeginningOfDocument() {
+    /// This is equivalent to doing Cmd+Right at the very beginning of the document.
+    func testMovingToEndOfFirstLineFragmentFromBeginningOfDocument() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 0)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 39)
     }
 
-    // This is equivalent to doing Cmd+Right within the first line fragment.
-    func testMovingToEndOfFirstLineFragmentFromWithinFirstLineFragment() {
+    /// This is equivalent to doing Cmd+Right within the first line fragment.
+    func testMovingToEndOfFirstLineFragmentFromWithinFirstLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 10)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 39)
     }
 
-    // This is equivalent to doing Cmd+Right within the second line fragment.
-    func testMovingToEndOfSecondLineFragmentFromWithinSecondLineFragment() {
+    /// This is equivalent to doing Cmd+Right within the second line fragment.
+    func testMovingToEndOfSecondLineFragmentFromWithinSecondLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 45)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 77)
     }
 
-    // This is equivalent to doing Cmd+Right within the last line fragment of a line.
-    func testMovingToEndOfLineFromWithinLastLineFragmentInLine() {
+    /// This is equivalent to doing Cmd+Right within the last line fragment of a line.
+    func testMovingToEndOfLineFromWithinLastLineFragmentInLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 274)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 289)
     }
 
-    // This is equivalent to doing Cmd+Left at the very beginning of the document.
-    func testMovingToBeginningOfFirstLineFragmentFromBeginningOfDocument() {
+    /// This is equivalent to doing Cmd+Left at the very beginning of the document.
+    func testMovingToBeginningOfFirstLineFragmentFromBeginningOfDocument() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 0)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Cmd+Left within the first line fragment.
-    func testMovingToBeginningOfFirstLineFragmentFromWithinFirstLineFragment() {
+    /// This is equivalent to doing Cmd+Left within the first line fragment.
+    func testMovingToBeginningOfFirstLineFragmentFromWithinFirstLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 10)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Cmd+Left within the second line fragment.
-    func testMovingToBeginningOfSecondLineFragmentFromWithinSecondLineFragment() {
+    /// This is equivalent to doing Cmd+Left within the second line fragment.
+    func testMovingToBeginningOfSecondLineFragmentFromWithinSecondLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 45)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 40)
     }
 
-    // This is equivalent to doing Cmd+Left within the last line fragment of a line.
-    func testMovingToBeginningOfLineFromWithinLastLineFragmentInLine() {
+    /// This is equivalent to doing Cmd+Left within the last line fragment of a line.
+    func testMovingToBeginningOfLineFromWithinLastLineFragmentInLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 274)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 267)
     }
 
-    // This is equivalent to doing Cmd+Right in an empty line.
-    func testMovingToEndOfLineFineFragmentFromEmptyLine() {
+    /// This is equivalent to doing Cmd+Right in an empty line.
+    func testMovingToEndOfLineFineFragmentFromEmptyLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 290)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 290)
     }
 
-    // This is equivalent to doing Cmd+Left in an empty line.
-    func testMovingToBeginningOfLineFineFragmentFromEmptyLine() {
+    /// This is equivalent to doing Cmd+Left in an empty line.
+    func testMovingToBeginningOfLineFineFragmentFromEmptyLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 290)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .line, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 290)
     }
 
@@ -151,103 +151,103 @@ extension TextInputStringTokenizerTests {
 // MARK: - Movement in Paragraphs
 
 extension TextInputStringTokenizerTests {
-    // This is equivalent to doing Ctrl+E at the very beginning of the document.
-    func testMovingToEndOfParagraphFromBeginningOfDocument() {
+    /// This is equivalent to doing Ctrl+E at the very beginning of the document.
+    func testMovingToEndOfParagraphFromBeginningOfDocument() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 0)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 289)
     }
 
-    // This is equivalent to doing Ctrl+E in the middle of the first line fragment.
-    func testMovingToEndOfParagraphFromMiddleOfFirstLineFragment() {
+    /// This is equivalent to doing Ctrl+E in the middle of the first line fragment.
+    func testMovingToEndOfParagraphFromMiddleOfFirstLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 10)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 289)
     }
 
-    // This is equivalent to doing Ctrl+E in the middle of the second line fragment.
-    func testMovingToEndOfParagraphFromMiddleOfSecondLineFragment() {
+    /// This is equivalent to doing Ctrl+E in the middle of the second line fragment.
+    func testMovingToEndOfParagraphFromMiddleOfSecondLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 50)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 289)
     }
 
-    // This is equivalent to doing Ctrl+E in the middle of the last line fragment in the line.
-    func testMovingToEndOfParagraphFromMiddleOfLastLineFragmentInLine() {
+    /// This is equivalent to doing Ctrl+E in the middle of the last line fragment in the line.
+    func testMovingToEndOfParagraphFromMiddleOfLastLineFragmentInLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 274)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 289)
     }
 
-    // This is equivalent to doing Ctrl+A at the very beginning of the document.
-    func testMovingToBeginningOfParagraphFromBeginningOfDocument() {
+    /// This is equivalent to doing Ctrl+A at the very beginning of the document.
+    func testMovingToBeginningOfParagraphFromBeginningOfDocument() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 0)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Ctrl+A in the middle of the first line fragment.
-    func testMovingToBeginningOfParagraphFromMiddleOfFirstLineFragment() {
+    /// This is equivalent to doing Ctrl+A in the middle of the first line fragment.
+    func testMovingToBeginningOfParagraphFromMiddleOfFirstLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 10)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Ctrl+A in the middle of the second line fragment.
-    func testMovingToBeginningOfParagraphFromMiddleOfSecondLineFragment() {
+    /// This is equivalent to doing Ctrl+A in the middle of the second line fragment.
+    func testMovingToBeginningOfParagraphFromMiddleOfSecondLineFragment() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 50)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Ctrl+A in the middle of the last line fragment in the line.
-    func testMovingToBeginningOfParagraphFromMiddleOfLastLineFragmentInLine() {
+    /// This is equivalent to doing Ctrl+A in the middle of the last line fragment in the line.
+    func testMovingToBeginningOfParagraphFromMiddleOfLastLineFragmentInLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 274)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 0)
     }
 
-    // This is equivalent to doing Ctrl+E in an empty line.
-    func testMovingToEndOfLineFromEmptyLine() {
+    /// This is equivalent to doing Ctrl+E in an empty line.
+    func testMovingToEndOfLineFromEmptyLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 290)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.forward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 290)
     }
 
-    // This is equivalent to doing Ctrl+A in an empty line.
-    func testMovingToBeginningOfLineFromEmptyLine() {
+    /// This is equivalent to doing Ctrl+A in an empty line.
+    func testMovingToBeginningOfLineFromEmptyLine() throws {
         let tokenizer = makeTokenizer()
         let fromPosition = IndexedPosition(index: 290)
         let textDirection = UITextDirection(rawValue: UITextStorageDirection.backward.rawValue)
         let position = tokenizer.position(from: fromPosition, toBoundary: .paragraph, inDirection: textDirection)
-        let indexedPosition = position as! IndexedPosition
+        let indexedPosition = try XCTUnwrap(position as? IndexedPosition)
         XCTAssertEqual(indexedPosition.index, 290)
     }
 }

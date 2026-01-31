@@ -10,8 +10,14 @@ import QuickLook
 
 class SingleItemDataSource: NSObject, QLPreviewControllerDelegate, QLPreviewControllerDataSource {
     class PreviewItem: NSObject, QLPreviewItem {
-        var previewItemURL: URL? { item }
-        var previewItemTitle: String? { item.lastPathComponent }
+        var previewItemURL: URL? {
+            item
+        }
+
+        var previewItemTitle: String? {
+            item.lastPathComponent
+        }
+
         let item: URL
         let name: String
         init(item: URL, name: String?) {

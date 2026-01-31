@@ -17,10 +17,17 @@ extension CloudModelEditorController {
 }
 
 private extension CloudModelEditorController {
-    var notConfiguredText: String { String(localized: "Not Configured") }
-    var notAvailableText: String { "N/A" }
+    var notConfiguredText: String {
+        String(localized: "Not Configured")
+    }
 
-    var configuredText: String { String(localized: "Configured") }
+    var notAvailableText: String {
+        "N/A"
+    }
+
+    var configuredText: String {
+        String(localized: "Configured")
+    }
 
     func addSeparator() {
         stackView.addArrangedSubview(SeparatorView())

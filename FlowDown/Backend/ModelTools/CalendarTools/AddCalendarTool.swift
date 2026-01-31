@@ -87,8 +87,7 @@ class MTAddCalendarTool: ModelTool, @unchecked Sendable {
             )
         }
 
-        let result = try await addWithUserInteractions(name: eventName, icsFile: icsContent, controller: viewController)
-        return result
+        return try await addWithUserInteractions(name: eventName, icsFile: icsContent, controller: viewController)
     }
 
     @MainActor

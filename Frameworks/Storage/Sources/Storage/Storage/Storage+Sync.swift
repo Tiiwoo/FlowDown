@@ -344,7 +344,7 @@ package extension Storage {
         )
 
         guard let localObject else {
-            /// 这些状态不需要同步
+            // 这些状态不需要同步
             remoteObject.connectionStatus = .disconnected
             remoteObject.lastConnected = nil
             remoteObject.capabilities = .init([])
@@ -365,7 +365,7 @@ package extension Storage {
             return
         }
 
-        /// 这些状态不需要同步
+        // 这些状态不需要同步
         remoteObject.connectionStatus = localObject.connectionStatus
         remoteObject.lastConnected = localObject.lastConnected
         remoteObject.capabilities = localObject.capabilities

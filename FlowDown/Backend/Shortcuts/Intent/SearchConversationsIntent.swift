@@ -59,8 +59,7 @@ enum SearchConversationsIntentHelper {
     private static let maximumResultLimit = 50
 
     static func normalizeLimit(_ limit: Int) -> Int {
-        let clamped = min(max(limit, 1), maximumResultLimit)
-        return clamped
+        min(max(limit, 1), maximumResultLimit)
     }
 
     static func search(
@@ -153,8 +152,7 @@ enum SearchConversationsIntentHelper {
             return [entryHeader, contents].joined(separator: "\n")
         }
 
-        let result = ([header] + body).joined(separator: "\n\n")
-        return result
+        return ([header] + body).joined(separator: "\n\n")
     }
 }
 
