@@ -4,7 +4,7 @@ FlowDown is on the App Store as a single purchase for iPhone, iPad, and Mac (Cat
 
 ## Availability & Pricing
 
-- **Price**: US$19.99 (regional pricing varies). Future changes appear in the changelog or [Pricing Timeline](./pricing_timeline.md).
+- **Price**: See the [Pricing Timeline](./pricing_timeline.md) for current pricing (regional pricing varies).
 - **Size**: About 99.6 MB.
 - **Requirements**: iOS 17.0, iPadOS 17.0, or macOS 14.0 and above.
 - **Languages**: English, Simplified Chinese, Traditional Chinese, Japanese, Korean, French, German, Spanish, and more.

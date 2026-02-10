@@ -13,7 +13,7 @@ This page collects common FlowDown questions. If you still need help, see the [I
 
 - The National Day 2025 free period ended on 2025-10-06. Future promotions will be announced via the in-app changelog and social channels.
 
-> **Pricing**: We plan to make FlowDown free next year. As more developers join and core features mature, maintenance costs drop, so we only need to cover essentials (domain, server, docs site, developer accounts). Before going free, pricing will step down in phases. Conversations and chat features stay free; only new personalization features will require a subscription. See the [pricing schedule on the App Store page](../app_store.md#pricing) for details.
+> **Pricing**: We plan to make FlowDown free later this year (June 2026). As more developers join and core features mature, maintenance costs drop, so we only need to cover essentials (domain, server, docs site, developer accounts). Before going free, pricing will step down in phases. Conversations and chat features stay free; only new personalization features will require a subscription. See the [Pricing Timeline](../pricing_timeline.md) for details.
 
 ## Sync & Data
 

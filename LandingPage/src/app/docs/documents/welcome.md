@@ -67,4 +67,4 @@ Artwork and resource files are not licensed for reuse. For a commercial FlowDown
 
 ---
 
-© 2025 FlowDown Team (@Lakr233). All rights reserved.
+© 2025-2026 FlowDown Team (@Lakr233). All rights reserved.

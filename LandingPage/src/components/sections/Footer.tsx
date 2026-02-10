@@ -12,7 +12,7 @@ export default function Footer() {
             baseFrequency="0.03"
             numOctaves="5"
           />
-          <feDiffuseLighting lightingColor="#fffff" surfaceScale="2">
+          <feDiffuseLighting lightingColor="#ffffff" surfaceScale="2">
             <feDistantLight azimuth="45" elevation="70" />
           </feDiffuseLighting>
         </filter>
@@ -43,7 +43,7 @@ export default function Footer() {
               <div>
                 <p className="text-lg text-[#242424]">FlowDown.ai</p>
                 <p className="text-sm font-medium text-[#aeaeae] mt-2">
-                  © 2025 FlowDown Team. All rights reserved.
+                  © 2025-2026 FlowDown Team. All rights reserved.
                 </p>
               </div>
               <img
@@ -155,7 +155,7 @@ export default function Footer() {
             </Link>
             {/* Email */}
             <Link
-              href="mailto:flowdown-support@qaq.wiki"
+              href="mailto:flowdownapp@qaq.wiki"
               className="w-10 h-10 flex items-center justify-center rounded text-[#8e8e8e] hover:bg-gray-100 hover:text-black transition-colors"
             >
               <svg
