@@ -42,7 +42,11 @@ const extractDescription = (content: string) => {
       continue;
     }
 
-    if (trimmed.startsWith("#") || trimmed.startsWith("![") || trimmed === "---") {
+    if (
+      trimmed.startsWith("#") ||
+      trimmed.startsWith("![") ||
+      trimmed === "---"
+    ) {
       continue;
     }
 
@@ -88,12 +92,12 @@ const walkFiles = (directory: string): string[] => {
 export const fixImagePaths = (content: string) => {
   const markdownImages = content.replace(
     /\((\.\.?\/)+res\/([^)]+)\)/g,
-    "(/docs/res/$2)"
+    "(/docs/res/$2)",
   );
 
   return markdownImages.replace(
     /src=["'](\.\.?\/)+res\/([^"']+)["']/g,
-    'src="/docs/res/$2"'
+    'src="/docs/res/$2"',
   );
 };
 

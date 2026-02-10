@@ -32,10 +32,10 @@ Changes take effect immediately on the current device.
 
 ## Where Each Model Is Used
 
-| Slot                                             | What it does                                              | Notes                                                                                  |
-| ------------------------------------------------ | --------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| Task model                                       | Conversation title, icon, and web-search query generation | Required when browsing is enabled and tools are off; pick a fast, low-cost text model. |
-| Visual auxiliary model                           | Image description + OCR/QR fallback for non-visual chats  | Only needed when the chat model lacks vision; Apple Intelligence is not supported.     |
+| Slot                                     | What it does                                              | Notes                                                                                  |
+| ---------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| Task model                               | Conversation title, icon, and web-search query generation | Required when browsing is enabled and tools are off; pick a fast, low-cost text model. |
+| Visual auxiliary model                   | Image description + OCR/QR fallback for non-visual chats  | Only needed when the chat model lacks vision; Apple Intelligence is not supported.     |
 | Chat model (when "Use Chat Model" is on) | Can take over task model duties                           | Uses the active chat model; turn off if you want a dedicated lightweight task model.   |
 
 This document may lag behind rapid code changes. When in doubt, rely on the in-app settings descriptions and the current release notes.

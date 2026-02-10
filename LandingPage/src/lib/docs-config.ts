@@ -49,7 +49,7 @@ const getDocOrderIndex = (section: string, slug: string[]) => {
 
 const sortDocs = (
   section: string,
-  docs: { slug: string[]; title: string }[]
+  docs: { slug: string[]; title: string }[],
 ) => {
   return docs.sort((a, b) => {
     const orderA = getDocOrderIndex(section, a.slug);
@@ -92,7 +92,7 @@ export const getDocsConfig = () => {
 
     const sorted = sortDocs(
       sectionKey,
-      items.map((item) => ({ slug: item.slug, title: item.title }))
+      items.map((item) => ({ slug: item.slug, title: item.title })),
     );
 
     sidebarNav.push({
@@ -116,7 +116,7 @@ export const getDocsConfig = () => {
 
     const sorted = sortDocs(
       sectionKey,
-      items.map((item) => ({ slug: item.slug, title: item.title }))
+      items.map((item) => ({ slug: item.slug, title: item.title })),
     );
 
     sidebarNav.push({
