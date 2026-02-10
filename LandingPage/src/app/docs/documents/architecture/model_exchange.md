@@ -35,58 +35,92 @@ let builder = ModelExchangeRequestBuilder(
 )
 ```
 
-### 2. Request Models
+### 2. Start the Handshake
 
-When you want to request models from FlowDown, use the builder to create a signed URL and open it.
+The protocol requires a handshake before requesting models. First, open FlowDown with the handshake URL to establish a verified session.
 
 ```swift
-func requestModels() {
+func startHandshake() {
+    guard let url = builder.makeHandshakeURL() else {
+        print("Handshake URL unavailable")
+        return
+    }
+    // Open FlowDown to begin verification
+    UIApplication.shared.open(url)
+}
+```
+
+### 3. Handle Callbacks
+
+Configure your app to handle the callback URL (e.g., in `onOpenURL` or `AppDelegate`). The protocol has three stages: `verification`, `completed`, and `cancelled`.
+
+```swift
+var sessionId: String?
+
+func handleCallback(url: URL) {
+    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+          let queryItems = components.queryItems else { return }
+
+    let params = Dictionary(uniqueKeysWithValues: queryItems.compactMap { item -> (String, String)? in
+        guard let value = item.value else { return nil }
+        return (item.name.lowercased(), value)
+    })
+
+    switch params["stage"]?.lowercased() {
+    case "verification":
+        handleVerification(params: params)
+    case "completed":
+        handleCompletion(params: params)
+    case "cancelled":
+        sessionId = nil
+        print("User cancelled in FlowDown")
+    default:
+        print("Unknown callback stage")
+    }
+}
+```
+
+### 4. Handle Verification and Request Models
+
+When FlowDown calls back with `stage=verification`, validate the session and public key, then send the actual exchange request.
+
+```swift
+func handleVerification(params: [String: String]) {
+    guard let session = params["session"] else {
+        print("Missing session in verification")
+        return
+    }
+    guard let pk = params["pk"], pk == keyPair.encodedPublicKey else {
+        print("Public key mismatch in verification")
+        return
+    }
+
+    sessionId = session
+
     do {
-        // Create a signed request URL
-        let request = try builder.makeExchangeURL(
-            session: UUID().uuidString,
+        let signed = try builder.makeExchangeURL(
+            session: session,
             appName: "My Awesome App",
             reason: "To assist with coding tasks",
-            capabilities: [.audio, .developerRole], // Filter needed models
+            capabilities: [.audio, .developerRole],
             multipleSelection: false
         )
-
-        // Open FlowDown
-        UIApplication.shared.open(request.url)
+        UIApplication.shared.open(signed.url)
     } catch {
         print("Failed to build request: \(error)")
     }
 }
 ```
 
-### 3. Handle Response
-
-Configure your app to handle the callback URL (e.g., in `onOpenURL` or `AppDelegate`).
-
-```swift
-func handleCallback(url: URL) {
-    guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
-          let queryItems = components.queryItems else { return }
-
-    let params = Dictionary(uniqueKeysWithValues: queryItems.map { ($0.name, $0.value ?? "") })
-
-    // Check the stage
-    if params["stage"] == "completed" {
-        handleCompletion(params: params)
-    } else if params["stage"] == "cancelled" {
-        print("User cancelled the operation")
-    }
-}
-```
-
-### 4. Decrypt Payload
+### 5. Decrypt Payload
 
 Once you receive the `completed` callback, use the framework to decode and decrypt the payload.
 
 ```swift
 func handleCompletion(params: [String: String]) {
     guard let payloadString = params["payload"],
-          let sessionID = params["session"] else { return }
+          let session = params["session"],
+          session == sessionId else { return }
 
     do {
         // 1. Decode the encrypted payload wrapper
@@ -98,7 +132,7 @@ func handleCompletion(params: [String: String]) {
             with: keyPair
         )
 
-        // 3. Parse the model data (usually a Property List)
+        // 3. Parse the model data (format is indicated by params["format"], usually "plist")
         let models = try PropertyListSerialization.propertyList(
             from: decryptedData,
             options: [],
@@ -109,6 +143,7 @@ func handleCompletion(params: [String: String]) {
     } catch {
         print("Decryption failed: \(error)")
     }
+    sessionId = nil
 }
 ```
 

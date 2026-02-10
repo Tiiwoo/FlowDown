@@ -2,7 +2,7 @@
 
 ## Overview
 
-FlowDown supports visual understanding through local MLX or cloud vision models and can auto-generate descriptions, OCR, and QR results for text-only models. Images are resized to ~1024 px and stripped of EXIF by default when **Settings → Editor → Compress Image** is on.
+FlowDown supports visual understanding through local MLX or cloud vision models and can auto-generate descriptions, OCR, and QR results for text-only models. EXIF data is always stripped from images. When **Settings → General → Editor → Compress Image** is on (default), images are also resized to ~1024 px.
 
 ![Image compression setting](../../../res/screenshots/imgs/flowdown-chat-compression-feature-ui.png)
 
@@ -21,7 +21,7 @@ Thumbnails appear above the composer; tap or hover to preview, rename, or remove
 - **Enable Vision capability**: Turn on Vision under **Settings → Model** (local) or on the cloud model edit page. Forcing Vision on unsupported models will fail.
 - **Auxiliary Visual Model**: **Settings → Inference → Visual Assessment → Auxiliary Visual Model**. Used when the active chat model lacks Vision or when you need text fallbacks (descriptions/OCR/QR).
 - **Skip Recognition If Possible**: **Settings → Inference → Visual Assessment**, default on. When the chat model has Vision, skipping sends the raw image; disable if you need OCR/backups or may switch to a text-only model.
-- **Compress Image**: **Settings → Editor → Compress Image**, on by default to shorten uploads and remove EXIF data.
+- **Compress Image**: **Settings → General → Editor → Compress Image**, on by default to shorten uploads and remove EXIF data.
 
 ![Model capability configuration](../../../res/screenshots/imgs/ai-model-capability-configuration.png)
 ![Visual inference configuration](../../../res/screenshots/imgs/visual-inference-model-configuration.png)
@@ -46,7 +46,7 @@ Thumbnails appear above the composer; tap or hover to preview, rename, or remove
 - Multilingual OCR extraction
 - QR code detection and decoding
 
-Results are written to the attachment’s text representation and persisted (non-ephemeral). Images are always compressed and EXIF-stripped. If no Vision-capable Auxiliary Visual Model is configured and the chat model is text-only, the image will be skipped.
+Results are written to the attachment’s text representation and persisted (non-ephemeral). Images are always EXIF-stripped; compression depends on the Compress Image toggle. If no Vision-capable Auxiliary Visual Model is configured and the chat model is text-only, the image will be skipped.
 
 ### Delivery to the Conversation
 

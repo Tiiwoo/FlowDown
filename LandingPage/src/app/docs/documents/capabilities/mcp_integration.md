@@ -11,7 +11,7 @@ Only connect to MCP servers you trust—they can receive the full conversation c
 1. Open **Settings → Tools → MCP Servers**, then tap **+ → Create Server** (HTTP/HTTPS only).
 2. Enter the **Endpoint** (usually ending with `/mcp/`) and any **Headers** (JSON map for auth/tenant tokens sent with every request). Add a **Nickname** for display; otherwise FlowDown shows the host name. Transport is fixed to **Streamable HTTP**.
 3. Turn on **Enabled** to auto-reconnect and sync tools; turn it off to pause the server without deleting it.
-4. Tap **Verify Configuration** to handshake and list available tools. After verification, the list shows **Connected / Connecting / Disconnected**.
+4. Tap **Verify Configuration** to handshake and list available tools. After verification, the list shows **Connected / Connecting / Disconnected / Connection Failed**.
 
 ![Server configuration modal](../../../res/screenshots/imgs/flowdown-mcp-server-configuration.png)
 
@@ -43,7 +43,7 @@ Only connect to MCP servers you trust—they can receive the full conversation c
 
 - Review the server’s privacy scope and credentials before enabling; keep secrets in headers minimal and rotate them regularly.
 - Disable servers when not needed to avoid background reconnections.
-- Audit tool calls from **Settings → Support → Logs** and keep only the servers required for current conversations.
+- Audit tool calls from **Settings → Support → View Logs** and keep only the servers required for current conversations.
 
 ## Advanced: edit `.fdmcp` manually
 

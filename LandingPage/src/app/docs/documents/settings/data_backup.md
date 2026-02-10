@@ -5,14 +5,14 @@ Centralize backup, export, and reset guidance so you can safely move or wipe dat
 ## Export Settings & Backups
 
 - Use **Settings → Data → Export Settings** to save app preferences and model configurations (without conversations).
-- Use **Export Workspace / Export Database** when you need full chat history and cloud model configs.
+- Use **Export Database** when you need full chat history and cloud model configs.
 
 ![Export settings and backup menu](../../../res/screenshots/imgs/flowdown-settings-data-export-and-backup-ui.png)
 
 ## Reset & Risk Warnings
 
-- **Reset Editing** or other destructive actions cannot be undone. Always export first.
-- For sync issues, prefer **Reset Sync State** before a full reset.
+- **Clear Editing** or other destructive actions cannot be undone. Always export first.
+- For sync issues, try toggling iCloud Sync off and on, or use **Delete iCloud Data** under **Settings → Data** before a full reset.
 
 ![Reset confirmation dialog](../../../res/screenshots/imgs/data-management-and-editing-reset-confirmation.png)
 

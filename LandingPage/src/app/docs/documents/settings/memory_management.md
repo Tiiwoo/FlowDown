@@ -4,7 +4,7 @@ FlowDown’s Memory stores facts for later recall. Use proactive context to auto
 
 ## Proactive Memory Context
 
-- Choose how much history the assistant can surface automatically (past day/week/month, latest N items, or off).
+- Choose how much history the assistant can surface automatically (off, past day/week/month/year, latest 15/30 items, or all memories).
 - Larger windows improve recall but consume more tokens; keep it minimal for long, tool-heavy chats.
 
 ![Proactive memory scope options](../../../res/screenshots/imgs/configuring-proactive-memory-context.png)

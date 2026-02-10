@@ -4,7 +4,7 @@ FlowDown supports any OpenAI-compatible HTTPS service (chat completions and resp
 
 ## Fetch the latest templates
 
-1. Open **Settings → Models**.
+1. Open **Settings → Model**.
 1. Tap the **＋** in the top-right corner.
 1. Under **Cloud Model**, pick **pollinations.ai (free)** to fetch the latest anonymous text models with the correct endpoint and context, or choose **Empty Model** to start from scratch.
 1. To reuse saved profiles, select **Import Model → Import from File** and load an exported `.fdmodel` or `.plist`.
@@ -32,7 +32,7 @@ Open the **Cloud Model** menu any time to refresh the pollinations.ai list or ad
 - **Model list**: configure the model list endpoint and use **Select from Server** instead of typing IDs.
 - **Pollinations**: free models are rate/region limited; connect your own provider if they are unavailable.
 - **Body fields**: add provider-specific keys (reasoning budgets, `top_p` / `top_k`, modalities, etc.) via **Body Fields**, ensuring valid JSON.
-- **Backups**: model definitions sync with iCloud and workspace exports. Before major edits, run **Settings → Data Control → Export Workspace**.
+- **Backups**: model definitions sync with iCloud and database exports. Before major edits, run **Settings → Data → Export Database**.
 
 <a id="advanced-custom-enterprise-setup"></a>
 
@@ -40,7 +40,7 @@ Open the **Cloud Model** menu any time to refresh the pollinations.ai list or ad
 
 For private deployments or bespoke gateways. Connect only trusted endpoints—misconfigurations can leak data or incur costs.
 
-- **Create**: **Settings → Models → ＋ → Cloud Model → Empty Model**. Edit inline or export `.fdmodel`, tweak externally, then re-import.
+- **Create**: **Settings → Model → ＋ → Cloud Model → Empty Model**. Edit inline or export `.fdmodel`, tweak externally, then re-import.
 - **Key fields** (unused fields can be empty strings/collections):
 
   | Key                                             | Purpose                                                                                                         |
@@ -53,4 +53,4 @@ For private deployments or bespoke gateways. Connect only trusted endpoints—mi
   | `body_fields`                                   | JSON string merged into the request body—use it for reasoning toggles, budgets, sampling keys, modalities, etc. |
   | `capabilities` / `context` / `name` / `comment` | Declare capabilities, context window, display name, and notes to drive UI toggles and trimming.                 |
 
-- **Verify & audit**: after saving, run `⋯ → Verify model`; audit calls in **Settings → Support → Logs**. Remove/disable unused configs to avoid accidental calls.
+- **Verify & audit**: after saving, run `⋯ → Verify model`; audit calls in **Settings → Support → View Logs**. Remove/disable unused configs to avoid accidental calls.

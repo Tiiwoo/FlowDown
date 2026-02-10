@@ -16,23 +16,23 @@ FlowDown provides an immersive chat interface, supports local models, and can sy
 
 - The list on the left shows all conversations. Click to switch; on touch devices you can swipe, and right-click/long-press to open the quick menu.
 - The assistant auto-generates a title and icon after the first reply. Use the quick menu to **Rename** or **Change Icon**.
-- Use **Copy** to create a branch (Fork); use **Archive** to hide a conversation without deleting data.
+- Use **Duplicate** to create a copy of a conversation.
 - To adjust tools, web browsing, or system prompts for a conversation, open **Conversation Settings** from the quick menu.
 
 ![Conversation quick menu](../../../res/screenshots/imgs/conversation-set-new-icon.png)
 
 ## UI & rendering
 
-- Replies support full Markdown (tables, code blocks, quotes). Switch to a classic list layout via **Settings → Conversation UI** if preferred.
+- Replies support full Markdown (tables, code blocks, quotes).
 - In the message menu, **Raw Data** shows the full prompt, including system instructions and attachment context; you can also copy/export/archive here.
 
 ## Cross-device sync
 
 FlowDown stores data locally and can optionally sync through CloudKit.
 
-- Turn on **Settings → Data Control → iCloud Sync** on each device. The sidebar shows the latest sync status and pending changes.
-- After adding a new device or resolving conflicts, run **Full Refresh from iCloud** to keep data consistent.
-- You can export a backup anytime via **Settings → Data Control → Export Workspace**. Restoring merges conversations, models, and attachments.
+- Turn on **Settings → Data → iCloud Sync** on each device. The sidebar shows the latest sync status and pending changes.
+- After adding a new device or resolving conflicts, toggle iCloud Sync off and on to refresh data.
+- You can export a backup anytime via **Settings → Data → Export Database**. Restoring replaces all local data with the imported backup.
 
 ![Sync scope on iPad](../../../res/screenshots/imgs/configuring-sync-scope.png)
 

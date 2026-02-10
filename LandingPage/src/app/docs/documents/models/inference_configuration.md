@@ -4,7 +4,7 @@ One place for context windows, temperature/sampling, and Reasoning/Thinking togg
 
 ## Where to edit
 
-1. Go to **Settings → Models** and pick a profile.
+1. Go to **Settings → Model** and pick a profile.
 2. Adjust items under **Inference** and **Networking (Optional)**, then save.
 
 ## Core parameters

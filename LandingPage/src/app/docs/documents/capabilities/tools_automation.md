@@ -28,7 +28,7 @@ Tool-capable models can use built-in tools and MCP extensions to enrich context 
 
 ## Multimodal & attachments
 
-- Supports text/Markdown, PDF, common images, audio (auto-transcoded to WAV); import via paperclip, drag-and-drop, or paste.
+- Supports text/Markdown, PDF, common images, audio (auto-transcoded to WAV); import via the + button, drag-and-drop, or paste.
 - Media returns only when the model declares matching capabilities; very large attachments can slow sync.
 
-For scenarios: calendar flow in [Calendar Workflow](../guides/calendar_workflow.md), attachments in [Attachments](./attachments.md), memory in [Memory Management](../settings/memory_management.md), and shortcuts in [Apple Shortcuts](../guides/apple_shortcuts.md).\*\*\*
+For scenarios: calendar flow in [Calendar Workflow](../guides/calendar_workflow.md), attachments in [Attachments](./attachments.md), memory in [Memory Management](../settings/memory_management.md), and shortcuts in [Apple Shortcuts](../guides/apple_shortcuts.md).

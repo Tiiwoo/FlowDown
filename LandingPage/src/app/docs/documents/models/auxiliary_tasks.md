@@ -21,7 +21,7 @@ Auxiliary task models handle background chores such as titling conversations, ch
 
 Open **Settings → Inference** and locate the default model section:
 
-- **Use conversation model** – Reuse the active chat model for auxiliary prompts. Disable to pick a dedicated model.
+- **Use Chat Model** – Reuse the active chat model for auxiliary prompts. Disable to pick a dedicated model.
 - **Task model** – Used for title/icon generation and web-search query generation; choose a fast, low-cost model. Apple Intelligence can be selected when available.
 - **Visual auxiliary model** – Vision-capable model used to pre-process images when the primary model cannot. Apple Intelligence is not supported here; pick a model with visual capability.
 - **Skip visual tasks if possible** – When the chat model already supports vision, skip the visual pre-processing step to avoid double cost (but image text will not be generated if you later switch to a non-visual chat model).
@@ -36,7 +36,7 @@ Changes take effect immediately on the current device.
 | ------------------------------------------------ | --------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | Task model                                       | Conversation title, icon, and web-search query generation | Required when browsing is enabled and tools are off; pick a fast, low-cost text model. |
 | Visual auxiliary model                           | Image description + OCR/QR fallback for non-visual chats  | Only needed when the chat model lacks vision; Apple Intelligence is not supported.     |
-| Chat model (when “Use conversation model” is on) | Can take over task model duties                           | Uses the active chat model; turn off if you want a dedicated lightweight task model.   |
+| Chat model (when "Use Chat Model" is on) | Can take over task model duties                           | Uses the active chat model; turn off if you want a dedicated lightweight task model.   |
 
 This document may lag behind rapid code changes. When in doubt, rely on the in-app settings descriptions and the current release notes.
 

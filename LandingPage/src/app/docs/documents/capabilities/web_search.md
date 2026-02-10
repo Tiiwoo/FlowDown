@@ -18,7 +18,7 @@ FlowDown offers two web search modes: pre-processing for models without tool-cal
 
 ![Web search parameter configuration interface](../../../res/screenshots/imgs/web-search-parameter-configuration-interface.png)
 
-- **Web Search Engines** lets you toggle Google / DuckDuckGo / Yahoo / Bing. Keep at least one on; if all are off, FlowDown automatically falls back to Google.
+- **Web Search Engines** lets you toggle Google / DuckDuckGo / Yahoo / Bing. Keep at least one on; if all are off, FlowDown automatically re-enables all engines.
 
 ## Execution Flow
 
@@ -27,7 +27,7 @@ FlowDown offers two web search modes: pre-processing for models without tool-cal
 1. **Context collection** – Last five user/assistant turns plus attachment text.
 1. **Query planning** – Auxiliary model applies the Search Strategy prompt and returns XML with `search_required` and up to three queries (2–25 characters, in the user’s language). If `search_required` is false, FlowDown posts a “no web search needed” note.
 1. **Failure handling** – If no queries are produced, FlowDown replies that it cannot generate search keywords and skips browsing.
-1. **Retrieval** – ScrubberKit + URLSReranker fetch per query (keeps four results per host) and honor the per-message limit, streaming sources/sites/result counts.
+1. **Retrieval** – ScrubberKit + URLsReranker fetch per query (keeps four results per host) and honor the per-message limit, streaming sources/sites/result counts.
 1. **Attachment injection** – Results are shuffled, converted to numbered `web_document` attachments, and appended before the model answers. Empty results raise “No web search results.”
 
 ### Tool-call mode (Tools on)
@@ -65,5 +65,5 @@ FlowDown offers two web search modes: pre-processing for models without tool-cal
 ## Implementation Details
 
 - Query generation uses the auxiliary model with the Search Strategy prompt (`Model.Inference.SearchSensitivity`).
-- Retrieval uses [ScrubberKit](https://github.com/Lakr233/ScrubberKit) plus `URLSReranker` and respects engine toggles and search-limit settings (`ScrubberConfiguration`).
+- Retrieval uses [ScrubberKit](https://github.com/Lakr233/ScrubberKit) plus `URLsReranker` and respects engine toggles and search-limit settings (`ScrubberConfiguration`).
 - Tool-call entry point: `MTWebSearchTool` runs the pipeline, and the conversation layer wraps results with `formatAsWebArchive` so the model can cite `web_document` IDs.

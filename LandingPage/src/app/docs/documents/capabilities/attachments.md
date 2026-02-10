@@ -4,9 +4,9 @@ Attachments let you add documents, screenshots, audio clips, and notes to a conv
 
 ## Availability
 
-- Tap the paperclip above the composer to manage attachments, or drag and drop/paste files directly.
+- Tap the **+** button above the composer to manage attachments, or drag and drop/paste files directly.
 - Supported formats: plain text/Markdown, PDF, common images (PNG/JPEG/WebP/HEIC), and audio (m4a/wav; other audio is transcoded automatically). Unsupported formats are skipped.
-- Attachments work with every model. Choose a **Visual** model for images and an **Auditory** model for audio clips.
+- Attachments work with every model. Choose a **Visual** model for images and an **Audio** model for audio clips.
 
 ## Processing Pipeline
 
@@ -31,5 +31,5 @@ Attachments let you add documents, screenshots, audio clips, and notes to a conv
 ## Troubleshooting
 
 - **Upload failed**: Usually due to limited storage or unsupported formats; convert to PDF or Markdown and retry.
-- **Sync differences**: Run **Data Control → Full Refresh from iCloud** to resync.
+- **Sync differences**: Try toggling iCloud Sync off and on under **Settings → Data**, or use **Delete iCloud Data** to clear and resync.
 - **Privacy review**: Attachments leave the device only when you use cloud models, tool calls, or iCloud sync.

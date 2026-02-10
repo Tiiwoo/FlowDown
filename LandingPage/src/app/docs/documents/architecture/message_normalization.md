@@ -11,10 +11,9 @@ This page explains how `ChatClientKit` “cleans” messages before sending requ
 
 ## Rule pipeline (execution order)
 
-1. **Merge system messages**: Combine all `.system` messages into one, keep the first `name`, and drop empty content to avoid repeated system prompts.
-2. **User context before assistant**: If an assistant message lacks a preceding user message, insert `.user "."` to satisfy alternation requirements.
-3. **Fill missing tool responses**: For each `tool_call` inside an assistant message, if the matching `.tool` reply is missing, insert `.tool "."` with the same `toolCallID`, keeping the assistant→tool→assistant chain intact.
-4. **Trailing user text**: If the final message is not user text, append `.user "."` so the model can continue after tool calls.
-5. **Align strict tools**: If any tool declares `strict: true`, rewrite all tools to `strict: true` to avoid mixed-strictness errors.
+1. **Merge system messages**: Combine all `.system` messages into one, keep the first `name`, and filter out empty content. If the merged result is entirely empty, the system message is omitted.
+2. **Fill missing tool responses**: For each `tool_call` inside an assistant message, if the matching `.tool` reply is missing, insert `.tool "."` with the same `toolCallID`, keeping the assistant→tool→assistant chain intact.
+3. **Trailing user text**: If the final message is not user text, append `.user "."` so the model can continue after tool calls.
+4. **Align strict tools**: If any tool declares `strict: true`, rewrite all tools to `strict: true` to avoid mixed-strictness errors.
 
 **Note**: Placeholder content uses a single dot `"."` to satisfy minimum-content checks while minimizing semantic impact.

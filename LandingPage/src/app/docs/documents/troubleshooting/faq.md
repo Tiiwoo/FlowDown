@@ -19,7 +19,7 @@ This page collects common FlowDown questions. If you still need help, see the [I
 
 **How do I enable iCloud sync?**
 
-- Sign in with iCloud, then turn on **Settings → Data Control → iCloud Sync**. If you hit issues, use “Full Refresh / Reset Sync State” on the same page; still stuck, export logs under **Settings → Support**.
+- Sign in with iCloud, then turn on **Settings → Data → iCloud Sync**. If you hit issues, try toggling sync off and on; if that doesn't help, use **Delete iCloud Data** on the same page to clear synced data and start fresh. Still stuck, export logs under **Settings → Support**.
 - See [Data Backup & Reset](../settings/data_backup.md) for detailed steps and safeguards.
 
 ![Sync scope configuration](../../../res/screenshots/imgs/flowdown-data-synchronization-configuration.png)

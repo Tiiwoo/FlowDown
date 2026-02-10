@@ -54,4 +54,4 @@ You can stop at any time with the stop button. The long-press quick menu also le
 - Diagnostic logs are recorded for export via **Settings → Support**.
 - Completion signals are sent to Shortcuts, MCP, calendar, and other automations.
 
-You can view details at any time: in the message menu, choose **Raw Data** to see the exact prompt sent to the model; tool call records also appear in the reasoning section.
+You can view details at any time: in the message menu, choose **View Raw** to see the exact prompt sent to the model; tool call records also appear in the reasoning section.
