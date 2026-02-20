@@ -267,7 +267,33 @@ class ModelToolsManager {
                         Logger.model.errorFile("failed to parse audio data from string")
                     }
                 case let .resource(uri, mimeType, text):
-                    textContent.append("[\(text ?? "Resource") \(mimeType)](\(uri))")
+                    let textValue = if let text { String(describing: text) } else { "" }
+                    let mimeTypeValue = if let mimeType { String(describing: mimeType) } else { "" }
+                    textContent.append("[\(textValue) \(mimeTypeValue)](\(uri))")
+                case let .resourceLink(
+                    uri: uri,
+                    name: name,
+                    title: title,
+                    description: description,
+                    mimeType: mimeType,
+                    annotations: annotations,
+                ):
+                    let annotationsValue: String = if let annotations {
+                        {
+                            let data = try? JSONEncoder().encode(annotations)
+                            let value = String(data: data ?? .init(), encoding: .utf8)
+                            return value ?? ""
+                        }()
+                    } else {
+                        ""
+                    }
+                    let titleValue = if let title { String(describing: title) } else { "" }
+                    let value = """
+                    [\(titleValue) \(name) \(mimeType ?? "application/resources")](\(uri))
+                    \(description ?? "")
+                    Annotations: \(annotationsValue)
+                    """
+                    textContent.append(value)
                 }
             }
             return .init(
