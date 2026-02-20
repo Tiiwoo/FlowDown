@@ -15,6 +15,7 @@ import UIKit
 extension ModelCapabilities {
     static var localModelEditable: [ModelCapabilities] = [
         .visual, // probably fixed
+        .tool,
     ]
 }
 
