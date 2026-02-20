@@ -144,6 +144,18 @@ struct Shortcuts: AppShortcutsProvider {
             )
         }
 
+        shortcuts.append(
+            AppShortcut(
+                intent: TranslateTextIntent(),
+                phrases: [
+                    "Translate text on \(.applicationName)",
+                    "Translate with \(.applicationName)",
+                ],
+                shortTitle: LocalizedStringResource("Translate"),
+                systemImageName: "globe",
+            ),
+        )
+
         return shortcuts
     }
 }

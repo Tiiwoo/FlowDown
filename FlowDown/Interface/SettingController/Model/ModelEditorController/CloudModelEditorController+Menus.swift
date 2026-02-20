@@ -251,13 +251,17 @@ extension CloudModelEditorController {
             menuElements.append(copyAction)
         }
 
-        let deferredElement = UIDeferredMenuElement.uncached { completion in
+        let deferredElement = UIDeferredMenuElement.uncached { [weak self, weak view] completion in
             guard let model = ModelManager.shared.cloudModel(identifier: modelId) else {
                 completion([])
                 return
             }
 
-            ModelManager.shared.fetchModelList(identifier: model.id) { list in
+            ModelManager.shared.fetchModelList(identifier: model.id) { [weak self, weak view] list in
+                guard let self else {
+                    completion([])
+                    return
+                }
                 guard !list.isEmpty else {
                     completion([UIAction(
                         title: String(localized: "(None)"),
@@ -266,11 +270,11 @@ extension CloudModelEditorController {
                     return
                 }
 
-                let menuElements = self.buildModelSelectionMenu(from: list) { selection in
+                let menuElements = buildModelSelectionMenu(from: list) { selection in
                     ModelManager.shared.editCloudModel(identifier: model.id) {
                         $0.update(\.model_identifier, to: selection)
                     }
-                    view.configure(value: selection)
+                    view?.configure(value: selection)
                 }
                 completion(menuElements)
             }

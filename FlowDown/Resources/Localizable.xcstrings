@@ -5109,6 +5109,17 @@
         }
       }
     },
+    "Bahasa Indonesia" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bahasa Indonesia"
+          }
+        }
+      }
+    },
     "Balanced" : {
       "comment" : "Search Strategy",
       "localizations" : {
@@ -13666,6 +13677,17 @@
         }
       }
     },
+    "Deutsch" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deutsch"
+          }
+        }
+      }
+    },
     "Device Not Eligible" : {
       "localizations" : {
         "de" : {
@@ -14634,16 +14656,16 @@
     },
     "Due to system limitations, you must enable audio to use this feature." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Due to system limitations, you must enable audio to use this feature."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aufgrund von Systemeinschränkungen musst du Audio aktivieren, um diese Funktion zu verwenden."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Due to system limitations, you must enable audio to use this feature."
           }
         },
         "es" : {
@@ -15969,16 +15991,16 @@
     },
     "Enable Live Activity" : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Enable Live Activity"
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Live-Aktivität aktivieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enable Live Activity"
           }
         },
         "es" : {
@@ -16381,6 +16403,28 @@
         }
       }
     },
+    "English (UK)" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English (UK)"
+          }
+        }
+      }
+    },
+    "English (US)" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English (US)"
+          }
+        }
+      }
+    },
     "Enter a keyword to search for in your conversations. Leave empty to return recent conversations." : {
       "localizations" : {
         "de" : {
@@ -16699,6 +16743,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "遇到错误"
+          }
+        }
+      }
+    },
+    "Español (España)" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Español (España)"
           }
         }
       }
@@ -20934,6 +20989,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "食物 & 饮品"
+          }
+        }
+      }
+    },
+    "Français" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Français"
           }
         }
       }
@@ -25264,6 +25330,17 @@
         }
       }
     },
+    "Italiano" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Italiano"
+          }
+        }
+      }
+    },
     "JavaScript/TypeScript Capabilities" : {
       "localizations" : {
         "de" : {
@@ -25582,6 +25659,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "关键词"
+          }
+        }
+      }
+    },
+    "Language" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Language"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sprache"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "言語"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "언어"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
           }
         }
       }
@@ -30279,6 +30402,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "原生支持 Apple 的基础模型与生态。"
+          }
+        }
+      }
+    },
+    "Nederlands" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nederlands"
           }
         }
       }
@@ -35116,6 +35250,28 @@
         }
       }
     },
+    "Polski" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Polski"
+          }
+        }
+      }
+    },
+    "Português (Brasil)" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Português (Brasil)"
+          }
+        }
+      }
+    },
     "Postal Code: %@" : {
       "localizations" : {
         "de" : {
@@ -36493,6 +36649,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "推理预算"
+          }
+        }
+      }
+    },
+    "Reasoning Effort" : {
+      "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reasoning-Aufwand"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reasoning Effort"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Esfuerzo de razonamiento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effort de raisonnement"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推論の労力"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "추론 노력"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "推理强度"
           }
         }
       }
@@ -41330,16 +41532,16 @@
     },
     "Show a Live Activity while streaming in the background." : {
       "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show a Live Activity while streaming in the background."
-          }
-        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zeige eine Live-Aktivität, während du im Hintergrund streamst."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show a Live Activity while streaming in the background."
           }
         },
         "es" : {
@@ -44547,6 +44749,52 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "系统为你提供当前查询的最新信息：\n\n模型/你的名称: %@\n当前日期: %@\n当前用户区域: %@\n\n请使用最新信息，并遵循此前提供的指南。"
+          }
+        }
+      }
+    },
+    "Target Language" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Target Language"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zielsprache"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Idioma de destino"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Langue cible"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "対象言語"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "대상 언어"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "目标语言"
           }
         }
       }
@@ -48645,6 +48893,17 @@
         }
       }
     },
+    "Tiếng Việt" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tiếng Việt"
+          }
+        }
+      }
+    },
     "Time Zone: %@" : {
       "localizations" : {
         "de" : {
@@ -50164,6 +50423,282 @@
         }
       }
     },
+    "Translate" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducir"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduire"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译"
+          }
+        }
+      }
+    },
+    "Translate ${text} into ${targetLanguage}" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate ${text} into ${targetLanguage}"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${text} in ${targetLanguage} übersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducir ${text} a ${targetLanguage}"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduire ${text} en ${targetLanguage}"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${text}を${targetLanguage}に翻訳"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${text}을(를) ${targetLanguage}(으)로 번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "将${text}翻译为${targetLanguage}"
+          }
+        }
+      }
+    },
+    "Translate ${text} into ${targetLanguage} using the default model" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate ${text} into ${targetLanguage} using the default model"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "${text} mit dem Standardmodell in ${targetLanguage} übersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducir ${text} a ${targetLanguage} usando el modelo predeterminado"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduire ${text} en ${targetLanguage} avec le modèle par défaut"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "デフォルトモデルで${text}を${targetLanguage}に翻訳"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "기본 모델을 사용하여 ${text}을(를) ${targetLanguage}(으)로 번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用默认模型将${text}翻译为${targetLanguage}"
+          }
+        }
+      }
+    },
+    "Translate Text" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate Text"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text übersetzen"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducir texto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduire le texte"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "テキストを翻訳"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "텍스트 번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译文本"
+          }
+        }
+      }
+    },
+    "Translate text into a target language using a selected model." : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translate text into a target language using a selected model."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Text mit einem ausgewählten Modell in eine Zielsprache übersetzen."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducir texto a un idioma objetivo usando un modelo seleccionado."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduire du texte dans une langue cible en utilisant un modèle sélectionné."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選択したモデルを使用してテキストを対象言語に翻訳します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "선택한 모델을 사용하여 텍스트를 대상 언어로 번역합니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用所选模型将文本翻译为目标语言。"
+          }
+        }
+      }
+    },
+    "Translation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Translation"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Übersetzung"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traducción"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Traduction"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻訳"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "번역"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "翻译"
+          }
+        }
+      }
+    },
     "Transparent architecture. Verify the code, trust the process." : {
       "localizations" : {
         "de" : {
@@ -50299,6 +50834,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "精简文本使其更简洁，同时不失关键信息。"
+          }
+        }
+      }
+    },
+    "Türkçe" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Türkçe"
           }
         }
       }
@@ -55961,6 +56507,52 @@
         }
       }
     },
+    "What text should be translated?" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "What text should be translated?"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Welcher Text soll übersetzt werden?"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "¿Qué texto se debe traducir?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quel texte doit être traduit ?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "どのテキストを翻訳しますか？"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "어떤 텍스트를 번역할까요?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "要翻译什么文本？"
+          }
+        }
+      }
+    },
     "When enabled, large content pasted into the editor will be attached as a file. You can tap on the file to edit it." : {
       "localizations" : {
         "de" : {
@@ -57111,48 +57703,101 @@
         }
       }
     },
-    "Reasoning Effort" : {
+    "Русский" : {
+      "shouldTranslate" : false,
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reasoning Effort"
+            "value" : "Русский"
           }
-        },
-        "de" : {
+        }
+      }
+    },
+    "Українська" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reasoning-Aufwand"
+            "value" : "Українська"
           }
-        },
-        "es" : {
+        }
+      }
+    },
+    "العربية" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Esfuerzo de razonamiento"
+            "value" : "العربية"
           }
-        },
-        "fr" : {
+        }
+      }
+    },
+    "हिन्दी" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Effort de raisonnement"
+            "value" : "हिन्दी"
           }
-        },
-        "ja" : {
+        }
+      }
+    },
+    "ไทย" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "推論の労力"
+            "value" : "ไทย"
           }
-        },
-        "ko" : {
+        }
+      }
+    },
+    "한국어" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "추론 노력"
+            "value" : "한국어"
           }
-        },
-        "zh-Hans" : {
+        }
+      }
+    },
+    "日本語" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "推理强度"
+            "value" : "日本語"
+          }
+        }
+      }
+    },
+    "简体中文" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "简体中文"
+          }
+        }
+      }
+    },
+    "繁體中文" : {
+      "shouldTranslate" : false,
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "繁體中文"
           }
         }
       }

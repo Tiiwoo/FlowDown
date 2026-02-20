@@ -131,6 +131,9 @@ def update_missing_translations(
     }
 
     for key, value in strings.items():
+        if not should_translate(value):
+            continue
+
         locs = value.setdefault("localizations", {})
 
         if "en" not in locs:
