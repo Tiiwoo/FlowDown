@@ -133,6 +133,19 @@ FlowDown is a Swift-based AI/LLM client for iOS and macOS (Catalyst) with a priv
 - Pull requests must include a summary, testing checklist, and before/after visuals for UI changes. Mention localization or asset updates when relevant.
 - Tag reviewers responsible for the affected modules and outline any follow-up tasks or risks.
 
+## Code Review Guidelines
+
+- Keep reviews pragmatic: prioritize reproducible, high-impact defects with clear user or data risk.
+- Do not report intentional fail-fast patterns as bugs by default (`force unwrap`, `as!`, `try!`, `unowned`) when they protect explicit invariants.
+- If an invariant can be violated, prefer explicit fail-fast checks (`precondition`/`assert`) over silent fallbacks that hide corruption.
+- Avoid recommending fixes for extremely low-probability race conditions unless impact is severe or reproduction is clear.
+- Prefer root-cause fixes over broad defensive rewrites that mostly reduce crash visibility without improving correctness.
+- Write findings as actionable items: include trigger condition, concrete impact, and minimal viable fix.
+
+### CI Review Check
+
+- For GitHub Actions workflows that invoke `xcodebuild`, ensure `xcodebuild -downloadComponent MetalToolchain` runs before build/test/archive steps.
+
 ## Localization Guidelines
 
 - `AlertViewController` and `ConfigurableKit` APIs expect `String.LocalizationValue`; pass localization values directly for consistency
