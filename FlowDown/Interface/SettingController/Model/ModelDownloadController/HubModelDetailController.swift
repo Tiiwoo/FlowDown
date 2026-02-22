@@ -73,7 +73,7 @@ class HubModelDetailController: StackScrollController {
         let package = MarkdownTextView.PreprocessedContent(
             blocks: blocks,
             rendered: rendered,
-            highlightMaps: highlightMaps
+            highlightMaps: highlightMaps,
         )
         let markdownView = MarkdownTextView().with {
             $0.theme = theme

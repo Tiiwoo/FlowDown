@@ -30,7 +30,7 @@ extension MarkdownParser.ParseResult {
             let repairedItems = items.map { item in
                 RawTaskListItem(
                     isCompleted: item.isCompleted,
-                    children: item.children.map { repair(block: $0, mathContext: mathContext) }
+                    children: item.children.map { repair(block: $0, mathContext: mathContext) },
                 )
             }
             return .taskList(isTight: isTight, items: repairedItems)
@@ -58,19 +58,19 @@ extension MarkdownParser.ParseResult {
     private func repair(inlineNode: MarkdownInlineNode, mathContext: [Int: String]) -> MarkdownInlineNode {
         switch inlineNode {
         case let .code(content):
-            return mathNodeFromReplacementCode(content, mathContext: mathContext) ?? inlineNode
+            mathNodeFromReplacementCode(content, mathContext: mathContext) ?? inlineNode
         case let .emphasis(children):
-            return .emphasis(children: repairInlineNodes(children, mathContext: mathContext))
+            .emphasis(children: repairInlineNodes(children, mathContext: mathContext))
         case let .strong(children):
-            return .strong(children: repairInlineNodes(children, mathContext: mathContext))
+            .strong(children: repairInlineNodes(children, mathContext: mathContext))
         case let .strikethrough(children):
-            return .strikethrough(children: repairInlineNodes(children, mathContext: mathContext))
+            .strikethrough(children: repairInlineNodes(children, mathContext: mathContext))
         case let .link(destination, children):
-            return .link(destination: destination, children: repairInlineNodes(children, mathContext: mathContext))
+            .link(destination: destination, children: repairInlineNodes(children, mathContext: mathContext))
         case let .image(source, children):
-            return .image(source: source, children: repairInlineNodes(children, mathContext: mathContext))
+            .image(source: source, children: repairInlineNodes(children, mathContext: mathContext))
         default:
-            return inlineNode
+            inlineNode
         }
     }
 
@@ -86,8 +86,8 @@ extension MarkdownParser.ParseResult {
             content: latex,
             replacementIdentifier: MarkdownParser.replacementText(
                 for: .math,
-                identifier: identifier
-            )
+                identifier: identifier,
+            ),
         )
     }
 }

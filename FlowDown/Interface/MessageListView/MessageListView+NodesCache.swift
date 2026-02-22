@@ -42,7 +42,7 @@ extension MessageListView {
             let package = MarkdownTextView.PreprocessedContent(
                 blocks: blocks,
                 rendered: rendered,
-                highlightMaps: highlightMaps
+                highlightMaps: highlightMaps,
             )
 
             lock.lock()
